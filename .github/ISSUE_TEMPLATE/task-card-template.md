@@ -2,7 +2,7 @@
 name: Task Card Template
 about: Task Card writing
 title: ''
-labels: KPT
+labels: Task
 assignees: ''
 
 ---
