@@ -7,7 +7,6 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <BrowserRouter>
-      <Nav />
     </BrowserRouter>
   );
 }
