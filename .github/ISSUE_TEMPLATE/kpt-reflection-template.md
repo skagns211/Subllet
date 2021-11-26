@@ -2,7 +2,7 @@
 name: KPT Reflection Template
 about: Keep, Problem, Try
 title: ''
-labels: Task
+labels: KPT
 assignees: ''
 
 ---
