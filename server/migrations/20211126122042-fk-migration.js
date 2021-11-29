@@ -2,39 +2,55 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.addConstraint("askings", {
+    await queryInterface.addConstraint("Askings", {
       fields: ["user_id"],
       type: "foreign key",
       references: {
-        table: "users",
+        table: "Users",
         field: "id",
       },
     });
-    await queryInterface.addConstraint("replys", {
+    await queryInterface.addConstraint("Replys", {
       fields: ["asking_id"],
       type: "foreign key",
       references: {
-        table: "askings",
+        table: "Askings",
         field: "id",
       },
     });
-    await queryInterface.addConstraint("replys", {
+    await queryInterface.addConstraint("Replys", {
       fields: ["user_id"],
       type: "foreign key",
       references: {
-        table: "users",
+        table: "Users",
         field: "id",
       },
     });
-    await queryInterface.addConstraint("comments", {
+    await queryInterface.addConstraint("Comments", {
       fields: ["user_id"],
       type: "foreign key",
       references: {
-        table: "users",
+        table: "Users",
         field: "id",
       },
     });
-    await queryInterface.addConstraint("comments", {
+    await queryInterface.addConstraint("Comments", {
+      fields: ["service_id"],
+      type: "foreign key",
+      references: {
+        table: "Services",
+        field: "id",
+      },
+    });
+    await queryInterface.addConstraint("Scraps", {
+      fields: ["user_id"],
+      type: "foreign key",
+      references: {
+        table: "Users",
+        field: "id",
+      },
+    });
+    await queryInterface.addConstraint("Scraps", {
       fields: ["service_id"],
       type: "foreign key",
       references: {
@@ -42,7 +58,7 @@ module.exports = {
         field: "id",
       },
     });
-    await queryInterface.addConstraint("scraps", {
+    await queryInterface.addConstraint("Subscribes", {
       fields: ["user_id"],
       type: "foreign key",
       references: {
@@ -50,35 +66,19 @@ module.exports = {
         field: "id",
       },
     });
-    await queryInterface.addConstraint("scraps", {
+    await queryInterface.addConstraint("Subscribes", {
       fields: ["service_id"],
       type: "foreign key",
       references: {
-        table: "services",
+        table: "Services",
         field: "id",
       },
     });
-    await queryInterface.addConstraint("subscribes", {
-      fields: ["user_id"],
-      type: "foreign key",
-      references: {
-        table: "users",
-        field: "id",
-      },
-    });
-    await queryInterface.addConstraint("subscribes", {
+    await queryInterface.addConstraint("Prices", {
       fields: ["service_id"],
       type: "foreign key",
       references: {
-        table: "services",
-        field: "id",
-      },
-    });
-    await queryInterface.addConstraint("prices", {
-      fields: ["service_id"],
-      type: "foreign key",
-      references: {
-        table: "services",
+        table: "Services",
         field: "id",
       },
     });

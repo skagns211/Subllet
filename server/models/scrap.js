@@ -1,32 +1,32 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class scrap extends Model {
+  class Scrap extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.scrap.belongsTo(models.user, {
+      models.Scrap.belongsTo(models.User, {
         foreignKey: "user_id",
         sourceKey: "id",
       });
-      models.scrap.belongsTo(models.service, {
+      models.Scrap.belongsTo(models.Service, {
         foreignKey: "service_id",
         sourceKey: "id",
       });
     }
   }
-  scrap.init(
+  Scrap.init(
     {
       user_id: DataTypes.INTEGER,
       service_id: DataTypes.INTEGER,
     },
     {
       sequelize,
-      modelName: "scrap",
+      modelName: "Scrap",
     }
   );
-  return scrap;
+  return Scrap;
 };
