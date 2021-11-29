@@ -4,7 +4,7 @@ import styled from "styled-components";
 const SearchBar = () => {
   const SearchBarBody = styled.header`
     @media only screen and (max-width: 800px) {
-      background-color: black;
+      background-color: #0f0f0f;
       padding-top: 1rem;
       padding-bottom: 1rem;
     }

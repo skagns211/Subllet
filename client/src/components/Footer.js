@@ -1,8 +1,27 @@
-import React from "react";
+import { React, useState } from "react";
 import styled from "styled-components";
 import github from "../IMG/github.png";
 
 const Footer = () => {
+  const [isMember, setIsMember] = useState([
+    "Kim namhun",
+    "Kim jongseo",
+    "Kim taehyung",
+    "Heo deokhwan",
+  ]);
+
+  window.onresize = () => {
+    const innerWidth = window.innerWidth;
+    innerWidth <= 816
+      ? setIsMember(["Kim", "Kim", "Kim", "Heo"])
+      : setIsMember([
+          "Kim namhun",
+          "Kim jongseo",
+          "Kim taehyung",
+          "Heo deokhwan",
+        ]);
+  };
+
   const FooterStyle = styled.footer`
     /* display: flex;
     justify-content: space-around; */
@@ -60,16 +79,16 @@ const Footer = () => {
         <Member>
           <img alt="gitLogo" src={github}></img>
           <a href="https://github.com/skagns211" target="_blank">
-            Kim namhun
+            {isMember[0]}
           </a>
           <a href="https://github.com/ionc635" target="_blank">
-            Kim jongseo
+            {isMember[1]}
           </a>
           <a href="https://github.com/kkangtaeng" target="_blank">
-            Kim taehyung
+            {isMember[2]}
           </a>
           <a href="https://github.com/Deokhwan-Heo" target="_blank">
-            Heo deokhwan
+            {isMember[3]}
           </a>
         </Member>
       </FooterStyle>
