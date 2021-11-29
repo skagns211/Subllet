@@ -111,9 +111,9 @@ const Font = styled.span`
 
 const RightNav = styled.span`
   display: flex;
-  :hover ul {
+  /* :hover ul {
     visibility: visible;
-  }
+  } */
   li {
     padding: 0.5rem 0;
     border-bottom: 1px solid #ff8a00;
@@ -144,6 +144,9 @@ const RightNav = styled.span`
     width: 3.7rem;
     border-radius: 2rem;
     margin: 0.4rem 1rem 0.4rem 0;
+    :hover {
+      visibility: visible;
+    }
     /* margin-top: 0.4rem;
     margin-right: 1.6rem; */
   }
