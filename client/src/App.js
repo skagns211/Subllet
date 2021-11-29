@@ -7,8 +7,8 @@ import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import SearchBar from "./components/SearchBar";
 
-import MainCard from "./components/MainCard";
-import Video from "./components/Video";
+// import MainCard from "./components/Main/MainCard";
+// import Video from "./components/Main/Video";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -16,12 +16,12 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     width: 100%;
-    /* height: 100%; */
     background-color: #130D0A;
     box-sizing: border-box; // ;
     min-height: 100vh; // ;
     position: relative;
     overflow: hidden;
+    /* height: 100%; */
   }
   a {
     color: #ffffff;
