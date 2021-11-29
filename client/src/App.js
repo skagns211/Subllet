@@ -7,6 +7,16 @@ import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import SearchBar from "./components/SearchBar";
 
+import Main from "./pages/Main";
+import AllView from "./pages/AllView";
+import ChangeInfo from "./pages/ChangeInfo";
+import CustomerCenter from "./pages/CustomerCenter";
+import Delete from "./pages/Delete";
+import Detail from "./pages/Detail";
+import Login from "./pages/Login";
+import MySubllet from "./pages/MySubllet";
+import SignUp from "./pages/SignUp";
+
 // import MainCard from "./components/Main/MainCard";
 // import Video from "./components/Main/Video";
 
@@ -42,8 +52,19 @@ function App() {
         <SearchBar />
         {/* <MainCard /> */}
         {/* <Video /> */}
+        <Routes>
+          <Route exact path="/" element={<Main />} />
+          <Route path="/allview" element={<AllView />} />
+          <Route path="/changeinfo" element={<ChangeInfo />} />
+          <Route path="/customercenter" element={<CustomerCenter />} />
+          <Route path="/delete" element={<Delete />} />
+          <Route path="/detail" element={<Detail />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/mysubllet" element={<MySubllet />} />
+          <Route path="/signup" element={<SignUp />} />
+        </Routes>
+        <Footer />
       </SectionStyle>
-      <Footer />
     </BrowserRouter>
   );
 }
