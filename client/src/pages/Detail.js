@@ -5,13 +5,16 @@ import ServiceContent from "../components/Detail/ServiceContent";
 import Comment from "../components/Detail/Comment";
 
 const Detail = () => {
+  const StyledBody = styled.section`
+    max-width: 1300px;
+    margin: 0 auto;
+  `;
   return (
-    <>
-      <div>Detail page</div>
+    <StyledBody>
       <InnerImage />
       <ServiceContent />
       <Comment />
-    </>
+    </StyledBody>
   );
 };
 

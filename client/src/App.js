@@ -17,9 +17,6 @@ import Login from "./pages/Login";
 import MySubllet from "./pages/MySubllet";
 import SignUp from "./pages/SignUp";
 
-// import MainCard from "./components/Main/MainCard";
-// import Video from "./components/Main/Video";
-
 const GlobalStyle = createGlobalStyle`
   body {
     font-family: "Geo", sans-serif;
@@ -27,7 +24,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     width: 100%;
     background-color: #130D0A;
-    box-sizing: border-box; // ;
+    box-sizing: border-box;
     min-height: 100vh;  
     position: relative;
     /* overflow: hidden; */
@@ -50,8 +47,6 @@ function App() {
       <SectionStyle>
         <Nav />
         <SearchBar />
-        {/* <MainCard /> */}
-        {/* <Video /> */}
         <Routes>
           <Route exact path="/" element={<Main />} />
           <Route path="/allview" element={<AllView />} />
