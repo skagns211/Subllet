@@ -7,6 +7,7 @@ const MyInfoContainer = styled.main`
   width: 100%;
   height: 30rem;
   margin-top: 2rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   /* border: 0.5px solid white; */
   /* flex-basis: auto; */
 `;
