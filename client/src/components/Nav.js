@@ -114,6 +114,7 @@ const RightNav = styled.span`
   /* :hover ul {
     visibility: visible;
   } */
+
   li {
     padding: 0.5rem 0;
     border-bottom: 1px solid #ff8a00;
@@ -127,6 +128,19 @@ const RightNav = styled.span`
     background-color: #ff8a00;
     opacity: 0.65;
   }
+`;
+
+const Test = styled.div`
+  img {
+    width: 3.7rem;
+    border-radius: 2rem;
+    margin: 0.4rem 1rem 0.4rem 0;
+    /* margin-top: 0.4rem;
+    margin-right: 1.6rem; */
+  }
+  :hover ul {
+    visibility: visible;
+  }
   ul {
     width: 6rem;
     margin: 0;
@@ -139,16 +153,6 @@ const RightNav = styled.span`
     border: 1px solid #ff8a00;
     opacity: 0.8;
     visibility: hidden;
-  }
-  img {
-    width: 3.7rem;
-    border-radius: 2rem;
-    margin: 0.4rem 1rem 0.4rem 0;
-    :hover {
-      visibility: visible;
-    }
-    /* margin-top: 0.4rem;
-    margin-right: 1.6rem; */
   }
 `;
 
@@ -179,15 +183,17 @@ const Nav = () => {
                 <Link to="/f">고객센터</Link>
               </div>
             </MaxNavTap>
-            <img alt="defaultImg" src={defaultImg} className="defaultImg" />
-            <ul id="menuUl">
-              <li>
-                <Link to="/">My Subllet</Link>
-              </li>
-              <li>
-                <Link to="/a">로그아웃</Link>
-              </li>
-            </ul>
+            <Test>
+              <img alt="defaultImg" src={defaultImg} className="defaultImg" />
+              <ul>
+                <li>
+                  <Link to="/">My Subllet</Link>
+                </li>
+                <li>
+                  <Link to="/a">로그아웃</Link>
+                </li>
+              </ul>
+            </Test>
           </RightNav>
         ) : (
           <div></div>
