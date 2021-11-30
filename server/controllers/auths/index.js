@@ -1,56 +1,78 @@
-const { user, RT } = require("../../models");
-const { sign } = require("jsonwebtoken");
+const {
+  generateSalt,
+  hashPassword,
+  checkPassword,
+} = require("../../utils/secure");
+const {
+  generateAccessToken,
+  generateRefreshToken,
+} = require("../../utils/tokenFunctions");
+const { User } = require("../../models");
 require("dotenv").config();
+const redisClient = require("../../utils/redis");
+const DEFAULT_EXPIRATION = 3600;
 
 module.exports = {
   signup: {
     post: async (req, res) => {
       const { email, nickname, password } = req.body;
-      if (!email || !nickname || !password) res.send("Empty body");
+      if (!email || !nickname || !password) {
+        return res.status(400).send("Empty body");
+      } else {
+        const salt = await generateSalt();
+        const hashedPassword = await hashPassword(password, salt);
 
-      await user.create({
-        email,
-        nickname,
-        password,
-      });
+        await User.create({
+          email,
+          password: hashedPassword,
+          salt,
+          nickname,
+        });
 
-      try {
-        res.send("signup success");
-      } catch (err) {
-        console.log(err);
+        try {
+          res.send("signup success");
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
   },
   login: {
     post: async (req, res) => {
       const { email, password } = req.body;
-      const userInfo = await user.findOne({
-        where: {
-          email,
-          password,
-        },
-      });
 
-      if (!email || !password) return res.send("Empty body");
-      if (!userInfo) return res.send("Inconsistency");
+      if (!email || !password) {
+        return res.status(400).send("Empty body");
+      } else {
+        const userInfo = await User.findOne({
+          attributes: ["id", "email", "password", "nickname", "profile"],
+          where: { email },
+        });
 
-      delete userInfo.dataValues.password;
-      const securityInfo = userInfo.dataValues;
-      const accessToken = sign(securityInfo, process.env.ACCESS_SECRET, {
-        expiresIn: "30m",
-      });
-      const refreshToken = sign(securityInfo, process.env.REFRESH_SECRET, {
-        expiresIn: "7d",
-      });
+        if (!userInfo) {
+          res.status(400).send("Email Inconsistency");
+        } else {
+          const result = await checkPassword(password, userInfo.password);
 
-      await RT.create({
-        refreshToken,
-      });
+          if (!result) {
+            res.status(400).send("Password Inconsistency");
+          } else {
+            delete userInfo.dataValues.password;
+            delete userInfo.dataValues.salt;
+            const securityInfo = userInfo.dataValues;
+            const accessToken = generateAccessToken(securityInfo);
+            const refreshToken = generateRefreshToken();
 
-      try {
-        res.send({ userInfo: { ...securityInfo }, accessToken, refreshToken });
-      } catch (err) {
-        console.log(err);
+            // redisClient.set(userInfo.id, DEFAULT_EXPIRATION, refreshToken);
+            redisClient.set("c", "d");
+
+            try {
+              res.json({ securityInfo, accessToken, refreshToken });
+            } catch (err) {
+              console.log(err);
+            }
+          }
+        }
       }
     },
   },
@@ -71,7 +93,7 @@ module.exports = {
   email: {
     post: async (req, res) => {
       const { email } = req.body;
-      const checkEmail = await user.findOne({
+      const checkEmail = await User.findOne({
         where: { email },
       });
 
@@ -88,7 +110,7 @@ module.exports = {
   nickname: {
     post: async (req, res) => {
       const { nickname } = req.body;
-      const checkNickname = await user.findOne({
+      const checkNickname = await User.findOne({
         where: { nickname },
       });
 
