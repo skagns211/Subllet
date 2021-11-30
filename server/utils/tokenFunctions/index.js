@@ -1,13 +1,13 @@
 const { sign, verify } = require("jsonwebtoken");
-const redisClient = require("../redis");
+const redis = require("../redis");
 require("dotenv").config();
 
 module.exports = {
   generateAccessToken: (data) => {
     return sign(data, process.env.ACCESS_SECRET, { expiresIn: "30m" });
   },
-  generateRefreshToken: () => {
-    return sign({}, process.env.REFRESH_SECRET, { expiresIn: "1d" });
+  generateRefreshToken: (data) => {
+    return sign({ data }, process.env.REFRESH_SECRET, { expiresIn: "14d" });
   },
   isAuthorized: (req) => {
     const authorization = req.headers["authorization"];
@@ -20,5 +20,10 @@ module.exports = {
     } catch (err) {
       return null;
     }
+  },
+  sendRefreshToken: (res, refreshToken) => {
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+    });
   },
 };

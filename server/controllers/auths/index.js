@@ -6,12 +6,12 @@ const {
 const {
   generateAccessToken,
   generateRefreshToken,
+  isAuthorized,
+  sendRefreshToken,
 } = require("../../utils/tokenFunctions");
 const { User } = require("../../models");
 require("dotenv").config();
-const redisClient = require("../../utils/redis");
-const { restart } = require("nodemon");
-const DEFAULT_EXPIRATION = 3600;
+const redis = require("../../utils/redis");
 
 module.exports = {
   signup: {
@@ -64,20 +64,22 @@ module.exports = {
       if (!result) {
         return res.status(400).send("Password inconsistency");
       }
-
+      const userId = userInfo.dataValues.id
       delete userInfo.dataValues.password;
       delete userInfo.dataValues.salt;
       const accessToken = generateAccessToken(userInfo.dataValues);
-      const refreshToken = generateRefreshToken();
+      const refreshToken = generateRefreshToken(userId);
 
+      // await tedis.set(userInfo.id, refreshToken)
+      // console.log(await tedis.get(userInfo.id))
       // redisClient.set(userInfo.id, refreshToken);
-      // redisClient.set("c", "d");
+      await redis.set(userInfo.id, refreshToken, "ex", 1209600);
+      sendRefreshToken(res, refreshToken);
 
       try {
-        res.json({
+        return res.json({
           userInfo: userInfo.dataValues,
           accessToken,
-          refreshToken,
         });
       } catch (err) {
         console.error(err);
@@ -87,10 +89,9 @@ module.exports = {
   },
   logout: {
     post: async (req, res) => {
-      // const refreshToken = req.headers.authorization;
-      // await RT.destroy({
-      //   where: { refreshToken },
-      // });
+      const { id } = isAuthorized(req);
+
+      redis.del(id);
 
       try {
         res.send("Logout success");
