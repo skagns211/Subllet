@@ -27,8 +27,8 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     min-height: 100vh;
     position: relative;
-    /* overflow: hidden;
-    height: 100% */
+    /* overflow: hidden; */
+    /* height: 100%; */
   }
   a {
     color: #ffffff;
