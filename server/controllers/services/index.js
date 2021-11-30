@@ -1,4 +1,4 @@
-const { Service, Comment } = require("../../models");
+const { Service, Comment, Price } = require("../../models");
 
 module.exports = {
   services: {
@@ -17,7 +17,8 @@ module.exports = {
       try {
         res.json({ services });
       } catch (err) {
-        res.status(500).send("Server Error");
+        console.error(err);
+        res.status(500).send("Server error");
       }
     },
   },
@@ -34,10 +35,20 @@ module.exports = {
         },
       });
 
+      const price = await Price.findAll({
+        where: { service_id: id },
+      });
+
+      // console.log(service.dataValues.assign(...(price.map((el) => el.dataValues))))
+      // const a = service[0].assign(...(price.map((el) => el.dataValues)))
+
+      const a = [service, ...price.map((el) => el.dataValues)];
+
       try {
-        return res.json({ service });
+        return res.json({ a });
       } catch (err) {
-        return res.status(500).json("Server Error");
+        console.error(err);
+        return res.status(500).json("Server error");
       }
     },
   },
