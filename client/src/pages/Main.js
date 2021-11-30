@@ -7,14 +7,18 @@ import Music from "../components/Main/Music";
 import Shoping from "../components/Main/Shopping";
 
 const Main = () => {
+  const StyledBody = styled.section`
+    max-width: 1300px;
+    margin: 0 auto;
+  `;
+
   return (
-    <>
+    <StyledBody>
       <MainCard />
-      <TopList />
       <Video />
       <Music />
       <Shoping />
-    </>
+    </StyledBody>
   );
 };
 

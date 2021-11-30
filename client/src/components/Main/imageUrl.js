@@ -6,6 +6,13 @@ export const IMG = {
     "https://i.esdrop.com/d/z3v0lj8ztjvc/KFTlConIR3.png",
     "https://i.esdrop.com/d/z3v0lj8ztjvc/Q92UGRiP1O.png",
   ],
+  topListRight: [
+    "https://i.esdrop.com/d/z3v0lj8ztjvc/rtSSkpWKec.png",
+    "https://i.esdrop.com/d/z3v0lj8ztjvc/FRvxYSRRBs.png",
+    "https://i.esdrop.com/d/z3v0lj8ztjvc/LHEpQBLpnz.png",
+    "https://i.esdrop.com/d/z3v0lj8ztjvc/fPLkwgw1Tj.png",
+    "https://i.esdrop.com/d/z3v0lj8ztjvc/dqhCz3xmgT.png",
+  ],
   video: [
     "https://i.esdrop.com/d/z3v0lj8ztjvc/oMazhAX82Z.png",
     "https://i.esdrop.com/d/z3v0lj8ztjvc/a0qm5eyaKr.png",
