@@ -10,6 +10,7 @@ const MySublletContainer = styled.main`
   /* flex-direction: column; */
   /* justify-content: center; */
   /* border: 1px solid white; */
+  /* height: 100vh; */
   margin: auto;
   div {
     &.Title {

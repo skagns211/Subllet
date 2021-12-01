@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const InnerImage = () => {
   const StyledBody = styled.section`
+    margin-top: 1rem;
     max-width: 100%;
   `;
   const BackgroundImage = styled.div`
