@@ -12,6 +12,12 @@ module.exports = {
           "category",
           "demo",
         ],
+        include: [
+          {
+            attributes: ["title", "price"],
+            model: Price,
+          },
+        ],
       });
 
       try {
