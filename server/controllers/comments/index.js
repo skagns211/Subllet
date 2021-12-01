@@ -4,6 +4,7 @@ module.exports = {
   comment: {
     post: async (req, res) => {
       const service_id = req.params.serviceId;
+      // user_id는 accessToken으로 받아올 예정
       const { user_id, message, likes } = req.body;
 
       if (!message || !likes) {
@@ -52,11 +53,11 @@ module.exports = {
     delete: async (req, res) => {
       const id = req.params.id;
 
-      await Comment.destroy({
-        where: { id },
-      });
-
       try {
+        await Comment.destroy({
+          where: { id },
+        });
+
         return res.status(204).send("Success");
       } catch (err) {
         console.error(err);

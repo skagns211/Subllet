@@ -24,6 +24,12 @@ app.use("/", indexRouter);
 
 const HTTPS_PORT = process.env.HTTPS_PORT || 4000;
 
+// const port = 4000;
+
+// app.listen(port, () => {
+//   console.log(`[RUN] StatesAirline Server... | http://localhost:${port}`);
+// });
+
 let server;
 if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
   const privateKey = fs.readFileSync(__dirname + "/key.pem", "utf8");
@@ -35,4 +41,5 @@ if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
 } else {
   server = app.listen(HTTPS_PORT);
 }
+
 module.exports = server;

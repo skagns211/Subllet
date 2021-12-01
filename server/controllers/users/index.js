@@ -21,7 +21,7 @@ module.exports = {
       }
 
       const salt = generateSalt();
-      const hashedPassword = hashedPassword(newPassword, salt);
+      const hashedPassword = hashPassword(newPassword, salt);
 
       try {
         await User.update({
