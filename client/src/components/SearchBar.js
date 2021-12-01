@@ -17,7 +17,7 @@ const SearchBar = () => {
     @media only screen and (max-width: 800px) {
       display: flex;
       /* margin-right: 15rem; */
-      width: 92.5%;
+      width: 94%;
       height: 2.3rem;
       margin-left: 1.5rem;
       margin-top: 0;

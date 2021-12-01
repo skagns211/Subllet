@@ -30,8 +30,13 @@ const MinNavTap = styled.span`
       display: flex;
       flex-shrink: 0;
       justify-content: space-around;
-      margin-left: 2.5rem;
       margin-top: 2.7rem;
+      :not(:last-child) {
+        margin-left: 1.5rem;
+      }
+      :last-child {
+        margin-left: 1rem;
+      }
     }
     a {
       color: #ff8a00;
@@ -65,7 +70,7 @@ const MaxNavTap = styled.div`
 const SearchBar = styled.input`
   display: flex;
   /* margin-right: 15rem; */
-  width: 30rem;
+  width: 35rem;
   height: 2.3rem;
   margin-left: 1.5rem;
   margin-top: 1rem;
@@ -92,20 +97,22 @@ const SearchBar = styled.input`
 
 const Font = styled.span`
   display: flex;
-  justify-content: space-around;
   color: #ff8a00;
-  font-size: 60px;
+  font-size: 3.8rem;
   margin-top: 0.5rem;
   @media only screen and (min-width: 800px) {
     margin-left: 2rem;
   }
   @media only screen and (max-width: 800px) {
-    padding-right: 7rem;
+    padding-right: 3.3rem;
   }
   img {
     margin-top: 0.6rem;
     width: 4rem;
     height: 3rem;
+  }
+  a {
+    color: #ff8a00;
   }
 `;
 
@@ -169,7 +176,9 @@ const Nav = () => {
           </span>
         </MinNavTap>
         <Font>
-          <span>Subllet</span>
+          <Link to="/">
+            <span>Subllet</span>
+          </Link>
           <img src={logo}></img>
           <SearchBar type="search" placeholder="서비스를 검색해보세요" />
         </Font>

@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
 import { IMG } from "../Main/imageUrl";
@@ -8,20 +8,13 @@ const Music = () => {
     color: #ff8a00;
     font-size: 1.5rem;
     margin-top: 3rem;
-    margin-left: 0.5rem;
   `;
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
-
   const Wrap = styled.div`
-    margin: 2rem 2rem 2rem 3.3rem;
-    width: 45rem;
+    margin: 0.5rem 0.5rem 2rem 0.5rem;
+    @media only screen and (min-width: 1050px) and (max-width: 1300px) {
+      width: 99%;
+    }
     .slick-dots {
       margin-bottom: 3rem;
     }
@@ -34,7 +27,11 @@ const Music = () => {
       font-size: 1.3rem;
     }
     .slick-prev {
-      left: -2.2rem;
+      left: 0.5rem;
+      z-index: 1;
+    }
+    .slick-next {
+      right: 1.5rem;
     }
     .slick-prev:before {
       opacity: 1;
@@ -48,23 +45,39 @@ const Music = () => {
     }
     img {
       width: 40rem;
+      @media only screen and (max-width: 800px) {
+        width: 100%;
+        height: 100%;
+      }
+      @media only screen and (min-width: 1050px) and (max-width: 1300px) {
+        width: 59rem;
+      }
     }
-    div {
+    /* div {
       width: 40rem;
-    }
+    } */
   `;
 
   const TopContent = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-left: 3rem;
-    width: 40rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    width: auto;
     a {
       font-size: 1rem;
       line-height: 2rem;
       color: #ff8a00;
     }
   `;
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 800,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
 
   return (
     <StyleSlider>
@@ -75,11 +88,7 @@ const Music = () => {
       <Wrap>
         <Slider {...settings}>
           {IMG["music"].map((el) => {
-            return (
-              <div>
-                <img alt="musicImg" src={el}></img>
-              </div>
-            );
+            return <img alt="musicImg" src={el}></img>;
           })}
         </Slider>
       </Wrap>
