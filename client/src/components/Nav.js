@@ -7,8 +7,8 @@ import defaultImg from "../IMG/default.png";
 const NavHeader = styled.header`
   @media only screen and (min-width: 800px) {
     display: flex;
-    /* justify-content: space-around; */ /* 로고, 프로필 좌우 가운데 */
-    justify-content: space-between;
+    justify-content: space-around;
+    /* justify-content: space-between; //둘 중 하나 골라야함 */
     background-color: #0f0f0f;
     width: 100%;
     height: 70px;
@@ -138,6 +138,8 @@ const RightNav = styled.span`
 `;
 
 const Test = styled.div`
+  display: flex;
+  flex-direction: column;
   img {
     width: 3.7rem;
     border-radius: 2rem;
@@ -155,12 +157,11 @@ const Test = styled.div`
     margin: 0;
     padding: 0;
     list-style: none;
-    position: absolute;
     top: 4.3rem;
-    right: 1rem;
     background-color: #000000;
     border: 1px solid #ff8a00;
     opacity: 0.8;
+    left: 5rem;
     visibility: hidden;
   }
 `;
@@ -171,37 +172,37 @@ const Nav = () => {
       <NavHeader>
         <MinNavTap>
           <span>
-            <Link to="/d">모두보기</Link>
+            <Link to="/AllView">모두보기</Link>
           </span>
           <span>
-            <Link to="/f">고객센터</Link>
+            <Link to="/customercenter">고객센터</Link>
           </span>
         </MinNavTap>
         <Font>
           <Link to="/">
             <span>Subllet</span>
           </Link>
-          <img src={logo}></img>
+          <img alt="logo" src={logo}></img>
           <SearchBar type="search" placeholder="서비스를 검색해보세요" />
         </Font>
         {true ? (
           <RightNav>
             <MaxNavTap>
               <div>
-                <Link to="/d">모두보기</Link>
+                <Link to="/AllView">모두보기</Link>
               </div>
               <div>
-                <Link to="/f">고객센터</Link>
+                <Link to="/customercenter">고객센터</Link>
               </div>
             </MaxNavTap>
             <Test>
               <img alt="defaultImg" src={defaultImg} className="defaultImg" />
               <ul>
                 <li>
-                  <Link to="/">My Subllet</Link>
+                  <Link to="/login">로그인</Link>
                 </li>
                 <li>
-                  <Link to="/a">로그아웃</Link>
+                  <Link to="/signup">회원가입</Link>
                 </li>
               </ul>
             </Test>

@@ -19,10 +19,11 @@ const MainSection = styled.section`
 
 const MainCardBody = styled.div`
   display: flex;
-  /* justify-content: space-around; */
+  opacity: 0.3;
   flex-direction: column;
   background-image: url(${backImg});
   background-repeat: no-repeat;
+  z-index: 500;
   /* background-size: 48rem 30rem; */
   background-size: 100% 100%;
   /* height: 30vh; */
@@ -45,9 +46,6 @@ const MainCardBody = styled.div`
     background-size: 100% 100%;
     width: 55rem;
     /* height: 35rem; */
-  }
-  .guest {
-    display: none;
   }
   /* margin: 0;
     min-height: 100vh;
@@ -142,49 +140,142 @@ const MainCardRightBottom = styled.div`
     }
   }
 `;
-const MainCard = () => {
+
+const RequestWindow = styled.div`
+  background-color: black;
+  position: absolute;
+  padding: 0 1rem 0 1rem;
+  opacity: 0.8;
+  z-index: 501;
+
+  @media only screen and (max-width: 800px) {
+    margin: 9rem 0 0 0;
+    left: 23%;
+    width: 50%;
+    height: 15rem;
+    text-align: center;
+    font-size: 1.5rem;
+    color: #ffffff;
+    padding-top: 3rem;
+    border-radius: 1rem;
+    .login {
+      color: #ff8a00;
+      text-decoration: underline;
+    }
+    .signup {
+      color: #ff8a00;
+      text-decoration: underline;
+    }
+  }
+  @media only screen and (min-width: 800px) and (max-width: 1050px) {
+    margin-top: 5rem;
+    left: 23%;
+    width: 50%;
+    height: 20rem;
+    text-align: center;
+    font-size: 2rem;
+    color: #ffffff;
+    padding-top: 3rem;
+    border-radius: 1rem;
+    .login {
+      color: #ff8a00;
+      text-decoration: underline;
+    }
+    .signup {
+      color: #ff8a00;
+      text-decoration: underline;
+    }
+  }
+  @media only screen and (min-width: 1050px) and (max-width: 1300px) {
+    margin-top: 10rem;
+    left: 15%;
+    width: 40%;
+    height: 20rem;
+    text-align: center;
+    font-size: 2rem;
+    color: #ffffff;
+    padding-top: 3rem;
+    border-radius: 1rem;
+    .login {
+      color: #ff8a00;
+      text-decoration: underline;
+    }
+    .signup {
+      color: #ff8a00;
+      text-decoration: underline;
+    }
+  }
+
+  @media only screen and (min-width: 1301px) {
+    /* background-size: 100% 100%; */
+    margin-top: 10rem;
+    margin-left: 1.5rem;
+    width: 51rem;
+    height: 20rem;
+    text-align: center;
+    font-size: 2rem;
+    color: #ffffff;
+    padding-top: 3rem;
+    border-radius: 1rem;
+    .login {
+      color: #ff8a00;
+      text-decoration: underline;
+    }
+    .signup {
+      color: #ff8a00;
+      text-decoration: underline;
+    }
+  }
+`;
+const GuestMainCard = () => {
   return (
     <>
       <MainSection>
+        <RequestWindow>
+          <div>
+            로그인을 하시면 <br /> Subllet의 다양한 서비스를 <br />
+            이용하실 수 있어요!
+          </div>
+          <br />
+          <Link to="/login">
+            <div className="login">로그인</div>
+          </Link>
+          <br />
+          <Link to="/signup">
+            <div className="signup">회원가입</div>
+          </Link>
+        </RequestWindow>
         <MainCardBody>
           <div>
-            <Link to="/MySubllet">
-              <img
-                alt="defaultImg"
-                src="https://i.esdrop.com/d/z3v0lj8ztjvc/UKFjJlgwrH.png"
-              />
-              <span className="user">Huni 님의 Subllet</span>
-            </Link>
+            <img
+              alt="defaultImg"
+              src="https://i.esdrop.com/d/z3v0lj8ztjvc/UKFjJlgwrH.png"
+            />
+            <span className="user">Guest 님의 Subllet</span>
           </div>
           <hr></hr>
           <span className="totalPrice">
             총 이용 금액: <br />
-            <div>₩ 39,203</div>
+            <div>₩ -</div>
           </span>
           <span className="nextPay">
             다음 결제까지: <br />
-            <div>Coupang : 4일 전</div>
-            <div>Melon : 2일 전</div>
+            <div>-</div>
           </span>
           <MainCardBottom>
             <span className="subscribe">
               구독중
               <br />
-              <div>Netflix</div>
-              <div>Melon</div>
-              <div>Coupang</div>
-              <div>밀리의서재</div>
+              <div>-</div>
             </span>
             <MainCardRightBottom>
               <span className="info">
-                Huni 님의 <br />
-                <div>총 구독 수 : 7개</div>
-                <div>총 스크랩 수 : 20개</div>
+                Guest 님의 <br />
+                <div>총 구독 수 : -개</div>
+                <div>총 스크랩 수 : -개</div>
               </span>
               <span className="addSub">
-                <Link to="/AllView">
-                  <i className="fas fa-plus-circle"></i>
-                </Link>
+                <i className="fas fa-plus-circle"></i>
                 <br />
                 <div>구독을 추가하세요</div>
               </span>
@@ -197,4 +288,4 @@ const MainCard = () => {
   );
 };
 
-export default MainCard;
+export default GuestMainCard;

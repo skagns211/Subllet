@@ -17,15 +17,18 @@ export const IMG = {
     "https://i.esdrop.com/d/z3v0lj8ztjvc/oMazhAX82Z.png",
     "https://i.esdrop.com/d/z3v0lj8ztjvc/a0qm5eyaKr.png",
     "https://i.esdrop.com/d/z3v0lj8ztjvc/WiKVtM2Xly.png",
+    "https://i.esdrop.com/d/z3v0lj8ztjvc/Gx5sDt8JRi.png",
   ],
   music: [
     "https://i.esdrop.com/d/z3v0lj8ztjvc/tdX07GrvZS.png",
     "https://i.esdrop.com/d/z3v0lj8ztjvc/6amFiaB9w6.png",
     "https://i.esdrop.com/d/z3v0lj8ztjvc/Gx5sDt8JRi.png",
+    "https://i.esdrop.com/d/z3v0lj8ztjvc/WiKVtM2Xly.png",
   ],
   shoping: [
     "https://i.esdrop.com/d/z3v0lj8ztjvc/qV0G8BPwYD.png",
     "https://i.esdrop.com/d/z3v0lj8ztjvc/SwfcuSVYlm.png",
     "https://i.esdrop.com/d/z3v0lj8ztjvc/BCCtxpfbKW.png",
+    "https://i.esdrop.com/d/z3v0lj8ztjvc/6amFiaB9w6.png",
   ],
 };
