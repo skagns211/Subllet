@@ -1,4 +1,4 @@
-const { Comment, Service } = require("../../models");
+const { Comment } = require("../../models");
 
 module.exports = {
   comment: {
@@ -7,45 +7,46 @@ module.exports = {
       const { user_id, message, likes } = req.body;
 
       if (!message || !likes) {
-        return res.send("Empty body");
-      } else {
-        const isExist = await Comment.findOne({
-          where: {
-            user_id,
-            service_id,
-          },
-        });
+        return res.status(400).send("Empty body");
+      }
 
-        if (isExist) {
-          return res.send("Already Written");
-        } else {
-          const created = await Comment.create({
-            user_id,
-            service_id,
-            message,
-            likes,
-          });
+      const isExist = await Comment.findOne({
+        where: {
+          user_id,
+          service_id,
+        },
+      });
 
-          // const count = await Comment.count({
-          //   where: { service_id },
-          // });
+      if (isExist) {
+        return res.status(400).send("Already written");
+      }
 
-          // await Service.update({
-          //   total_comments: count,
-          //   where: { id: service_id },
-          // });
+      const created = await Comment.create({
+        user_id,
+        service_id,
+        message,
+        likes,
+      });
 
-          const comment = await Comment.findOne({
-            attributes: ["id", "message", "likes", "createdAt"],
-            where: { id: created.id },
-          });
+      // const count = await Comment.count({
+      //   where: { service_id },
+      // });
 
-          try {
-            return res.status(201).json({ comment });
-          } catch (err) {
-            return res.status(500).send("Server Error");
-          }
-        }
+      // await Service.update({
+      //   total_comments: count,
+      //   where: { id: service_id },
+      // });
+
+      const comment = await Comment.findOne({
+        attributes: ["id", "message", "likes", "createdAt"],
+        where: { id: created.id },
+      });
+
+      try {
+        return res.status(201).json({ comment });
+      } catch (err) {
+        console.error(err);
+        return res.status(500).send("Server error");
       }
     },
     delete: async (req, res) => {
@@ -56,9 +57,10 @@ module.exports = {
       });
 
       try {
-        return res.status(204).send("No Content");
+        return res.status(204).send("Success");
       } catch (err) {
-        return res.status(500).send("Server Error");
+        console.error(err);
+        return res.status(500).send("Server error");
       }
     },
   },

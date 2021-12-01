@@ -27,11 +27,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     min-height: 100vh;  
     position: relative;
-    /* font-size: 30px;
-    @media (max-width: 800px) {
-    font-size: 100vw / (800px / 1px);
-    } */
-
+    /* display: flex; */
     /* overflow: hidden; */
     /* height: 100%; */
   }

@@ -44,6 +44,7 @@ const MySubllet = () => {
       <MyInfo />
       <Line />
       <MyScribe />
+      <MyScrap />
     </MySublletContainer>
   );
 };
