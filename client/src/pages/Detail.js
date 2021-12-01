@@ -8,6 +8,7 @@ const Detail = () => {
   const StyledBody = styled.section`
     max-width: 1300px;
     margin: 0 auto;
+    transition: 0.4s;
   `;
   return (
     <StyledBody>

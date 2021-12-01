@@ -142,6 +142,7 @@ const Test = styled.div`
     width: 3.7rem;
     border-radius: 2rem;
     margin: 0.4rem 1rem 0.4rem 0;
+
     /* margin-top: 0.4rem;
     margin-right: 1.6rem; */
   }
@@ -149,6 +150,7 @@ const Test = styled.div`
     visibility: visible;
   }
   ul {
+    z-index: 1;
     width: 6rem;
     margin: 0;
     padding: 0;

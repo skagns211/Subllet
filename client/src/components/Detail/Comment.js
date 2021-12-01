@@ -4,6 +4,7 @@ import styled from "styled-components";
 const Comment = () => {
   const StyledBody = styled.div`
     max-width: 100%;
+    margin-bottom: 1rem;
     .fa-thumbs-up {
       color: blue;
     }

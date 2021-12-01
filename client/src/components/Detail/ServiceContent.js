@@ -11,6 +11,9 @@ const ServiceContent = () => {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+      span {
+        width: 100%;
+      }
     }
   `;
 
@@ -23,7 +26,7 @@ const ServiceContent = () => {
     margin: 0.5rem 0rem;
     @media only screen and (min-width: 800px) {
       height: 20rem;
-      width: 37rem;
+      /* width: 37rem; */
       flex-wrap: nowrap;
     }
   `;
@@ -40,8 +43,6 @@ const ServiceContent = () => {
       width: 100%;
       border: 0px;
       padding: 0.5rem;
-      @media only screen and (min-width: 800px) {
-      }
     }
   `;
   const ServiceOption = styled.div`
@@ -50,22 +51,29 @@ const ServiceContent = () => {
     color: #e37b02;
   `;
 
+  const Price = styled.span`
+    margin-right: 1rem;
+  `;
+
   return (
     <StyledBody>
       <Service>
-        <span>
+        <Price>
           <ServiceOption>Price</ServiceOption>
           <ServiceDetail>
-            <input type="radio" name="price" value="2900" checked />
-            <label>월 2900원</label>
+            <label>
+              <input type="radio" name="price" value="2900" />월 2900원
+            </label>
             <br />
-            <input type="radio" name="price" value="3900" />
-            <label>월 3900원</label>
+            <label>
+              <input type="radio" name="price" value="3900" />월 3900원
+            </label>
             <br />
-            <input type="radio" name="price" value="4900" />
-            <label>월 4900원</label>
+            <label>
+              <input type="radio" name="price" value="4900" />월 4900원
+            </label>
           </ServiceDetail>
-        </span>
+        </Price>
         <span>
           <ServiceOption>Service</ServiceOption>
           <ServiceDetail>
