@@ -29,7 +29,6 @@ const Footer = () => {
     height: 70px;
     bottom: 0px;
     position: absolute;
-    //position: absolute;
     background-color: #0f0f0f;
     color: #ffffff;
     line-height: 4.3rem;
