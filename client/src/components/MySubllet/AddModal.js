@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { SelectBox, SelectBox2, SelectBox3 } from "./Select";
 
 const ModalContainer = styled.div`
   //!Modal 구현 css
@@ -38,6 +39,33 @@ const AddHeader = styled.h1`
   font-size: 2rem;
   margin-top: 1rem;
   color: white;
+`;
+
+const InputBox = styled.input`
+  width: 24rem;
+  height: 2.5rem;
+  margin-top: 0.2rem;
+  border-radius: 0.4rem;
+  border: none;
+  background-color: white;
+  font-size: 1rem;
+  text-align: center;
+  ::-webkit-input-placeholder {
+    text-align: center;
+  }
+`;
+
+const DivInput = styled.div`
+  width: 24rem;
+  height: 2.5rem;
+  font-size: 1.5rem;
+  border-radius: 0.4rem;
+  border: 0.5px solid white;
+  text-align: center;
+  justify-content: center;
+  color: white;
+
+  /* border: 0.5px solid white; */
 `;
 
 const Button = styled.button`
@@ -103,17 +131,18 @@ const AddModal = ({ openModalHandler }) => {
       ></ModalBackdrop>
       <ModalContainer welcome>
         <AddHeader> 구독을 추가해주세요! </AddHeader>
-
         <EmptySpace></EmptySpace>
-
-        {/* <Button
+        <SelectBox />
+        <SelectBox2 />
+        <SelectBox3 />
+        <Button
           onClick={() => {
             // navigate("/mysubllet");
             openModalHandler();
           }}
         >
           구독추가
-        </Button> */}
+        </Button>
       </ModalContainer>
     </>
   );

@@ -37,6 +37,7 @@ const LeftBox = styled.span`
   justify-content: center;
   align-items: center;
   /* border: 0.5px solid white; */
+
   img {
     border-radius: 50%;
     width: 18rem;
@@ -44,6 +45,10 @@ const LeftBox = styled.span`
     margin: auto;
     /* border: 1px solid #b2b2b2; */
     object-fit: cover;
+  }
+
+  @media only screen and (max-width: 800px) {
+    width: 45%;
   }
 `;
 const RightBox = styled.span`
@@ -58,6 +63,9 @@ const RightBox = styled.span`
   div {
     font-size: 1.5rem;
     margin-top: 1.5rem;
+  }
+  @media only screen and (max-width: 800px) {
+    width: 45%;
   }
 `;
 

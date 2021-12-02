@@ -84,6 +84,8 @@ const Filter = ({ category, setCategory, price, setPrice, free, setFree }) => {
     setPrice(false);
     setFree(!free);
   };
+
+  // console.log(categoryClick);
   return (
     <StyledBody>
       <FilterLabel>

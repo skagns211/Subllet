@@ -1,6 +1,10 @@
 import Netflix from "../IMG/Logo/Netflix.png";
 import Watcha from "../IMG/Logo/Watcha.png";
 import AppleMusic from "../IMG/Logo/AppleMusic.png";
+import netflix_scrap from "../IMG/Logo/netflix_scrap.png";
+import watcha_scrap from "../IMG/Logo/watcha_scrap.png";
+import applemusic_scrap from "../IMG/Logo/applemusic_scrap.png";
+import wavve_scrap from "../IMG/Logo/wavve_scrap.png";
 
 const dummy = [
   {
@@ -11,7 +15,7 @@ const dummy = [
     service: {
       id: 1,
       title: "Netflix",
-      outer_image: Netflix,
+      outer_image: netflix_scrap,
       category: "video",
     },
   },
@@ -23,7 +27,7 @@ const dummy = [
     service: {
       id: 2,
       title: "왓챠",
-      outer_image: Watcha,
+      outer_image: watcha_scrap,
       category: "video",
     },
   },
@@ -35,12 +39,10 @@ const dummy = [
     service: {
       id: 2,
       title: "애플뮤직",
-      outer_image: AppleMusic,
+      outer_image: applemusic_scrap,
       category: "Music",
     },
   },
-  
-  
 ];
 
 export default dummy;

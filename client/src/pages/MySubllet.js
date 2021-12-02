@@ -18,6 +18,10 @@ const MySublletContainer = styled.main`
       color: white;
     }
   }
+  @media only screen and (min-width: 800px) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 `;
 const Line = styled.div`
   width: 100%;
