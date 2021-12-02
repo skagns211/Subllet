@@ -29,8 +29,19 @@ module.exports = {
       // user_id는 포스트맨 확인용
       const { user_id, paydate, planname, planprice } = req.body;
 
-      if (!planname || !planprice) {
+      if (!user_id || !planname || !planprice) {
         return res.status(400).send("Empty body");
+      }
+
+      const checkSubscribe = await Subscribe.findOne({
+        where: {
+          user_id,
+          service_id,
+        },
+      });
+
+      if (checkSubscribe) {
+        return res.status(400).send("Overlap");
       }
 
       const created = await Subscribe.create({
@@ -100,7 +111,7 @@ module.exports = {
       try {
         return res.status(204).send("Success");
       } catch (err) {
-        console.error(err)
+        console.error(err);
         return res.status(500).send("Server error");
       }
     },

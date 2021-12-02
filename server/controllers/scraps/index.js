@@ -10,13 +10,14 @@ module.exports = {
         where: { user_id },
       });
 
-      const servicesId = services.map((el) => el.dataValues.service_id);
+      const servicesId = services.rows.map((el) => el.dataValues.service_id);
 
       const scraps = [];
 
       for (const service of servicesId) {
         scraps.push(
           await Service.findOne({
+            attributes: ["outer_image"],
             where: { id: service },
           })
         );
@@ -34,10 +35,12 @@ module.exports = {
       const { user_id } = req.body;
       const service_id = req.params.serviceId;
 
-      const scrap = await Scrap.create({
-        user_id,
-        service_id,
-      });
+      await Scrap.findOrCreate({
+        where: {
+          user_id,
+          service_id,
+        },
+      })
 
       const service = await Service.findOne({
         attributes: ["outer_image"],

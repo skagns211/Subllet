@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --inspect index.js"
+    "start": "nodemon --inspect index.js",
+    "test": "jest"
   },
   "dependencies": {
     "axios": "^0.24.0",
@@ -33,6 +34,11 @@
     "tedis": "^0.1.12"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "babel-jest": "^27.4.2",
+    "jest": "^27.4.3",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.1.6"
   }
 }

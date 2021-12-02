@@ -41,17 +41,14 @@ module.exports = {
         },
       });
 
-      const price = await Price.findAll({
-        where: { service_id: id },
-      });
+      // const price = await Price.findAll({
+      //   where: { service_id: id },
+      // });
 
-      // console.log(service.dataValues.assign(...(price.map((el) => el.dataValues))))
-      // const a = service[0].assign(...(price.map((el) => el.dataValues)))
-
-      const a = [service, ...price.map((el) => el.dataValues)];
+      // const a = [service, ...price.map((el) => el.dataValues)];
 
       try {
-        return res.json({ a });
+        return res.json({ service });
       } catch (err) {
         console.error(err);
         return res.status(500).json("Server error");

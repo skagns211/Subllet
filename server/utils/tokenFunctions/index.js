@@ -21,9 +21,21 @@ module.exports = {
       return null;
     }
   },
-  sendRefreshToken: (res, refreshToken) => {
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-    });
-  },
+  // checkRefreshToken: (req) => {
+  //   const authorization = req.headers["authorization"];
+  //   if (!authorization) {
+  //     return null;
+  //   }
+  //   const token = authorization.split(" ")[1];
+
+  //   const { decode } = verify(token, process.env.REFRESH_SECRET);
+
+  //   redis.get(`${decode}`, (err, result) => {
+  //     if (result) {
+  //       return decode;
+  //     } else {
+  //       return null;
+  //     }
+  //   });
+  // },
 };

@@ -7,7 +7,6 @@ const {
   generateAccessToken,
   generateRefreshToken,
   isAuthorized,
-  sendRefreshToken,
 } = require("../../utils/tokenFunctions");
 const { User } = require("../../models");
 require("dotenv").config();
@@ -19,23 +18,22 @@ module.exports = {
       const { email, nickname, password } = req.body;
       if (!email || !nickname || !password) {
         return res.status(400).send("Empty body");
-      } else {
-        const salt = await generateSalt();
-        const hashedPassword = await hashPassword(password, salt);
+      }
+      const salt = await generateSalt();
+      const hashedPassword = await hashPassword(password, salt);
 
-        await User.create({
-          email,
-          password: hashedPassword,
-          salt,
-          nickname,
-        });
+      await User.create({
+        email,
+        password: hashedPassword,
+        salt,
+        nickname,
+      });
 
-        try {
-          res.send("signup success");
-        } catch (err) {
-          console.error(err);
-          return res.status(500).send("Server error");
-        }
+      try {
+        res.send("signup success");
+      } catch (err) {
+        console.error(err);
+        return res.status(500).send("Server error");
       }
     },
   },
@@ -64,7 +62,7 @@ module.exports = {
       if (!result) {
         return res.status(400).send("Password inconsistency");
       }
-      const userId = userInfo.dataValues.id
+      const userId = userInfo.dataValues.id;
       delete userInfo.dataValues.password;
       delete userInfo.dataValues.salt;
       const accessToken = generateAccessToken(userInfo.dataValues);
@@ -74,12 +72,12 @@ module.exports = {
       // console.log(await tedis.get(userInfo.id))
       // redisClient.set(userInfo.id, refreshToken);
       await redis.set(userInfo.id, refreshToken, "ex", 1209600);
-      sendRefreshToken(res, refreshToken);
 
       try {
         return res.json({
           userInfo: userInfo.dataValues,
           accessToken,
+          refreshToken,
         });
       } catch (err) {
         console.error(err);
@@ -138,7 +136,7 @@ module.exports = {
       });
 
       if (checkNickname) {
-        return res.statue(400).send("Overlap");
+        return res.status(400).send("Overlap");
       }
 
       try {
