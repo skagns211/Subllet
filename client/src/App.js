@@ -27,6 +27,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     min-height: 100vh;  
     position: relative;
+    min-width: 530px;
     /* display: flex; */
     /* overflow: hidden; */
     /* height: 100%; */
@@ -55,7 +56,7 @@ function App() {
           <Route path="/customercenter" element={<CustomerCenter />} />
           <Route path="/delete" element={<Delete />} />
           <Route path="/detail" element={<Detail />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/userlogin" element={<Login />} />
           <Route path="/mysubllet" element={<MySubllet />} />
           <Route path="/signup" element={<SignUp />} />
         </Routes>

@@ -36,9 +36,9 @@ const TopImg = styled.span`
   @media only screen and (min-width: 1300px) {
     flex-direction: column;
     img {
-      width: 23rem;
-      height: 6.55rem;
-      margin-bottom: 0.2rem;
+      width: 12rem;
+      height: 6.3rem;
+      margin-bottom: 0.5rem;
     }
   }
 `;
