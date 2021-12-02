@@ -1,4 +1,4 @@
-const { Scrap, Service } = require("../../models");
+const { Scrap, Service } = require("../models");
 
 module.exports = {
   scrap: {
@@ -10,7 +10,7 @@ module.exports = {
         where: { user_id },
       });
 
-      const servicesId = services.rows.map((el) => el.dataValues.service_id);
+      const servicesId = services.map((el) => el.dataValues.service_id);
 
       const scraps = [];
 

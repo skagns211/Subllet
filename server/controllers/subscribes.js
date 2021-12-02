@@ -1,4 +1,4 @@
-const { Subscribe, Service } = require("../../Models");
+const { Subscribe, Service } = require("../Models");
 
 module.exports = {
   subscribe: {

@@ -1,4 +1,4 @@
-const { Service, Comment, Price } = require("../../models");
+const { Service, Comment, Price } = require("../models");
 
 module.exports = {
   services: {
