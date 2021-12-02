@@ -1,23 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 import MainCard from "../components/Main/MainCard";
-import TopList from "../components/Main/TopList";
+import GuestMainCard from "../components/Main/GuestMainCard";
 import Video from "../components/Main/Video";
 import Music from "../components/Main/Music";
 import Shoping from "../components/Main/Shopping";
+import Pick from "../components/Main/Pick";
+
+const StyledBody = styled.section`
+  max-width: 1300px;
+  margin: 0 auto;
+`;
 
 const Main = () => {
-  const StyledBody = styled.section`
-    max-width: 1300px;
-    margin: 0 auto;
-  `;
-
   return (
     <StyledBody>
-      <MainCard />
+      {false ? <MainCard /> : <GuestMainCard />} {/* isLogin에 따라 */}
       <Video />
       <Music />
       <Shoping />
+      <Pick />
     </StyledBody>
   );
 };
