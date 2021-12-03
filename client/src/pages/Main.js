@@ -8,7 +8,7 @@ import Shoping from "../components/Main/Shopping";
 import Pick from "../components/Main/Pick";
 
 const StyledBody = styled.section`
-  max-width: 1300px;
+  max-width: 950px;
   margin: 0 auto;
 `;
 

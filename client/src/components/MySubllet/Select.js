@@ -4,16 +4,78 @@ import styled from "styled-components";
 import Netflix from "../../IMG/Logo/netflix_scrap.png";
 
 const SelectTab = styled(Select)`
-  width: 20rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  width: 100%;
+  .Select__control {
+    height: 3.5rem;
+    border: 0.5px solid #ff8a00;
+    border-radius: 0.2em;
+    background-color: black;
+    color: white !important;
+    cursor: pointer;
+    text-align: center;
+    :hover {
+      border-color: white;
+      background-color: #3a3f51;
+    }
+  }
+  .Select__placeholder {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+  .Select__option {
+    background-color: black;
+    color: #ff8a00;
+  }
+  .Select__input {
+    color: white !important;
+  }
+  .Select__menu {
+    color: #ff8a00;
+    background-color: black;
+    border: 0.5px solid #ff8a00;
+    text-align: center;
+  }
+
+  .Select__control--is-focused {
+    /* box-shadow: 0 0 0 1px #ff8a00; */
+    outline: none;
+  }
+
+  .Select__indicator-separator {
+    display: none;
+  }
 `;
 
+const styles = {
+  singleValue: (provided, state) => ({
+    ...provided,
+    color: "#ff8a00",
+  }),
+  noOptionsMessage: (provided, state) => ({
+    ...provided,
+    color: "white",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    ":hover": {
+      fontWeight: "regular",
+      background: "#3a3f51",
+    },
+  }),
+  clearIndicator: (provided) => ({ ...provided, color: "gray" }),
+};
+
+//!--------------------------------------------------
 const List = styled.div`
   /* text-align: center; */
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   font-size: 1.5rem;
   display: inline-flex;
   div {
+    display: flex;
     padding-left: 1rem;
+    align-items: center;
   }
   img {
     width: 5rem;
@@ -22,15 +84,15 @@ const List = styled.div`
   }
 `;
 
-const Logo = styled.img`
-  width: 5rem;
-  height: 2rem;
-  object-fit: cover;
-`;
+// const Logo = styled.img`
+//   width: 5rem;
+//   height: 2rem;
+//   object-fit: cover;
+// `;
 
-export const SelectBox = () => {
+export const SelectService = () => {
   const [data, setData] = useState({
-    value: { label: "암거나 선택해라", value: "암거나 선택해라" },
+    value: { label: "", value: "" },
   });
   console.log(data.value);
 
@@ -39,32 +101,13 @@ export const SelectBox = () => {
       label: (
         <List>
           <img src={Netflix} />
-          <div>Netflix</div>
+          <div>NETFLIX</div>
         </List>
       ),
-      value: "Netflix",
+      value: "NETFLIX",
     },
     { label: 2020, value: 2020 },
     { label: 2019, value: 2019 },
-    { label: 2018, value: 2018 },
-    { label: 2017, value: 2017 },
-    { label: 2016, value: 2016 },
-    { label: 2015, value: 2015 },
-    { label: 2014, value: 2014 },
-    { label: 2013, value: 2013 },
-    { label: 2012, value: 2012 },
-    { label: 2011, value: 2011 },
-    { label: 2010, value: 2010 },
-    { label: 2009, value: 2009 },
-    { label: 2008, value: 2008 },
-    { label: 2007, value: 2007 },
-    { label: 2006, value: 2006 },
-    { label: 2005, value: 2005 },
-    { label: 2004, value: 2004 },
-    { label: 2003, value: 2003 },
-    { label: 2002, value: 2002 },
-    { label: 2001, value: 2001 },
-    { label: 2000, value: 2000 },
   ];
 
   const handleChange = (value) => {
@@ -73,18 +116,24 @@ export const SelectBox = () => {
 
   return (
     <SelectTab
+      classNamePrefix="Select"
       options={options}
       search
-      value={data.value}
+      // value={data.value}
+      styles={styles}
       onChange={(value) => handleChange(value)}
-      defaultValue={{ label: 2002, value: 2002 }}
+      noOptionsMessage={({ inputValue }) =>
+        !inputValue ? null : "해당하는 구독이 없습니다."
+      }
+      placeholder="구독을 선택해주세요."
+      isClearable
     />
   );
 };
 
-export const SelectBox2 = () => {
+export const SelectPlanPrice = () => {
   const [data, setData] = useState({
-    value: { label: "Choose Plan", value: "Choose Plan" },
+    value: { label: "", value: "" },
   });
   console.log(data.value);
 
@@ -100,21 +149,24 @@ export const SelectBox2 = () => {
 
   return (
     <SelectTab
+      classNamePrefix="Select"
       options={options}
       search
-      value={data.value}
+      // value={data.value}
+      styles={styles}
       onChange={(value) => handleChange(value)}
-      defaultValue={{
-        label: "2인용 요금제, 3000원",
-        value: "2인용 요금제, 3000원",
-      }}
+      noOptionsMessage={({ inputValue }) =>
+        !inputValue ? null : "해당하는 요금제가 없습니다."
+      }
+      placeholder="요금제 및 금액을 선택해주세요."
+      isClearable
     />
   );
 };
 
-export const SelectBox3 = () => {
+export const SelectDate = () => {
   const [data, setData] = useState({
-    value: { label: "Choose Plan", value: "Choose Plan" },
+    value: { label: "", value: "" },
   });
   console.log(data.value);
 
@@ -134,11 +186,17 @@ export const SelectBox3 = () => {
 
   return (
     <SelectTab
+      classNamePrefix="Select"
       options={options}
       search
-      value={data.value}
+      // value={data.value}
+      styles={styles}
       onChange={(value) => handleChange(value)}
-      defaultValue={options[0]}
+      noOptionsMessage={({ inputValue }) =>
+        !inputValue ? null : "해당하는 날짜가 존재하지 않습니다."
+      }
+      placeholder="결제일을 선택해주세요."
+      isClearable
     />
   );
 };
