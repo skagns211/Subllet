@@ -45,7 +45,7 @@ const MainCardBody = styled.div`
   @media only screen and (min-width: 1301px) {
     background-size: 100% 100%;
     width: 55rem;
-    /* height: 35rem; */
+    height: 35rem;
   }
   /* margin: 0;
     min-height: 100vh;
@@ -149,7 +149,7 @@ const RequestWindow = styled.div`
   z-index: 501;
 
   @media only screen and (max-width: 800px) {
-    margin: 9rem 0 0 0;
+    margin: 11rem 0 0 0;
     left: 23%;
     width: 50%;
     height: 15rem;
@@ -210,7 +210,7 @@ const RequestWindow = styled.div`
     /* background-size: 100% 100%; */
     margin-top: 10rem;
     margin-left: 1.5rem;
-    width: 51rem;
+    width: 49.5rem;
     height: 20rem;
     text-align: center;
     font-size: 2rem;
@@ -237,7 +237,7 @@ const GuestMainCard = () => {
             이용하실 수 있어요!
           </div>
           <br />
-          <Link to="/login">
+          <Link to="/userlogin">
             <div className="login">로그인</div>
           </Link>
           <br />

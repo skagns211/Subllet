@@ -7,6 +7,8 @@ const StylePick = styled.div`
   color: #ff8a00;
   font-size: 1.5rem;
   margin-top: 3rem;
+  margin-left: 2rem;
+  width: 90%;
 `;
 
 const PickBox = styled.div`

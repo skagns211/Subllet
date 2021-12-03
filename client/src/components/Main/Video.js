@@ -10,7 +10,17 @@ const StyleSlider = styled.div`
 `;
 
 const Wrap = styled.div`
-  margin: 0.5rem 0.5rem 2rem 0.5rem;
+  margin: 0.5rem 0rem 2rem 0.5rem;
+  @media only screen and (max-width: 530px) {
+    margin-left: 2rem;
+    width: 90%;
+    .slick-prev:before {
+      display: none;
+    }
+    .slick-next:before {
+      display: none;
+    }
+  }
   @media only screen and (min-width: 1050px) and (max-width: 1300px) {
     width: 99%;
   }
@@ -30,7 +40,7 @@ const Wrap = styled.div`
     z-index: 1;
   }
   .slick-next {
-    right: 1.5rem;
+    right: 1.1rem;
   }
   .slick-prev:before {
     opacity: 1;
