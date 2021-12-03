@@ -40,6 +40,7 @@ module.exports = {
   login: {
     post: async (req, res) => {
       const { email, password } = req.body;
+      console.log(req.headers);
 
       if (!email || !password) {
         return res.status(400).send("Empty body");
@@ -87,9 +88,9 @@ module.exports = {
   },
   logout: {
     post: async (req, res) => {
+      console.log(req.headers);
       const { id } = isAuthorized(req);
-
-      redis.del(id);
+      // redis.del(id);
 
       try {
         res.send("Logout success");

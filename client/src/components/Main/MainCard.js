@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import TopList from "./TopList";
 import backImg from "../../IMG/MainCardBackImg.png";
@@ -143,6 +144,10 @@ const MainCardRightBottom = styled.div`
   }
 `;
 const MainCard = () => {
+  const state = useSelector((state) => state);
+  const { email, nickname, profile } = state.loginUserInfo; //! user정보 state
+  console.log(state);
+
   return (
     <>
       <MainSection>
@@ -151,9 +156,13 @@ const MainCard = () => {
             <Link to="/MySubllet">
               <img
                 alt="defaultImg"
-                src="https://i.esdrop.com/d/z3v0lj8ztjvc/UKFjJlgwrH.png"
+                src={
+                  profile
+                    ? profile
+                    : "https://i.esdrop.com/d/z3v0lj8ztjvc/UKFjJlgwrH.png"
+                }
               />
-              <span className="user">Huni 님의 Subllet</span>
+              <span className="user">{nickname} 님의 Subllet</span>
             </Link>
           </div>
           <hr></hr>

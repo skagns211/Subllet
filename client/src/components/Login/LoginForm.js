@@ -1,7 +1,9 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setLoginUserInfo, setIsLogin, setAccessToken } from "../../actions";
 import styled from "styled-components";
 import axios from "axios";
-require("dotenv").config();
 
 const LoginStyled = styled.div`
   display: flex;
@@ -67,6 +69,7 @@ const EmailContainer = styled.div`
   span {
     font-size: 2rem;
     color: #ffffff;
+    width: 1rem;
   }
   input {
     margin-right: 1rem;
@@ -78,6 +81,7 @@ const EmailContainer = styled.div`
     text-align: center;
   }
   .inputEmail {
+    display: inline-flex;
     position: relative;
     /* left: 2rem; */
     height: 2rem;
@@ -114,39 +118,60 @@ const emailList = [
 ];
 
 const LoginForm = () => {
-  const [userInfo, setUserInfo] = useState({
+  const state = useSelector((state) => state); //! state 사용 함수
+  const dispatch = useDispatch(); //! action 사용 함수
+  const navigate = useNavigate();
+  const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
   });
 
   const handleInputValue = (key) => (e) => {
-    setUserInfo({ ...userInfo, [key]: e.target.value });
-    console.log(userInfo);
+    setLoginInfo({ ...loginInfo, [key]: e.target.value });
+    console.log(loginInfo);
   };
 
   const [isSelectSelf, setIsSelectSelf] = useState(false);
+
+  useEffect(() => {
+    window.localStorage.setItem(
+      "loginUserInfo",
+      JSON.stringify(state.loginUserInfo)
+    );
+  }, [state.loginUserInfo]);
+
+  useEffect(() => {
+    window.localStorage.setItem(
+      "accessToken",
+      JSON.stringify(state.accessToken)
+    );
+  }, [state.accessToken]);
+
+  useEffect(() => {
+    window.localStorage.setItem("isLogin", JSON.stringify(state.isLogin));
+  }, [state.isLogin]);
 
   //! email이 이미 선택되어 있으면 id에 재선택된 email을 붙여줌
   //! email option이 "직접입력"이면 option을 text로 바꿔줌
   //! 직접 입력한 value 적용 필요!!!!!
   const handleSelect = (e) => {
-    const atIndex = userInfo.email.indexOf("@");
-    const justId = userInfo.email.slice(0, atIndex);
+    const atIndex = loginInfo.email.indexOf("@");
+    const justId = loginInfo.email.slice(0, atIndex);
     console.log(justId);
-    userInfo.email.includes("@")
-      ? setUserInfo({
-          ...userInfo,
+    loginInfo.email.includes("@")
+      ? setLoginInfo({
+          ...loginInfo,
           email: justId + "@" + e.target.value,
         })
-      : setUserInfo({
-          ...userInfo,
-          email: userInfo.email + "@" + e.target.value,
+      : setLoginInfo({
+          ...loginInfo,
+          email: loginInfo.email + "@" + e.target.value,
         });
-    console.log(userInfo);
+    console.log(loginInfo);
     e.target.value === "직접 입력"
       ? setIsSelectSelf(true)
       : setIsSelectSelf(false);
-    console.log(userInfo.email);
+    console.log(loginInfo.email);
   };
   const [isEamilSelect, setIsEmailSelect] = useState("");
   const handleEmailSelect = (e) => {
@@ -154,24 +179,32 @@ const LoginForm = () => {
   };
 
   const postInfo = () => {
-    const { email, password } = userInfo;
+    const { email, password } = loginInfo;
     const isAt = email.includes("@");
     if (!email || !password || !isAt) {
       alert("이메일과 비밀번호를 모두 입력해주세요"); //! alert 임시
     }
     axios
-      .post(
-        `${process.env.REACT_APP_URL}/auth/login`,
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true,
-        }
-      )
+      .post("/auth/login", {
+        email,
+        password,
+      })
       .then((res) => {
-        console.log(res.data);
+        const { accessToken, userInfo } = res.data; //! refreshToken을 어디로 받을지 상의필요
+        console.log(accessToken);
+        // console.log(state);
+        if (res.statusText === "OK") {
+          const loginUserInfo = userInfo;
+          // console.log(loginUserInfo);
+          dispatch(setLoginUserInfo(loginUserInfo));
+          dispatch(setAccessToken(accessToken));
+          dispatch(setIsLogin(true));
+          navigate("/");
+        }
+        console.log(state);
+      })
+      .catch((err) => {
+        alert("올바른 아이디와 비밀번호를 입력해 주세요"); //! alert 임시
       });
   };
 

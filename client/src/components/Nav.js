@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setLoginUserInfo, setIsLogin } from "../actions";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
 import logo from "../IMG/favicon.png";
 import defaultImg from "../IMG/default.png";
@@ -172,6 +175,46 @@ const Test = styled.div`
 `;
 
 const Nav = () => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { email, nickname, profile } = state.loginUserInfo;
+
+  useEffect(() => {
+    window.localStorage.setItem(
+      "accessToken",
+      JSON.stringify(state.accessToken)
+    );
+  }, [state.accessToken]);
+
+  useEffect(() => {
+    window.localStorage.setItem("isLogin", JSON.stringify(state.isLogin));
+  }, [state.isLogin]);
+
+  console.log(state.accessToken);
+  const logoutHandler = () => {
+    axios
+      .post("/auth/logout", null, {
+        headers: {
+          authorization: `Bearer ${state.accessToken}`,
+        },
+      })
+      .then((res) => {
+        if (res.statusText === "OK") {
+          const loginUserInfo = {
+            email: "",
+            nickname: "",
+            profile: "",
+          };
+          dispatch(setLoginUserInfo(loginUserInfo));
+          dispatch(setIsLogin(false));
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
+  console.log(state.accessToken);
+
   return (
     <>
       <NavHeader>
@@ -190,31 +233,52 @@ const Nav = () => {
           <img alt="logo" src={logo}></img>
           <SearchBar type="search" placeholder="서비스를 검색해보세요" />
         </Font>
-        {true ? (
-          <RightNav>
-            <MaxNavTap>
-              <div>
-                <Link to="/AllView">모두보기</Link>
-              </div>
-              <div>
-                <Link to="/customercenter">고객센터</Link>
-              </div>
-            </MaxNavTap>
+        <RightNav>
+          <MaxNavTap>
+            <div>
+              <Link to="/AllView">모두보기</Link>
+            </div>
+            <div>
+              <Link to="/customercenter">고객센터</Link>
+            </div>
+          </MaxNavTap>
+          {state.isLogin ? (
+            <Test>
+              <img
+                alt="userImg"
+                src={profile ? profile : defaultImg}
+                className="defaultImg"
+              />
+              <ul>
+                <li>
+                  <Link to="/mysubllet">MySubllet</Link>
+                </li>
+                <li>
+                  <Link
+                    to="/"
+                    onClick={() => {
+                      logoutHandler();
+                    }}
+                  >
+                    로그아웃
+                  </Link>
+                </li>
+              </ul>
+            </Test>
+          ) : (
             <Test>
               <img alt="defaultImg" src={defaultImg} className="defaultImg" />
               <ul>
                 <li>
-                  <Link to="/login">로그인</Link>
+                  <Link to="/userLogin">로그인</Link>
                 </li>
                 <li>
                   <Link to="/signup">회원가입</Link>
                 </li>
               </ul>
             </Test>
-          </RightNav>
-        ) : (
-          <div></div>
-        )}
+          )}
+        </RightNav>
       </NavHeader>
     </>
   );
