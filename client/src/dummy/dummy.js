@@ -43,6 +43,78 @@ const dummy = [
       category: "Music",
     },
   },
+  {
+    id: 3,
+    paydate: 17,
+    planname: "개인요금제",
+    planprice: "8900원",
+    service: {
+      id: 2,
+      title: "애플뮤직",
+      outer_image: applemusic_scrap,
+      category: "Music",
+    },
+  },
+  {
+    id: 3,
+    paydate: 17,
+    planname: "개인요금제",
+    planprice: "8900원",
+    service: {
+      id: 2,
+      title: "애플뮤직",
+      outer_image: applemusic_scrap,
+      category: "Music",
+    },
+  },
+  {
+    id: 3,
+    paydate: 17,
+    planname: "개인요금제",
+    planprice: "8900원",
+    service: {
+      id: 2,
+      title: "애플뮤직",
+      outer_image: applemusic_scrap,
+      category: "Music",
+    },
+  },
+  {
+    id: 3,
+    paydate: 17,
+    planname: "개인요금제",
+    planprice: "8900원",
+    service: {
+      id: 2,
+      title: "애플뮤직",
+      outer_image: applemusic_scrap,
+      category: "Music",
+    },
+  },
+  {
+    id: 3,
+    paydate: 17,
+    planname: "개인요금제",
+    planprice: "8900원",
+    service: {
+      id: 2,
+      title: "애플뮤직",
+      outer_image: applemusic_scrap,
+      category: "Music",
+    },
+  },
+  {
+    id: 3,
+    paydate: 17,
+    planname: "개인요금제",
+    planprice: "8900원",
+    service: {
+      id: 2,
+      title: "애플뮤직",
+      outer_image: applemusic_scrap,
+      category: "Music",
+    },
+  },
 ];
 
 export default dummy;

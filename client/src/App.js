@@ -22,10 +22,9 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Geo", sans-serif;
     margin: 0;
     padding: 0;
-    width: 100%;
     background-color: #130D0A;
     box-sizing: border-box;
-    min-height: 100vh;  
+    min-width: 530px;
     position: relative;
     min-width: 530px;
     /* display: flex; */
@@ -58,7 +57,7 @@ function App() {
           <Route path="/changeinfo" element={<ChangeInfo />} />
           <Route path="/customercenter" element={<CustomerCenter />} />
           <Route path="/delete" element={<Delete />} />
-          <Route path="/detail" element={<Detail />} />
+          <Route path="/detail/:id" element={<Detail />} />
           <Route path="/userlogin" element={<Login />} />
           <Route path="/mysubllet" element={<MySubllet />} />
           <Route path="/signup" element={<SignUp />} />

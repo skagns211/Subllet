@@ -40,7 +40,7 @@ module.exports = {
           user_id,
           service_id,
         },
-      })
+      });
 
       const service = await Service.findOne({
         attributes: ["outer_image"],

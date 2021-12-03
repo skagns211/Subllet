@@ -4,38 +4,20 @@ import styled from "styled-components";
 import Filter from "../components/AllView/Filter";
 import FilterList from "../components/AllView/FilterList";
 
+const StyledBody = styled.section`
+  max-width: 950px;
+  margin: 0 auto;
+`;
+
 const AllView = () => {
-  const StyledBody = styled.section`
-    max-width: 1300px;
-  `;
-  const ModalBackdrop = styled.div`
-    // TODO : Modal이 떴을 때의 배경을 깔아주는 CSS를 구현합니다.
-    max-width: 1300px;
-  `;
   const [category, setCategory] = useState(false);
   const [price, setPrice] = useState(false);
   const [free, setFree] = useState(false);
 
-  const categoryClick = () => {
-    setCategory(!category);
-    setPrice(false);
-    setFree(false);
-  };
-  const priceClick = () => {
-    setCategory(false);
-    setPrice(!price);
-    setFree(false);
-  };
-  const freeClick = () => {
-    setCategory(false);
-    setPrice(false);
-    setFree(!free);
-  };
-
   return (
-    <StyledBody>
+    <>
       {category ? (
-        <ModalBackdrop onClick={categoryClick}>
+        <StyledBody>
           <Filter
             category={category}
             setCategory={setCategory}
@@ -45,9 +27,9 @@ const AllView = () => {
             setFree={setFree}
           />
           <FilterList />
-        </ModalBackdrop>
+        </StyledBody>
       ) : price ? (
-        <ModalBackdrop onClick={priceClick}>
+        <StyledBody>
           <Filter
             category={category}
             setCategory={setCategory}
@@ -57,9 +39,9 @@ const AllView = () => {
             setFree={setFree}
           />
           <FilterList />
-        </ModalBackdrop>
+        </StyledBody>
       ) : free ? (
-        <ModalBackdrop onClick={freeClick}>
+        <StyledBody>
           <Filter
             category={category}
             setCategory={setCategory}
@@ -69,7 +51,7 @@ const AllView = () => {
             setFree={setFree}
           />
           <FilterList />
-        </ModalBackdrop>
+        </StyledBody>
       ) : (
         <StyledBody>
           <Filter
@@ -83,7 +65,7 @@ const AllView = () => {
           <FilterList />
         </StyledBody>
       )}
-    </StyledBody>
+    </>
   );
 };
 

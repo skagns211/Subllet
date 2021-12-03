@@ -1,60 +1,60 @@
 import React from "react";
 import styled from "styled-components";
 
-const ServiceContent = () => {
-  const StyledBody = styled.div`
-    max-width: 100%;
-  `;
+const StyledBody = styled.div`
+  max-width: 100%;
+`;
 
-  const Service = styled.div`
-    @media only screen and (min-width: 800px) {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      span {
-        width: 100%;
-      }
+const Service = styled.div`
+  @media only screen and (min-width: 800px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    span {
+      width: 100%;
     }
-  `;
+  }
+`;
 
-  const ServiceDetail = styled.div`
+const ServiceDetail = styled.div`
+  background-color: #252a3b;
+  color: white;
+  font-size: 2rem;
+  border-radius: 5px;
+  padding: 1rem;
+  margin: 0.5rem 0rem;
+  @media only screen and (min-width: 800px) {
+    height: 20rem;
+    /* width: 37rem; */
+    flex-wrap: nowrap;
+  }
+`;
+
+const LinkButton = styled.div`
+  display: flex;
+  justify-content: center;
+  button {
     background-color: #252a3b;
-    color: white;
+    color: #e37b02;
+    margin: 0.5rem 0rem;
     font-size: 2rem;
     border-radius: 5px;
-    padding: 1rem;
-    margin: 0.5rem 0rem;
-    @media only screen and (min-width: 800px) {
-      height: 20rem;
-      /* width: 37rem; */
-      flex-wrap: nowrap;
-    }
-  `;
+    width: 100%;
+    border: 0px;
+    padding: 0.5rem;
+  }
+`;
+const ServiceOption = styled.div`
+  margin: 1rem 3rem;
+  font-size: 2rem;
+  color: #e37b02;
+`;
 
-  const LinkButton = styled.div`
-    display: flex;
-    justify-content: center;
-    button {
-      background-color: #252a3b;
-      color: #e37b02;
-      margin: 0.5rem 0rem;
-      font-size: 2rem;
-      border-radius: 5px;
-      width: 100%;
-      border: 0px;
-      padding: 0.5rem;
-    }
-  `;
-  const ServiceOption = styled.div`
-    margin: 1rem 3rem;
-    font-size: 2rem;
-    color: #e37b02;
-  `;
+const Price = styled.span`
+  margin-right: 1rem;
+`;
 
-  const Price = styled.span`
-    margin-right: 1rem;
-  `;
-
+const ServiceContent = () => {
   return (
     <StyledBody>
       <Service>
@@ -65,13 +65,6 @@ const ServiceContent = () => {
               <input type="radio" name="price" value="2900" />월 2900원
             </label>
             <br />
-            <label>
-              <input type="radio" name="price" value="3900" />월 3900원
-            </label>
-            <br />
-            <label>
-              <input type="radio" name="price" value="4900" />월 4900원
-            </label>
           </ServiceDetail>
         </Price>
         <span>
@@ -85,7 +78,6 @@ const ServiceContent = () => {
           </ServiceDetail>
         </span>
       </Service>
-
       <LinkButton>
         <button>구독하러가기</button>
       </LinkButton>
