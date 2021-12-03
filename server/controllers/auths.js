@@ -2,15 +2,15 @@ const {
   generateSalt,
   hashPassword,
   checkPassword,
-} = require("../../utils/secure");
+} = require("../utils/secure");
 const {
   generateAccessToken,
   generateRefreshToken,
   isAuthorized,
-} = require("../../utils/tokenFunctions");
-const { User } = require("../../models");
+} = require("../utils/tokenFunctions");
+const { User } = require("../models");
 require("dotenv").config();
-const redis = require("../../utils/redis");
+const redis = require("../utils/redis");
 
 module.exports = {
   signup: {
@@ -30,7 +30,7 @@ module.exports = {
       });
 
       try {
-        res.send("signup success");
+        res.status(201).send("Signup success");
       } catch (err) {
         console.error(err);
         return res.status(500).send("Server error");

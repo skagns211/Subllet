@@ -14,6 +14,9 @@ module.exports = {
       service_id: {
         type: Sequelize.INTEGER,
       },
+      commenter: {
+        type: Sequelize.STRING,
+      },
       message: {
         type: Sequelize.TEXT,
       },

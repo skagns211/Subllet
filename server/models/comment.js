@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       user_id: DataTypes.INTEGER,
       service_id: DataTypes.INTEGER,
+      commenter: DataTypes.STRING,
       message: DataTypes.TEXT,
       likes: DataTypes.BOOLEAN,
     },
