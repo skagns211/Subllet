@@ -1,9 +1,9 @@
-const { User } = require("../../models");
+const { User } = require("../models");
 const {
   generateSalt,
   hashPassword,
   checkPassword,
-} = require("../../utils/secure");
+} = require("../utils/secure");
 
 module.exports = {
   password: {

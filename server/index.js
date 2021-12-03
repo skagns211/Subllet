@@ -27,7 +27,7 @@ const HTTPS_PORT = process.env.HTTPS_PORT || 4000;
 // const port = 4000;
 
 // app.listen(port, () => {
-//   console.log(`[RUN] StatesAirline Server... | http://localhost:${port}`);
+//   console.log(`run http://localhost:${port}`);
 // });
 
 let server;

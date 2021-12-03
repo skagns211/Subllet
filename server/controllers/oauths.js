@@ -1,10 +1,10 @@
 require("dotenv").config();
 const axios = require("axios");
-const { User } = require("../users");
+const { User } = require("./users");
 const {
   generateAccessToken,
   generateRefreshToken,
-} = require("../../utils/tokenFunctions");
+} = require("../utils/tokenFunctions");
 
 module.exports = {
   google: {

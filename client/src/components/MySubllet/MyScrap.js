@@ -41,14 +41,14 @@ const MyScrapBox = styled.div`
   align-items: center; */
   background-color: #252a3c;
   border-radius: 0.5rem;
-  border: 0.5px solid white;
+  /* border: 0.5px solid white; */
   div {
     width: 31%;
     height: 20%;
     margin-top: 1%;
     margin-left: auto;
     margin-right: auto;
-    border: 0.5px solid white;
+    /* border: 0.5px solid white; */
   }
 `;
 
@@ -57,7 +57,7 @@ const ScrapImg = styled.img`
   /* height: 10rem; */
   display: flex;
   object-fit: cover;
-  border-radius: 0.5rem;
+  /* border-radius: 0.5rem; */
 `;
 
 const MyScrap = () => {

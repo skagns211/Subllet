@@ -31,15 +31,18 @@ const GlobalStyle = createGlobalStyle`
     /* display: flex; */
     /* overflow: hidden; */
     /* height: 100%; */
+    @media only screen and (max-width: 800px) {
+    min-width: 380px;
   }
   a {
     color: #ffffff;
     text-decoration: none;
-  }
+  }}
 `;
 
 const SectionStyle = styled.section`
   padding-bottom: 70px;
+  min-width: 540px;
 `;
 
 function App() {
