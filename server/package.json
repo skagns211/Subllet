@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon --inspect index.js",
-    "test": "jest"
+    "test": "jest --forceExit"
   },
   "dependencies": {
     "axios": "^0.24.0",

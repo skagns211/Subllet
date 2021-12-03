@@ -6,7 +6,7 @@ import MyScribe from "../components/MySubllet/MyScribe";
 
 const MySublletContainer = styled.main`
   /* width: 50.8%; */
-  max-width: 81.25rem;
+  max-width: 950px;
   /* flex-direction: column; */
   /* justify-content: center; */
   /* border: 1px solid white; */

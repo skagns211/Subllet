@@ -1,4 +1,4 @@
-const { Scrap, Service } = require("../../models");
+const { Scrap, Service } = require("../models");
 
 module.exports = {
   scrap: {

@@ -7,8 +7,8 @@ import defaultImg from "../IMG/default.png";
 const NavHeader = styled.header`
   @media only screen and (min-width: 800px) {
     display: flex;
-    justify-content: space-around;
-    /* justify-content: space-between; //둘 중 하나 골라야함 */
+    /* justify-content: space-around; */
+    justify-content: space-between; //둘 중 하나 골라야함
     background-color: #0f0f0f;
     width: 100%;
     height: 70px;
@@ -105,6 +105,11 @@ const Font = styled.span`
   }
   @media only screen and (max-width: 800px) {
     padding-right: 3.3rem;
+  }
+  span {
+    @media only screen and (max-width: 800px) {
+      margin-left: 1.5rem;
+    }
   }
   img {
     margin-top: 0.6rem;

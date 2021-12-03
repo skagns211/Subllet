@@ -26,18 +26,22 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     min-width: 530px;
     position: relative;
+    min-width: 530px;
     /* display: flex; */
     /* overflow: hidden; */
     /* height: 100%; */
+    @media only screen and (max-width: 800px) {
+    min-width: 380px;
   }
   a {
     color: #ffffff;
     text-decoration: none;
-  }
+  }}
 `;
 
 const SectionStyle = styled.section`
   padding-bottom: 70px;
+  min-width: 540px;
 `;
 
 function App() {
@@ -54,7 +58,7 @@ function App() {
           <Route path="/customercenter" element={<CustomerCenter />} />
           <Route path="/delete" element={<Delete />} />
           <Route path="/detail/:id" element={<Detail />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/userlogin" element={<Login />} />
           <Route path="/mysubllet" element={<MySubllet />} />
           <Route path="/signup" element={<SignUp />} />
         </Routes>

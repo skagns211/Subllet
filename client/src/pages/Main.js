@@ -6,21 +6,33 @@ import Video from "../components/Main/Video";
 import Music from "../components/Main/Music";
 import Shoping from "../components/Main/Shopping";
 import Pick from "../components/Main/Pick";
+import Life from "../components/Main/Life";
 
-const StyledBody = styled.section`
-  max-width: 1300px;
+
+const StyledTopBody = styled.section`
+  max-width: 1100px;
+  margin: 0 auto;
+`;
+
+const StyledBottomBody = styled.section`
+  max-width: 950px;
   margin: 0 auto;
 `;
 
 const Main = () => {
   return (
-    <StyledBody>
-      {false ? <MainCard /> : <GuestMainCard />} {/* isLogin에 따라 */}
-      <Video />
-      <Music />
-      <Shoping />
-      <Pick />
-    </StyledBody>
+    <>
+      <StyledTopBody>
+        {false ? <MainCard /> : <GuestMainCard />} {/* isLogin에 따라 */}
+      </StyledTopBody>
+      <StyledBottomBody>
+        <Video />
+        <Music />
+        <Shoping />
+        <Pick />
+        <Life />
+      </StyledBottomBody>
+    </>
   );
 };
 
