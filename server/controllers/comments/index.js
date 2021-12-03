@@ -5,9 +5,9 @@ module.exports = {
     post: async (req, res) => {
       const service_id = req.params.serviceId;
       // user_id는 accessToken으로 받아올 예정
-      const { user_id, message, likes } = req.body;
+      const { user_id, commenter, message, likes } = req.body;
 
-      if (!message || !likes) {
+      if (!service_id || !user_id || !commenter || !message || !likes) {
         return res.status(400).send("Empty body");
       }
 
@@ -25,6 +25,7 @@ module.exports = {
       const created = await Comment.create({
         user_id,
         service_id,
+        commenter,
         message,
         likes,
       });
@@ -39,7 +40,7 @@ module.exports = {
       // });
 
       const comment = await Comment.findOne({
-        attributes: ["id", "message", "likes", "createdAt"],
+        attributes: ["id", "commenter", "message", "likes", "createdAt"],
         where: { id: created.id },
       });
 

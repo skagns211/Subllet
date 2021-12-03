@@ -10,7 +10,7 @@ module.exports = {
         where: { user_id },
       });
 
-      const servicesId = services.rows.map((el) => el.dataValues.service_id);
+      const servicesId = services.map((el) => el.dataValues.service_id);
 
       const scraps = [];
 
@@ -40,7 +40,7 @@ module.exports = {
           user_id,
           service_id,
         },
-      })
+      });
 
       const service = await Service.findOne({
         attributes: ["outer_image"],

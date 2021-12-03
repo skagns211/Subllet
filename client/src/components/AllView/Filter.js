@@ -6,29 +6,22 @@ const StyledBody = styled.div`
 `;
 
 const FilterLabel = styled.div`
-  margin: 1rem 0rem;
-  width: 70%;
+  margin-top: 2rem;
+  width: 75%;
   font-size: 2rem;
   div {
     padding-left: 20%;
   }
+  @media only screen and (min-width: 800px) {
+    div {
+      padding-left: 5%;
+    }
+  }
 `;
 
-const DropDown = styled.div`
+const StyledDropDown = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  font-size: 1.5rem;
-
-  div {
-    position: relative;
-    top: -11.5rem;
-    background: rgba(102, 102, 102, 0.8);
-    border-radius: 10px;
-    padding: 10.1rem;
-  }
-
   label {
     border-radius: 5px;
     border: 1px solid #e69332;
@@ -39,6 +32,24 @@ const DropDown = styled.div`
   label:hover {
     cursor: pointer;
   }
+  @media only screen and (min-width: 800px) {
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    label {
+      width: 100%;
+      min-width: 18rem;
+    }
+  }
+`;
+
+const DropDown = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-size: 1.5rem;
+
   ul {
     border-radius: 5px;
     list-style: none;
@@ -46,26 +57,25 @@ const DropDown = styled.div`
     position: absolute;
     z-index: 999;
     border: 1px solid #e69332;
-    width: 70%;
     margin-top: 5rem;
-  }
-  li {
-    padding: 1rem;
     background-color: #130d0a;
+    opacity: 0.9;
+    width: 70%;
+    max-width: 41.5rem;
+    li {
+      padding: 1rem;
+      background-color: #130d0a;
+    }
+    li:hover {
+      background-color: #e69332;
+      cursor: pointer;
+    }
   }
-  li:hover {
-    background-color: #e69332;
-    cursor: pointer;
+  @media only screen and (min-width: 800px) {
+    ul {
+      width: 18rem;
+    }
   }
-`;
-
-export const ModalBackdrop = styled.div`
-  // TODO : Modal이 떴을 때의 배경을 깔아주는 CSS를 구현합니다.
-  position: relative;
-  top: -11.5rem;
-  background: rgba(102, 102, 102, 0.8);
-  border-radius: 10px;
-  padding: 10.1rem;
 `;
 
 const Filter = ({ category, setCategory, price, setPrice, free, setFree }) => {
@@ -85,43 +95,44 @@ const Filter = ({ category, setCategory, price, setPrice, free, setFree }) => {
     setFree(!free);
   };
 
-  // console.log(categoryClick);
   return (
     <StyledBody>
       <FilterLabel>
         <div>모두보기</div>
       </FilterLabel>
-      <DropDown>
-        <label onClick={categoryClick}>카테고리</label>
-        {category ? (
-          <ul>
-            <li>Video</li>
-            <li>Music</li>
-            <li>Shopping</li>
-            <li>Life</li>
-          </ul>
-        ) : null}
-      </DropDown>
-      <DropDown>
-        <label onClick={priceClick}>가격</label>
-        {price ? (
-          <ul>
-            <li>5000</li>
-            <li>10000</li>
-            <li>15000</li>
-            <li>20000</li>
-          </ul>
-        ) : null}
-      </DropDown>
-      <DropDown>
-        <label onClick={freeClick}>체험하기 유무</label>
-        {free ? (
-          <ul>
-            <li>유</li>
-            <li>무</li>
-          </ul>
-        ) : null}
-      </DropDown>
+      <StyledDropDown>
+        <DropDown>
+          <label onClick={categoryClick}>카테고리</label>
+          {category ? (
+            <ul>
+              <li>Video</li>
+              <li>Music</li>
+              <li>Shopping</li>
+              <li>Life</li>
+            </ul>
+          ) : null}
+        </DropDown>
+        <DropDown>
+          <label onClick={priceClick}>가격</label>
+          {price ? (
+            <ul>
+              <li>5000</li>
+              <li>10000</li>
+              <li>15000</li>
+              <li>20000</li>
+            </ul>
+          ) : null}
+        </DropDown>
+        <DropDown>
+          <label onClick={freeClick}>체험하기 유무</label>
+          {free ? (
+            <ul>
+              <li>유</li>
+              <li>무</li>
+            </ul>
+          ) : null}
+        </DropDown>
+      </StyledDropDown>
     </StyledBody>
   );
 };

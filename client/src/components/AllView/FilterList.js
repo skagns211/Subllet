@@ -2,34 +2,49 @@ import React from "react";
 import styled from "styled-components";
 import dummy from "../../dummy/dummy";
 
-const FilterList = () => {
-  const StyledBody = styled.div`
-    max-width: 100%;
-  `;
-  const ServiceList = styled.div`
+const StyledBody = styled.div``;
+const ServiceList = styled.div`
+  list-style: none;
+  background-color: #252a3b;
+  border-radius: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2rem 2rem 0rem 2rem;
+  padding-top: 1.5rem;
+  img {
+    width: 100%;
     height: 100%;
-    list-style: none;
-    padding-top: 2rem;
-    padding-left: 2rem;
-    margin: 1rem 3rem;
-    background-color: #252a3b;
-    flex-direction: row;
+    min-width: 10rem;
+    width: 100%;
+    max-width: 35%;
+    max-height: 8rem;
+    object-fit: cover;
     border-radius: 5px;
-
+    margin: 0 0 1.5rem 10%;
+  }
+  @media only screen and (max-width: 500px) {
     img {
-      margin: 0rem 1rem 2rem 1rem;
-      width: 18rem;
-      height: 9rem;
+      margin: 0 0 1.5rem 10%;
+    }
+  }
+  @media only screen and (min-width: 800px) {
+    img {
+      height: 100%;
+      min-width: 9rem;
+      width: 100%;
+      max-width: 30%;
+      max-height: 8rem;
       object-fit: cover;
       border-radius: 5px;
-      /* position: relative; */
+      margin: 0 0 3% 2.5%;
     }
-  `;
+  }
+`;
+const FilterList = () => {
   return (
     <StyledBody>
-      <div>Scrap</div>
       <ServiceList>
-        {dummy.map(dummy => {
+        {dummy.map((dummy) => {
           return <img src={dummy.service.outer_image} />;
         })}
       </ServiceList>
