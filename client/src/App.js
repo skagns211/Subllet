@@ -24,9 +24,9 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     background-color: #130D0A;
     box-sizing: border-box;
-    min-width: 530px;
     position: relative;
     min-width: 530px;
+    min-height: 100vh;
     /* display: flex; */
     /* overflow: hidden; */
     /* height: 100%; */
