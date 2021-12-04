@@ -1,5 +1,6 @@
 // const crypto = require("crypto");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const saltRounds = 10;
 
 module.exports = {
@@ -12,6 +13,11 @@ module.exports = {
   checkPassword: async (plainPassword, hashPassword) => {
     return bcrypt.compareSync(plainPassword, hashPassword);
   },
+  // generateEmailKey: async () => {
+    // const key_one = Math.random()
+    // const key_two = Math.random()
+  //   return Math.random()
+  // },
   //   createSalt: () => {
   //     return crypto.randomBytes(64).toString("base64");
   //   },
