@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
+import axios from "axios";
 
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
@@ -17,6 +18,9 @@ import Login from "./pages/Login";
 import MySubllet from "./pages/MySubllet";
 import SignUp from "./pages/SignUp";
 
+axios.defaults.baseURL = "https://localhost:4000";
+axios.defaults.withCredentials = true;
+
 const GlobalStyle = createGlobalStyle`
   body {
     font-family: "Geo", sans-serif;
@@ -31,7 +35,7 @@ const GlobalStyle = createGlobalStyle`
     /* overflow: hidden; */
     /* height: 100%; */
     @media only screen and (max-width: 800px) {
-    min-width: 380px;
+    min-width: 370px;
   }
   a {
     color: #ffffff;
@@ -41,7 +45,7 @@ const GlobalStyle = createGlobalStyle`
 
 const SectionStyle = styled.section`
   padding-bottom: 70px;
-  min-width: 540px;
+  /* min-width: 540px; */
 `;
 
 function App() {
