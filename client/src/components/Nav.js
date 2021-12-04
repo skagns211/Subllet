@@ -151,7 +151,7 @@ const Test = styled.div`
   img {
     width: 3.7rem;
     border-radius: 2rem;
-    margin: 0.4rem 1rem 0.4rem 0;
+    margin: 0.4rem 0rem 0.4rem 0;
 
     /* margin-top: 0.4rem;
     margin-right: 1.6rem; */
@@ -270,7 +270,7 @@ const Nav = () => {
               <img alt="defaultImg" src={defaultImg} className="defaultImg" />
               <ul>
                 <li>
-                  <Link to="/userLogin">로그인</Link>
+                  <Link to="/userlogin">로그인</Link>
                 </li>
                 <li>
                   <Link to="/signup">회원가입</Link>

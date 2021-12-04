@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
+import LoginModal from "../LoginModal";
+require("dotenv").config();
 
 const StyledBody = styled.section`
   margin-top: 1rem;
@@ -14,6 +16,7 @@ const BackgroundImage = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border-radius: 5px;
   @media only screen and (min-device-width: 800px) {
     background-image: url("https://i.ibb.co/3FR86KX/2021-11-28-20-53-51.png");
     background-repeat: no-repeat;
@@ -52,10 +55,11 @@ const DetailMessage = styled.div`
   }
 `;
 
-const InnerImage = ({ detail }) => {
+const InnerImage = ({ open, detail, handleClick }) => {
   const [scrap, setScrap] = useState("");
+
   axios
-    .get("https:localhost:4000/scrap/1", {
+    .get(`${process.env.REACT_APP_URL}/scrap/1`, {
       withCredentials: true,
     })
     .then((res) => {
@@ -64,9 +68,10 @@ const InnerImage = ({ detail }) => {
 
   return (
     <StyledBody>
+      {open ? <LoginModal handleClick={handleClick} /> : null}
       <BackgroundImage>
         <ScrapButton>
-          <i class="far fa-star fa-2x"></i>
+          <i onClick={handleClick} class="far fa-star fa-2x"></i>
           <div>{scrap}</div>
         </ScrapButton>
         <DetailMessage>

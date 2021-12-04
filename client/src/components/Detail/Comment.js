@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const StyledBody = styled.div`
@@ -84,7 +84,7 @@ const CommentLike = styled.div`
   margin: 0rem 3rem;
 `;
 
-const Comment = ({ detail }) => {
+const Comment = ({ detail, comments }) => {
   const day = (createdAt) => {
     let year = createdAt.slice(0, 4);
     let month = createdAt.slice(5, 7);
@@ -108,9 +108,8 @@ const Comment = ({ detail }) => {
         <SendButton>
           <button>send</button>
         </SendButton>
-        {detail.Comments &&
-          detail.Comments.map((comment) => {
-            console.log(comment);
+        {comments &&
+          comments.map((comment) => {
             return (
               <Comments>
                 <CommentList>
