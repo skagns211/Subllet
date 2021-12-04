@@ -21,6 +21,20 @@ module.exports = {
       return null;
     }
   },
+  checkAccessToken: (accesstoken) => {
+    try {
+      return verify(accesstoken, process.env.ACCESS_SECRET);
+    } catch (err) {
+      return null;
+    }
+  },
+  checkRefeshToken: (refreshToken) => {
+    try {
+      return verify(refreshToken, process.env.REFRESH_SECRET);
+    } catch (err) {
+      return null;
+    }
+  },
   // checkRefreshToken: (req) => {
   //   const authorization = req.headers["authorization"];
   //   if (!authorization) {
