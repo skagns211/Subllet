@@ -13,6 +13,9 @@ const AllView = () => {
   const [category, setCategory] = useState(false);
   const [price, setPrice] = useState(false);
   const [free, setFree] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  
 
   return (
     <>
