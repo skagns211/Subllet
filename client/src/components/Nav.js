@@ -10,18 +10,20 @@ import defaultImg from "../IMG/default.png";
 const NavHeader = styled.header`
   @media only screen and (min-width: 800px) {
     display: flex;
-    /* justify-content: space-around; */
-    justify-content: space-between; //둘 중 하나 골라야함
+    justify-content: space-around;
+    /* justify-content: space-between; //둘 중 하나 골라야함 */
     background-color: #0f0f0f;
     width: 100%;
     height: 70px;
   }
   @media only screen and (max-width: 800px) {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    /* justify-content: space-between; */
     background-color: #0f0f0f;
     width: 100%;
     height: 70px;
+    /* border: 1px solid white; */
   }
 `;
 
@@ -35,7 +37,7 @@ const MinNavTap = styled.span`
       justify-content: space-around;
       margin-top: 2.7rem;
       :not(:last-child) {
-        margin-left: 1.5rem;
+        /* margin-left: 1.5rem; */
       }
       :last-child {
         margin-left: 1rem;
@@ -103,21 +105,27 @@ const Font = styled.span`
   color: #ff8a00;
   font-size: 3.8rem;
   margin-top: 0.5rem;
-  @media only screen and (min-width: 800px) {
+  /* @media only screen and (min-width: 800px) {
     margin-left: 2rem;
-  }
-  @media only screen and (max-width: 800px) {
-    padding-right: 3.3rem;
-  }
+  } */
+
   span {
     @media only screen and (max-width: 800px) {
       margin-left: 1.5rem;
+    }
+    @media only screen and (max-width: 500px) {
+      font-size: 2.5rem;
+      /* padding-right: 3.3rem; */
     }
   }
   img {
     margin-top: 0.6rem;
     width: 4rem;
     height: 3rem;
+    @media only screen and (max-width: 800px) {
+      width: 3rem;
+      height: 2rem;
+    }
   }
   a {
     color: #ff8a00;
