@@ -38,9 +38,10 @@ module.exports = {
   user: {
     patch: async (req, res) => {
       // 실제 id는 accessToken에서 가져올 것.
-      const { id, nickname, profile } = req.body;
+      const id = req.id;
+      const { nickname, profile } = req.body;
 
-      if (!nickname || !profile) {
+      if (!nickname) {
         return res.status(400).send("Empty body");
       }
 

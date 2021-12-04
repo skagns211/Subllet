@@ -8,7 +8,6 @@ import Shoping from "../components/Main/Shopping";
 import Pick from "../components/Main/Pick";
 import Life from "../components/Main/Life";
 
-
 const StyledTopBody = styled.section`
   max-width: 1100px;
   margin: 0 auto;
@@ -23,7 +22,12 @@ const Main = () => {
   return (
     <>
       <StyledTopBody>
-        {false ? <MainCard /> : <GuestMainCard />} {/* isLogin에 따라 */}
+        {window.localStorage.getItem("isLogin") ? (
+          <MainCard />
+        ) : (
+          <GuestMainCard />
+        )}
+        {/* isLogin에 따라 */}
       </StyledTopBody>
       <StyledBottomBody>
         <Video />

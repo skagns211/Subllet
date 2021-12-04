@@ -23,6 +23,14 @@ module.exports = {
       profile: {
         type: Sequelize.STRING
       },
+      email_verified: {
+        allowNull: false,
+        defaultValue: false,
+        type: Sequelize.BOOLEAN
+      },
+      email_key: {
+        type: Sequelize.STRING,
+      },
       total_scraps: {
         type: Sequelize.INTEGER
       },
