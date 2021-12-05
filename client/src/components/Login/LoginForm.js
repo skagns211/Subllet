@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import Select from "react-select";
 import { setLoginUserInfo, setIsLogin, setAccessToken } from "../../actions";
 import styled from "styled-components";
 import axios from "axios";
@@ -74,27 +75,61 @@ const EmailContainer = styled.div`
   input {
     margin-right: 1rem;
     text-align: center;
-  }
-  select {
-    width: 10rem;
-    margin-left: 1rem;
-    text-align: center;
+    border-radius: 0.2rem;
+    border: 0.5px solid gray;
   }
   .inputEmail {
     display: inline-flex;
-    position: relative;
+    position: absolute;
     /* left: 2rem; */
+    margin-left: 1.5rem;
     height: 2rem;
+    width: 6.5rem;
   }
   .cancleBtn {
     position: relative;
-    /* left: rem; */
-    right: 30%;
+    left: 8.5rem;
     width: 1.5rem;
-    height: 1.3rem;
+    height: 1.5rem;
     button {
-      /* padding-right: 1rem; */
+      padding: 0.8rem 1rem 0.25rem 1rem;
     }
+  }
+`;
+
+const SelectEmail = styled(Select)`
+  width: 9.5rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  margin-left: 1.5rem;
+  .Select__control {
+    border: 1px solid #a1a1a1;
+    border-radius: 0.2rem;
+    cursor: pointer;
+  }
+
+  .Select__control:hover {
+    border-color: #a1a1a1;
+  }
+
+  .Select__control--is-focused {
+    box-shadow: 0 0 0 1px black;
+    outline: none;
+  }
+
+  .Select__indicator-separator {
+    display: none;
+  }
+  .Select__value {
+    font-size: 1rem;
+    color: blue;
+  }
+
+  .Select__menu {
+    color: #3c3d3e;
+  }
+  .Select__dropdown-indicator {
+    color: gray;
+    /* background: purple; */
   }
 `;
 
@@ -106,15 +141,15 @@ const PassWordContainer = styled.div`
 `;
 
 const emailList = [
-  "naver.com",
-  "gmail.com",
-  "hanmail.net",
-  "daum.net",
-  "nate.com",
-  "hotmail.com",
-  "outlook.com",
-  "icloud.com",
-  "직접 입력",
+  { value: "naver.com", label: "naver.com" },
+  { value: "gmail.com", label: "gmail.com" },
+  { value: "hanmail.net", label: "hanmail.net" },
+  { value: "daum.net", label: "daum.net" },
+  { value: "nate.com", label: "nate.com" },
+  { value: "hotmail.com", label: "hotmail.com" },
+  { value: "outlook.com", label: "outlook.com" },
+  { value: "icloud.com", label: "icloud.com" },
+  { value: "직접 입력", label: "직접 입력" },
 ];
 
 const LoginForm = () => {
@@ -154,28 +189,28 @@ const LoginForm = () => {
   //! email이 이미 선택되어 있으면 id에 재선택된 email을 붙여줌
   //! email option이 "직접입력"이면 option을 text로 바꿔줌
   //! 직접 입력한 value 적용 필요!!!!!
-  const handleSelect = (e) => {
+  const handleSelect = (value, key) => {
     const atIndex = loginInfo.email.indexOf("@");
     const justId = loginInfo.email.slice(0, atIndex);
     console.log(justId);
     loginInfo.email.includes("@")
       ? setLoginInfo({
           ...loginInfo,
-          email: justId + "@" + e.target.value,
+          email: justId + "@" + value.value,
         })
       : setLoginInfo({
           ...loginInfo,
-          email: loginInfo.email + "@" + e.target.value,
+          email: loginInfo.email + "@" + value.value,
         });
     console.log(loginInfo);
-    e.target.value === "직접 입력"
+    value.value === "직접 입력"
       ? setIsSelectSelf(true)
       : setIsSelectSelf(false);
     console.log(loginInfo.email);
   };
   const [isEamilSelect, setIsEmailSelect] = useState("");
-  const handleEmailSelect = (e) => {
-    setIsEmailSelect(e.target.value);
+  const handleEmailSelect = (value) => {
+    setIsEmailSelect(value.value);
   };
 
   const postInfo = () => {
@@ -199,7 +234,8 @@ const LoginForm = () => {
           dispatch(setLoginUserInfo(loginUserInfo));
           dispatch(setAccessToken(accessToken));
           dispatch(setIsLogin(true));
-          navigate("/");
+          // navigate("/");
+          window.location.replace("/"); //! navigate 사용시 isLogin에 따른 nav변경 안됨
         }
         console.log(state);
       })
@@ -231,7 +267,7 @@ const LoginForm = () => {
                 <input
                   className="inputEmail"
                   type="text"
-                  onChange={handleEmailSelect}
+                  onChange={(value) => handleEmailSelect(value)} //! 손봐야함
                   value={isEamilSelect}
                 ></input>
                 <span className="cancleBtn">
@@ -241,14 +277,14 @@ const LoginForm = () => {
                 </span>
               </span>
             ) : (
-              <select onChange={handleSelect}>
-                <option disabled selected>
-                  선택해주세요
-                </option>
-                {emailList.map((el, idx) => {
-                  return <option key={idx}>{el}</option>;
-                })}
-              </select>
+              <SelectEmail
+                onChange={(value) => {
+                  handleSelect(value);
+                }}
+                classNamePrefix="Select"
+                options={emailList}
+                placeholder="선택해주세요"
+              ></SelectEmail>
             )}
           </EmailContainer>
         </LoginContainer>

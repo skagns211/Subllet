@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setLoginUserInfo, setIsLogin } from "../actions";
+import { setLoginUserInfo, setIsLogin, setAccessToken } from "../actions";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
@@ -186,6 +186,22 @@ const Nav = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { email, nickname, profile } = state.loginUserInfo;
+  console.log(state);
+  const isLogin = window.localStorage.getItem("isLogin");
+  const loginUserInfo = window.localStorage.getItem("loginUserInfo");
+  const accessToken = window.localStorage.getItem("accessToken");
+  // const { email, nickname, profile } = JSON.parse(
+  //   window.localStorage.getItem("loginUserInfo")
+  // );
+  console.log(nickname);
+  // console.log(JSON.parse(window.localStorage.getItem("loginUserInfo")));
+
+  useEffect(() => {
+    window.localStorage.setItem(
+      "loginUserInfo",
+      JSON.stringify(state.loginUserInfo)
+    );
+  }, [state.loginUserInfo]);
 
   useEffect(() => {
     window.localStorage.setItem(
@@ -198,12 +214,11 @@ const Nav = () => {
     window.localStorage.setItem("isLogin", JSON.stringify(state.isLogin));
   }, [state.isLogin]);
 
-  console.log(state.accessToken);
   const logoutHandler = () => {
     axios
       .post("/auth/logout", null, {
         headers: {
-          authorization: `Bearer ${state.accessToken}`,
+          authorization: `Bearer ${JSON.parse(accessToken)}`,
         },
       })
       .then((res) => {
@@ -214,6 +229,7 @@ const Nav = () => {
             profile: "",
           };
           dispatch(setLoginUserInfo(loginUserInfo));
+          dispatch(setAccessToken(""));
           dispatch(setIsLogin(false));
         }
       })
@@ -221,7 +237,7 @@ const Nav = () => {
         alert(err);
       });
   };
-  console.log(state.accessToken);
+  console.log(accessToken);
 
   return (
     <>
@@ -250,7 +266,7 @@ const Nav = () => {
               <Link to="/customercenter">고객센터</Link>
             </div>
           </MaxNavTap>
-          {state.isLogin ? (
+          {isLogin === "true" ? (
             <Test>
               <img
                 alt="userImg"
@@ -266,6 +282,7 @@ const Nav = () => {
                     to="/"
                     onClick={() => {
                       logoutHandler();
+                      window.location.replace("/");
                     }}
                   >
                     로그아웃

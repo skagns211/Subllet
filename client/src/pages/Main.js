@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import MainCard from "../components/Main/MainCard";
 import GuestMainCard from "../components/Main/GuestMainCard";
@@ -19,14 +20,27 @@ const StyledBottomBody = styled.section`
 `;
 
 const Main = () => {
+  const state = useSelector((state) => state);
+  const isLogin = window.localStorage.getItem("isLogin");
+  const loginUserInfo = window.localStorage.getItem("loginUserInfo");
+  const accessToken = window.localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    window.localStorage.setItem("loginUserInfo", loginUserInfo);
+  }, [loginUserInfo]);
+
+  useEffect(() => {
+    window.localStorage.setItem("accessToken", accessToken);
+  }, [accessToken]);
+
+  useEffect(() => {
+    window.localStorage.setItem("isLogin", isLogin);
+  }, [isLogin]);
+
   return (
     <>
       <StyledTopBody>
-        {window.localStorage.getItem("isLogin") ? (
-          <MainCard />
-        ) : (
-          <GuestMainCard />
-        )}
+        {isLogin === "true" ? <MainCard /> : <GuestMainCard />}
         {/* isLogin에 따라 */}
       </StyledTopBody>
       <StyledBottomBody>

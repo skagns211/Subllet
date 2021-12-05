@@ -145,7 +145,10 @@ const MainCardRightBottom = styled.div`
 `;
 const MainCard = () => {
   const state = useSelector((state) => state);
-  const { email, nickname, profile } = state.loginUserInfo; //! user정보 state
+  // const { email, nickname, profile } = state.loginUserInfo; //! user정보 state
+  const { nickname, profile } = JSON.parse(
+    window.localStorage.getItem("loginUserInfo")
+  ); //! user정보 state
   console.log(state);
 
   return (
