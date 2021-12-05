@@ -8,26 +8,39 @@ const {
 module.exports = {
   password: {
     patch: async (req, res) => {
+      const id = req.id;
       const { password, newPassword } = req.body;
 
       if (!password || !newPassword) {
         res.status(400).send("Empty body");
       }
-      // accessToken을 verify해서 데이터베이스의 값을 가져와 비교
-      // const result = checkPassword(password, )
+
+      const findUser = await User.findOne({
+        where: { id },
+      });
+
+      const result = await checkPassword(
+        password,
+        findUser.dataValues.password
+      );
 
       if (!result) {
         return res.status(400).send("Inconsistency");
       }
 
-      const salt = generateSalt();
-      const hashedPassword = hashPassword(newPassword, salt);
+      const salt = await generateSalt();
+      const hashedPassword = await hashPassword(newPassword, salt);
+
+      await User.update(
+        {
+          password: hashedPassword,
+        },
+        {
+          where: { id },
+        }
+      );
 
       try {
-        await User.update({
-          password: hashedPassword,
-          salt,
-        });
         return res.status(201).send("Success");
       } catch (err) {
         console.error(err);
@@ -37,7 +50,6 @@ module.exports = {
   },
   user: {
     patch: async (req, res) => {
-      // 실제 id는 accessToken에서 가져올 것.
       const id = req.id;
       const { nickname, profile } = req.body;
 
@@ -68,21 +80,25 @@ module.exports = {
       }
     },
     post: async (req, res) => {
+      const id = req.id;
       const { password } = req.body;
 
       if (!password) {
         return res.status(400).send("Empty body");
       }
 
-      // accessToken을 verify해서 데이터베이스의 값을 가져와 비교
-      // const result = checkPassword(password, )
+      const findUser = await User.findOne({
+        where: { id },
+      });
+
+      const result = checkPassword(password, findUser.password);
 
       if (!result) {
         return res.status(400).send("Inconsistency");
       }
 
       try {
-        await User.destory({
+        await User.destroy({
           where: { id },
         });
         return res.status(204).send("Success");

@@ -1,5 +1,4 @@
 const { sign, verify } = require("jsonwebtoken");
-const redis = require("../redis");
 require("dotenv").config();
 
 module.exports = {

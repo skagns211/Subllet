@@ -9,18 +9,22 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       user_id: {
+        // references: { model: "Users", key: "id" },
         type: Sequelize.INTEGER,
       },
       service_id: {
+        // references: { model: "Services", key: "id" },
         type: Sequelize.INTEGER,
       },
       paydate: {
         type: Sequelize.INTEGER,
       },
       planname: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       planprice: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       createdAt: {
