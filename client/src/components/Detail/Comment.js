@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
 
@@ -84,7 +85,10 @@ const CommentLike = styled.div`
   margin: 0rem 3rem;
 `;
 
-const Comment = ({ detail, comments }) => {
+const Comment = ({ comments, setComments, ServiceId }) => {
+  const [comment, setComment] = useState("");
+  const [like, setLike] = useState();
+
   const day = (createdAt) => {
     let year = createdAt.slice(0, 4);
     let month = createdAt.slice(5, 7);
@@ -92,26 +96,58 @@ const Comment = ({ detail, comments }) => {
     return `${year}년 ${month}월 ${day}일`;
   };
 
+  const inputText = (e) => {
+    setComment(e.target.value);
+  };
+
+  const handleSelect = (e) => {
+    setLike(e.target.value);
+  };
+
+  const sendComment = () => {
+    axios
+      .post(`/comment/${ServiceId}`, {
+        user_id: 2,
+        commenter: "test",
+        message: comment,
+        likes: Boolean(like),
+      })
+      .then((res) => {
+        console.log(res.status);
+        setComments([...comments, res.data.comment]);
+      });
+  };
+
   return (
     <StyledBody>
       <ServiceOption>Comment</ServiceOption>
       <CommentBody>
         <InputComment>
-          <textarea placeholder="댓글을 입력해주세요" />
+          <textarea onChange={inputText} placeholder="댓글을 입력해주세요" />
           <Likes>
-            <input type="radio" name="likes" value="true" />
-            <i class="fas fa-thumbs-up"></i>
-            <input type="radio" name="likes" value="false" />
-            <i class="fas fa-thumbs-down"></i>
+            <input
+              type="radio"
+              name="likes"
+              value="true"
+              onChange={handleSelect}
+            />
+            <i className="fas fa-thumbs-up"></i>
+            <input
+              type="radio"
+              name="likes"
+              value="false"
+              onChange={handleSelect}
+            />
+            <i className="fas fa-thumbs-down"></i>
           </Likes>
         </InputComment>
         <SendButton>
-          <button>send</button>
+          <button onClick={sendComment}>send</button>
         </SendButton>
         {comments &&
           comments.map((comment) => {
             return (
-              <Comments>
+              <Comments key={comment.id}>
                 <CommentList>
                   <CommentInfo>
                     <div>테스트중</div>
@@ -121,9 +157,9 @@ const Comment = ({ detail, comments }) => {
                 </CommentList>
                 <CommentLike>
                   {comment.likes ? (
-                    <i class="fas fa-thumbs-up fa-2x"></i>
+                    <i className="fas fa-thumbs-up fa-2x"></i>
                   ) : (
-                    <i class="fas fa-thumbs-down fa-2x"></i>
+                    <i className="fas fa-thumbs-down fa-2x"></i>
                   )}
                 </CommentLike>
               </Comments>

@@ -5,7 +5,6 @@ import ServiceContent from "../components/Detail/ServiceContent";
 import Comment from "../components/Detail/Comment";
 import { useParams } from "react-router";
 import axios from "axios";
-require("dotenv").config();
 
 const StyledBody = styled.section`
   max-width: 950px;
@@ -24,21 +23,22 @@ const Detail = () => {
   };
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_URL}/service/${ServiceId}`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setDetail(res.data.service);
-        setComments(res.data.Comments);
-      });
+    axios.get(`/service/${ServiceId}`).then((res) => {
+      setDetail(res.data.service);
+      setComments(res.data.service.Comments);
+    });
   }, []);
+  // console.log(comments);
 
   return (
     <StyledBody>
       <InnerImage open={open} detail={detail} handleClick={handleClick} />
       <ServiceContent detail={detail} />
-      <Comment detail={detail} comments={comments} />
+      <Comment
+        ServiceId={ServiceId}
+        comments={comments}
+        setComments={setComments}
+      />
     </StyledBody>
   );
 };
