@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Select from "react-select";
 import { setLoginUserInfo, setIsLogin, setAccessToken } from "../../actions";
 import styled from "styled-components";
+import OauthLogin from "./OauthLogin";
 import axios from "axios";
 
 const LoginStyled = styled.div`
@@ -40,7 +41,6 @@ const LoginStyled = styled.div`
   .warning {
     margin: 1rem 6rem 0 0;
     color: #cf3c3c;
-    display: none;
   }
   .loginBtn {
     color: #ff8a00;
@@ -59,9 +59,7 @@ const LoginStyled = styled.div`
 const LoginContainer = styled.div`
   display: flex;
   input {
-    ::placeholder {
-      text-align: center;
-    }
+    text-indent: 1rem;
   }
 `;
 
@@ -73,10 +71,11 @@ const EmailContainer = styled.div`
     width: 1rem;
   }
   input {
-    margin-right: 1rem;
-    text-align: center;
+    margin-right: 1.1rem;
     border-radius: 0.2rem;
     border: 0.5px solid gray;
+    font-size: 1rem;
+    width: 9rem;
   }
   .inputEmail {
     display: inline-flex;
@@ -98,9 +97,9 @@ const EmailContainer = styled.div`
 `;
 
 const SelectEmail = styled(Select)`
-  width: 9.5rem;
+  width: 9.8rem;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  margin-left: 1.5rem;
+  margin-left: 1.2rem;
   .Select__control {
     border: 1px solid #a1a1a1;
     border-radius: 0.2rem;
@@ -137,6 +136,8 @@ const PassWordContainer = styled.div`
   input {
     width: 22rem;
     height: 2rem;
+    text-indent: 1rem;
+    font-size: 1rem;
   }
 `;
 
@@ -155,14 +156,19 @@ const emailList = [
 const LoginForm = () => {
   const state = useSelector((state) => state); //! state 사용 함수
   const dispatch = useDispatch(); //! action 사용 함수
-  const navigate = useNavigate();
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
   });
 
   const handleInputValue = (key) => (e) => {
-    setLoginInfo({ ...loginInfo, [key]: e.target.value });
+    const atIndex = loginInfo.email.indexOf("@");
+    setLoginInfo({
+      ...loginInfo,
+      [key]: e.target.value + loginInfo.email.slice(atIndex), //! email을 재선택 했을때 초기화되는것 방지
+      [key]: e.target.value,
+    });
+
     console.log(loginInfo);
   };
 
@@ -212,36 +218,40 @@ const LoginForm = () => {
   const handleEmailSelect = (value) => {
     setIsEmailSelect(value.value);
   };
+  const [isWarning, setIsWarning] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(false);
 
   const postInfo = () => {
     const { email, password } = loginInfo;
     const isAt = email.includes("@");
     if (!email || !password || !isAt) {
-      alert("이메일과 비밀번호를 모두 입력해주세요"); //! alert 임시
+      setIsEmpty(true);
+      setIsWarning(false);
+    } else {
+      axios
+        .post("/auth/login", {
+          email,
+          password,
+        })
+        .then((res) => {
+          console.log(res.status);
+          const { accessToken, userInfo } = res.data; //! refreshToken을 어디로 받을지 상의필요
+          console.log(accessToken);
+          if (res.statusText === "OK") {
+            const loginUserInfo = userInfo;
+            // console.log(loginUserInfo);
+            dispatch(setLoginUserInfo(loginUserInfo));
+            dispatch(setAccessToken(accessToken));
+            dispatch(setIsLogin(true));
+            // navigate("/");
+            window.location.replace("/"); //! navigate 사용시 isLogin에 따른 nav변경 안됨
+          }
+        })
+        .catch((err) => {
+          setIsWarning(true);
+          setIsEmpty(false);
+        });
     }
-    axios
-      .post("/auth/login", {
-        email,
-        password,
-      })
-      .then((res) => {
-        const { accessToken, userInfo } = res.data; //! refreshToken을 어디로 받을지 상의필요
-        console.log(accessToken);
-        // console.log(state);
-        if (res.statusText === "OK") {
-          const loginUserInfo = userInfo;
-          // console.log(loginUserInfo);
-          dispatch(setLoginUserInfo(loginUserInfo));
-          dispatch(setAccessToken(accessToken));
-          dispatch(setIsLogin(true));
-          // navigate("/");
-          window.location.replace("/"); //! navigate 사용시 isLogin에 따른 nav변경 안됨
-        }
-        console.log(state);
-      })
-      .catch((err) => {
-        alert("올바른 아이디와 비밀번호를 입력해 주세요"); //! alert 임시
-      });
   };
 
   const inputEnter = (e) => {
@@ -258,7 +268,7 @@ const LoginForm = () => {
           <EmailContainer>
             <input
               type="text"
-              placeholder="your email"
+              placeholder="이메일"
               onChange={handleInputValue("email")}
             ></input>
             <span>@</span>
@@ -292,12 +302,19 @@ const LoginForm = () => {
         <PassWordContainer>
           <input
             type="password"
-            placeholder="your password"
+            placeholder="비밀번호"
             onChange={handleInputValue("password")}
             onKeyPress={inputEnter}
           ></input>
         </PassWordContainer>
-        <div className="warning">이메일 또는 비밀번호가 올바르지 않습니다</div>
+        {isWarning ? (
+          <div className="warning">
+            이메일 또는 비밀번호가 올바르지 않습니다
+          </div>
+        ) : null}
+        {isEmpty ? (
+          <div className="warning">이메일과 비밀번호를 모두 입력해주세요</div>
+        ) : null}
         <input
           type="button"
           className="loginBtn"
@@ -305,6 +322,7 @@ const LoginForm = () => {
           onClick={() => postInfo()}
         ></input>
         <hr />
+        <OauthLogin />
       </div>
     </LoginStyled>
   );

@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import TopList from "./TopList";
-import backImg from "../../IMG/MainCardBackImg.png";
+import { IMG } from "./imageUrl";
+
+const randomIdx = Math.floor(Math.random() * IMG["backImg"].length);
+const randomBackImg = IMG.backImg[randomIdx];
 
 const MainSection = styled.section`
   @media only screen and (max-width: 800px) {
@@ -20,20 +23,14 @@ const MainSection = styled.section`
 
 const MainCardBody = styled.div`
   display: flex;
-  /* justify-content: space-around; */
   flex-direction: column;
-  background-image: url(${backImg});
+  background-image: url(${randomBackImg});
   background-repeat: no-repeat;
-  /* background-size: 48rem 30rem; */
   background-size: 100% 100%;
-  /* height: 30vh; */
-  /* margin-left: 0.5rem;
-    margin-top: 3.6rem; */
+  border-radius: 1rem;
   margin: 3.6rem 0.7rem 0.5rem 0.5rem;
   padding: 0;
-  /* width: 48rem;
-    height: 30rem; */
-  width: auto; //!
+  width: auto;
   height: auto;
   @media only screen and (max-width: 1050px) {
     padding-bottom: 1.5rem;
@@ -45,31 +42,21 @@ const MainCardBody = styled.div`
   @media only screen and (min-width: 1301px) {
     background-size: 100% 100%;
     width: 55rem;
-    /* height: 35rem; */
   }
   .guest {
     display: none;
   }
-  /* margin: 0;
-    min-height: 100vh;
-    position: relative; */
   hr {
     width: 22.5rem;
     margin-left: 1rem;
     margin-top: 0;
   }
   span {
-    /* border: 1px solid #ffffff; */
     border-radius: 0.3rem;
     background-color: #252a3c;
     color: white;
     height: 6rem;
-    /* margin-right: 40rem; */
     font-size: 1.2rem;
-    /* display: flex;
-      align-items: flex-end;
-      justify-content: flex-end; */
-    /* justify-self: center; */
   }
   img {
     width: 2.5rem;
@@ -82,7 +69,6 @@ const MainCardBody = styled.div`
     align-self: flex-start;
     margin: 1rem 0 0 0;
     font-size: 2rem;
-    /* margin-right: 35rem; */
     padding: 1rem 5rem 1rem 1rem;
   }
   .totalPrice {
@@ -117,7 +103,6 @@ const MainCardBottom = styled.div`
     padding-top: 0.5rem;
     width: 7.5rem;
     height: 10.3rem;
-    /* text-align: center; */
   }
 `;
 
@@ -148,8 +133,7 @@ const MainCard = () => {
   // const { email, nickname, profile } = state.loginUserInfo; //! user정보 state
   const { nickname, profile } = JSON.parse(
     window.localStorage.getItem("loginUserInfo")
-  ); //! user정보 state
-  console.log(state);
+  ); //! user정보
 
   return (
     <>

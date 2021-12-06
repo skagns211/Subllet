@@ -7,17 +7,19 @@ const StylePick = styled.div`
   color: #ff8a00;
   font-size: 1.5rem;
   margin-top: 3rem;
-  margin-left: 2rem;
-  width: 90%;
+  margin-left: 0.5rem;
+  width: 99.5%;
 `;
 
 const PickBox = styled.div`
+  @media only screen and (max-width: 530px) {
+    margin-left: 1.5rem;
+  }
   @media only screen and (max-width: 800px) {
     img {
       width: 99%;
     }
     div {
-      margin-left: 0.5rem;
       margin-bottom: 0.5rem;
     }
   }
@@ -26,7 +28,6 @@ const PickBox = styled.div`
       width: 99%;
     }
     div {
-      margin-left: 0.5rem;
       margin-bottom: 0.5rem;
     }
   }
@@ -35,7 +36,6 @@ const PickBox = styled.div`
       width: 99%;
     }
     div {
-      margin-left: 0.5rem;
       margin-bottom: 0.5rem;
     }
   }
@@ -44,13 +44,15 @@ const PickBox = styled.div`
       width: 99%;
     }
     div {
-      margin-left: 0.5rem;
       margin-bottom: 0.5rem;
     }
   }
 `;
 
 const ForUserBox = styled.div`
+  @media only screen and (max-width: 530px) {
+    margin-right: 1.5rem;
+  }
   @media only screen and (max-width: 800px) {
     img {
       width: 99%;
@@ -97,7 +99,7 @@ const Pick = () => {
   const randomArr = Math.random() * arrLength;
   const randomArr2 = Math.random() * arrLength;
   const pickImg = IMG[randomKey][Math.floor(randomArr)];
-  const forImg = IMG[randomKey][Math.floor(randomArr2)];
+  let forImg = IMG[randomKey][Math.floor(randomArr2)];
 
   return (
     <StylePick>
