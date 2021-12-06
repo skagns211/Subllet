@@ -4,10 +4,10 @@ module.exports = {
   comment: {
     post: async (req, res) => {
       const service_id = req.params.serviceId;
-      // user_id는 accessToken으로 받아올 예정
-      const { user_id, commenter, message, likes } = req.body;
+      const user_id = req.id;
+      const { commenter, message, likes } = req.body;
 
-      if (!service_id || !user_id || !commenter || !message || !likes) {
+      if (!commenter || !message || !likes) {
         return res.status(400).send("Empty body");
       }
 

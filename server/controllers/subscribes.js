@@ -3,8 +3,7 @@ const { Subscribe, Service } = require("../Models");
 module.exports = {
   subscribe: {
     get: async (req, res) => {
-      // 포스트맨으로 확인하기 위해 route에 /:id 추가함. 이후 삭제해야 함.
-      const user_id = req.params.id;
+      const user_id = req.id;
 
       const subscribes = await Subscribe.findAll({
         attributes: ["id", "paydate", "planname", "planprice"],
@@ -26,10 +25,11 @@ module.exports = {
     },
     post: async (req, res) => {
       const service_id = req.params.serviceId;
-      // user_id는 포스트맨 확인용
-      const { user_id, paydate, planname, planprice } = req.body;
+      const user_id = req.id
+      
+      const {paydate, planname, planprice } = req.body;
 
-      if (!user_id || !planname || !planprice) {
+      if (!planname || !planprice) {
         return res.status(400).send("Empty body");
       }
 

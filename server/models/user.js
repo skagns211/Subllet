@@ -34,11 +34,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       email: DataTypes.STRING,
       password: DataTypes.STRING,
-      salt: DataTypes.STRING,
       nickname: DataTypes.STRING,
       profile: DataTypes.STRING,
       email_verified: DataTypes.BOOLEAN,
-      email_key: DataTypes.STRING(255),
+      email_key: DataTypes.STRING,
+      signup_method: DataTypes.STRING,
       total_scraps: DataTypes.INTEGER,
       total_subscribes: DataTypes.INTEGER,
       total_price: DataTypes.STRING,

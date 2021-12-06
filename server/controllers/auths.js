@@ -14,12 +14,12 @@ const {
 const { User } = require("../models");
 require("dotenv").config();
 const redis = require("../utils/redis");
-const emailSend = require("../middlewares/email/send");
-const { emailVerify } = require("../middlewares/email/content");
+const emailSend = require("../utils/emails/send");
+const { emailVerify } = require("../utils/emails/content");
 
 module.exports = {
   signup: {
-    post: async (req, res) => {
+    post: async (req, res, next) => {
       const { email, nickname, password } = req.body;
       if (!email || !nickname || !password) {
         return res.status(400).send("Empty body");
@@ -27,26 +27,26 @@ module.exports = {
 
       const userInfo = await User.findOne({ where: { email } });
 
-      if (userInfo) {
-        if (userInfo.email_verified) {
-          return res.status(409).send("Overlap");
-          //   } else {
-          //     req.userId = userInfo.id;
-          //     // next();
-          //     return;
-        }
-      }
+      // if (userInfo) {
+      //   if (userInfo.email_verified) {
+      //     return res.status(409).send("Overlap");
+      //   } else {
+      //     req.id = userInfo.id;
+      //     next();
+      //     return;
+      //   }
+      // }
 
-      const emailKey = Math.random().toString(36).slice(2);
+      const emailKey = await generateEmailKey();
       const salt = await generateSalt();
       const hashedPassword = await hashPassword(password, salt);
 
       await User.create({
         email,
         password: hashedPassword,
-        salt,
         nickname,
         email_key: emailKey,
+        signup_method: "Normal",
       });
 
       const url =
@@ -64,40 +64,37 @@ module.exports = {
     },
   },
   login: {
-    post: async (req, res) => {
+    post: async (req, res, next) => {
       const { email, password } = req.body;
-      console.log(req.headers);
 
       if (!email || !password) {
         return res.status(400).send("Empty body");
       }
 
       const userInfo = await User.findOne({
-        attributes: ["id", "email", "password", "nickname", "profile"],
         where: { email },
       });
 
-      if (!userInfo) {
+      if (!userInfo || userInfo.signup_method !== "일반") {
         return res.status(400).send("Non-existent account");
       }
 
-      const result = await checkPassword(
-        password,
-        userInfo.dataValues.password
-      );
+      if (!userInfo.email_verified) {
+        req.id = userInfo.id;
+        next();
+        return;
+      }
+
+      const result = await checkPassword(password, userInfo.password);
 
       if (!result) {
         return res.status(400).send("Password inconsistency");
       }
-      const userId = userInfo.dataValues.id;
+      const userId = userInfo.id;
       delete userInfo.dataValues.password;
-      delete userInfo.dataValues.salt;
       const accessToken = generateAccessToken(userInfo.dataValues);
       const refreshToken = generateRefreshToken(userId);
 
-      // await tedis.set(userInfo.id, refreshToken)
-      // console.log(await tedis.get(userInfo.id))
-      // redisClient.set(userInfo.id, refreshToken);
       await redis.set(userInfo.id, refreshToken, "ex", 1209600);
 
       try {
@@ -114,9 +111,10 @@ module.exports = {
   },
   logout: {
     post: async (req, res) => {
-      console.log(req.headers);
+      // console.log(req.headers);
       const { id } = isAuthorized(req);
-      // redis.del(id);
+
+      redis.del(id);
 
       try {
         res.send("Logout success");
@@ -237,29 +235,19 @@ module.exports = {
           where: { email_key: key },
         });
 
-        console.log(findUser.email_verified);
+        if (!findUser) {
+          return res.status(404).send("Not Found");
+        }
+
         if (findUser.email_verified) {
           return res.status(400).send("Already confirm");
         }
 
         const currentTime = new Date().getTime();
-        const signupDate = new Date(findUser.updated_at);
-        const validTime = new Date(
-          signupDate.getFullYear(),
-          signupDate.getMonth(),
-          signupDate.getDate(),
-          signupDate.getHours(),
-          signupDate.getMinutes() + 3,
-          signupDate.getSeconds()
-        );
+        const signupDate = new Date(findUser.updatedAt).getTime();
 
-        if (validTime.getTime() < new Date().getTime()) {
-          return res.status(400).json({
-            currentTime: new Date(currentTime).toLocaleString(),
-            signupDate: new Date(signupDate).toLocaleString(),
-            validTime: new Date(validTime).toLocaleString(),
-            message: "expiration",
-          });
+        if (signupDate + 180000 < currentTime) {
+          return res.status(400).send("expiration")
         }
 
         await User.update(

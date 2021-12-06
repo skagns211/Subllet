@@ -3,8 +3,7 @@ const { Scrap, Service } = require("../models");
 module.exports = {
   scrap: {
     get: async (req, res) => {
-      // 포스트맨용으로 route에 추가
-      const user_id = req.params.id;
+      const user_id = req.id;
 
       const services = await Scrap.findAll({
         where: { user_id },
@@ -31,8 +30,7 @@ module.exports = {
       }
     },
     post: async (req, res) => {
-      // user_id는 포스트맨용
-      const { user_id } = req.body;
+      const user_id = req.id;
       const service_id = req.params.serviceId;
 
       await Scrap.findOrCreate({
@@ -55,7 +53,7 @@ module.exports = {
       }
     },
     delete: async (req, res) => {
-      // params에 user_id는 포스트맨용
+      const user_id = req.id
       const service_id = req.params.serviceId;
 
       await Scrap.destroy({

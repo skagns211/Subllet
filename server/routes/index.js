@@ -9,13 +9,14 @@ const scrapsRouter = require("./scraps");
 const askingsRouter = require("./askings");
 const replysRouter = require("./replys");
 const oauthsRouter = require("./oauths");
+const authorization = require("../middlewares/authorization");
 
 router.use("/auth", authsRouter);
-router.use("/user", usersRouter);
+router.use("/user", authorization, usersRouter);
 router.use("/service", servicesRouter);
-router.use("/comment", commentsRouter);
-router.use("/subscribe", subscribesRouter);
-router.use("/scrap", scrapsRouter);
+router.use("/comment", authorization, commentsRouter);
+router.use("/subscribe", authorization, subscribesRouter);
+router.use("/scrap", authorization, scrapsRouter);
 router.use("/asking", askingsRouter);
 router.use("/reply", replysRouter);
 router.use("/oauth", oauthsRouter);

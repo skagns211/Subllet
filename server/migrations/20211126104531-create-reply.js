@@ -9,9 +9,11 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       user_id: {
+        // references: { model: "Users", key: "id" },
         type: Sequelize.INTEGER,
       },
       asking_id: {
+        // references: { model: "Askings", key: "id" },
         type: Sequelize.INTEGER,
       },
       message: {

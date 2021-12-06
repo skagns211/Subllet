@@ -9,21 +9,27 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       message: {
+        allowNull: false,
         type: Sequelize.TEXT
       },
       inner_image: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       outer_image: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       category: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       url: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       demo: {

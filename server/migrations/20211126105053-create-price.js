@@ -9,12 +9,15 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       service_id: {
+        // references: { model: "Services", key: "id" },
         type: Sequelize.INTEGER,
       },
       title: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       price: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       createdAt: {

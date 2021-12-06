@@ -1,8 +1,8 @@
 const {
   isAuthorized,
   checkAccessToken,
-} = require("../../utils/tokenFunctions");
-const { User } = require("../../models");
+} = require("../utils/tokenFunctions");
+const { User } = require("../models");
 
 const authorization = async (req, res, next) => {
   const { accesstoken } = req.headers;
