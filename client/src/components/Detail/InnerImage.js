@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
 import LoginModal from "../LoginModal";
-require("dotenv").config();
 
 const StyledBody = styled.section`
   margin-top: 1rem;
@@ -58,20 +57,16 @@ const DetailMessage = styled.div`
 const InnerImage = ({ open, detail, handleClick }) => {
   const [scrap, setScrap] = useState("");
 
-  axios
-    .get(`${process.env.REACT_APP_URL}/scrap/1`, {
-      withCredentials: true,
-    })
-    .then((res) => {
-      setScrap(res.data.scraps.length);
-    });
+  axios.get("/scrap/1").then((res) => {
+    setScrap(res.data.scraps.length);
+  });
 
   return (
     <StyledBody>
       {open ? <LoginModal handleClick={handleClick} /> : null}
       <BackgroundImage>
         <ScrapButton>
-          <i onClick={handleClick} class="far fa-star fa-2x"></i>
+          <i onClick={handleClick} className="far fa-star fa-2x"></i>
           <div>{scrap}</div>
         </ScrapButton>
         <DetailMessage>

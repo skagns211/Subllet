@@ -45,7 +45,7 @@ const FilterList = () => {
     <StyledBody>
       <ServiceList>
         {dummy.map((dummy) => {
-          return <img src={dummy.service.outer_image} />;
+          return <img src={dummy.service.outer_image} alt="detail 이미지" />;
         })}
       </ServiceList>
     </StyledBody>
