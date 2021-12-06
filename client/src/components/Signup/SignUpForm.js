@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Select from "react-select";
 import axios from "axios";
 
+//! Styled Setting--------------------------------------------
+
 const SignUpContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -133,6 +135,7 @@ const Button = styled.button`
 `;
 
 //! Component render-------------------------------------------------------------
+
 const SignUpForm = () => {
   const [frontEmail, setFrontEmail] = useState("");
   const [backEmail, setBackEmail] = useState("");
@@ -157,6 +160,12 @@ const SignUpForm = () => {
     passwordCheck: "",
   });
   useEffect(() => {
+    validPassword(userInfo.password);
+  }, [userInfo.password]);
+
+  useEffect(() => {
+    validPassword(userInfo.password);
+    equalPassword(userInfo.password, userInfo.passwordCheck);
     // console.log(userInfo);
   }, [userInfo]);
 
@@ -167,7 +176,7 @@ const SignUpForm = () => {
   };
   console.log(userData);
 
-  //!유효성검사 및 State
+  //!유효성검사 관련 State
   const [isEmail, setIsEmail] = useState(false);
   const [isDupEmail, setIsDupEmail] = useState(false); //! 이메일 중복을 확인하는 State
   const [isDupNickname, setIsDupNickname] = useState(false);
@@ -194,7 +203,33 @@ const SignUpForm = () => {
     { value: "outlook.com", label: "outlook.com" },
     { value: "icloud.com", label: "icloud.com" },
   ];
-  //!------------------------------------------------------------
+
+  //! 유효성검사 --------------------------------------------------
+
+  //! password 유효성검사
+  const validPassword = (password) => {
+    const regPassword = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    if (!regPassword.test(password)) {
+      setIsPassword(false);
+      setPasswordMessage(
+        "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
+      );
+    } else {
+      setIsPassword(true);
+      setPasswordMessage("사용하기 좋은 비밀번호입니다:)");
+    }
+  };
+  //! password 확인 유효성검사
+  const equalPassword = (password, cheeckPassword) => {
+    if (password === cheeckPassword) {
+      setIsPwdCheck(true);
+      setPasswordCheckMessage("비밀번호가 일치합니다:)");
+    } else {
+      setIsPwdCheck(false);
+      setPasswordCheckMessage("비밀번호가 일치하지 않습니다.");
+    }
+  };
+  //! Handler function-----------------------------------------------
   const navigate = useNavigate();
   const handleEmailFrontValue = (e) => {
     setFrontEmail(e.target.value);
@@ -207,14 +242,65 @@ const SignUpForm = () => {
   const handleInputValue = (key) => (e) => {
     setUserInfo({ ...userInfo, [key]: e.target.value });
   };
+
   //! Axios -----------------------------------------------------
+
+  const checkEmail = () => {
+    //! 이메일 중복확인
+    if (email.length !== 0) {
+      setIsDupEmail(false);
+      setEmailMessage("이메일이 입력되지 않았습니다. 이메일을 입력해주세요.");
+    } else {
+      axios
+        .post("/auth/email", { email: userData.email })
+        .then((res) => {
+          const resMsg = res.data;
+          if (resMsg === "Overlap") {
+            setIsDupEmail(false);
+            setEmailMessage("이미 회원가입된 이메일입니다.");
+          } else if (resMsg === "Empty body") {
+            setIsDupEmail(false);
+            setEmailMessage(
+              "이메일이 입력되지 않았습니다. 이메일을 입력해주세요."
+            );
+          } else {
+            setIsDupEmail(true);
+            setEmailMessage("사용가능한 이메일입니다.");
+          }
+        })
+        .catch((err) => {
+          throw err;
+        });
+    }
+  };
+
+  const checkNickname = () => {
+    axios
+      .post("/auth/nickname", { nickname: userData.nickname })
+      .then((res) => {
+        const resMsg = res.data;
+        if (resMsg === "Overlap") {
+          setIsDupNickname(false);
+          setNicknameMessage("이미 사용중인 닉네임입니다.");
+        } else if (resMsg === "Empty body") {
+          setIsDupNickname(false);
+          setNicknameMessage(
+            "닉네임이 입력되지 않았습니다. 닉네임을 입력해주세요."
+          );
+        } else {
+          setIsDupNickname(true);
+          setNicknameMessage("사용가능한 닉네임입니다:)");
+        }
+      });
+  };
+
   const handleComplete = () => {
     axios
       .post("/auth/signup", userData)
       .then((res) => {
         console.log(res.data);
-        const successMsg = res.data.message;
-        if (successMsg) {
+        const resMsg = res.data;
+        if (resMsg === "Signup success") {
           setIsComplete(true);
           setTimeout(() => {
             navigate("/");
@@ -225,6 +311,8 @@ const SignUpForm = () => {
         throw err;
       });
   };
+
+  //! 1. Authorization Code를 받고 서버로 넘겨주는것까지
 
   return (
     <SignUpContainer>
@@ -248,7 +336,9 @@ const SignUpForm = () => {
             placeholder="선택해주세요"
           />
         </EmailTab>
-        <ErrorMessage>올바른 이메일 형식이 아닙니다.</ErrorMessage>
+        {isEmail ? null : email.length === 0 ? null : (
+          <ErrorMessage>{emailMessage}</ErrorMessage>
+        )}
       </ElementBox>
       <ElementBox>
         <ElementTitle>닉네임</ElementTitle>
@@ -257,8 +347,14 @@ const SignUpForm = () => {
           placeholder="닉네임"
           onChange={handleInputValue("nickname")}
         />
-        <ErrorMessage>중복된 닉네임입니다.</ErrorMessage>
-        <Button>닉네임 중복검사</Button>
+        {isDupNickname ? (
+          <ErrorMessage></ErrorMessage>
+        ) : userInfo.nickname.length === 0 ? (
+          <ErrorMessage></ErrorMessage>
+        ) : (
+          <ErrorMessage>{nicknameMessage}</ErrorMessage>
+        )}
+        <Button onClick={() => checkNickname()}>닉네임 중복검사</Button>
       </ElementBox>
       <ElementBox>
         <ElementTitle>비밀번호</ElementTitle>
@@ -270,10 +366,9 @@ const SignUpForm = () => {
           type="password"
           onChange={handleInputValue("password")}
         />
-        <ErrorMessage>
-          비밀번호는 영문, 숫자를 포함하여 8이상이어야 합니다
-        </ErrorMessage>
-        {/* <Button>닉네임 중복검사</Button> */}
+        {isPassword ? null : userInfo.password.length === 0 ? null : (
+          <ErrorMessage>{passwordMessage}</ErrorMessage>
+        )}
       </ElementBox>
       <ElementBox>
         <ElementTitle>비밀번호 확인</ElementTitle>
@@ -282,10 +377,11 @@ const SignUpForm = () => {
           type="password"
           onChange={handleInputValue("passwordCheck")}
         />
-        <ErrorMessage>비밀번호가 일치하지 않습니다.</ErrorMessage>
-        {/* <Button>회원가입</Button> */}
+        {isPwdCheck ? null : userInfo.passwordCheck.length === 0 ? null : (
+          <ErrorMessage>{passwordCheckMessage}</ErrorMessage>
+        )}
       </ElementBox>
-      <Button>회원가입</Button>
+      <Button onClick={() => checkEmail()}>회원가입</Button>
     </SignUpContainer>
   );
 };
