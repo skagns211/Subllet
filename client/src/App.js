@@ -17,6 +17,8 @@ import Detail from "./pages/Detail";
 import Login from "./pages/Login";
 import MySubllet from "./pages/MySubllet";
 import SignUp from "./pages/SignUp";
+import KakaoAuthHandler from "./components/Signup/KakaoAuthHandler";
+import AfterPage from "./pages/AfterPage";
 
 axios.defaults.baseURL = "https://localhost:4000";
 axios.defaults.withCredentials = true;
@@ -65,6 +67,8 @@ function App() {
           <Route path="/userlogin" element={<Login />} />
           <Route path="/mysubllet" element={<MySubllet />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/auth/kakao/callback" element={<KakaoAuthHandler />} />
+          <Route path="/auth_signup" element={<AfterPage />} />
         </Routes>
         <Footer />
       </SectionStyle>
