@@ -25,9 +25,9 @@ module.exports = {
     },
     post: async (req, res) => {
       const service_id = req.params.serviceId;
-      const user_id = req.id
-      
-      const {paydate, planname, planprice } = req.body;
+      const user_id = req.id;
+
+      const { paydate, planname, planprice } = req.body;
 
       if (!planname || !planprice) {
         return res.status(400).send("Empty body");
@@ -110,6 +110,34 @@ module.exports = {
 
       try {
         return res.status(204).send("Success");
+      } catch (err) {
+        console.error(err);
+        return res.status(500).send("Server error");
+      }
+    },
+  },
+  isSubscribe: {
+    get: async (req, res) => {
+      const user_id = req.id;
+      const service_id = req.params.serviceId;
+
+      const subscribe = await Subscribe.findOne({
+        where: {
+          user_id,
+          service_id,
+        },
+      });
+
+      let isSubscribe;
+
+      if (subscribe) {
+        isSubscribe = true;
+      } else {
+        isSubscribe = false;
+      }
+
+      try {
+        return res.json({ isSubscribe });
       } catch (err) {
         console.error(err);
         return res.status(500).send("Server error");
