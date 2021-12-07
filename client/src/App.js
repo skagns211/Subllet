@@ -18,7 +18,6 @@ import Login from "./pages/Login";
 import MySubllet from "./pages/MySubllet";
 import SignUp from "./pages/SignUp";
 import KakaoAuthHandler from "./components/Signup/KakaoAuthHandler";
-import AfterPage from "./pages/AfterPage";
 
 axios.defaults.baseURL = "https://localhost:4000";
 axios.defaults.withCredentials = true;
