@@ -26,15 +26,16 @@ const Main = () => {
   const accessToken = window.localStorage.getItem("accessToken");
 
   useEffect(() => {
-    window.localStorage.setItem("loginUserInfo", loginUserInfo);
+    loginUserInfo &&
+      window.localStorage.setItem("loginUserInfo", loginUserInfo);
   }, [loginUserInfo]);
 
   useEffect(() => {
-    window.localStorage.setItem("accessToken", accessToken);
+    accessToken && window.localStorage.setItem("accessToken", accessToken);
   }, [accessToken]);
 
   useEffect(() => {
-    window.localStorage.setItem("isLogin", isLogin);
+    isLogin && window.localStorage.setItem("isLogin", isLogin);
   }, [isLogin]);
 
   return (

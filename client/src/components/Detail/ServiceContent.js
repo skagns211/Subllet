@@ -25,6 +25,9 @@ const ServiceDetail = styled.div`
   margin: 0.5rem 0rem;
   display: flex;
   flex-direction: column;
+  input {
+    margin: 1rem;
+  }
 
   @media only screen and (min-width: 800px) {
     height: 20rem;
@@ -38,13 +41,13 @@ const LinkButton = styled.div`
   justify-content: center;
   button {
     background-color: #252a3b;
-    color: #e37b02;
     margin: 0.5rem 0rem;
     font-size: 2rem;
     border-radius: 5px;
     width: 100%;
     border: 0px;
     padding: 0.5rem;
+    color: #e37b02;
   }
 `;
 const ServiceOption = styled.div`
@@ -58,9 +61,14 @@ const Price = styled.span`
 `;
 
 const ServiceContent = ({ detail }) => {
-  console.log(detail);
   let prices = detail.prices;
+  console.log(detail);
   console.log(prices);
+
+  const openURL = () => {
+    window.open(`${detail.url}`);
+  };
+
   return (
     <StyledBody>
       <Service>
@@ -69,10 +77,12 @@ const ServiceContent = ({ detail }) => {
           <ServiceDetail>
             {prices &&
               prices.map((price) => {
-                <>
-                  <input type="radio" name="price" value="qweqwe" />
-                  <div>{price}</div>;
-                </>;
+                return (
+                  <div>
+                    <input type="radio" name="price" value={price.price} />
+                    {price.title} 월 {price.price}
+                  </div>
+                );
               })}
           </ServiceDetail>
         </Price>
@@ -88,7 +98,7 @@ const ServiceContent = ({ detail }) => {
         </span>
       </Service>
       <LinkButton>
-        <button>구독하러가기</button>
+        <button onClick={openURL}>구독하러가기</button>
       </LinkButton>
     </StyledBody>
   );
