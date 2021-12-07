@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+
 import kakao_oauth from "../../IMG/Oauth/kakao_oauth.png";
 import google_oauth from "../../IMG/Oauth/google_oauth.png";
 import naver_oauth from "../../IMG/Oauth/naver_oauth.png";
-require("dotenv").config();
 
 const OauthContainer = styled.div`
   width: 100%;
@@ -38,24 +37,16 @@ const IconBox = styled.span`
     width: 3.5rem;
     height: 3.5rem;
     margin: 0 0.5rem 0 0.5rem;
-    cursor: pointer;
     /* border: 1px solid white; */
   }
 `;
 
-const OauthSignUp = () => {
-  const navigate = useNavigate();
-  const KAKAO_REST_API_KEY = "87738e53cf21a10d5f15c7dc5a63180f";
-  const REDIRECT_URI = "https://localhost:3000/auth/kakao/callback";
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-
+const OauthLogin = () => {
   return (
     <OauthContainer>
-      <div>SNS 계정으로 회원가입</div>
+      <div>SNS 계정으로 로그인</div>
       <IconBox>
-        <a href={KAKAO_AUTH_URL}>
-          <img src={kakao_oauth} />
-        </a>
+        <img src={kakao_oauth} />
         <img src={google_oauth} />
         <img src={naver_oauth} />
       </IconBox>
@@ -63,4 +54,4 @@ const OauthSignUp = () => {
   );
 };
 
-export default OauthSignUp;
+export default OauthLogin;

@@ -110,6 +110,7 @@ const Font = styled.span`
   } */
 
   span {
+    cursor: pointer;
     @media only screen and (max-width: 800px) {
       margin-left: 1.5rem;
     }
@@ -251,9 +252,9 @@ const Nav = () => {
           </span>
         </MinNavTap>
         <Font>
-          <Link to="/">
-            <span>Subllet</span>
-          </Link>
+          {/* <Link to="/"> */}
+          <span onClick={() => window.location.replace("/")}>Subllet</span>
+          {/* </Link> */}
           <img alt="logo" src={logo}></img>
           <SearchBar type="search" placeholder="서비스를 검색해보세요" />
         </Font>

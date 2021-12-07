@@ -11,7 +11,7 @@ const emailRedirection = async (req, res) => {
   });
 
   if (!findUser) {
-    return res.status(404).send("사용자를 찾을 수 없습니다.");
+    return res.status(404).send("Not found");
   }
 
   const { email, nickname } = findUser;
@@ -32,7 +32,7 @@ const emailRedirection = async (req, res) => {
   emailSend(emailContent);
 
   try {
-    res.status(201).send("메일이 재발송되었습니다.");
+    res.status(201).send("Resended");
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");

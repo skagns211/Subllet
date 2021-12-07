@@ -16,6 +16,9 @@
 export const LOGIN_USER_INFO = "LOGIN_USER_INFO";
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
 export const IS_LOGIN = "IS_LOGIN";
+export const KAKAO_AUTH_CODE = "KAKAO_AUTH_CODE";
+export const AUTH_NICKNAME = "AUTH_NICKNAME";
+export const AUTH_USERINFO = "AUTH_USERINFO";
 
 export const setLoginUserInfo = (loginUserInfo) => {
   console.log(loginUserInfo);
@@ -37,4 +40,25 @@ export const setIsLogin = (data) => {
     type: IS_LOGIN,
     payload: data ? true : false,
   };
+};
+
+export const setKakaoAuthCode = (data) => {
+  return {
+    type: KAKAO_AUTH_CODE,
+    payload: data,
+  };
+};
+
+export const setAuthUserInfo = (data) => {
+  if (data.nickname.length === 0) {
+    return {
+      type: AUTH_USERINFO,
+      payload: data,
+    };
+  } else {
+    return {
+      type: AUTH_NICKNAME,
+      payload: data,
+    };
+  }
 };

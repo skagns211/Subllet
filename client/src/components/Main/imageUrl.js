@@ -37,4 +37,12 @@ export const IMG = {
     "https://i.esdrop.com/d/z3v0lj8ztjvc/ivDA4Bur58.png",
     "https://i.esdrop.com/d/z3v0lj8ztjvc/DK1R6h6M7N.png",
   ],
+  backImg: [
+    "https://i.esdrop.com/d/z3v0lj8ztjvc/8j3Dk7HH3O.png",
+    "https://i.esdrop.com/d/z3v0lj8ztjvc/ieclYOlOqZ.png",
+    "https://i.esdrop.com/d/z3v0lj8ztjvc/5zkUQIf8dG.png",
+    "https://i.esdrop.com/d/z3v0lj8ztjvc/DhNyzvVjAb.png",
+    "https://i.esdrop.com/d/z3v0lj8ztjvc/UbrqwYPymr.png",
+    "https://i.esdrop.com/d/z3v0lj8ztjvc/r5AEoc1aZy.png",
+  ],
 };
