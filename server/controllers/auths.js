@@ -100,9 +100,9 @@ module.exports = {
   logout: {
     post: async (req, res) => {
       // console.log(req.headers);
-      const { id } = isAuthorized(req);
+      // const { id } = isAuthorized(req);
 
-      redis.del(id);
+      // redis.del(id);
 
       try {
         res.send("Logout success");
@@ -172,6 +172,7 @@ module.exports = {
   refresh: {
     post: async (req, res) => {
       const { accesstoken, refreshtoken } = req.headers;
+      console.log(accesstoken);
 
       if (!accesstoken || !refreshtoken) {
         return res.status(400).send("Not exist token");

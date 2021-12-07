@@ -283,7 +283,7 @@ const Nav = () => {
                     to="/"
                     onClick={() => {
                       logoutHandler();
-                      window.location.replace("/");
+                      window.location.href("/");
                     }}
                   >
                     로그아웃

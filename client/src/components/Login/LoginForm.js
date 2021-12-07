@@ -155,6 +155,7 @@ const emailList = [
 
 const LoginForm = () => {
   const state = useSelector((state) => state); //! state 사용 함수
+  // console.log(state);
   const dispatch = useDispatch(); //! action 사용 함수
   const [loginInfo, setLoginInfo] = useState({
     email: "",

@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+
 import LoginModal from "../LoginModal";
 
 const StyledBody = styled.section`
@@ -8,19 +9,19 @@ const StyledBody = styled.section`
   max-width: 100%;
 `;
 const BackgroundImage = styled.div`
-  background-image: url("https://i.ibb.co/3FR86KX/2021-11-28-20-53-51.png");
+  background-image: url(${(props) => props.detail});
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   opacity: 0.7;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-radius: 5px;
   @media only screen and (min-device-width: 800px) {
-    background-image: url("https://i.ibb.co/3FR86KX/2021-11-28-20-53-51.png");
+    background-image: url(${(props) => props.detail});
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
+    background-size: contain;
     height: 35rem;
     opacity: 0.7;
     display: flex;
@@ -54,24 +55,81 @@ const DetailMessage = styled.div`
   }
 `;
 
-const InnerImage = ({ open, detail, handleClick }) => {
-  const [scrap, setScrap] = useState("");
+const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
+  const [open, setOpen] = useState(false);
+  const [isScrap, setIsScrap] = useState();
+  const [scrapNum, setScrapNum] = useState();
 
-  axios.get("/scrap/1").then((res) => {
-    setScrap(res.data.scraps.length);
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  useEffect(() => {
+    axios
+      .get(`/scrap/${ServiceId}`, {
+        headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+      })
+      .then((res) => {
+        setIsScrap(res.data.isScrap);
+        // console.log(res);
+      });
   });
+
+  useEffect(() => {
+    axios.get(`/service/${ServiceId}`).then((res) => {
+      setScrapNum(res.data.scrapNum);
+    });
+  });
+
+  const addScrap = () => {
+    axios
+      .post(`/scrap/${ServiceId}`, null, {
+        headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+      })
+      .then(() => {
+        setIsScrap(true);
+      });
+  };
+
+  const deleteScrap = () => {
+    axios
+      .delete(`/scrap/${ServiceId}`, {
+        headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+      })
+      .then(() => {
+        setIsScrap(false);
+      });
+  };
 
   return (
     <StyledBody>
       {open ? <LoginModal handleClick={handleClick} /> : null}
-      <BackgroundImage>
+      <BackgroundImage detail={detail.inner_image}>
         <ScrapButton>
-          <i onClick={handleClick} className="far fa-star fa-2x"></i>
-          <div>{scrap}</div>
+          {JSON.parse(isLogin) && isScrap ? (
+            <>
+              <i onClick={deleteScrap} className="fas fa-star fa-2x"></i>
+              <div>{scrapNum}</div>
+            </>
+          ) : JSON.parse(isLogin) && isScrap === false ? (
+            <>
+              <i onClick={addScrap} className="far fa-star fa-2x"></i>
+              <div>{scrapNum}</div>
+            </>
+          ) : (
+            <>
+              <i onClick={handleClick} className="far fa-star fa-2x"></i>
+              <div>{scrapNum}</div>
+            </>
+          )}
         </ScrapButton>
         <DetailMessage>
           <span>로켓배송 상품 100% 무료배송</span>
-          <button>내 구독 목록에 추가</button>
+          {JSON.parse(isLogin) ? (
+            <button>내 구독 목록에 추가</button>
+          ) : (
+            <button onClick={handleClick}>내 구독 목록에 추가</button>
+          )}
         </DetailMessage>
       </BackgroundImage>
     </StyledBody>
