@@ -13,31 +13,49 @@ const StyledBody = styled.section`
 `;
 
 const Detail = () => {
-  const ServiceId = useParams().id;
-  const [detail, setDetail] = useState({});
-  const [open, setOpen] = useState(false);
-  const [comments, setComments] = useState([]);
+  const isLogin = window.localStorage.getItem("isLogin");
+  const loginUserInfo = window.localStorage.getItem("loginUserInfo");
+  const accessToken = window.localStorage.getItem("accessToken");
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
+  const ServiceId = useParams().id;
+
+  const [comments, setComments] = useState([]);
+  const [detail, setDetail] = useState([]);
+
+  useEffect(() => {
+    window.localStorage.setItem("loginUserInfo", loginUserInfo);
+  }, [loginUserInfo]);
+
+  useEffect(() => {
+    window.localStorage.setItem("accessToken", accessToken);
+  }, [accessToken]);
+
+  useEffect(() => {
+    window.localStorage.setItem("isLogin", isLogin);
+  }, [isLogin]);
 
   useEffect(() => {
     axios.get(`/service/${ServiceId}`).then((res) => {
-      setDetail(res.data.service);
       setComments(res.data.service.Comments);
+      setDetail(res.data.service);
     });
   }, []);
-  // console.log(comments);
 
   return (
     <StyledBody>
-      <InnerImage open={open} detail={detail} handleClick={handleClick} />
+      <InnerImage
+        isLogin={isLogin}
+        ServiceId={ServiceId}
+        accessToken={accessToken}
+        detail={detail}
+      />
       <ServiceContent detail={detail} />
       <Comment
         ServiceId={ServiceId}
         comments={comments}
         setComments={setComments}
+        accessToken={accessToken}
+        loginUserInfo={loginUserInfo}
       />
     </StyledBody>
   );

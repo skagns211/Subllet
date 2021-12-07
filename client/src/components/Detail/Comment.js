@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
+import AlertModal from "../AlertModal";
 
 const StyledBody = styled.div`
   max-width: 100%;
@@ -35,6 +36,7 @@ const InputComment = styled.div`
     height: 3.5rem;
     resize: none;
     font-size: 1.5rem;
+    padding: 1rem;
   }
 `;
 
@@ -85,15 +87,27 @@ const CommentLike = styled.div`
   margin: 0rem 3rem;
 `;
 
-const Comment = ({ comments, setComments, ServiceId }) => {
+const Comment = ({
+  comments,
+  setComments,
+  ServiceId,
+  accessToken,
+  loginUserInfo,
+}) => {
   const [comment, setComment] = useState("");
   const [like, setLike] = useState();
+  const [open, setOpen] = useState(false);
+  const [alertMsg, setAlertMsg] = useState();
 
   const day = (createdAt) => {
     let year = createdAt.slice(0, 4);
     let month = createdAt.slice(5, 7);
     let day = createdAt.slice(8, 10);
     return `${year}년 ${month}월 ${day}일`;
+  };
+
+  const handleClick = () => {
+    setOpen(!open);
   };
 
   const inputText = (e) => {
@@ -105,21 +119,40 @@ const Comment = ({ comments, setComments, ServiceId }) => {
   };
 
   const sendComment = () => {
-    axios
-      .post(`/comment/${ServiceId}`, {
-        user_id: 2,
-        commenter: "test",
-        message: comment,
-        likes: Boolean(like),
-      })
-      .then((res) => {
-        console.log(res.status);
-        setComments([...comments, res.data.comment]);
-      });
+    if (comment && like) {
+      axios
+        .post(
+          `/comment/${ServiceId}`,
+          {
+            commenter: JSON.parse(loginUserInfo).nickname,
+            message: comment,
+            likes: like,
+          },
+          {
+            headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+          }
+        )
+        .then((res) => {
+          setComments([...comments, res.data.comment]);
+        })
+        .catch((err) => {
+          // console.dir(err);
+          // console.log(err.response.data);
+          // if(err.response.data === '')
+          setAlertMsg({ message: "이미 작성하셨습니다", button: "확인" });
+          setOpen(!open);
+        });
+    } else {
+      setAlertMsg({ message: "모두 입력해주세요", button: "확인" });
+      setOpen(!open);
+    }
   };
 
   return (
     <StyledBody>
+      {open ? (
+        <AlertModal alertMsg={alertMsg} handleClick={handleClick} />
+      ) : null}
       <ServiceOption>Comment</ServiceOption>
       <CommentBody>
         <InputComment>

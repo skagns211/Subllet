@@ -23,6 +23,9 @@ const ServiceDetail = styled.div`
   border-radius: 5px;
   padding: 1rem;
   margin: 0.5rem 0rem;
+  display: flex;
+  flex-direction: column;
+
   @media only screen and (min-width: 800px) {
     height: 20rem;
     /* width: 37rem; */
@@ -54,17 +57,23 @@ const Price = styled.span`
   margin-right: 1rem;
 `;
 
-const ServiceContent = () => {
+const ServiceContent = ({ detail }) => {
+  console.log(detail);
+  let prices = detail.prices;
+  console.log(prices);
   return (
     <StyledBody>
       <Service>
         <Price>
           <ServiceOption>Price</ServiceOption>
           <ServiceDetail>
-            <label>
-              <input type="radio" name="price" value="2900" />월 2900원
-            </label>
-            <br />
+            {prices &&
+              prices.map((price) => {
+                <>
+                  <input type="radio" name="price" value="qweqwe" />
+                  <div>{price}</div>;
+                </>;
+              })}
           </ServiceDetail>
         </Price>
         <span>

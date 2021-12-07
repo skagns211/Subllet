@@ -15,7 +15,7 @@ const emailRedirection = async (req, res) => {
   }
 
   const { email, nickname } = findUser;
-  const emailKey = await generateEmailKey()
+  const emailKey = await generateEmailKey();
 
   await User.update(
     {

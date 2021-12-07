@@ -75,15 +75,15 @@ module.exports = {
         where: { email },
       });
 
-      if (!userInfo || userInfo.signup_method !== "일반") {
+      if (!userInfo || userInfo.signup_method !== "Normal") {
         return res.status(400).send("Non-existent account");
       }
 
-      if (!userInfo.email_verified) {
-        req.id = userInfo.id;
-        next();
-        return;
-      }
+      // if (!userInfo.email_verified) {
+      //   req.id = userInfo.id;
+      //   next();
+      //   return;
+      // }
 
       const result = await checkPassword(password, userInfo.password);
 
@@ -112,9 +112,9 @@ module.exports = {
   logout: {
     post: async (req, res) => {
       // console.log(req.headers);
-      const { id } = isAuthorized(req);
+      // const { id } = isAuthorized(req);
 
-      redis.del(id);
+      // redis.del(id);
 
       try {
         res.send("Logout success");
@@ -184,6 +184,7 @@ module.exports = {
   refresh: {
     post: async (req, res) => {
       const { accesstoken, refreshtoken } = req.headers;
+      console.log(accesstoken);
 
       if (!accesstoken || !refreshtoken) {
         return res.status(401).send("Not exist token");
@@ -247,7 +248,7 @@ module.exports = {
         const signupDate = new Date(findUser.updatedAt).getTime();
 
         if (signupDate + 180000 < currentTime) {
-          return res.status(400).send("expiration")
+          return res.status(400).send("expiration");
         }
 
         await User.update(

@@ -1,6 +1,6 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import dummy from "../../dummy/dummy";
 
 const StyledBody = styled.div``;
 const ServiceList = styled.div`
@@ -15,7 +15,6 @@ const ServiceList = styled.div`
     width: 100%;
     height: 100%;
     min-width: 10rem;
-    width: 100%;
     max-width: 35%;
     max-height: 8rem;
     object-fit: cover;
@@ -41,11 +40,19 @@ const ServiceList = styled.div`
   }
 `;
 const FilterList = () => {
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    axios.get("/service").then((res) => {
+      setServices(res.data.services);
+    });
+  }, []);
+
   return (
     <StyledBody>
       <ServiceList>
-        {dummy.map((dummy) => {
-          return <img src={dummy.service.outer_image} alt="detail 이미지" />;
+        {services.map((service) => {
+          return <img src={service.outer_image} alt="detail 이미지" />;
         })}
       </ServiceList>
     </StyledBody>
