@@ -1,4 +1,4 @@
-import React from "react";
+import react, { useState, useEffect } from "react";
 import styled from "styled-components";
 import OauthSignUp from "../components/Signup/OauthSignUp";
 import SignUpForm from "../components/Signup/SignUpForm";
@@ -58,7 +58,6 @@ const Line = styled.div`
     background: #cecece;
   } */
 `;
-
 
 const SignUp = () => {
   return (

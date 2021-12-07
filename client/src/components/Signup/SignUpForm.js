@@ -116,6 +116,9 @@ const ErrorMessage = styled.div`
   color: red;
   font-size: 0.7em;
   /* border: 1px solid white; */
+  &.good {
+    color: #ff8a00;
+  }
 `;
 const Button = styled.button`
   top: 1rem;
@@ -142,6 +145,7 @@ const SignUpForm = () => {
   const [email, setEmail] = useState("");
 
   useEffect(() => {
+    setEmail(frontEmail + "@" + backEmail);
     // console.log(frontEmail);
   }, [frontEmail]);
 
@@ -247,7 +251,8 @@ const SignUpForm = () => {
 
   const checkEmail = () => {
     //! 이메일 중복확인
-    if (email.length !== 0) {
+    console.log(email);
+    if (frontEmail.length === 0 || backEmail.length === 0) {
       setIsDupEmail(false);
       setEmailMessage("이메일이 입력되지 않았습니다. 이메일을 입력해주세요.");
     } else {
@@ -255,6 +260,7 @@ const SignUpForm = () => {
         .post("/auth/email", { email: userData.email })
         .then((res) => {
           const resMsg = res.data;
+          console.log(resMsg);
           if (resMsg === "Overlap") {
             setIsDupEmail(false);
             setEmailMessage("이미 회원가입된 이메일입니다.");
@@ -264,6 +270,7 @@ const SignUpForm = () => {
               "이메일이 입력되지 않았습니다. 이메일을 입력해주세요."
             );
           } else {
+            setIsEmail(true);
             setIsDupEmail(true);
             setEmailMessage("사용가능한 이메일입니다.");
           }
@@ -295,21 +302,33 @@ const SignUpForm = () => {
   };
 
   const handleComplete = () => {
-    axios
-      .post("/auth/signup", userData)
-      .then((res) => {
-        console.log(res.data);
-        const resMsg = res.data;
-        if (resMsg === "Signup success") {
-          setIsComplete(true);
-          setTimeout(() => {
-            navigate("/");
-          }, 2000);
-        }
-      })
-      .catch((err) => {
-        throw err;
-      });
+    console.log(isEmail, isDupEmail, isDupNickname, isPassword, isPwdCheck);
+    if (
+      isEmail &&
+      isDupEmail &&
+      isDupNickname &&
+      isPassword &&
+      isPwdCheck === false
+    ) {
+      console.log("회원가입 요청이 실패하였습니다.");
+    } else {
+      axios
+        .post("/auth/signup", userData)
+        .then((res) => {
+          console.log(res.data);
+          const resMsg = res.data;
+          if (resMsg === "Signup success") {
+            setIsComplete(true);
+            console.log("회원가입 요청이 성공적으로 전달되었습니다.");
+            setTimeout(() => {
+              navigate("/");
+            }, 2000);
+          }
+        })
+        .catch((err) => {
+          throw err;
+        });
+    }
   };
 
   //! 1. Authorization Code를 받고 서버로 넘겨주는것까지
@@ -336,9 +355,12 @@ const SignUpForm = () => {
             placeholder="선택해주세요"
           />
         </EmailTab>
-        {isEmail ? null : email.length === 0 ? null : (
+        {isEmail ? (
+          <ErrorMessage className="good">{emailMessage}</ErrorMessage>
+        ) : email.length === 0 ? null : (
           <ErrorMessage>{emailMessage}</ErrorMessage>
         )}
+        <Button onClick={() => checkEmail()}>이메일 중복검사</Button>
       </ElementBox>
       <ElementBox>
         <ElementTitle>닉네임</ElementTitle>
@@ -348,7 +370,7 @@ const SignUpForm = () => {
           onChange={handleInputValue("nickname")}
         />
         {isDupNickname ? (
-          <ErrorMessage></ErrorMessage>
+          <ErrorMessage className="good">{nicknameMessage}</ErrorMessage>
         ) : userInfo.nickname.length === 0 ? (
           <ErrorMessage></ErrorMessage>
         ) : (
@@ -381,7 +403,7 @@ const SignUpForm = () => {
           <ErrorMessage>{passwordCheckMessage}</ErrorMessage>
         )}
       </ElementBox>
-      <Button onClick={() => checkEmail()}>회원가입</Button>
+      <Button onClick={() => handleComplete()}>회원가입</Button>
     </SignUpContainer>
   );
 };
