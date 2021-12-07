@@ -65,14 +65,16 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
   };
 
   useEffect(() => {
-    axios
-      .get(`/scrap/${ServiceId}`, {
-        headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
-      })
-      .then((res) => {
-        setIsScrap(res.data.isScrap);
-        // console.log(res);
-      });
+    if (isLogin === true) {
+      axios
+        .get(`/scrap/${ServiceId}`, {
+          headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+        })
+        .then((res) => {
+          setIsScrap(res.data.isScrap);
+          // console.log(res);
+        });
+    }
   });
 
   useEffect(() => {
