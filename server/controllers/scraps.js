@@ -23,10 +23,10 @@ module.exports = {
       }
 
       try {
-        res.json({ scraps });
+        return res.json({ scraps });
       } catch (err) {
         console.error(err);
-        res.status(500).send("Server error");
+        return res.status(500).send("Server error");
       }
     },
     post: async (req, res) => {
@@ -53,7 +53,7 @@ module.exports = {
       }
     },
     delete: async (req, res) => {
-      const user_id = req.id
+      const user_id = req.id;
       const service_id = req.params.serviceId;
 
       await Scrap.destroy({
@@ -65,6 +65,31 @@ module.exports = {
 
       try {
         return res.status(204).send("Success");
+      } catch (err) {
+        console.error(err);
+        return res.status(500).send("Server error");
+      }
+    },
+  },
+  isScrap: {
+    get: async (req, res) => {
+      const user_id = req.id;
+      const service_id = req.params.serviceId;
+
+      const scrap = await Scrap.findOne({
+        where: { user_id, service_id },
+      });
+
+      let isScrap;
+
+      if (scrap) {
+        isScrap = true;
+      } else {
+        isScrap = false;
+      }
+
+      try {
+        return res.json({ isScrap });
       } catch (err) {
         console.error(err);
         return res.status(500).send("Server error");

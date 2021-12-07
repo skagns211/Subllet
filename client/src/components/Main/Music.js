@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
-import { IMG } from "../Main/imageUrl";
+import { IMG } from "./imageUrl";
 
 const StyleSlider = styled.div`
   color: #ff8a00;

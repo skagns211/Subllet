@@ -30,15 +30,6 @@ module.exports = {
         likes,
       });
 
-      // const count = await Comment.count({
-      //   where: { service_id },
-      // });
-
-      // await Service.update({
-      //   total_comments: count,
-      //   where: { id: service_id },
-      // });
-
       const comment = await Comment.findOne({
         attributes: ["id", "commenter", "message", "likes", "createdAt"],
         where: { id: created.id },
