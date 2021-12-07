@@ -24,6 +24,7 @@ const Main = () => {
   const isLogin = window.localStorage.getItem("isLogin");
   const loginUserInfo = window.localStorage.getItem("loginUserInfo");
   const accessToken = window.localStorage.getItem("accessToken");
+  console.log(isLogin);
 
   useEffect(() => {
     loginUserInfo &&
