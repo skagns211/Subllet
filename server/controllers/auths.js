@@ -25,18 +25,6 @@ module.exports = {
         return res.status(400).send("Empty body");
       }
 
-      const userInfo = await User.findOne({ where: { email } });
-
-      // if (userInfo) {
-      //   if (userInfo.email_verified) {
-      //     return res.status(409).send("Overlap");
-      //   } else {
-      //     req.id = userInfo.id;
-      //     next();
-      //     return;
-      //   }
-      // }
-
       const emailKey = await generateEmailKey();
       const salt = await generateSalt();
       const hashedPassword = await hashPassword(password, salt);
@@ -76,7 +64,7 @@ module.exports = {
       });
 
       if (!userInfo || userInfo.signup_method !== "Normal") {
-        return res.status(400).send("Non-existent account");
+        return res.status(404).send("Non-existent account");
       }
 
       // if (!userInfo.email_verified) {
@@ -173,7 +161,7 @@ module.exports = {
     },
   },
   render: {
-    post: async (req, res) => {
+    get: async (req, res) => {
       try {
         res.send("Ok");
       } catch (err) {
@@ -186,14 +174,14 @@ module.exports = {
       const { accesstoken, refreshtoken } = req.headers;
 
       if (!accesstoken || !refreshtoken) {
-        return res.status(401).send("Not exist token");
+        return res.status(400).send("Not exist token");
       }
 
       const accessTokenData = checkAccessToken(accesstoken);
       const refreshTokenData = checkRefeshToken(refreshtoken);
 
       if (accessTokenData.id !== refreshTokenData.data) {
-        return res.status(401).send("userId inconsistency");
+        return res.status(401).send("UserId inconsistency");
       }
 
       if (refreshTokenData.exp <= Date.now() / 1000) {
@@ -236,7 +224,7 @@ module.exports = {
         });
 
         if (!findUser) {
-          return res.status(404).send("Not Found");
+          return res.status(404).send("Not found");
         }
 
         if (findUser.email_verified) {
@@ -247,7 +235,7 @@ module.exports = {
         const signupDate = new Date(findUser.updatedAt).getTime();
 
         if (signupDate + 180000 < currentTime) {
-          return res.status(400).send("expiration");
+          return res.status(401).send("Expiration")
         }
 
         await User.update(

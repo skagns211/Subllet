@@ -1,20 +1,13 @@
-const { Service, Comment, Price } = require("../models");
+const { Service, Comment, Price, Scrap } = require("../models");
 
 module.exports = {
   services: {
     get: async (req, res) => {
       const services = await Service.findAll({
-        attributes: [
-          "id",
-          "title",
-          "message",
-          "outer_image",
-          "category",
-          "demo",
-        ],
+        attributes: ["id", "title", "outer_image", "category", "demo"],
         include: [
           {
-            attributes: ["title", "price"],
+            attributes: ["id", "title", "message", "price"],
             model: Price,
           },
         ],
@@ -33,7 +26,13 @@ module.exports = {
       const id = req.params.id;
 
       const service = await Service.findOne({
-        attributes: ["inner_image", "url", "total_comments", "total_likes"],
+        attributes: [
+          "message",
+          "inner_image",
+          "url",
+          "total_comments",
+          "total_likes",
+        ],
         where: { id },
         include: {
           attributes: ["id", "message", "likes", "createdAt", "updatedAt"],
@@ -41,11 +40,21 @@ module.exports = {
         },
       });
 
-      // const price = await Price.findAll({
-      //   where: { service_id: id },
-      // });
+      const scrapNum = await Scrap.count({
+        where: { service_id: id },
+      });
 
-      // const a = [service, ...price.map((el) => el.dataValues)];
+      const price = await Service.findOne({
+        attributes: [],
+        where: { id },
+        include: {
+          attributes: ["id", "title", "message", "price"],
+          model: Price,
+        },
+      });
+
+      service.dataValues.scrapNum = scrapNum;
+      service.dataValues.prices = price.dataValues.Prices;
 
       try {
         return res.json({ service });
