@@ -35,7 +35,14 @@ module.exports = {
         ],
         where: { id },
         include: {
-          attributes: ["id", "message", "likes", "createdAt", "updatedAt"],
+          attributes: [
+            "id",
+            "commenter",
+            "message",
+            "likes",
+            "createdAt",
+            "updatedAt",
+          ],
           model: Comment,
         },
       });
