@@ -45,6 +45,7 @@ const IconBox = styled.span`
 
 const OauthSignUp = () => {
   const navigate = useNavigate();
+  // const KAKAO_REST_API_KEY = process.env.KAKAO_REST_API_KEY;
   const KAKAO_REST_API_KEY = "87738e53cf21a10d5f15c7dc5a63180f";
   const REDIRECT_URI = "https://localhost:3000/auth/kakao/callback";
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;

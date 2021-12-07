@@ -68,7 +68,6 @@ function App() {
           <Route path="/mysubllet" element={<MySubllet />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/auth/kakao/callback" element={<KakaoAuthHandler />} />
-          <Route path="/auth_signup" element={<AfterPage />} />
         </Routes>
         <Footer />
       </SectionStyle>
