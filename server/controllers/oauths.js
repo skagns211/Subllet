@@ -26,11 +26,11 @@ module.exports = {
         const url = `${endPoint}?code=${authorizationCode}&client_id=${client_id}&client_secret=${client_secret}&redirect_uri=${redirect_uri}&grant_type=${grant_type}`;
 
         const response = await axios({
-          method: 'POST',
+          method: "POST",
           url,
           headers: {
-            'content-type': 'application/x-www-form-urlencoded'
-          }
+            "content-type": "application/x-www-form-urlencoded",
+          },
         });
         const { access_token } = response.data;
 
@@ -152,11 +152,11 @@ module.exports = {
         const url = `${endPoint}?code=${authorizationCode}&client_id=${client_id}&client_secret=${client_secret}&redirect_uri=${redirect_uri}&grant_type=${grant_type}`;
 
         const response = await axios({
-          method: 'POST',
+          method: "POST",
           url,
           headers: {
-            'content-type': 'application/x-www-form-urlencoded'
-          }
+            "content-type": "application/x-www-form-urlencoded",
+          },
         });
 
         const { access_token } = response.data;

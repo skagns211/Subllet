@@ -83,7 +83,7 @@ module.exports = {
       const accessToken = generateAccessToken(userInfo.dataValues);
       const refreshToken = generateRefreshToken(userId);
 
-      await redis.set(userInfo.id, refreshToken, "ex", 1209600);
+      // await redis.set(userInfo.id, refreshToken, "ex", 1209600);
 
       try {
         return res.json({
@@ -236,7 +236,7 @@ module.exports = {
         const signupDate = new Date(findUser.updatedAt).getTime();
 
         if (signupDate + 180000 < currentTime) {
-          return res.status(401).send("Expiration")
+          return res.status(401).send("Expiration");
         }
 
         await User.update(
