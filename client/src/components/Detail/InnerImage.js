@@ -36,6 +36,10 @@ const ScrapButton = styled.div`
   align-items: flex-end;
   div {
     font-size: 2rem;
+    color: yellow;
+  }
+  i {
+    color: yellow;
   }
 `;
 const DetailMessage = styled.div`
@@ -55,32 +59,41 @@ const DetailMessage = styled.div`
   }
 `;
 
-const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
+const InnerImage = ({
+  isLogin,
+  ServiceId,
+  accessToken,
+  detail,
+  scrapNum,
+  isScrap,
+  setIsScrap,
+  isSub,
+  setIsSub,
+}) => {
   const [open, setOpen] = useState(false);
-  const [isScrap, setIsScrap] = useState();
-  const [scrapNum, setScrapNum] = useState();
 
   const handleClick = () => {
     setOpen(!open);
   };
 
   useEffect(() => {
-    if (isLogin === true) {
+    if (JSON.parse(isLogin) === true) {
       axios
-        .get(`/scrap/${ServiceId}`, {
-          headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
-        })
-        .then((res) => {
-          setIsScrap(res.data.isScrap);
-          // console.log(res);
-        });
+        .all([
+          axios.get(`/scrap/${ServiceId}`, {
+            headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+          }),
+          axios.get(`/subscribe/${ServiceId}`, {
+            headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+          }),
+        ])
+        .then(
+          axios.spread((isScrap, isSub) => {
+            setIsScrap(isScrap.data.isScrap);
+            setIsSub(isSub.data.isSubscribe);
+          })
+        );
     }
-  });
-
-  useEffect(() => {
-    axios.get(`/service/${ServiceId}`).then((res) => {
-      setScrapNum(res.data.scrapNum);
-    });
   });
 
   const addScrap = () => {
@@ -93,7 +106,7 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
       });
   };
 
-  const deleteScrap = () => {
+  const delScrap = () => {
     axios
       .delete(`/scrap/${ServiceId}`, {
         headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
@@ -103,6 +116,10 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
       });
   };
 
+  const addSub = () => {};
+
+  const delSub = () => {};
+
   return (
     <StyledBody>
       {open ? <LoginModal handleClick={handleClick} /> : null}
@@ -110,10 +127,10 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
         <ScrapButton>
           {JSON.parse(isLogin) && isScrap ? (
             <>
-              <i onClick={deleteScrap} className="fas fa-star fa-2x"></i>
+              <i onClick={delScrap} className="fas fa-star fa-2x"></i>
               <div>{scrapNum}</div>
             </>
-          ) : JSON.parse(isLogin) && isScrap === false ? (
+          ) : JSON.parse(isLogin) && !isScrap ? (
             <>
               <i onClick={addScrap} className="far fa-star fa-2x"></i>
               <div>{scrapNum}</div>
@@ -127,8 +144,10 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
         </ScrapButton>
         <DetailMessage>
           <span>로켓배송 상품 100% 무료배송</span>
-          {JSON.parse(isLogin) ? (
-            <button>내 구독 목록에 추가</button>
+          {JSON.parse(isLogin) && isSub ? (
+            <button onClick={delSub}>구독중</button>
+          ) : JSON.parse(isLogin) && !isSub ? (
+            <button onClick={addSub}>내 구독 목록에 추가</button>
           ) : (
             <button onClick={handleClick}>내 구독 목록에 추가</button>
           )}

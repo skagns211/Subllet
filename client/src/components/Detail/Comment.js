@@ -64,7 +64,7 @@ const SendButton = styled.div`
 
 const Comments = styled.div`
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 `;
 
 const CommentList = styled.div`
@@ -73,6 +73,13 @@ const CommentList = styled.div`
   background-color: #3a3f51;
   border-radius: 5px;
   margin: 1rem 0;
+  div {
+    display: flex;
+    justify-content: space-between;
+    i {
+      color: red;
+    }
+  }
 `;
 
 const CommentInfo = styled.div`
@@ -93,8 +100,9 @@ const Comment = ({
   ServiceId,
   accessToken,
   loginUserInfo,
+  detail,
 }) => {
-  const [comment, setComment] = useState("");
+  const [text, setText] = useState("");
   const [like, setLike] = useState();
   const [open, setOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState();
@@ -111,7 +119,7 @@ const Comment = ({
   };
 
   const inputText = (e) => {
-    setComment(e.target.value);
+    setText(e.target.value);
   };
 
   const handleSelect = (e) => {
@@ -119,13 +127,13 @@ const Comment = ({
   };
 
   const sendComment = () => {
-    if (comment && like) {
+    if (text && like) {
       axios
         .post(
           `/comment/${ServiceId}`,
           {
             commenter: JSON.parse(loginUserInfo).nickname,
-            message: comment,
+            message: text,
             likes: like,
           },
           {
@@ -148,12 +156,22 @@ const Comment = ({
     }
   };
 
+  const delComment = () => {
+    axios
+      .delete(`/comment/${ServiceId}`, {
+        headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
   return (
     <StyledBody>
       {open ? (
         <AlertModal alertMsg={alertMsg} handleClick={handleClick} />
       ) : null}
-      <ServiceOption>Comment</ServiceOption>
+      <ServiceOption>Comment {detail.total_comments}개</ServiceOption>
       <CommentBody>
         <InputComment>
           <textarea onChange={inputText} placeholder="댓글을 입력해주세요" />
@@ -183,10 +201,19 @@ const Comment = ({
               <Comments key={comment.id}>
                 <CommentList>
                   <CommentInfo>
-                    <div>테스트중</div>
+                    <div>{comment.commenter}</div>
                     <div>{day(comment.createdAt)}</div>
                   </CommentInfo>
-                  <div>{comment.message}</div>
+                  <div>
+                    {comment.message}
+                    {JSON.parse(loginUserInfo).nickname ===
+                    comment.commenter ? (
+                      <i
+                        onClick={delComment}
+                        className="fas fa-minus-circle"
+                      ></i>
+                    ) : null}
+                  </div>
                 </CommentList>
                 <CommentLike>
                   {comment.likes ? (
