@@ -160,33 +160,57 @@ module.exports = {
         });
 
         if (!userInfo || userInfo.signup_method !== "Kakao") {
-          const newUserInfo = await User.create({
-            email,
-            nickname: profile.nickname,
-            profile: profile.profile_image_url,
-            signup_method: "Kakao",
-            email_verified: true,
-          });
-
-          const userId = newUserInfo.dataValues.id;
-          delete newUserInfo.dataValues.password;
-
-          const accessToken = generateAccessToken(newUserInfo.dataValues);
-          const refreshToken = generateRefreshToken(userId);
-      
-          return res
-            .status(201)
-            .json({ userInfo: newUserInfo, accessToken, refreshToken });
+          return res.json({ email, profile, signup_method: "Kakao" });
         }
+        // if (!userInfo || userInfo.signup_method !== "Kakao") {
+        //   const newUserInfo = await User.create({
+        //     email,
+        //     nickname: profile.nickname,
+        //     profile: profile.profile_image_url,
+        //     signup_method: "Kakao",
+        //     email_verified: true,
+        //   });
 
-        delete UserInfo.dataValues.password;
-        const userId = UserInfo.dataValues.id;
-        const accessToken = generateAccessToken(UserInfo.dataValues);
+        const userId = userInfo.dataValues.id;
+        delete userInfo.dataValues.password;
+
+        const accessToken = generateAccessToken(userInfo.dataValues);
         const refreshToken = generateRefreshToken(userId);
+
         return res.json({ userInfo, accessToken, refreshToken });
       } catch (err) {
         console.error(err);
-        return res.status(400).json(err.response.data.error);
+        return res.status(400).json("Client error");
+      }
+    },
+  },
+  signup: {
+    post: async (req, res) => {
+      const { email, profile, signup_method } = req.body;
+
+      if (!email || !profile || !signup_method) {
+        return res.status(400).send("Empty body")
+      }
+
+      const userInfo = await User.create({
+        email,
+        nickname: profile.nickname,
+        profile: profile.profile_image_url,
+        signup_method: signup_method,
+        email_verified: true,
+      });
+
+      const userId = userInfo.dataValues.id;
+      delete userInfo.dataValues.password;
+
+      const accessToken = generateAccessToken(userInfo.dataValues);
+      const refreshToken = generateRefreshToken(userId);
+
+      try {
+        return res.status(201).json({ userInfo, accessToken, refreshToken });
+      } catch (err) {
+        console.error(err);
+        return res.status(500).send("Server error");
       }
     },
   },
