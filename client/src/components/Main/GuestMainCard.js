@@ -24,16 +24,10 @@ const MainCardBody = styled.div`
   background-image: url(${backImg});
   background-repeat: no-repeat;
   z-index: 500;
-  /* background-size: 48rem 30rem; */
   background-size: 100% 100%;
-  /* height: 30vh; */
-  /* margin-left: 0.5rem;
-    margin-top: 3.6rem; */
   margin: 3.6rem 0.7rem 0.5rem 0.5rem;
   padding: 0;
-  /* width: 48rem;
-    height: 30rem; */
-  width: auto; //!
+  width: auto;
   height: auto;
   @media only screen and (max-width: 1050px) {
     padding-bottom: 1.5rem;
@@ -47,26 +41,17 @@ const MainCardBody = styled.div`
     width: 55rem;
     height: 35rem;
   }
-  /* margin: 0;
-    min-height: 100vh;
-    position: relative; */
   hr {
     width: 22.5rem;
     margin-left: 1rem;
     margin-top: 0;
   }
   span {
-    /* border: 1px solid #ffffff; */
     border-radius: 0.3rem;
     background-color: #252a3c;
     color: white;
     height: 6rem;
-    /* margin-right: 40rem; */
     font-size: 1.2rem;
-    /* display: flex;
-      align-items: flex-end;
-      justify-content: flex-end; */
-    /* justify-self: center; */
   }
   img {
     width: 2.5rem;
@@ -79,7 +64,6 @@ const MainCardBody = styled.div`
     align-self: flex-start;
     margin: 1rem 0 0 0;
     font-size: 2rem;
-    /* margin-right: 35rem; */
     padding: 1rem 5rem 1rem 1rem;
   }
   .totalPrice {
@@ -114,7 +98,6 @@ const MainCardBottom = styled.div`
     padding-top: 0.5rem;
     width: 7.5rem;
     height: 10.3rem;
-    /* text-align: center; */
   }
 `;
 
@@ -207,7 +190,6 @@ const RequestWindow = styled.div`
   }
 
   @media only screen and (min-width: 1301px) {
-    /* background-size: 100% 100%; */
     margin-top: 10rem;
     margin-left: 1.5rem;
     width: 49.5rem;
@@ -238,11 +220,12 @@ const GuestMainCard = () => {
           </div>
           <br />
           <Link to="/userlogin">
-            <div className="login">로그인</div>
+            <span className="login">로그인</span>
           </Link>
           <br />
+          <br />
           <Link to="/signup">
-            <div className="signup">회원가입</div>
+            <span className="signup">회원가입</span>
           </Link>
         </RequestWindow>
         <MainCardBody>
