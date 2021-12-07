@@ -28,12 +28,12 @@ const ServiceList = styled.div`
   }
   @media only screen and (min-width: 800px) {
     img {
-      height: 100%;
-      min-width: 9rem;
-      width: 100%;
+      height: 10rem;
+      /* min-width: 9rem; */
+      /* width: 100%; */
       max-width: 30%;
-      max-height: 8rem;
-      object-fit: cover;
+      /* max-height: 8rem; */
+      object-fit: fill;
       border-radius: 5px;
       margin: 0 0 3% 2.5%;
     }

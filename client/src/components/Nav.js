@@ -238,6 +238,7 @@ const Nav = () => {
         alert(err);
       });
   };
+  console.log(state);
   console.log(accessToken);
 
   return (
