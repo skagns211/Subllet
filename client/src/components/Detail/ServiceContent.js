@@ -104,7 +104,7 @@ const ServiceContent = ({ detail }) => {
         </span>
       </Service>
       <LinkButton>
-        <button onClick={openURL}>구독하러가기</button>
+        <button>구독하러가기</button>
       </LinkButton>
     </StyledBody>
   );

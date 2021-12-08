@@ -188,14 +188,12 @@ const Nav = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { email, nickname, profile } = state.loginUserInfo;
-  console.log(state);
   const isLogin = window.localStorage.getItem("isLogin");
   const loginUserInfo = window.localStorage.getItem("loginUserInfo");
   const accessToken = window.localStorage.getItem("accessToken");
   // const { email, nickname, profile } = JSON.parse(
   //   window.localStorage.getItem("loginUserInfo")
   // );
-  console.log(nickname);
   // console.log(JSON.parse(window.localStorage.getItem("loginUserInfo")));
 
   useEffect(() => {
@@ -239,8 +237,6 @@ const Nav = () => {
         alert(err);
       });
   };
-  console.log(state);
-  console.log(accessToken);
 
   const currentUrl = location.pathname;
 

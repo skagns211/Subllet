@@ -160,7 +160,7 @@ const Comment = ({
     axios.delete(`/comment/${ServiceId}`, {
       headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
     });
-
+  };
 
   return (
     <StyledBody>
