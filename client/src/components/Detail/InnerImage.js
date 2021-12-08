@@ -63,7 +63,7 @@ const DetailMessage = styled.div`
 const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
   const state = useSelector((state) => state);
 
-  console.log(state.services[0]);
+  console.log(state.service[0]);
 
   const [open, setOpen] = useState(false);
   const [isScrap, setIsScrap] = useState();
@@ -84,19 +84,19 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
           axios.get(`/subscribe/${ServiceId}`, {
             headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
           }),
-          axios.get(`/service/${ServiceId}`, {
-            headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
-          }),
+          // axios.get(`/service/${ServiceId}`, {
+          //   headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+          // }),
         ])
         .then(
           axios.spread((isScrap, isSub, scrapNum) => {
             setIsScrap(isScrap.data.isScrap);
             setIsSub(isSub.data.isSubscribe);
-            setScrapNum(scrapNum.data.service.scrapNum);
+            // setScrapNum(scrapNum.data.service.scrapNum);
           })
         );
     }
-  }, [isSub]);
+  }, []);
 
   const addScrap = () => {
     axios
@@ -145,11 +145,14 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
       });
   };
 
+  const ServiceDetail = state.services.filter((service) => {
+    return service.id === ServiceId;
+  });
 
   return (
     <StyledBody>
       {open ? <LoginModal handleClick={handleClick} /> : null}
-      <BackgroundImage detail={detail.inner_image}>
+      <BackgroundImage image={state.service.inner_image}>
         <ScrapButton>
           {JSON.parse(isLogin) && isScrap ? (
             <>

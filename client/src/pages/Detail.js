@@ -4,7 +4,8 @@ import InnerImage from "../components/Detail/InnerImage";
 import ServiceContent from "../components/Detail/ServiceContent";
 import Comment from "../components/Detail/Comment";
 import { useParams } from "react-router";
-import axios from "axios";
+import { setService, setServices } from "../actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const StyledBody = styled.section`
   max-width: 950px;
@@ -17,7 +18,9 @@ const Detail = () => {
   const loginUserInfo = window.localStorage.getItem("loginUserInfo");
   const accessToken = window.localStorage.getItem("accessToken");
 
-  const ServiceId = useParams().id;
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const ServiceId = Number(useParams().id);
 
   const [comments, setComments] = useState([]);
   const [detail, setDetail] = useState([]);
@@ -39,12 +42,14 @@ const Detail = () => {
   }, [isLogin]);
 
   useEffect(() => {
-    axios.get(`/service/${ServiceId}`).then((res) => {
-      setComments(res.data.service.Comments);
-      setDetail(res.data.service);
-      console.log(res.data);
-    });
-  }, []);
+    dispatch(
+      setService(
+        state.services.filter((service) => {
+          return service.id === ServiceId;
+        })
+      )
+    );
+  }, [state.services]);
 
   return (
     <StyledBody>
