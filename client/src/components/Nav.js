@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setLoginUserInfo, setIsLogin, setAccessToken } from "../actions";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import logo from "../IMG/favicon.png";
@@ -186,6 +186,7 @@ const Test = styled.div`
 const Nav = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
+  const location = useLocation();
   const { email, nickname, profile } = state.loginUserInfo;
   console.log(state);
   const isLogin = window.localStorage.getItem("isLogin");
@@ -241,6 +242,8 @@ const Nav = () => {
   console.log(state);
   console.log(accessToken);
 
+  const currentUrl = location.pathname;
+
   return (
     <>
       <NavHeader>
@@ -281,10 +284,10 @@ const Nav = () => {
                 </li>
                 <li>
                   <Link
-                    to="/"
+                    to={currentUrl}
                     onClick={() => {
                       logoutHandler();
-                      window.location.href("/");
+                      window.location.href(currentUrl);
                     }}
                   >
                     로그아웃
