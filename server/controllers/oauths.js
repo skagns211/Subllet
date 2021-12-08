@@ -35,7 +35,7 @@ module.exports = {
         const { access_token } = response.data;
 
         const googleUserInfo = await axios.get(
-          "https://www.googleapis.com/oauth2/v1/userinfo", 
+          "https://www.googleapis.com/oauth2/v1/userinfo",
           { headers: { Authorization: `Bearer ${access_token}` } }
         );
 
@@ -175,7 +175,6 @@ module.exports = {
         if (!userInfo || userInfo.signup_method !== "Kakao") {
           return res.json({
             email,
-            nickname: profile.nickname,
             profile: profile.profile_image_url,
             signup_method: "Kakao",
           });
