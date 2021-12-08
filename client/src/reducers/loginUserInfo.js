@@ -23,5 +23,4 @@ const userReducer = (state = loginUserInfo, action) => {
       return state;
   }
 };
-console.log(loginUserInfo);
 export default userReducer;

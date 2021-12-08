@@ -25,7 +25,13 @@ module.exports = {
           process.env.CLIENT_ORIGIN + "/auth/google/callback";
         const url = `${endPoint}?code=${authorizationCode}&client_id=${client_id}&client_secret=${client_secret}&redirect_uri=${redirect_uri}&grant_type=${grant_type}`;
 
-        const response = await axios.post(url);
+        const response = await axios({
+          method: "POST",
+          url,
+          headers: {
+            "content-type": "application/x-www-form-urlencoded",
+          },
+        });
         const { access_token } = response.data;
 
         const googleUserInfo = await axios.get(
@@ -139,13 +145,20 @@ module.exports = {
         }
 
         const client_id = process.env.KAKAO_CLIENT_ID;
-        const client_secret = process.env.KAKAO_CLIENT_SECRET;
-        const endPoint = "kauth.kakao.com/oauth/token";
+        const client_secret = process.env.KAKAO_SECRET;
+        const endPoint = "https://kauth.kakao.com/oauth/token";
         const grant_type = "authorization_code";
         const redirect_uri = process.env.CLIENT_ORIGIN + "/auth/kakao/callback";
         const url = `${endPoint}?code=${authorizationCode}&client_id=${client_id}&client_secret=${client_secret}&redirect_uri=${redirect_uri}&grant_type=${grant_type}`;
 
-        const response = await axios.post(url);
+        const response = await axios({
+          method: "POST",
+          url,
+          headers: {
+            "content-type": "application/x-www-form-urlencoded",
+          },
+        });
+
         const { access_token } = response.data;
 
         const KakaoUserInfo = await axios.get(
@@ -160,7 +173,11 @@ module.exports = {
         });
 
         if (!userInfo || userInfo.signup_method !== "Kakao") {
-          return res.json({ email, profile, signup_method: "Kakao" });
+          return res.json({
+            email,
+            profile: profile.profile_image_url,
+            signup_method: "Kakao",
+          });
         }
         // if (!userInfo || userInfo.signup_method !== "Kakao") {
         //   const newUserInfo = await User.create({
@@ -186,16 +203,16 @@ module.exports = {
   },
   signup: {
     post: async (req, res) => {
-      const { email, profile, signup_method } = req.body;
+      const { email, nickname, profile, signup_method } = req.body;
 
-      if (!email || !profile || !signup_method) {
-        return res.status(400).send("Empty body")
+      if (!email || !nickname || !profile || !signup_method) {
+        return res.status(400).send("Empty body");
       }
 
       const userInfo = await User.create({
         email,
-        nickname: profile.nickname,
-        profile: profile.profile_image_url,
+        nickname,
+        profile,
         signup_method: signup_method,
         email_verified: true,
       });

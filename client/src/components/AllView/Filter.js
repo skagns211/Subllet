@@ -104,7 +104,7 @@ const Filter = ({ category, setCategory, price, setPrice, free, setFree }) => {
         <DropDown>
           <label onClick={categoryClick}>카테고리</label>
           {category ? (
-            <ul>
+            <ul onClick={categoryClick}>
               <li>Video</li>
               <li>Music</li>
               <li>Shopping</li>
@@ -115,7 +115,7 @@ const Filter = ({ category, setCategory, price, setPrice, free, setFree }) => {
         <DropDown>
           <label onClick={priceClick}>가격</label>
           {price ? (
-            <ul>
+            <ul onClick={priceClick}>
               <li>5000</li>
               <li>10000</li>
               <li>15000</li>
@@ -126,7 +126,7 @@ const Filter = ({ category, setCategory, price, setPrice, free, setFree }) => {
         <DropDown>
           <label onClick={freeClick}>체험하기 유무</label>
           {free ? (
-            <ul>
+            <ul onClick={freeClick}>
               <li>유</li>
               <li>무</li>
             </ul>

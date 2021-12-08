@@ -21,17 +21,21 @@ const Detail = () => {
 
   const [comments, setComments] = useState([]);
   const [detail, setDetail] = useState([]);
+  const [scrapNum, setScrapNum] = useState();
+  const [isScrap, setIsScrap] = useState();
+  const [isSub, setIsSub] = useState();
 
   useEffect(() => {
-    window.localStorage.setItem("loginUserInfo", loginUserInfo);
+    loginUserInfo &&
+      window.localStorage.setItem("loginUserInfo", loginUserInfo);
   }, [loginUserInfo]);
 
   useEffect(() => {
-    window.localStorage.setItem("accessToken", accessToken);
+    accessToken && window.localStorage.setItem("accessToken", accessToken);
   }, [accessToken]);
 
   useEffect(() => {
-    window.localStorage.setItem("isLogin", isLogin);
+    isLogin && window.localStorage.setItem("isLogin", isLogin);
   }, [isLogin]);
 
   useEffect(() => {
@@ -49,9 +53,15 @@ const Detail = () => {
         ServiceId={ServiceId}
         accessToken={accessToken}
         detail={detail}
+        scrapNum={scrapNum}
+        isScrap={isScrap}
+        setIsScrap={setIsScrap}
+        isSub={isSub}
+        setIsSub={setIsSub}
       />
       <ServiceContent detail={detail} />
       <Comment
+        detail={detail}
         ServiceId={ServiceId}
         comments={comments}
         setComments={setComments}

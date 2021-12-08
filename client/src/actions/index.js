@@ -21,8 +21,8 @@ export const AUTH_NICKNAME = "AUTH_NICKNAME";
 export const AUTH_USERINFO = "AUTH_USERINFO";
 export const SERVICE_COMMENT = "SERVICE_COMMENT";
 export const SERVICECS_LIST = "SERVICECS_LIST";
-
 export const SELECT_PLAN = "SELECT_PLAN"; // Detail Page
+
 
 export const setLoginUserInfo = (loginUserInfo) => {
   console.log(loginUserInfo);
@@ -66,6 +66,7 @@ export const setAuthUserInfo = (data) => {
     };
   }
 };
+
 
 export const selectPlan = (plan) => {
   return {

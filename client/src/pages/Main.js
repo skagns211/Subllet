@@ -24,17 +24,19 @@ const Main = () => {
   const isLogin = window.localStorage.getItem("isLogin");
   const loginUserInfo = window.localStorage.getItem("loginUserInfo");
   const accessToken = window.localStorage.getItem("accessToken");
+  console.log(isLogin);
 
   useEffect(() => {
-    window.localStorage.setItem("loginUserInfo", loginUserInfo);
+    loginUserInfo &&
+      window.localStorage.setItem("loginUserInfo", loginUserInfo);
   }, [loginUserInfo]);
 
   useEffect(() => {
-    window.localStorage.setItem("accessToken", accessToken);
+    accessToken && window.localStorage.setItem("accessToken", accessToken);
   }, [accessToken]);
 
   useEffect(() => {
-    window.localStorage.setItem("isLogin", isLogin);
+    isLogin && window.localStorage.setItem("isLogin", isLogin);
   }, [isLogin]);
 
   return (

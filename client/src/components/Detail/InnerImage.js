@@ -145,6 +145,7 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
       });
   };
 
+
   return (
     <StyledBody>
       {open ? <LoginModal handleClick={handleClick} /> : null}
