@@ -102,10 +102,11 @@ module.exports = {
       }
     },
     delete: async (req, res) => {
-      const id = req.params.id;
+      const user_id = req.id;
+      const service_id = req.params.id;
 
       await Subscribe.destroy({
-        where: { id },
+        where: { user_id, service_id },
       });
 
       try {

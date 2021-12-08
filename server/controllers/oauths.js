@@ -1,6 +1,6 @@
 require("dotenv").config();
 const axios = require("axios");
-const { User } = require("./users");
+const { User } = require("../models");
 const {
   generateAccessToken,
   generateRefreshToken,
@@ -35,44 +35,36 @@ module.exports = {
         const { access_token } = response.data;
 
         const googleUserInfo = await axios.get(
-          "https://www.googleapis.com/oauth2/v1/userinfo", 
+          "https://www.googleapis.com/oauth2/v1/userinfo",
           { headers: { Authorization: `Bearer ${access_token}` } }
         );
 
-        const { email, given_name, picture } = googleUserInfo.data;
+        const { email, picture } = googleUserInfo.data;
 
         const userInfo = await User.findOne({
           where: { email },
         });
 
-        if (!userInfo || userInfo.signup_method !== "Google") {
-          const newUserInfo = await User.create({
+        if (!userInfo) {
+          return res.json({
             email,
-            nickname: given_name,
             profile: picture,
             signup_method: "Google",
-            email_verified: true,
           });
-
-          const userId = newUserInfo.dataValues.id;
-          delete newUserInfo.dataValues.password;
-
-          const accessToken = generateAccessToken(newUserInfo.dataValues);
-          const refreshToken = generateRefreshToken(userId);
-
-          return res
-            .status(201)
-            .json({ userInfo: newUserInfo, accessToken, refreshToken });
         }
 
-        delete UserInfo.dataValues.password;
-        const userId = UserInfo.dataValues.id;
-        const accessToken = generateAccessToken(UserInfo.dataValues);
-        const refreshToken = generateRefreshToken(userId);
-        return res.json({ userInfo, accessToken, refreshToken });
+        if (userInfo.signup_method === "Google") {
+          const userId = userInfo.dataValues.id;
+          delete userInfo.dataValues.password;
+
+          const accessToken = generateAccessToken(userInfo.dataValues);
+          const refreshToken = generateRefreshToken(userId);
+
+          return res.json({ userInfo, accessToken, refreshToken });
+        }
       } catch (err) {
         console.error(err);
-        return res.status(400).json(err.response.data.error);
+        return res.status(400).json("Client error");
       }
     },
   },
@@ -99,40 +91,32 @@ module.exports = {
           { headers: { Authorization: `Bearer ${access_token}` } }
         );
 
-        const { email, nickname, profile_image } = NaverUserInfo.data;
+        const { email, profile_image } = NaverUserInfo.response;
 
         const userInfo = await User.findOne({
           where: { email },
         });
 
-        if (!userInfo || userInfo.signup_method !== "Naver") {
-          const newUserInfo = await User.create({
+        if (!userInfo) {
+          return res.json({
             email,
-            nickname,
             profile: profile_image,
             signup_method: "Naver",
-            email_verified: true,
           });
-
-          const userId = newUserInfo.dataValues.id;
-          delete newUserInfo.dataValues.password;
-
-          const accessToken = generateAccessToken(newUserInfo.dataValues);
-          const refreshToken = generateRefreshToken(userId);
-
-          return res
-            .status(201)
-            .json({ userInfo: newUserInfo, accessToken, refreshToken });
         }
 
-        delete UserInfo.dataValues.password;
-        const userId = UserInfo.dataValues.id;
-        const accessToken = generateAccessToken(UserInfo.dataValues);
-        const refreshToken = generateRefreshToken(userId);
-        return res.json({ userInfo, accessToken, refreshToken });
+        if (userInfo.signup_method === "Naver") {
+          const userId = userInfo.dataValues.id;
+          delete userInfo.dataValues.password;
+
+          const accessToken = generateAccessToken(userInfo.dataValues);
+          const refreshToken = generateRefreshToken(userId);
+
+          return res.json({ userInfo, accessToken, refreshToken });
+        }
       } catch (err) {
         console.error(err);
-        return res.status(400).json(err.response.data.error);
+        return res.status(400).json("Client error");
       }
     },
   },
@@ -155,47 +139,44 @@ module.exports = {
           method: "POST",
           url,
           headers: {
-            "content-type": "application/x-www-form-urlencoded",
+            "content-type": "application/x-www-form-urlencoded;charset=utf-8",
           },
         });
 
         const { access_token } = response.data;
 
-        const KakaoUserInfo = await axios.get(
-          "https://kapi.kakao.com/v2/user/me",
-          { headers: { Authorization: `Bearer ${access_token}` } }
-        );
+        const KakaoUserInfo = await axios({
+          method: "GET",
+          url: "https://kapi.kakao.com/v2/user/me",
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+            "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          },
+        });
 
-        const { email, profile } = KakaoUserInfo.data;
+        const { email, profile } = KakaoUserInfo.data.kakao_account;
 
         const userInfo = await User.findOne({
           where: { email },
         });
 
-        if (!userInfo || userInfo.signup_method !== "Kakao") {
+        if (!userInfo) {
           return res.json({
             email,
-            nickname: profile.nickname,
             profile: profile.profile_image_url,
             signup_method: "Kakao",
           });
         }
-        // if (!userInfo || userInfo.signup_method !== "Kakao") {
-        //   const newUserInfo = await User.create({
-        //     email,
-        //     nickname: profile.nickname,
-        //     profile: profile.profile_image_url,
-        //     signup_method: "Kakao",
-        //     email_verified: true,
-        //   });
 
-        const userId = userInfo.dataValues.id;
-        delete userInfo.dataValues.password;
+        if (userInfo.signup_method === "Kakao") {
+          const userId = userInfo.dataValues.id;
+          delete userInfo.dataValues.password;
 
-        const accessToken = generateAccessToken(userInfo.dataValues);
-        const refreshToken = generateRefreshToken(userId);
+          const accessToken = generateAccessToken(userInfo.dataValues);
+          const refreshToken = generateRefreshToken(userId);
 
-        return res.json({ userInfo, accessToken, refreshToken });
+          return res.json({ userInfo, accessToken, refreshToken });
+        }
       } catch (err) {
         console.error(err);
         return res.status(400).json("Client error");

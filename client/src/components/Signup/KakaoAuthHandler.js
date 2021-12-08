@@ -158,23 +158,25 @@ const KakaoAuthHandler = () => {
   console.log(state);
   console.log(state.kakaoAuthCode);
 
-  axios
-    .post("/oauth/kakao", {
-      authorizationCode: authCode,
-    })
-    .then((response) => {
-      console.log(response);
-      const authUser = {
-        email: response.data.email,
-        nickname: "",
-        profile: response.data.profile,
-        signup_method: response.data.signup_method,
-      };
-      dispatch(setAuthUserInfo(authUser));
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  useEffect(() => {
+    axios
+      .post("/oauth/kakao", {
+        authorizationCode: authCode,
+      })
+      .then((response) => {
+        console.log(response);
+        const authUser = {
+          email: response.data.email,
+          nickname: "",
+          profile: response.data.profile,
+          signup_method: response.data.signup_method,
+        };
+        dispatch(setAuthUserInfo(authUser));
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   const navigate = useNavigate();
   useEffect(() => {}, [state.authUserInfo]);
