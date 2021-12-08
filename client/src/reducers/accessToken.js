@@ -2,7 +2,7 @@
 
 import { ACCESS_TOKEN } from "../actions";
 
-const accessToken =
+const accessToken = () =>
   JSON.parse(window.localStorage.getItem("accessToken")) || "";
 
 const accessTokenReducer = (state = accessToken, action) => {

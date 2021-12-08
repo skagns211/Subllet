@@ -251,7 +251,7 @@ const SignUpForm = () => {
 
   const checkEmail = () => {
     //! 이메일 중복확인
-    console.log(email);
+    console.log(userData.email);
     if (frontEmail.length === 0 || backEmail.length === 0) {
       setIsDupEmail(false);
       setEmailMessage("이메일이 입력되지 않았습니다. 이메일을 입력해주세요.");
@@ -259,8 +259,14 @@ const SignUpForm = () => {
       axios
         .post("/auth/email", { email: userData.email })
         .then((res) => {
-          const resMsg = res.data;
-          console.log(resMsg);
+          console.log(res);
+          setIsEmail(true);
+          setIsDupEmail(true);
+          setEmailMessage("사용가능한 이메일입니다.");
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+          const resMsg = err.response.data;
           if (resMsg === "Overlap") {
             setIsDupEmail(false);
             setEmailMessage("이미 회원가입된 이메일입니다.");
@@ -269,14 +275,7 @@ const SignUpForm = () => {
             setEmailMessage(
               "이메일이 입력되지 않았습니다. 이메일을 입력해주세요."
             );
-          } else {
-            setIsEmail(true);
-            setIsDupEmail(true);
-            setEmailMessage("사용가능한 이메일입니다.");
           }
-        })
-        .catch((err) => {
-          throw err;
         });
     }
   };
@@ -285,7 +284,12 @@ const SignUpForm = () => {
     axios
       .post("/auth/nickname", { nickname: userData.nickname })
       .then((res) => {
-        const resMsg = res.data;
+        setIsDupNickname(true);
+        setNicknameMessage("사용가능한 닉네임입니다:)");
+      })
+      .catch((err) => {
+        console.error(err.response);
+        const resMsg = err.response.data;
         if (resMsg === "Overlap") {
           setIsDupNickname(false);
           setNicknameMessage("이미 사용중인 닉네임입니다.");
@@ -294,9 +298,6 @@ const SignUpForm = () => {
           setNicknameMessage(
             "닉네임이 입력되지 않았습니다. 닉네임을 입력해주세요."
           );
-        } else {
-          setIsDupNickname(true);
-          setNicknameMessage("사용가능한 닉네임입니다:)");
         }
       });
   };
@@ -312,22 +313,17 @@ const SignUpForm = () => {
     ) {
       console.log("회원가입 요청이 실패하였습니다.");
     } else {
-      axios
-        .post("/auth/signup", userData)
-        .then((res) => {
-          console.log(res.data);
-          const resMsg = res.data;
-          if (resMsg === "Signup success") {
-            setIsComplete(true);
-            console.log("회원가입 요청이 성공적으로 전달되었습니다.");
-            setTimeout(() => {
-              navigate("/");
-            }, 2000);
-          }
-        })
-        .catch((err) => {
-          throw err;
-        });
+      axios.post("/auth/signup", userData).then((res) => {
+        console.log(res.data);
+        const resMsg = res.data;
+        if (resMsg === "Signup success") {
+          setIsComplete(true);
+          console.log("회원가입 요청이 성공적으로 전달되었습니다.");
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
+        }
+      });
     }
   };
 

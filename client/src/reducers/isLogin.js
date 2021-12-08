@@ -2,7 +2,8 @@
 
 import { IS_LOGIN } from "../actions";
 
-const isLogin = JSON.parse(window.localStorage.getItem("isLogin")) || false;
+const isLogin = () =>
+  JSON.parse(window.localStorage.getItem("isLogin")) || false;
 
 const loginReducer = (state = isLogin, action) => {
   // const { email, nickname, profile } = await action.payload;
