@@ -23,7 +23,6 @@ export const SERVICE_COMMENT = "SERVICE_COMMENT";
 export const SERVICECS_LIST = "SERVICECS_LIST";
 export const SELECT_PLAN = "SELECT_PLAN"; // Detail Page
 
-
 export const setLoginUserInfo = (loginUserInfo) => {
   console.log(loginUserInfo);
   return {
@@ -54,7 +53,7 @@ export const setKakaoAuthCode = (data) => {
 };
 
 export const setAuthUserInfo = (data) => {
-  if (data.nickname.length === 0) {
+  if (Object.keys(data)[0] === "email") {
     return {
       type: AUTH_USERINFO,
       payload: data,
@@ -66,7 +65,6 @@ export const setAuthUserInfo = (data) => {
     };
   }
 };
-
 
 export const selectPlan = (plan) => {
   return {

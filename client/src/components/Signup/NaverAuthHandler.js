@@ -146,7 +146,7 @@ const Button = styled.button`
   }
 `;
 
-const KakaoAuthHandler = () => {
+const NaverAuthHandler = () => {
   const state = useSelector((state) => state); //! state 사용 함수
   const dispatch = useDispatch();
 
@@ -252,4 +252,4 @@ const KakaoAuthHandler = () => {
   );
 };
 
-export default KakaoAuthHandler;
+export default NaverAuthHandler;

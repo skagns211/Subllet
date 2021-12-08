@@ -46,9 +46,13 @@ const IconBox = styled.span`
 const OauthSignUp = () => {
   const navigate = useNavigate();
   // const KAKAO_REST_API_KEY = process.env.KAKAO_REST_API_KEY;
-  const KAKAO_REST_API_KEY = "1612f790c5728491ad5c5c7ba0ba99d6";
-  const REDIRECT_URI = "https://localhost:3000/auth/kakao/callback";
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const KAKAO_REST_API_KEY = "1612f790c5728491ad5c5c7ba0ba99d6"; //! javascript key
+  const KAKAO_REDIRECT_URI = "https://localhost:3000/auth/kakao/callback";
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
+
+  const NAVER_CLIENT_ID = "fSzmSCYBKfOat2t90EFv";
+  const NAVER_CALLBACK_URL = "https://localhost:3000/auth/naver/signup";
+  const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&state=STATE_STRING&redirect_uri=${NAVER_CALLBACK_URL}`;
 
   return (
     <OauthContainer>
@@ -57,8 +61,10 @@ const OauthSignUp = () => {
         <a href={KAKAO_AUTH_URL}>
           <img src={kakao_oauth} />
         </a>
+        <a href={NAVER_AUTH_URL}>
+          <img src={naver_oauth} />
+        </a>
         <img src={google_oauth} />
-        <img src={naver_oauth} />
       </IconBox>
     </OauthContainer>
   );
