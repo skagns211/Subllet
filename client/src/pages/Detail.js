@@ -38,6 +38,7 @@ const Detail = () => {
     axios.get(`/service/${ServiceId}`).then((res) => {
       setComments(res.data.service.Comments);
       setDetail(res.data.service);
+      console.log(res.data);
     });
   }, []);
 

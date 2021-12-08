@@ -73,6 +73,13 @@ const CommentList = styled.div`
   background-color: #3a3f51;
   border-radius: 5px;
   margin: 1rem 0;
+  div {
+    display: flex;
+    justify-content: space-between;
+    i {
+      color: red;
+    }
+  }
 `;
 
 const CommentInfo = styled.div`
@@ -148,6 +155,12 @@ const Comment = ({
     }
   };
 
+  const delComment = () => {
+    axios.delete(`/comment/${ServiceId}`, {
+      headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+    });
+  };
+
   return (
     <StyledBody>
       {open ? (
@@ -186,7 +199,10 @@ const Comment = ({
                     <div>테스트중</div>
                     <div>{day(comment.createdAt)}</div>
                   </CommentInfo>
-                  <div>{comment.message}</div>
+                  <div>
+                    {comment.message}
+                    <i className="fas fa-minus-circle" onClick={delComment}></i>
+                  </div>
                 </CommentList>
                 <CommentLike>
                   {comment.likes ? (

@@ -13,7 +13,6 @@ const userReducer = (state = loginUserInfo, action) => {
   // const { email, nickname, profile } = await action.payload;
   switch (action.type) {
     case LOGIN_USER_INFO:
-      console.log(action.payload);
       return {
         ...state,
         email: action.payload.email,

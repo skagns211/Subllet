@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { selectPlan } from "../../actions";
 
 const StyledBody = styled.div`
   max-width: 100%;
@@ -58,21 +60,32 @@ const Price = styled.span`
 `;
 
 const ServiceContent = ({ detail }) => {
-  console.log(detail);
-  let prices = detail.prices;
-  console.log(prices);
+  const dispatch = useDispatch();
+
+  const checked = (e) => {
+    let plan = e.target.value.split(",");
+    dispatch(selectPlan(plan));
+  };
+
   return (
     <StyledBody>
       <Service>
         <Price>
           <ServiceOption>Price</ServiceOption>
           <ServiceDetail>
-            {prices &&
-              prices.map((price) => {
-                <>
-                  <input type="radio" name="price" value="qweqwe" />
-                  <div>{price}</div>;
-                </>;
+            {detail.prices &&
+              detail.prices.map((price, idx) => {
+                return (
+                  <label key={idx}>
+                    <input
+                      type="radio"
+                      name="price"
+                      value={`${price.title}, ${price.price}`}
+                      onChange={checked}
+                    />
+                    {`${price.title} 월 ${price.price}`}
+                  </label>
+                );
               })}
           </ServiceDetail>
         </Price>
