@@ -155,23 +155,32 @@ const emailList = [
 
 const LoginForm = () => {
   const state = useSelector((state) => state); //! state 사용 함수
-  console.log(state);
   const dispatch = useDispatch(); //! action 사용 함수
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
   });
 
-  const handleInputValue = (key) => (e) => {
+  const handleEmailValue = (key) => (e) => {
     const atIndex = loginInfo.email.indexOf("@");
+    loginInfo.email.includes("@")
+      ? setLoginInfo({
+          ...loginInfo,
+          [key]: e.target.value + loginInfo.email.slice(atIndex),
+        })
+      : setLoginInfo({
+          ...loginInfo,
+          [key]: e.target.value,
+        });
+  };
+  const handlePwdValue = (key) => (e) => {
     setLoginInfo({
       ...loginInfo,
-      [key]: e.target.value + loginInfo.email.slice(atIndex), //! email을 재선택 했을때 초기화되는것 방지
       [key]: e.target.value,
     });
-
-    console.log(loginInfo);
   };
+
+  console.log(loginInfo);
 
   const [isSelectSelf, setIsSelectSelf] = useState(false);
 
@@ -270,7 +279,8 @@ const LoginForm = () => {
             <input
               type="text"
               placeholder="이메일"
-              onChange={handleInputValue("email")}
+              onChange={handleEmailValue("email")}
+              onKeyPress={inputEnter}
             ></input>
             <span>@</span>
             {isSelectSelf ? (
@@ -304,7 +314,7 @@ const LoginForm = () => {
           <input
             type="password"
             placeholder="비밀번호"
-            onChange={handleInputValue("password")}
+            onChange={handlePwdValue("password")}
             onKeyPress={inputEnter}
           ></input>
         </PassWordContainer>

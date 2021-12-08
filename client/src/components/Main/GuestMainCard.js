@@ -2,7 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import TopList from "./TopList";
-import backImg from "../../IMG/MainCardBackImg.png";
+import { IMG } from "./imageUrl";
+
+const randomIdx = Math.floor(Math.random() * IMG["backImg"].length);
+const randomBackImg = IMG.backImg[randomIdx];
 
 const MainSection = styled.section`
   @media only screen and (max-width: 800px) {
@@ -21,10 +24,11 @@ const MainCardBody = styled.div`
   display: flex;
   opacity: 0.3;
   flex-direction: column;
-  background-image: url(${backImg});
+  background-image: url(${randomBackImg});
   background-repeat: no-repeat;
   z-index: 500;
   background-size: 100% 100%;
+  border-radius: 1rem;
   margin: 3.6rem 0.7rem 0.5rem 0.5rem;
   padding: 0;
   width: auto;

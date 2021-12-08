@@ -39,19 +39,12 @@ const Detail = () => {
   }, [isLogin]);
 
   useEffect(() => {
-    axios
-      .get(`/service/${ServiceId}`)
-      .then((res) => {
-        setComments(res.data.service.Comments);
-        setDetail(res.data.service);
-        setScrapNum(res.data.service.scrapNum);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [isScrap]);
-
-  console.log(detail);
+    axios.get(`/service/${ServiceId}`).then((res) => {
+      setComments(res.data.service.Comments);
+      setDetail(res.data.service);
+      console.log(res.data);
+    });
+  }, []);
 
   return (
     <StyledBody>

@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
 
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
@@ -19,6 +21,7 @@ import Login from "./pages/Login";
 import MySubllet from "./pages/MySubllet";
 import SignUp from "./pages/SignUp";
 import KakaoAuthHandler from "./components/Signup/KakaoAuthHandler";
+import { setServices, setService } from "./actions";
 
 axios.defaults.baseURL = "https://localhost:4000";
 axios.defaults.withCredentials = true;
@@ -51,6 +54,13 @@ const SectionStyle = styled.section`
 `;
 
 function App() {
+  const ServiceId = useParams().id;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    axios.get("/service").then((res) => console.log(res));
+  });
+
   return (
     <BrowserRouter>
       <GlobalStyle />

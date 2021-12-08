@@ -180,27 +180,32 @@ const KakaoAuthHandler = () => {
 
   const navigate = useNavigate();
   useEffect(() => {}, [state.authUserInfo]);
+  console.log(state.authUserInfo);
 
   const [isDupNickname, setIsDupNickname] = useState(false);
   const [nicknameMessage, setNicknameMessage] = useState("");
   const [isComplete, setIsComplete] = useState(false);
 
   const checkNickname = () => {
-    axios.post("/auth/nickname", {}).then((res) => {
-      const resMsg = res.data;
-      if (resMsg === "Overlap") {
-        setIsDupNickname(false);
-        setNicknameMessage("이미 사용중인 닉네임입니다.");
-      } else if (resMsg === "Empty body") {
-        setIsDupNickname(false);
-        setNicknameMessage(
-          "닉네임이 입력되지 않았습니다. 닉네임을 입력해주세요."
-        );
-      } else {
+    axios
+      .post("/auth/nickname", { nickname: state.authUserInfo.nickname })
+      .then((res) => {
         setIsDupNickname(true);
         setNicknameMessage("사용가능한 닉네임입니다:)");
-      }
-    });
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        const resMsg = err.response.data;
+        if (resMsg === "Overlap") {
+          setIsDupNickname(false);
+          setNicknameMessage("이미 사용중인 닉네임입니다.");
+        } else if (resMsg === "Empty body") {
+          setIsDupNickname(false);
+          setNicknameMessage(
+            "닉네임이 입력되지 않았습니다. 닉네임을 입력해주세요."
+          );
+        }
+      });
   };
 
   const handleComplete = () => {

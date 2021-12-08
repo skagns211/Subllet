@@ -43,7 +43,7 @@ module.exports = {
       }
     },
     delete: async (req, res) => {
-      const user_id = req.id
+      const user_id = req.id;
       const service_id = req.params.id;
 
       try {

@@ -157,14 +157,10 @@ const Comment = ({
   };
 
   const delComment = () => {
-    axios
-      .delete(`/comment/${ServiceId}`, {
-        headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
-      })
-      .then((res) => {
-        console.log(res);
-      });
-  };
+    axios.delete(`/comment/${ServiceId}`, {
+      headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+    });
+
 
   return (
     <StyledBody>
@@ -206,13 +202,7 @@ const Comment = ({
                   </CommentInfo>
                   <div>
                     {comment.message}
-                    {JSON.parse(loginUserInfo).nickname ===
-                    comment.commenter ? (
-                      <i
-                        onClick={delComment}
-                        className="fas fa-minus-circle"
-                      ></i>
-                    ) : null}
+                    <i className="fas fa-minus-circle" onClick={delComment}></i>
                   </div>
                 </CommentList>
                 <CommentLike>
