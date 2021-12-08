@@ -19,6 +19,7 @@ import Login from "./pages/Login";
 import MySubllet from "./pages/MySubllet";
 import SignUp from "./pages/SignUp";
 import KakaoAuthHandler from "./components/Signup/KakaoAuthHandler";
+import NaverAuthHandler from "./components/Signup/NaverAuthHandler";
 import { setServices, setService } from "./actions";
 
 axios.defaults.baseURL = "https://localhost:4000";
@@ -77,6 +78,7 @@ function App() {
           <Route path="/mysubllet" element={<MySubllet />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/auth/kakao/callback" element={<KakaoAuthHandler />} />
+          <Route path="/auth/naver/signup" element={<NaverAuthHandler />} />
         </Routes>
         <Footer />
       </SectionStyle>

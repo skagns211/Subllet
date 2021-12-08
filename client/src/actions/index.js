@@ -53,7 +53,7 @@ export const setKakaoAuthCode = (data) => {
 };
 
 export const setAuthUserInfo = (data) => {
-  if (data.nickname.length === 0) {
+  if (Object.keys(data)[0] === "email") {
     return {
       type: AUTH_USERINFO,
       payload: data,
