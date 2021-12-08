@@ -1,24 +1,12 @@
-import { SERVICE_COMMENT } from "../actions";
+import { SERVICE_DETAIL } from "../actions";
 
-const service = {
-  message: "",
-  inner_image: "",
-  url: "",
-  total_comments: 0,
-  total_likes: 0,
-  Comments: [],
-  scrapNum: 0,
-  prices: [],
-};
+const service = "";
 
 const serviceReducer = (state = service, action) => {
+  console.log(action.payload);
   switch (action.type) {
-    case SERVICE_COMMENT:
-      return {
-        ...state,
-        Comments: [...state.Comments, action.payload],
-        prices: [...state.prices, action.payload],
-      };
+    case SERVICE_DETAIL:
+      return (state = action.payload);
     default:
       return state;
   }

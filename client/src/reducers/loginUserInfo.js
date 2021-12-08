@@ -2,12 +2,11 @@
 
 import { LOGIN_USER_INFO } from "../actions";
 
-const loginUserInfo = () =>
-  JSON.parse(window.localStorage.getItem("isLogin")) || {
-    email: "",
-    nickname: "",
-    profile: "",
-  };
+const loginUserInfo = JSON.parse(window.localStorage.getItem("isLogin")) || {
+  email: "",
+  nickname: "",
+  profile: "",
+};
 
 const userReducer = (state = loginUserInfo, action) => {
   // const { email, nickname, profile } = await action.payload;

@@ -46,11 +46,11 @@ const ServiceList = styled.div`
 const FilterList = () => {
   const [services, setServices] = useState([]);
 
-  useEffect(() => {
-    axios.get("/service").then((res) => {
-      setServices(res.data.services);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get("/service").then((res) => {
+  //     setServices(res.data.services);
+  //   });
+  // }, []);
 
   return (
     <StyledBody>
