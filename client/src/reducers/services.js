@@ -1,6 +1,6 @@
 import { SERVICECS_LIST } from "../actions";
 
-const services = "";
+const services = [];
 
 const servicesReducer = (state = services, action) => {
   switch (action.type) {

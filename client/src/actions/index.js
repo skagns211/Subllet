@@ -19,7 +19,7 @@ export const IS_LOGIN = "IS_LOGIN";
 export const KAKAO_AUTH_CODE = "KAKAO_AUTH_CODE";
 export const AUTH_NICKNAME = "AUTH_NICKNAME";
 export const AUTH_USERINFO = "AUTH_USERINFO";
-export const SERVICE_COMMENT = "SERVICE_COMMENT";
+export const SERVICE_DETAIL = "SERVICE_DETAIL";
 export const SERVICECS_LIST = "SERVICECS_LIST";
 export const SELECT_PLAN = "SELECT_PLAN"; // Detail Page
 
@@ -78,7 +78,7 @@ export const selectPlan = (plan) => {
 
 export const setService = (data) => {
   return {
-    type: SERVICE_COMMENT,
+    type: SERVICE_DETAIL,
     payload: data,
   };
 };

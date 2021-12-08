@@ -161,6 +161,7 @@ const Comment = ({
       headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
     });
   };
+
   return (
     <StyledBody>
       {open ? (
