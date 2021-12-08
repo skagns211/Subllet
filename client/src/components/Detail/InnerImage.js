@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import LoginModal from "../LoginModal";
@@ -59,25 +60,22 @@ const DetailMessage = styled.div`
   }
 `;
 
-const InnerImage = ({
-  isLogin,
-  ServiceId,
-  accessToken,
-  detail,
-  scrapNum,
-  isScrap,
-  setIsScrap,
-  isSub,
-  setIsSub,
-}) => {
+const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
+  const state = useSelector((state) => state);
+
+  console.log(state.services[0]);
+
   const [open, setOpen] = useState(false);
+  const [isScrap, setIsScrap] = useState();
+  const [isSub, setIsSub] = useState();
+  const [scrapNum, setScrapNum] = useState();
 
   const handleClick = () => {
     setOpen(!open);
   };
 
   useEffect(() => {
-    if (JSON.parse(isLogin) === true) {
+    if (JSON.parse(isLogin)) {
       axios
         .all([
           axios.get(`/scrap/${ServiceId}`, {
@@ -86,15 +84,19 @@ const InnerImage = ({
           axios.get(`/subscribe/${ServiceId}`, {
             headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
           }),
+          axios.get(`/service/${ServiceId}`, {
+            headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+          }),
         ])
         .then(
-          axios.spread((isScrap, isSub) => {
+          axios.spread((isScrap, isSub, scrapNum) => {
             setIsScrap(isScrap.data.isScrap);
             setIsSub(isSub.data.isSubscribe);
+            setScrapNum(scrapNum.data.service.scrapNum);
           })
         );
     }
-  });
+  }, [isSub]);
 
   const addScrap = () => {
     axios
@@ -116,9 +118,33 @@ const InnerImage = ({
       });
   };
 
-  const addSub = () => {};
+  const addSub = () => {
+    axios
+      .post(
+        `/subscribe/${ServiceId}`,
+        {
+          planname: state.selectPlan.planname,
+          planprice: state.selectPlan.planprice,
+        },
+        {
+          headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+        }
+      )
+      .then(() => {
+        setIsSub(true);
+      });
+  };
 
-  const delSub = () => {};
+  const delSub = () => {
+    axios
+      .delete(`/subscribe/${ServiceId}`, {
+        headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+      })
+      .then(() => {
+        setIsSub(false);
+      });
+  };
+
 
   return (
     <StyledBody>

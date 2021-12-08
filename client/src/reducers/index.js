@@ -4,7 +4,9 @@ import isLogin from "./isLogin";
 import accessToken from "./accessToken";
 import kakaoAuthCode from "./kakaoAuthCode";
 import authUserInfo from "./authUserInfo";
+import selectPlan from "./selectPlan";
 import service from "./service";
+import services from "./services";
 
 // reducers폴더의 reducer파일 import 후 combineReducers 함수의 인자로 넣어서 combine
 
@@ -14,7 +16,9 @@ const rootReducer = combineReducers({
   accessToken,
   kakaoAuthCode,
   authUserInfo,
+  selectPlan,
   service,
+  services,
 });
 
 export default rootReducer;

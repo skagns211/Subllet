@@ -20,6 +20,9 @@ export const KAKAO_AUTH_CODE = "KAKAO_AUTH_CODE";
 export const AUTH_NICKNAME = "AUTH_NICKNAME";
 export const AUTH_USERINFO = "AUTH_USERINFO";
 export const SERVICE_COMMENT = "SERVICE_COMMENT";
+export const SERVICECS_LIST = "SERVICECS_LIST";
+export const SELECT_PLAN = "SELECT_PLAN"; // Detail Page
+
 
 export const setLoginUserInfo = (loginUserInfo) => {
   console.log(loginUserInfo);
@@ -64,9 +67,27 @@ export const setAuthUserInfo = (data) => {
   }
 };
 
+
+export const selectPlan = (plan) => {
+  return {
+    type: SELECT_PLAN,
+    payload: {
+      planname: plan[0],
+      planprice: plan[1],
+    },
+  };
+};
+
 export const setService = (data) => {
   return {
     type: SERVICE_COMMENT,
+    payload: data,
+  };
+};
+
+export const setServices = (data) => {
+  return {
+    type: SERVICECS_LIST,
     payload: data,
   };
 };

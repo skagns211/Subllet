@@ -14,7 +14,11 @@ const service = {
 const serviceReducer = (state = service, action) => {
   switch (action.type) {
     case SERVICE_COMMENT:
-      return { ...state, Comments: [...state.Comments, action.payload] };
+      return {
+        ...state,
+        Comments: [...state.Comments, action.payload],
+        prices: [...state.prices, action.payload],
+      };
     default:
       return state;
   }
