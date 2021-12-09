@@ -52,11 +52,11 @@ const SectionStyle = styled.section`
 function App() {
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   axios
-  //     .get("/service")
-  //     .then((res) => dispatch(setServices(res.data.services)));
-  // }, []);
+  useEffect(() => {
+    axios
+      .get("/service")
+      .then((res) => dispatch(setServices(res.data.services)));
+  }, []);
 
   axios.get("/service").then((res) => dispatch(setServices(res.data.services)));
 

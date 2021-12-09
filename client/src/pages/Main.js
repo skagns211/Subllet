@@ -40,7 +40,7 @@ const Main = () => {
   }, [isLogin]);
 
   console.log(state.services);
-  console.log(state.authUserInfo);
+
   return (
     <>
       <StyledTopBody>
