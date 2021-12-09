@@ -2,7 +2,8 @@ import { combineReducers } from "redux";
 import loginUserInfo from "./loginUserInfo";
 import isLogin from "./isLogin";
 import accessToken from "./accessToken";
-import kakaoAuthCode from "./kakaoAuthCode";
+import authCode from "./authCode";
+import naverAuthCode from "./naverAuthCode";
 import authUserInfo from "./authUserInfo";
 import selectPlan from "./selectPlan";
 import service from "./service";
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   loginUserInfo,
   isLogin,
   accessToken,
-  kakaoAuthCode,
+  authCode,
+  naverAuthCode,
   authUserInfo,
   selectPlan,
   service,

@@ -28,19 +28,7 @@ const Detail = () => {
   const [isScrap, setIsScrap] = useState();
   const [isSub, setIsSub] = useState();
 
-  useEffect(() => {
-    loginUserInfo &&
-      window.localStorage.setItem("loginUserInfo", loginUserInfo);
-  }, [loginUserInfo]);
-
-  useEffect(() => {
-    accessToken && window.localStorage.setItem("accessToken", accessToken);
-  }, [accessToken]);
-
-  useEffect(() => {
-    isLogin && window.localStorage.setItem("isLogin", isLogin);
-  }, [isLogin]);
-
+  console.log(state.services);
   useEffect(() => {
     dispatch(
       setService(

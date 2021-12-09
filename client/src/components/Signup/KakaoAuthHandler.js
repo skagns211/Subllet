@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import axios from "axios";
-import { setKakaoAuthCode, setAuthUserInfo } from "../../actions/index";
+import { setAuthCode, setAuthUserInfo } from "../../actions/index";
 
 const AfterPageContainer = styled.main`
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
@@ -149,19 +149,21 @@ const Button = styled.button`
 const KakaoAuthHandler = () => {
   const state = useSelector((state) => state); //! state 사용 함수
   const dispatch = useDispatch();
+  const preUrl = document.referrer;
+  console.log("이전url=", preUrl);
 
   //! Authorization Code
-  let authCode = new URL(window.location.href).searchParams.get("code");
-  console.log("authCode=", authCode);
-  useEffect(() => dispatch(setKakaoAuthCode(authCode)), [state.kakaoAuthCode]);
-  dispatch(setKakaoAuthCode(authCode));
+  let authoCode = new URL(window.location.href).searchParams.get("code");
+  console.log("authorizationCode=", authoCode);
+  useEffect(() => dispatch(setAuthCode(authoCode)), [state.authCode]);
+  dispatch(setAuthCode(authoCode));
   console.log(state);
-  console.log(state.kakaoAuthCode);
+  console.log(state.authCode);
 
   useEffect(() => {
     axios
       .post("/oauth/kakao", {
-        authorizationCode: authCode,
+        authorizationCode: authoCode,
       })
       .then((response) => {
         console.log(response);
@@ -194,7 +196,7 @@ const KakaoAuthHandler = () => {
         setNicknameMessage("사용가능한 닉네임입니다:)");
       })
       .catch((err) => {
-        // console.log(err.response.data);
+        console.error(err.response);
         const resMsg = err.response.data;
         if (resMsg === "Overlap") {
           setIsDupNickname(false);

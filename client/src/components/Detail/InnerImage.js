@@ -63,7 +63,7 @@ const DetailMessage = styled.div`
 const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
   const state = useSelector((state) => state);
 
-  console.log(state.service[0]);
+  console.log(state.service);
 
   const [open, setOpen] = useState(false);
   const [isScrap, setIsScrap] = useState();
@@ -148,11 +148,12 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
   const ServiceDetail = state.services.filter((service) => {
     return service.id === ServiceId;
   });
-
+  console.log(state.service[0]);
   return (
     <StyledBody>
       {open ? <LoginModal handleClick={handleClick} /> : null}
-      <BackgroundImage image={state.service.inner_image}>
+      <BackgroundImage>
+        {/* <img src={state.service[0].inner_image} /> */}
         <ScrapButton>
           {JSON.parse(isLogin) && isScrap ? (
             <>

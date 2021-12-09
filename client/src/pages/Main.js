@@ -39,6 +39,8 @@ const Main = () => {
     isLogin && window.localStorage.setItem("isLogin", isLogin);
   }, [isLogin]);
 
+  console.log(state.services);
+  console.log(state.authUserInfo);
   return (
     <>
       <StyledTopBody>

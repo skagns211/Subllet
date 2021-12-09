@@ -22,9 +22,6 @@ import KakaoAuthHandler from "./components/Signup/KakaoAuthHandler";
 import NaverAuthHandler from "./components/Signup/NaverAuthHandler";
 import { setServices, setService } from "./actions";
 
-axios.defaults.baseURL = "https://localhost:4000";
-axios.defaults.withCredentials = true;
-
 const GlobalStyle = createGlobalStyle`
   body {
     font-family: "Geo", sans-serif;
@@ -55,11 +52,13 @@ const SectionStyle = styled.section`
 function App() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    axios
-      .get("/service")
-      .then((res) => dispatch(setServices(res.data.services)));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("/service")
+  //     .then((res) => dispatch(setServices(res.data.services)));
+  // }, []);
+
+  axios.get("/service").then((res) => dispatch(setServices(res.data.services)));
 
   return (
     <BrowserRouter>
