@@ -8,6 +8,20 @@ module.exports = {
   generateRefreshToken: (data) => {
     return sign({ data }, process.env.REFRESH_SECRET, { expiresIn: "14d" });
   },
+  sendAccessToken: (res, accessToken) => {
+    return res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      samesite: "none",
+      secure: true,
+    });
+  },
+  sendRefreshToken: (res, refreshToken) => {
+    return res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      samesite: "none",
+      secure: true,
+    });
+  },
   isAuthorized: (req) => {
     const authorization = req.headers["authorization"];
     console.log("authorization : " + authorization);
