@@ -54,7 +54,7 @@ module.exports = {
       fields: ["service_id"],
       type: "foreign key",
       references: {
-        table: "services",
+        table: "Services",
         field: "id",
       },
     });
@@ -62,7 +62,7 @@ module.exports = {
       fields: ["user_id"],
       type: "foreign key",
       references: {
-        table: "users",
+        table: "Users",
         field: "id",
       },
     });
