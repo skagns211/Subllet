@@ -244,18 +244,17 @@ const LoginForm = () => {
           password,
         })
         .then((res) => {
+          console.log(res);
           console.log(res.status);
           const { accessToken, userInfo } = res.data; //! refreshToken을 어디로 받을지 상의필요
           console.log(accessToken);
-          if (res.statusText === "OK") {
-            const loginUserInfo = userInfo;
-            // console.log(loginUserInfo);
-            dispatch(setLoginUserInfo(loginUserInfo));
-            dispatch(setAccessToken(accessToken));
-            dispatch(setIsLogin(true));
-            // navigate("/");
-            window.location.replace("/"); //! navigate 사용시 isLogin에 따른 nav변경 안됨
-          }
+          const loginUserInfo = userInfo;
+          // console.log(loginUserInfo);
+          dispatch(setLoginUserInfo(loginUserInfo));
+          dispatch(setAccessToken(accessToken));
+          dispatch(setIsLogin(true));
+          // navigate("/");
+          window.location.replace("/"); //! navigate 사용시 isLogin에 따른 nav변경 안됨
         })
         .catch((err) => {
           setIsWarning(true);

@@ -6,6 +6,7 @@ import store from "./store/store";
 import { Provider } from "react-redux";
 
 axios.defaults.baseURL = "https://localhost:4000";
+// axios.defaults.baseURL = "https://server.subllet.co.kr";
 axios.defaults.withCredentials = true;
 
 ReactDOM.render(
