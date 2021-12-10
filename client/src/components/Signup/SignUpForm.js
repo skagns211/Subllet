@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import styled from "styled-components";
 import Select from "react-select";
 import axios from "axios";
+import AgreeCheck from "./AgreeCheck";
 
 //! Styled Setting--------------------------------------------
 
@@ -186,7 +187,7 @@ const SignUpForm = () => {
   const [isDupNickname, setIsDupNickname] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [isPwdCheck, setIsPwdCheck] = useState(false);
-
+  const [isCheck, setIsCheck] = useState(false);
   //! 회원가입 상태 state
   const [isComplete, setIsComplete] = useState(false);
 
@@ -399,6 +400,7 @@ const SignUpForm = () => {
           <ErrorMessage>{passwordCheckMessage}</ErrorMessage>
         )}
       </ElementBox>
+      <AgreeCheck isCheck={isCheck} setIsCheck={setIsCheck} />
       <Button onClick={() => handleComplete()}>회원가입</Button>
     </SignUpContainer>
   );

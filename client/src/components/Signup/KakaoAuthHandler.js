@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import axios from "axios";
 import { setAuthCode, setAuthUserInfo } from "../../actions/index";
+import AgreeCheck from "./AgreeCheck";
 
 const AfterPageContainer = styled.main`
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
@@ -149,8 +150,7 @@ const Button = styled.button`
 const KakaoAuthHandler = () => {
   const state = useSelector((state) => state); //! state 사용 함수
   const dispatch = useDispatch();
-  const preUrl = document.referrer;
-  console.log("이전url=", preUrl);
+  const [isCheck, setIsCheck] = useState(false);
 
   //! Authorization Code
   let authoCode = new URL(window.location.href).searchParams.get("code");
@@ -248,6 +248,7 @@ const KakaoAuthHandler = () => {
           )}
           <Button onClick={() => checkNickname()}>닉네임 중복검사</Button>
         </ElementBox>
+        <AgreeCheck isCheck={isCheck} setIsCheck={setIsCheck} />
         <Button onClick={() => handleComplete()}>회원가입</Button>
       </InnerBox>
     </AfterPageContainer>
