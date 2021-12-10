@@ -13,6 +13,8 @@ const SignUpContainer = styled.main`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  /* background-color: #272729; */
+  border-radius: 0.5rem;
   /* border: 1px solid white; */
   /* @media only screen and (min-width: 800px) {
     padding-left: 1rem;

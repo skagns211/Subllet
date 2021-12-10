@@ -20,6 +20,7 @@ import MySubllet from "./pages/MySubllet";
 import SignUp from "./pages/SignUp";
 import KakaoAuthHandler from "./components/Signup/KakaoAuthHandler";
 import NaverAuthHandler from "./components/Signup/NaverAuthHandler";
+import GoogleAuthHandler from "./components/Signup/GoogleAuthHandler";
 import { setServices, setService } from "./actions";
 
 const GlobalStyle = createGlobalStyle`
@@ -78,6 +79,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/auth/kakao/callback" element={<KakaoAuthHandler />} />
           <Route path="/auth/naver/signup" element={<NaverAuthHandler />} />
+          <Route path="/auth/google/signup" element={<GoogleAuthHandler />} />
         </Routes>
         <Footer />
       </SectionStyle>
