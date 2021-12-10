@@ -22,8 +22,8 @@ import KakaoAuthHandler from "./components/Signup/KakaoAuthHandler";
 import NaverAuthHandler from "./components/Signup/NaverAuthHandler";
 import { setServices, setService } from "./actions";
 
-axios.defaults.baseURL = "https://localhost:4000";
-axios.defaults.withCredentials = true;
+// axios.defaults.baseURL = "https://localhost:4000";
+// axios.defaults.withCredentials = true;
 
 const GlobalStyle = createGlobalStyle`
   body {
