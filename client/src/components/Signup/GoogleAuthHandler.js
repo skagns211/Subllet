@@ -162,7 +162,7 @@ const NaverAuthHandler = () => {
 
   useEffect(() => {
     axios
-      .post("/oauth/naver", {
+      .post("/oauth/google", {
         authorizationCode: authoCode,
       })
       .then((response) => {

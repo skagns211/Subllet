@@ -25,22 +25,6 @@ const Main = () => {
   const isLogin = window.localStorage.getItem("isLogin");
   const loginUserInfo = window.localStorage.getItem("loginUserInfo");
   const accessToken = window.localStorage.getItem("accessToken");
-  console.log(isLogin);
-
-  // useEffect(() => {
-  //   loginUserInfo &&
-  //     window.localStorage.setItem("loginUserInfo", loginUserInfo);
-  // }, [loginUserInfo]);
-
-  // useEffect(() => {
-  //   accessToken && window.localStorage.setItem("accessToken", accessToken);
-  // }, [accessToken]);
-
-  // useEffect(() => {
-  //   isLogin && window.localStorage.setItem("isLogin", isLogin);
-  // }, [isLogin]);
-  console.log(state);
-  console.log(state.services);
 
   return (
     <>

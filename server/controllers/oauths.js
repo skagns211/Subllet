@@ -21,8 +21,7 @@ module.exports = {
         const client_secret = process.env.GOOGLE_SECRET;
         const endPoint = "https://oauth2.googleapis.com/token";
         const grant_type = "authorization_code";
-        const redirect_uri =
-          process.env.CLIENT_ORIGIN + "/auth/google/callback";
+        const redirect_uri = process.env.CLIENT_ORIGIN + "/auth/google/signup";
         const url = `${endPoint}?code=${authorizationCode}&client_id=${client_id}&client_secret=${client_secret}&redirect_uri=${redirect_uri}&grant_type=${grant_type}`;
 
         const response = await axios({
@@ -32,15 +31,17 @@ module.exports = {
             "content-type": "application/x-www-form-urlencoded",
           },
         });
+        // console.log(response);
+
         const { access_token } = response.data;
 
         const googleUserInfo = await axios.get(
           "https://www.googleapis.com/oauth2/v1/userinfo",
           { headers: { Authorization: `Bearer ${access_token}` } }
         );
-
+        console.log(googleUserInfo);
         const { email, picture } = googleUserInfo.data;
-
+        console.log(email);
         const userInfo = await User.findOne({
           where: { email },
         });
@@ -63,7 +64,7 @@ module.exports = {
           return res.json({ userInfo, accessToken, refreshToken });
         }
       } catch (err) {
-        console.error(err);
+        // console.error(err);
         return res.status(400).json("Client error");
       }
     },
