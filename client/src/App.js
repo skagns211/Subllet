@@ -1,9 +1,6 @@
-import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
 
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
@@ -20,7 +17,6 @@ import MySubllet from "./pages/MySubllet";
 import SignUp from "./pages/SignUp";
 import KakaoAuthHandler from "./components/Signup/KakaoAuthHandler";
 import NaverAuthHandler from "./components/Signup/NaverAuthHandler";
-import { setServices, setService } from "./actions";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -50,16 +46,6 @@ const SectionStyle = styled.section`
 `;
 
 function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    axios
-      .get("/service")
-      .then((res) => dispatch(setServices(res.data.services)));
-  }, []);
-
-  axios.get("/service").then((res) => dispatch(setServices(res.data.services)));
-
   return (
     <BrowserRouter>
       <GlobalStyle />

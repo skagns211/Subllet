@@ -6,6 +6,7 @@ import Comment from "../components/Detail/Comment";
 import { useParams } from "react-router";
 import { setService, setServices } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 const StyledBody = styled.section`
   max-width: 950px;
@@ -18,26 +19,34 @@ const Detail = () => {
   const loginUserInfo = window.localStorage.getItem("loginUserInfo");
   const accessToken = window.localStorage.getItem("accessToken");
 
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state);
+  useEffect(() => {
+    window.localStorage.setItem("loginUserInfo", loginUserInfo);
+  }, [loginUserInfo]);
+
+  useEffect(() => {
+    window.localStorage.setItem("accessToken", accessToken);
+  }, [accessToken]);
+
+  useEffect(() => {
+    window.localStorage.setItem("isLogin", isLogin);
+  }, [isLogin]);
+
   const ServiceId = Number(useParams().id);
 
-  const [comments, setComments] = useState([]);
   const [detail, setDetail] = useState([]);
   const [scrapNum, setScrapNum] = useState();
   const [isScrap, setIsScrap] = useState();
   const [isSub, setIsSub] = useState();
 
-  console.log(state.services);
+  const [comments, setComments] = useState([]);
+
   useEffect(() => {
-    dispatch(
-      setService(
-        state.services.filter((service) => {
-          return service.id === ServiceId;
-        })
-      )
-    );
-  }, [state.services]);
+    axios.get(`/service/${ServiceId}`).then((res) => {
+      setDetail(res.data.service);
+      setScrapNum(res.data.service.scrapNum);
+      setComments(res.data.service.Comments);
+    });
+  }, [isScrap]);
 
   return (
     <StyledBody>
