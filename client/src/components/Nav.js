@@ -214,7 +214,9 @@ const Nav = () => {
     window.localStorage.setItem("isLogin", JSON.stringify(state.isLogin));
   }, [state.isLogin]);
 
+  const currentUrl = location.pathname;
   const logoutHandler = () => {
+    console.log("click1");
     axios
       .post("/auth/logout", null, {
         headers: {
@@ -222,23 +224,21 @@ const Nav = () => {
         },
       })
       .then((res) => {
-        if (res.statusText === "OK") {
-          const loginUserInfo = {
-            email: "",
-            nickname: "",
-            profile: "",
-          };
-          dispatch(setLoginUserInfo(loginUserInfo));
-          dispatch(setAccessToken(""));
-          dispatch(setIsLogin(false));
-        }
+        console.log("then");
+        const loginUserInfo = {
+          email: "",
+          nickname: "",
+          profile: "",
+        };
+        dispatch(setLoginUserInfo(loginUserInfo));
+        dispatch(setAccessToken(""));
+        dispatch(setIsLogin(false));
+        window.location.href(currentUrl);
       })
       .catch((err) => {
         alert(err);
       });
   };
-
-  const currentUrl = location.pathname;
 
   return (
     <>
@@ -283,7 +283,6 @@ const Nav = () => {
                     to={currentUrl}
                     onClick={() => {
                       logoutHandler();
-                      window.location.href(currentUrl);
                     }}
                   >
                     로그아웃

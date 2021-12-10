@@ -5,8 +5,8 @@ const {
   generateAccessToken,
   generateRefreshToken,
 } = require("../utils/tokenFunctions");
-const emailSend = require("../utils/emails/send");
-const { emailVerify } = require("../utils/emails/content");
+// const emailSend = require("../utils/emails/send");
+// const { emailVerify } = require("../utils/emails/content");
 
 module.exports = {
   google: {
