@@ -187,34 +187,10 @@ const Nav = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const location = useLocation();
-  const { email, nickname, profile } = state.loginUserInfo;
-  const isLogin = window.localStorage.getItem("isLogin");
-  const loginUserInfo = window.localStorage.getItem("loginUserInfo");
+  const { profile } = state.loginUserInfo;
   const accessToken = window.localStorage.getItem("accessToken");
-  // const { email, nickname, profile } = JSON.parse(
-  //   window.localStorage.getItem("loginUserInfo")
-  // );
-  // console.log(JSON.parse(window.localStorage.getItem("loginUserInfo")));
-
-  useEffect(() => {
-    window.localStorage.setItem(
-      "loginUserInfo",
-      JSON.stringify(state.loginUserInfo)
-    );
-  }, [state.loginUserInfo]);
-
-  useEffect(() => {
-    window.localStorage.setItem(
-      "accessToken",
-      JSON.stringify(state.accessToken)
-    );
-  }, [state.accessToken]);
-
-  useEffect(() => {
-    window.localStorage.setItem("isLogin", JSON.stringify(state.isLogin));
-  }, [state.isLogin]);
-
   const currentUrl = location.pathname;
+
   const logoutHandler = () => {
     console.log("click1");
     axios
@@ -233,7 +209,7 @@ const Nav = () => {
         dispatch(setLoginUserInfo(loginUserInfo));
         dispatch(setAccessToken(""));
         dispatch(setIsLogin(false));
-        window.location.href(currentUrl);
+        window.location.href = currentUrl;
       })
       .catch((err) => {
         alert(err);
@@ -252,9 +228,7 @@ const Nav = () => {
           </span>
         </MinNavTap>
         <Font>
-          {/* <Link to="/"> */}
           <span onClick={() => window.location.replace("/")}>Subllet</span>
-          {/* </Link> */}
           <img alt="logo" src={logo}></img>
           <SearchBar type="search" placeholder="서비스를 검색해보세요" />
         </Font>
@@ -267,7 +241,7 @@ const Nav = () => {
               <Link to="/customercenter">고객센터</Link>
             </div>
           </MaxNavTap>
-          {isLogin === "true" ? (
+          {state.isLogin ? (
             <Test>
               <img
                 alt="userImg"

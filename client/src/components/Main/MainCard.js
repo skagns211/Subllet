@@ -62,7 +62,6 @@ const MainCardBody = styled.div`
     width: 2.5rem;
     margin-left: 3.2rem;
     margin-top: 1rem;
-    border-radius: 2rem;
   }
   .user {
     background-color: transparent;
@@ -130,10 +129,7 @@ const MainCardRightBottom = styled.div`
 `;
 const MainCard = () => {
   const state = useSelector((state) => state);
-  // const { email, nickname, profile } = state.loginUserInfo; //! user정보 state
-  const { nickname, profile } = JSON.parse(
-    window.localStorage.getItem("loginUserInfo")
-  ); //! user정보
+  const { nickname, profile } = state.loginUserInfo; //! user정보
 
   return (
     <>
@@ -146,7 +142,7 @@ const MainCard = () => {
                 src={
                   profile
                     ? profile
-                    : "https://i.esdrop.com/d/z3v0lj8ztjvc/UKFjJlgwrH.png"
+                    : "https://i.esdrop.com/d/z3v0lj8ztjvc/OizvMNga4W.png"
                 }
               />
               <span className="user">{nickname} 님의 Subllet</span>

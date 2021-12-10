@@ -1,7 +1,8 @@
 import { React, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Slider from "react-slick";
-import { IMG } from "../Main/imageUrl";
 
 const StyleSlider = styled.div`
   color: #ff8a00;
@@ -54,6 +55,7 @@ const Wrap = styled.div`
   }
   img {
     width: 40rem;
+    cursor: pointer;
     @media only screen and (max-width: 800px) {
       width: 100%;
       height: 100%;
@@ -78,6 +80,11 @@ const TopContent = styled.div`
 `;
 
 const Video = () => {
+  const state = useSelector((state) => state);
+  const navigate = useNavigate();
+  const serviceList = state.services;
+  const videoList = serviceList.filter((el) => el.category === "video");
+
   const [isSetting, setIsSetting] = useState({
     dots: true,
     infinite: true,
@@ -100,9 +107,12 @@ const Video = () => {
         });
   };
 
+  const handleIntoDetail = (path) => {
+    navigate(`Detail/${path}`);
+  };
+
   useEffect(() => {
     handleResize();
-    console.log("render..");
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -117,8 +127,15 @@ const Video = () => {
       </TopContent>
       <Wrap>
         <Slider {...isSetting}>
-          {IMG["video"].map((el, idx) => {
-            return <img key={idx} alt="videoImg" src={el}></img>;
+          {videoList.map((el, idx) => {
+            return (
+              <img
+                key={idx}
+                alt="videoImg"
+                src={el.outer_image}
+                onClick={() => handleIntoDetail(el.id)}
+              ></img>
+            );
           })}
         </Slider>
       </Wrap>

@@ -40,7 +40,14 @@ module.exports = {
   services: {
     get: async (req, res) => {
       const services = await Service.findAll({
-        attributes: ["id", "title", "outer_image", "category", "demo"],
+        attributes: [
+          "id",
+          "title",
+          "outer_image",
+          "category",
+          "demo",
+          "total_likes",
+        ],
         include: [
           {
             attributes: ["id", "title", "message", "price"],

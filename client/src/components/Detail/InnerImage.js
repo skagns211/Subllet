@@ -75,7 +75,6 @@ const InnerImage = ({
   setIsScrap,
 }) => {
   const state = useSelector((state) => state);
-
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
