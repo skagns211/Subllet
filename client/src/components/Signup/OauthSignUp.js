@@ -64,7 +64,9 @@ const OauthSignUp = () => {
         <a href={NAVER_AUTH_URL}>
           <img src={naver_oauth} />
         </a>
-        <img src={google_oauth} />
+        <a>
+          <img src={google_oauth} />
+        </a>
       </IconBox>
     </OauthContainer>
   );

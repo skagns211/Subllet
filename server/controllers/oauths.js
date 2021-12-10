@@ -75,23 +75,25 @@ module.exports = {
         if (!authorizationCode) {
           return res.status(400).send("Bad request");
         }
-
+        // console.log(authorizationCode);
         const client_id = process.env.NAVER_CLIENT_ID;
         const client_secret = process.env.NAVER_SECRET;
         const endPoint = "https://nid.naver.com/oauth2.0/token";
         const grant_type = "authorization_code";
-        const state = Math.random().toString(36).slice(2);
+        // const state = Math.random().toString(36).slice(2);
+        const state = "1234567";
 
         const url = `${endPoint}?grant_type=${grant_type}&client_id=${client_id}&client_secret=${client_secret}&code=${authorizationCode}&state=${state}`;
         const response = await axios.post(url);
         const { access_token } = response.data;
-
+        console.log(access_token);
         const NaverUserInfo = await axios.get(
           "https://openapi.naver.com/v1/nid/me",
           { headers: { Authorization: `Bearer ${access_token}` } }
         );
+        console.log(NaverUserInfo.data);
 
-        const { email, profile_image } = NaverUserInfo.response;
+        const { email, profile_image } = NaverUserInfo.data.response;
 
         const userInfo = await User.findOne({
           where: { email },

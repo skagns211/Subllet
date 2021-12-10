@@ -63,13 +63,14 @@ const Price = styled.span`
 `;
 
 const ServiceContent = ({ detail }) => {
+  const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const checked = (e) => {
     let plan = e.target.value.split(",");
     dispatch(selectPlan(plan));
   };
-
+  console.log(state.service);
   return (
     <StyledBody>
       <Service>

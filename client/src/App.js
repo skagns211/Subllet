@@ -58,6 +58,8 @@ function App() {
       .then((res) => dispatch(setServices(res.data.services)));
   }, []);
 
+  axios.get("/service").then((res) => dispatch(setServices(res.data.services)));
+
   return (
     <BrowserRouter>
       <GlobalStyle />
