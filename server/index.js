@@ -5,7 +5,7 @@ const app = express();
 // const session = require("express-session");
 // const passport = require("passport");
 const cors = require("cors");
-// const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser");
 const indexRouter = require("./routes");
 // const bodyParser = require("body-parser");
 // app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,7 +19,7 @@ app.use(
     methods: ["GET", "POST", "OPTIONS", "PATCH", "DELETE"],
   })
 );
-// app.use(cookieParser());
+app.use(cookieParser());
 app.use("/", indexRouter);
 
 const HTTPS_PORT = process.env.HTTPS_PORT || 4000;

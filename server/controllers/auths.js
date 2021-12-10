@@ -10,6 +10,8 @@ const {
   isAuthorized,
   checkRefeshToken,
   checkAccessToken,
+  sendAccessToken,
+  sendRefreshToken,
 } = require("../utils/tokenFunctions");
 const { User } = require("../models");
 require("dotenv").config();
@@ -85,6 +87,9 @@ module.exports = {
 
       // await redis.set(userInfo.id, refreshToken, "ex", 1209600);
 
+      // sendAccessToken(res, accessToken);
+      // sendRefreshToken(res, refreshToken);
+
       try {
         return res.json({
           userInfo: userInfo.dataValues,
@@ -103,6 +108,8 @@ module.exports = {
       // const { id } = isAuthorized(req);
 
       // redis.del(id);
+      res.cookie("accessToken", null, { maxAge: 0 });
+      res.cookie("refreshToken", null, { maxAge: 0 });
 
       try {
         res.send("Logout success");
@@ -172,7 +179,7 @@ module.exports = {
   refresh: {
     post: async (req, res) => {
       const { accesstoken, refreshtoken } = req.headers;
-      console.log(accesstoken);
+      // const { accesstoken, refreshtoken } = req.cookies;
 
       if (!accesstoken || !refreshtoken) {
         return res.status(400).send("Not exist token");
@@ -207,8 +214,11 @@ module.exports = {
       delete userInfo.dataValues.salt;
       const newAccessToken = generateAccessToken(userInfo.dataValues);
 
+      // sendAccessToken(res, newAccessToken);
+
       try {
         res.json({ newAccessToken });
+        res.send("Success");
       } catch (err) {
         console.error(err);
         res.status(500).send("Server error");
