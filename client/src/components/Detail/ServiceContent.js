@@ -70,7 +70,13 @@ const ServiceContent = ({ detail }) => {
     let plan = e.target.value.split(",");
     dispatch(selectPlan(plan));
   };
-  console.log(state.service);
+
+  const mvPage = () => {
+    window.open(`${detail.url}`);
+  };
+
+  console.log(state.selectPlan);
+
   return (
     <StyledBody>
       <Service>
@@ -96,16 +102,16 @@ const ServiceContent = ({ detail }) => {
         <span>
           <ServiceOption>Service</ServiceOption>
           <ServiceDetail>
-            1. 로켓배송상품 무료배송 <br />
+            {/* 1. 로켓배송상품 무료배송 <br />
             2. 새벽배송 (19시전까지 주문시) <br />
             3. 저녁배송 (09시전까지 주문시 당일배송) <br />
             4. 로켓배송상품 30일 무료반품 <br />
-            5.쿠팡플레이 무료이용
+            5.쿠팡플레이 무료이용 */}
           </ServiceDetail>
         </span>
       </Service>
       <LinkButton>
-        <button>구독하러가기</button>
+        <button onClick={mvPage}>구독하러가기</button>
       </LinkButton>
     </StyledBody>
   );

@@ -144,9 +144,6 @@ const Comment = ({
           setComments([...comments, res.data.comment]);
         })
         .catch((err) => {
-          // console.dir(err);
-          // console.log(err.response.data);
-          // if(err.response.data === '')
           setAlertMsg({ message: "이미 작성하셨습니다", button: "확인" });
           setOpen(!open);
         });
@@ -156,10 +153,17 @@ const Comment = ({
     }
   };
 
-  const delComment = () => {
-    axios.delete(`/comment/${ServiceId}`, {
-      headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
-    });
+  const delComment = (e) => {
+    axios
+      .delete(`/comment/${ServiceId}`, {
+        headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+      })
+      .then((res) => {
+        let del = comments.filter(
+          (comment) => comment.commenter !== JSON.parse(loginUserInfo).nickname
+        );
+        setComments([...del]);
+      });
   };
 
   return (
