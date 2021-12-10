@@ -7,6 +7,7 @@ import Video from "../components/Main/Video";
 import Music from "../components/Main/Music";
 import Shoping from "../components/Main/Shopping";
 import Pick from "../components/Main/Pick";
+import Book from "../components/Main/Book";
 import Life from "../components/Main/Life";
 
 const StyledTopBody = styled.section`
@@ -26,25 +27,25 @@ const Main = () => {
   const accessToken = window.localStorage.getItem("accessToken");
   console.log(isLogin);
 
-  useEffect(() => {
-    loginUserInfo &&
-      window.localStorage.setItem("loginUserInfo", loginUserInfo);
-  }, [loginUserInfo]);
+  // useEffect(() => {
+  //   loginUserInfo &&
+  //     window.localStorage.setItem("loginUserInfo", loginUserInfo);
+  // }, [loginUserInfo]);
 
-  useEffect(() => {
-    accessToken && window.localStorage.setItem("accessToken", accessToken);
-  }, [accessToken]);
+  // useEffect(() => {
+  //   accessToken && window.localStorage.setItem("accessToken", accessToken);
+  // }, [accessToken]);
 
-  useEffect(() => {
-    isLogin && window.localStorage.setItem("isLogin", isLogin);
-  }, [isLogin]);
-
+  // useEffect(() => {
+  //   isLogin && window.localStorage.setItem("isLogin", isLogin);
+  // }, [isLogin]);
+  console.log(state);
   console.log(state.services);
 
   return (
     <>
       <StyledTopBody>
-        {isLogin === "true" ? <MainCard /> : <GuestMainCard />}
+        {state.isLogin ? <MainCard /> : <GuestMainCard />}
         {/* isLogin에 따라 */}
       </StyledTopBody>
       <StyledBottomBody>
@@ -52,6 +53,7 @@ const Main = () => {
         <Music />
         <Shoping />
         <Pick />
+        <Book />
         <Life />
       </StyledBottomBody>
     </>

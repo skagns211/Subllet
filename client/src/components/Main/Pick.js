@@ -1,4 +1,6 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IMG } from "./imageUrl";
 
@@ -9,6 +11,9 @@ const StylePick = styled.div`
   margin-top: 3rem;
   margin-left: 0.5rem;
   width: 99.5%;
+  img {
+    cursor: pointer;
+  }
 `;
 
 const PickBox = styled.div`
@@ -92,24 +97,36 @@ const ForUserBox = styled.div`
 `;
 
 const Pick = () => {
-  const ObjIMG = Math.floor(Math.random() * 3 + 2); // Math.random() * (최댓값 - 최솟값) + 최솟값
-  const randomImg = Math.floor(ObjIMG);
-  const randomKey = Object.keys(IMG)[randomImg];
-  const arrLength = IMG[randomKey].length;
+  const state = useSelector((state) => state);
+  const navigate = useNavigate();
+  const serviceList = state.services;
+  const arrLength = serviceList.length;
   const randomArr = Math.random() * arrLength;
   const randomArr2 = Math.random() * arrLength;
-  const pickImg = IMG[randomKey][Math.floor(randomArr)];
-  let forImg = IMG[randomKey][Math.floor(randomArr2)];
+  const pick = serviceList[Math.floor(randomArr)];
+  let forYou = serviceList[Math.floor(randomArr2)];
+
+  const handleIntoDetail = (path) => {
+    navigate(`Detail/${path}`);
+  };
 
   return (
     <StylePick>
       <PickBox>
         <div>Subllet's Pick</div>
-        <img alt="pickImg" src={pickImg}></img>
+        <img
+          alt="pickImg"
+          src={pick.outer_image}
+          onClick={() => handleIntoDetail(pick.id)}
+        ></img>
       </PickBox>
       <ForUserBox>
         <div>For Guest</div>
-        <img alt="pickImg" src={forImg}></img>
+        <img
+          alt="pickImg"
+          src={forYou.outer_image}
+          onClick={() => handleIntoDetail(forYou.id)}
+        ></img>
       </ForUserBox>
     </StylePick>
   );

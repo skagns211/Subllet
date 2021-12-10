@@ -79,11 +79,11 @@ const TopContent = styled.div`
   }
 `;
 
-const Life = () => {
+const Book = () => {
   const state = useSelector((state) => state);
   const navigate = useNavigate();
   const serviceList = state.services;
-  const lifeList = serviceList.filter((el) => el.category === "life");
+  const bookList = serviceList.filter((el) => el.category === "book");
 
   const [isSetting, setIsSetting] = useState({
     dots: true,
@@ -122,16 +122,16 @@ const Life = () => {
   return (
     <StyleSlider>
       <TopContent>
-        <div>Life</div>
+        <div>Book</div>
         <a>전체보기</a>
       </TopContent>
       <Wrap>
         <Slider {...isSetting}>
-          {lifeList.map((el, idx) => {
+          {bookList.map((el, idx) => {
             return (
               <img
                 key={idx}
-                alt="lifeImg"
+                alt="bookImg"
                 src={el.outer_image}
                 onClick={() => handleIntoDetail(el.id)}
               ></img>
@@ -143,4 +143,4 @@ const Life = () => {
   );
 };
 
-export default Life;
+export default Book;

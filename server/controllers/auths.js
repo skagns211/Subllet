@@ -87,14 +87,14 @@ module.exports = {
 
       // await redis.set(userInfo.id, refreshToken, "ex", 1209600);
 
-      // sendAccessToken(res, accessToken);
-      // sendRefreshToken(res, refreshToken);
+      sendAccessToken(res, accessToken);
+      sendRefreshToken(res, refreshToken);
 
       try {
         return res.json({
           userInfo: userInfo.dataValues,
-          accessToken,
-          refreshToken,
+          // accessToken,
+          // refreshToken,
         });
       } catch (err) {
         console.error(err);

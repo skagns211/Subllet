@@ -1,7 +1,8 @@
 import { React, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Slider from "react-slick";
-import { IMG } from "../Main/imageUrl";
 
 const StyleSlider = styled.div`
   color: #ff8a00;
@@ -54,6 +55,7 @@ const Wrap = styled.div`
   }
   img {
     width: 40rem;
+    cursor: pointer;
     @media only screen and (max-width: 800px) {
       width: 100%;
       height: 100%;
@@ -78,6 +80,11 @@ const TopContent = styled.div`
 `;
 
 const Shoping = () => {
+  const state = useSelector((state) => state);
+  const navigate = useNavigate();
+  const serviceList = state.services;
+  const shopingList = serviceList.filter((el) => el.category === "shoping");
+
   const [isSetting, setIsSetting] = useState({
     dots: true,
     infinite: true,
@@ -100,6 +107,10 @@ const Shoping = () => {
         });
   };
 
+  const handleIntoDetail = (path) => {
+    navigate(`Detail/${path}`);
+  };
+
   useEffect(() => {
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -116,8 +127,15 @@ const Shoping = () => {
       </TopContent>
       <Wrap>
         <Slider {...isSetting}>
-          {IMG["shoping"].map((el, idx) => {
-            return <img key={idx} alt="shopingImg" src={el}></img>;
+          {shopingList.map((el, idx) => {
+            return (
+              <img
+                key={idx}
+                alt="shopingImg"
+                src={el.outer_image}
+                onClick={() => handleIntoDetail(el.id)}
+              ></img>
+            );
           })}
         </Slider>
       </Wrap>

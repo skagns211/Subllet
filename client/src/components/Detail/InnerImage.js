@@ -63,7 +63,7 @@ const DetailMessage = styled.div`
 const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
   const state = useSelector((state) => state);
 
-  console.log(state.service[0]);
+  console.log(state.service);
 
   const [open, setOpen] = useState(false);
   const [isScrap, setIsScrap] = useState();
