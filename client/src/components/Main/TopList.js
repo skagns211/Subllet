@@ -37,7 +37,7 @@ const TopImg = styled.span`
   @media only screen and (min-width: 1050px) and (max-width: 1300px) {
     flex-direction: column;
     img {
-      width: 18rem;
+      width: 15rem;
       height: 6.55rem;
       margin-bottom: 0.2rem;
     }
@@ -45,7 +45,7 @@ const TopImg = styled.span`
   @media only screen and (min-width: 1300px) {
     flex-direction: column;
     img {
-      width: 19rem;
+      width: 16rem;
       height: 6.3rem;
       margin-bottom: 0.5rem;
     }

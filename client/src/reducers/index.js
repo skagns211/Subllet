@@ -4,7 +4,6 @@ import storage from "redux-persist/lib/storage";
 
 import loginUserInfo from "./loginUserInfo";
 import isLogin from "./isLogin";
-import accessToken from "./accessToken";
 import authCode from "./authCode";
 import naverAuthCode from "./naverAuthCode";
 import authUserInfo from "./authUserInfo";
@@ -22,7 +21,6 @@ const persistConfig = {
 const rootReducer = combineReducers({
   loginUserInfo,
   isLogin,
-  accessToken,
   authCode,
   naverAuthCode,
   authUserInfo,

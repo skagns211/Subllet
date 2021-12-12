@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import TopList from "./TopList";
 import { IMG } from "./imageUrl";
+import axios from "axios";
+import { setLoginUserInfo } from "../../actions";
 
 const randomIdx = Math.floor(Math.random() * IMG["backImg"].length);
 const randomBackImg = IMG.backImg[randomIdx];
@@ -60,7 +62,7 @@ const MainCardBody = styled.div`
   }
   img {
     width: 2.5rem;
-    margin-left: 3.2rem;
+    margin-left: 1.5rem;
     margin-top: 1rem;
   }
   .user {
@@ -89,6 +91,20 @@ const MainCardBody = styled.div`
     padding: 0.5rem 5rem 0.5rem 2.5rem;
     width: 15rem;
   }
+  @media only screen and (max-width: 500px) {
+    .user {
+      padding-right: 0;
+    }
+    .totalPrice {
+      padding-left: 1.3rem;
+    }
+    .nextPay {
+      padding-left: 1.3rem;
+    }
+    hr {
+      width: 21.1rem;
+    }
+  }
 `;
 
 const MainCardBottom = styled.div`
@@ -102,6 +118,11 @@ const MainCardBottom = styled.div`
     padding-top: 0.5rem;
     width: 7.5rem;
     height: 10.3rem;
+  }
+  @media only screen and (max-width: 500px) {
+    .subscribe {
+      padding-left: 0.8rem;
+    }
   }
 `;
 
@@ -129,7 +150,83 @@ const MainCardRightBottom = styled.div`
 `;
 const MainCard = () => {
   const state = useSelector((state) => state);
-  const { nickname, profile } = state.loginUserInfo; //! user정보
+  const dispatch = useDispatch();
+  const [service, setService] = useState([
+    "-",
+    "구독중인",
+    "서비스가",
+    "없습니다",
+  ]);
+  const [payDate, setPayDate] = useState([]);
+  const {
+    email,
+    nickname,
+    profile,
+    total_price,
+    total_scraps,
+    total_subscribes,
+  } = state.loginUserInfo; //! user정보
+
+  useEffect(() => {
+    axios.all([axios.get("/subscribe"), axios.get("/scrap")]).then(
+      axios.spread((res1, res2) => {
+        const total_subscribes = res1.data.subscribes.length;
+        const price =
+          res1.data.subscribes &&
+          res1.data.subscribes.map((el) => {
+            return el.planprice.replace(/[^0-9]/g, "") * 1;
+          });
+        let total_price = 0;
+        price.length !== 0
+          ? (total_price =
+              res1.data.subscribes &&
+              price.reduce((acc, cur) => {
+                return acc + cur;
+              }))
+          : (total_price = 0);
+        const total_scraps = res2.data.length;
+
+        const loginUserInfo = {
+          email,
+          nickname,
+          profile,
+          total_subscribes,
+          total_price,
+          total_scraps,
+        };
+        dispatch(setLoginUserInfo(loginUserInfo));
+        if (res1.data.subscribes.length !== 0) {
+          setService(
+            res1.data.subscribes.map((el) => {
+              return el.Service.title;
+            })
+          );
+          setPayDate(
+            res1.data.subscribes.map((el) => {
+              return el.paydate;
+            })
+          );
+        }
+      })
+    );
+  }, []);
+
+  // const nextPayDate = payDate.map((el) => {
+  //   const date = new Date();
+  //   let month = date.getMonth() + 1;
+  //   let year = date.getFullYear();
+  //   const nextDate = new Date(year, month, el);
+  //   const btMs = nextDate.getTime() - date.getTime();
+  //   const btDay = Math.round(btMs / (1000 * 60 * 60 * 24));
+  //   return btDay;
+  // });
+  const nextPayDate = [4, 1, 2, 3];
+  const nextList = service.map(
+    (el) =>
+      nextPayDate.map((el2) => {
+        return `<div>${el} : ${el2}일 전</div>`;
+      })[0]
+  );
 
   return (
     <>
@@ -151,27 +248,25 @@ const MainCard = () => {
           <hr></hr>
           <span className="totalPrice">
             총 이용 금액: <br />
-            <div>₩ 39,203</div>
+            <div>₩ {total_price}</div>
           </span>
           <span className="nextPay">
             다음 결제까지: <br />
-            <div>Coupang : 4일 전</div>
-            <div>Melon : 2일 전</div>
+            {nextList}
           </span>
           <MainCardBottom>
             <span className="subscribe">
               구독중
               <br />
-              <div>Netflix</div>
-              <div>Melon</div>
-              <div>Coupang</div>
-              <div>밀리의서재</div>
+              {service.map((el) => {
+                return <div>{el}</div>;
+              })}
             </span>
             <MainCardRightBottom>
               <span className="info">
                 Huni 님의 <br />
-                <div>총 구독 수 : 7개</div>
-                <div>총 스크랩 수 : 20개</div>
+                <div>총 구독 수 : {total_subscribes}개</div>
+                <div>총 스크랩 수 : {total_scraps}개</div>
               </span>
               <span className="addSub">
                 <Link to="/AllView">

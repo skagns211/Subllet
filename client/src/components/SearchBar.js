@@ -2,6 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 const SearchBarBody = styled.header`
+  @media only screen and (max-width: 500px) {
+    margin-right: 1.5rem;
+  }
   @media only screen and (max-width: 800px) {
     background-color: #0f0f0f;
     padding-top: 1rem;

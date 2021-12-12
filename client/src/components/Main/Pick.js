@@ -17,8 +17,8 @@ const StylePick = styled.div`
 `;
 
 const PickBox = styled.div`
-  @media only screen and (max-width: 530px) {
-    margin-left: 1.5rem;
+  @media only screen and (max-width: 500px) {
+    margin-left: 1rem;
   }
   @media only screen and (max-width: 800px) {
     img {
@@ -55,8 +55,8 @@ const PickBox = styled.div`
 `;
 
 const ForUserBox = styled.div`
-  @media only screen and (max-width: 530px) {
-    margin-right: 1.5rem;
+  @media only screen and (max-width: 500px) {
+    margin-right: 1.8rem;
   }
   @media only screen and (max-width: 800px) {
     img {
@@ -104,8 +104,10 @@ const Pick = () => {
   const randomArr = Math.random() * arrLength;
   const randomArr2 = Math.random() * arrLength;
   const pick = serviceList[Math.floor(randomArr)];
-  let forYou = serviceList[Math.floor(randomArr2)];
-
+  const forYou = serviceList[Math.floor(randomArr2)];
+  const pickImg = pick && pick.outer_image;
+  const forYouImg = forYou && forYou.outer_image;
+  console.log(pick && pick.outer_image);
   const handleIntoDetail = (path) => {
     navigate(`Detail/${path}`);
   };
@@ -116,7 +118,7 @@ const Pick = () => {
         <div>Subllet's Pick</div>
         <img
           alt="pickImg"
-          src={pick.outer_image}
+          src={pickImg}
           onClick={() => handleIntoDetail(pick.id)}
         ></img>
       </PickBox>
@@ -124,7 +126,7 @@ const Pick = () => {
         <div>For Guest</div>
         <img
           alt="pickImg"
-          src={forYou.outer_image}
+          src={forYouImg}
           onClick={() => handleIntoDetail(forYou.id)}
         ></img>
       </ForUserBox>

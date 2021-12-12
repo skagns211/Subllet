@@ -14,7 +14,7 @@
 // 위와 같은 방법으로 Action 함수 작성, export 후 import해서 사용
 
 export const LOGIN_USER_INFO = "LOGIN_USER_INFO";
-export const ACCESS_TOKEN = "ACCESS_TOKEN";
+export const SUB_COUNT = "SUB_COUNT";
 export const IS_LOGIN = "IS_LOGIN";
 export const AUTH_NICKNAME = "AUTH_NICKNAME";
 export const AUTH_USERINFO = "AUTH_USERINFO";
@@ -33,10 +33,10 @@ export const setLoginUserInfo = (loginUserInfo) => {
   };
 };
 
-export const setAccessToken = (token) => {
+export const setSubscribesCount = (data) => {
   return {
-    type: ACCESS_TOKEN,
-    payload: token,
+    type: SUB_COUNT,
+    payload: data,
   };
 };
 

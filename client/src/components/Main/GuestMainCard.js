@@ -33,6 +33,7 @@ const MainCardBody = styled.div`
   padding: 0;
   width: auto;
   height: auto;
+
   @media only screen and (max-width: 1050px) {
     padding-bottom: 1.5rem;
   }
@@ -59,7 +60,7 @@ const MainCardBody = styled.div`
   }
   img {
     width: 2.5rem;
-    margin-left: 3.2rem;
+    margin-left: 1.5rem;
     margin-top: 1rem;
     border-radius: 2rem;
   }
@@ -89,6 +90,20 @@ const MainCardBody = styled.div`
     padding: 0.5rem 5rem 0.5rem 2.5rem;
     width: 15rem;
   }
+  @media only screen and (max-width: 500px) {
+    .user {
+      padding-right: 0;
+    }
+    .totalPrice {
+      padding-left: 1.3rem;
+    }
+    .nextPay {
+      padding-left: 1.3rem;
+    }
+    hr {
+      width: 21.5rem;
+    }
+  }
 `;
 
 const MainCardBottom = styled.div`
@@ -102,6 +117,11 @@ const MainCardBottom = styled.div`
     padding-top: 0.5rem;
     width: 7.5rem;
     height: 10.3rem;
+  }
+  @media only screen and (max-width: 500px) {
+    .subscribe {
+      padding-left: 0.8rem;
+    }
   }
 `;
 
@@ -196,7 +216,7 @@ const RequestWindow = styled.div`
   @media only screen and (min-width: 1301px) {
     margin-top: 10rem;
     margin-left: 1.5rem;
-    width: 49.5rem;
+    width: 45.5rem;
     height: 20rem;
     text-align: center;
     font-size: 2rem;
@@ -236,7 +256,7 @@ const GuestMainCard = () => {
           <div>
             <img
               alt="defaultImg"
-              src="https://i.esdrop.com/d/z3v0lj8ztjvc/UKFjJlgwrH.png"
+              src="https://i.esdrop.com/d/z3v0lj8ztjvc/OizvMNga4W.png"
             />
             <span className="user">Guest 님의 Subllet</span>
           </div>
