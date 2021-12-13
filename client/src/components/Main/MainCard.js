@@ -171,6 +171,7 @@ const MainCard = () => {
     axios.all([axios.get("/subscribe"), axios.get("/scrap")]).then(
       axios.spread((res1, res2) => {
         const total_subscribes = res1.data.subscribes.length;
+        console.log(res1.data.subscribes[0]);
         const price =
           res1.data.subscribes &&
           res1.data.subscribes.map((el) => {
@@ -184,8 +185,8 @@ const MainCard = () => {
                 return acc + cur;
               }))
           : (total_price = 0);
-        const total_scraps = res2.data.length;
-
+        const total_scraps = res2.data.scraps.length;
+        console.log(total_scraps);
         const loginUserInfo = {
           email,
           nickname,
@@ -224,7 +225,7 @@ const MainCard = () => {
   const nextList = service.map(
     (el) =>
       nextPayDate.map((el2) => {
-        return `<div>${el} : ${el2}일 전</div>`;
+        return `${el} : ${el2}일 전`;
       })[0]
   );
 

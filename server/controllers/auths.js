@@ -197,7 +197,8 @@ module.exports = {
 
       const accessTokenData = checkAccessToken(accessToken);
       const refreshTokenData = checkRefeshToken(refreshToken);
-
+      console.log(accessTokenData);
+      console.log(new Date());
       if (refreshTokenData === null) {
         return res.status(401).send("Expiration");
       }

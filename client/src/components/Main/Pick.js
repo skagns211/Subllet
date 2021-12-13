@@ -109,7 +109,7 @@ const Pick = () => {
   const forYouImg = forYou && forYou.outer_image;
   console.log(pick && pick.outer_image);
   const handleIntoDetail = (path) => {
-    navigate(`Detail/${path}`);
+    navigate(`/detail/${path}`);
   };
 
   return (
