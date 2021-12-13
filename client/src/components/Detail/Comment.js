@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import AlertModal from "../AlertModal";
 
@@ -102,6 +103,8 @@ const Comment = ({
   loginUserInfo,
   detail,
 }) => {
+  const state = useSelector((state) => state);
+
   const [text, setText] = useState("");
   const [like, setLike] = useState();
   const [open, setOpen] = useState(false);
@@ -127,28 +130,33 @@ const Comment = ({
   };
 
   const sendComment = () => {
-    if (text && like) {
-      axios
-        .post(
-          `/comment/${ServiceId}`,
-          {
-            commenter: JSON.parse(loginUserInfo).nickname,
-            message: text,
-            likes: like,
-          },
-          {
-            headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
-          }
-        )
-        .then((res) => {
-          setComments([...comments, res.data.comment]);
-        })
-        .catch((err) => {
-          setAlertMsg({ message: "이미 작성하셨습니다", button: "확인" });
-          setOpen(!open);
-        });
+    if (state.isLogin) {
+      if (text && like) {
+        axios
+          .post(
+            `/comment/${ServiceId}`,
+            {
+              commenter: state.loginUserInfo.nickname,
+              message: text,
+              likes: like,
+            },
+            {
+              headers: { authorization: `Bearer ${state.accessToken}` },
+            }
+          )
+          .then((res) => {
+            setComments([...comments, res.data.comment]);
+          })
+          .catch((err) => {
+            setAlertMsg({ message: "이미 작성하셨습니다", button: "확인" });
+            setOpen(!open);
+          });
+      } else {
+        setAlertMsg({ message: "모두 입력해주세요", button: "확인" });
+        setOpen(!open);
+      }
     } else {
-      setAlertMsg({ message: "모두 입력해주세요", button: "확인" });
+      setAlertMsg({ message: "로그인을 먼저 해주세요", button: "확인" });
       setOpen(!open);
     }
   };
@@ -156,11 +164,11 @@ const Comment = ({
   const delComment = (e) => {
     axios
       .delete(`/comment/${ServiceId}`, {
-        headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+        headers: { authorization: `Bearer ${state.accessToken}` },
       })
       .then((res) => {
         let del = comments.filter(
-          (comment) => comment.commenter !== JSON.parse(loginUserInfo).nickname
+          (comment) => comment.commenter !== state.loginUserInfo.nickname
         );
         setComments([...del]);
       });

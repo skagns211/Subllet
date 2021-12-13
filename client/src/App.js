@@ -1,6 +1,9 @@
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import axios from "axios";
 
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
@@ -55,7 +58,6 @@ function App() {
       .get("/service")
       .then((res) => dispatch(setServices(res.data.services)));
   }, []);
-
 
   return (
     <BrowserRouter>

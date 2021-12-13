@@ -15,22 +15,6 @@ const StyledBody = styled.section`
 `;
 
 const Detail = () => {
-  const isLogin = window.localStorage.getItem("isLogin");
-  const loginUserInfo = window.localStorage.getItem("loginUserInfo");
-  const accessToken = window.localStorage.getItem("accessToken");
-
-  useEffect(() => {
-    window.localStorage.setItem("loginUserInfo", loginUserInfo);
-  }, [loginUserInfo]);
-
-  useEffect(() => {
-    window.localStorage.setItem("accessToken", accessToken);
-  }, [accessToken]);
-
-  useEffect(() => {
-    window.localStorage.setItem("isLogin", isLogin);
-  }, [isLogin]);
-
   const ServiceId = Number(useParams().id);
 
   const [detail, setDetail] = useState([]);
@@ -51,9 +35,7 @@ const Detail = () => {
   return (
     <StyledBody>
       <InnerImage
-        isLogin={isLogin}
         ServiceId={ServiceId}
-        accessToken={accessToken}
         detail={detail}
         scrapNum={scrapNum}
         isScrap={isScrap}
@@ -67,8 +49,6 @@ const Detail = () => {
         ServiceId={ServiceId}
         comments={comments}
         setComments={setComments}
-        accessToken={accessToken}
-        loginUserInfo={loginUserInfo}
       />
     </StyledBody>
   );

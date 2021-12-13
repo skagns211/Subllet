@@ -116,7 +116,7 @@ const Pick = () => {
         <div>Subllet's Pick</div>
         <img
           alt="pickImg"
-          src={pick.outer_image}
+          // src={pick.outer_image}
           onClick={() => handleIntoDetail(pick.id)}
         ></img>
       </PickBox>
@@ -124,7 +124,7 @@ const Pick = () => {
         <div>For Guest</div>
         <img
           alt="pickImg"
-          src={forYou.outer_image}
+          // src={forYou.outer_image}
           onClick={() => handleIntoDetail(forYou.id)}
         ></img>
       </ForUserBox>

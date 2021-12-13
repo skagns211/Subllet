@@ -75,6 +75,8 @@ const InnerImage = ({
   setIsScrap,
 }) => {
   const state = useSelector((state) => state);
+
+  console.log(state.isLogin);
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -82,29 +84,28 @@ const InnerImage = ({
   };
 
   useEffect(() => {
-    if (JSON.parse(isLogin)) {
+    if (state.isLogin) {
       axios
         .all([
-          axios.get(`/scrap/${ServiceId}`, {
-            headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
-          }),
-          axios.get(`/subscribe/${ServiceId}`, {
-            headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
-          }),
+          axios.get(`/scrap/${ServiceId}`),
+          axios.get(`/subscribe/${ServiceId}`),
         ])
         .then(
           axios.spread((isScrap, isSub) => {
             setIsScrap(isScrap.data.isScrap);
             setIsSub(isSub.data.isSubscribe);
           })
-        );
+        )
+        .catch((err) => console.log(err));
     }
   });
+
+  console.log(state);
 
   const addScrap = () => {
     axios
       .post(`/scrap/${ServiceId}`, null, {
-        headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+        headers: { authorization: `Bearer ${state.accessToken}` },
       })
       .then(() => {
         setIsScrap(true);
@@ -114,7 +115,7 @@ const InnerImage = ({
   const delScrap = () => {
     axios
       .delete(`/scrap/${ServiceId}`, {
-        headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+        headers: { authorization: `Bearer ${state.accessToken}` },
       })
       .then(() => {
         setIsScrap(false);
@@ -130,7 +131,7 @@ const InnerImage = ({
           planprice: state.selectPlan.planprice,
         },
         {
-          headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+          headers: { authorization: `Bearer ${state.accessToken}` },
         }
       )
       .then(() => {
@@ -141,7 +142,7 @@ const InnerImage = ({
   const delSub = () => {
     axios
       .delete(`/subscribe/${ServiceId}`, {
-        headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+        headers: { authorization: `Bearer ${state.accessToken}` },
       })
       .then(() => {
         setIsSub(false);
@@ -153,12 +154,12 @@ const InnerImage = ({
       {open ? <LoginModal handleClick={handleClick} /> : null}
       <BackgroundImage image={detail.inner_image}>
         <ScrapButton>
-          {JSON.parse(isLogin) && isScrap ? (
+          {state.isLogin && isScrap ? (
             <>
               <i onClick={delScrap} className="fas fa-star fa-2x"></i>
               <div>{scrapNum}</div>
             </>
-          ) : JSON.parse(isLogin) && !isScrap ? (
+          ) : state.isLogin && !isScrap ? (
             <>
               <i onClick={addScrap} className="far fa-star fa-2x"></i>
               <div>{scrapNum}</div>
@@ -172,9 +173,9 @@ const InnerImage = ({
         </ScrapButton>
         <DetailMessage>
           <span>{detail.message}</span>
-          {JSON.parse(isLogin) && isSub ? (
+          {state.isLogin && isSub ? (
             <button onClick={delSub}>구독중</button>
-          ) : JSON.parse(isLogin) && !isSub ? (
+          ) : state.isLogin && !isSub ? (
             <button onClick={addSub}>내 구독 목록에 추가</button>
           ) : (
             <button onClick={handleClick}>내 구독 목록에 추가</button>
