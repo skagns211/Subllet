@@ -62,9 +62,6 @@ const DetailMessage = styled.div`
 
 const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
   const state = useSelector((state) => state);
-
-  console.log(state.service[0]);
-
   const [open, setOpen] = useState(false);
   const [isScrap, setIsScrap] = useState();
   const [isSub, setIsSub] = useState();
@@ -75,18 +72,11 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
   };
 
   useEffect(() => {
-    if (JSON.parse(isLogin)) {
+    if (state.isLogin) {
       axios
         .all([
-          axios.get(`/scrap/${ServiceId}`, {
-            headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
-          }),
-          axios.get(`/subscribe/${ServiceId}`, {
-            headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
-          }),
-          // axios.get(`/service/${ServiceId}`, {
-          //   headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
-          // }),
+          axios.get(`/scrap/${ServiceId}`),
+          axios.get(`/subscribe/${ServiceId}`),
         ])
         .then(
           axios.spread((isScrap, isSub, scrapNum) => {
@@ -94,14 +84,17 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
             setIsSub(isSub.data.isSubscribe);
             // setScrapNum(scrapNum.data.service.scrapNum);
           })
-        );
+        )
+        .catch((err) => console.log(err));
     }
   }, []);
+
+  console.log(state);
 
   const addScrap = () => {
     axios
       .post(`/scrap/${ServiceId}`, null, {
-        headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+        headers: { authorization: `Bearer ${state.accessToken}` },
       })
       .then(() => {
         setIsScrap(true);
@@ -111,7 +104,7 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
   const delScrap = () => {
     axios
       .delete(`/scrap/${ServiceId}`, {
-        headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+        headers: { authorization: `Bearer ${state.accessToken}` },
       })
       .then(() => {
         setIsScrap(false);
@@ -127,7 +120,7 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
           planprice: state.selectPlan.planprice,
         },
         {
-          headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+          headers: { authorization: `Bearer ${state.accessToken}` },
         }
       )
       .then(() => {
@@ -138,7 +131,7 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
   const delSub = () => {
     axios
       .delete(`/subscribe/${ServiceId}`, {
-        headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+        headers: { authorization: `Bearer ${state.accessToken}` },
       })
       .then(() => {
         setIsSub(false);
@@ -154,12 +147,12 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
       {open ? <LoginModal handleClick={handleClick} /> : null}
       <BackgroundImage image={state.service.inner_image}>
         <ScrapButton>
-          {JSON.parse(isLogin) && isScrap ? (
+          {state.isLogin && isScrap ? (
             <>
               <i onClick={delScrap} className="fas fa-star fa-2x"></i>
               <div>{scrapNum}</div>
             </>
-          ) : JSON.parse(isLogin) && !isScrap ? (
+          ) : state.isLogin && !isScrap ? (
             <>
               <i onClick={addScrap} className="far fa-star fa-2x"></i>
               <div>{scrapNum}</div>
@@ -172,10 +165,10 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
           )}
         </ScrapButton>
         <DetailMessage>
-          <span>로켓배송 상품 100% 무료배송</span>
-          {JSON.parse(isLogin) && isSub ? (
+          <span>{detail.message}</span>
+          {state.isLogin && isSub ? (
             <button onClick={delSub}>구독중</button>
-          ) : JSON.parse(isLogin) && !isSub ? (
+          ) : state.isLogin && !isSub ? (
             <button onClick={addSub}>내 구독 목록에 추가</button>
           ) : (
             <button onClick={handleClick}>내 구독 목록에 추가</button>

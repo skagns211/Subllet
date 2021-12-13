@@ -75,8 +75,6 @@ const ServiceContent = ({ detail }) => {
     window.open(`${detail.url}`);
   };
 
-  console.log(state.selectPlan);
-
   return (
     <StyledBody>
       <Service>
