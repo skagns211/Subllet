@@ -10,7 +10,7 @@ const StyledBody = styled.section`
   max-width: 100%;
 `;
 const BackgroundImage = styled.div`
-  background-image: url(${(props) => props.detail});
+  background-image: url(${(props) => props.image});
   background-repeat: no-repeat;
   background-size: contain;
   opacity: 0.7;
@@ -19,7 +19,7 @@ const BackgroundImage = styled.div`
   justify-content: space-between;
   border-radius: 5px;
   @media only screen and (min-device-width: 800px) {
-    background-image: url(${(props) => props.detail});
+    background-image: url(${(props) => props.image});
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -50,6 +50,7 @@ const DetailMessage = styled.div`
   justify-content: space-between;
   padding-bottom: 1rem;
   margin: 0rem 1rem;
+  color: white;
   button {
     padding: 1rem;
     font-size: 1.5rem;
@@ -60,12 +61,17 @@ const DetailMessage = styled.div`
   }
 `;
 
-const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
+const InnerImage = ({
+  ServiceId,
+  detail,
+  scrapNum,
+  isScrap,
+  setIsScrap,
+  isSub,
+  setIsSub,
+}) => {
   const state = useSelector((state) => state);
   const [open, setOpen] = useState(false);
-  const [isScrap, setIsScrap] = useState();
-  const [isSub, setIsSub] = useState();
-  const [scrapNum, setScrapNum] = useState();
 
   const handleClick = () => {
     setOpen(!open);
@@ -79,17 +85,14 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
           axios.get(`/subscribe/${ServiceId}`),
         ])
         .then(
-          axios.spread((isScrap, isSub, scrapNum) => {
+          axios.spread((isScrap, isSub) => {
             setIsScrap(isScrap.data.isScrap);
             setIsSub(isSub.data.isSubscribe);
-            // setScrapNum(scrapNum.data.service.scrapNum);
           })
         )
         .catch((err) => console.log(err));
     }
   }, []);
-
-  console.log(state);
 
   const addScrap = () => {
     axios
@@ -138,14 +141,10 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
       });
   };
 
-  const ServiceDetail = state.services.filter((service) => {
-    return service.id === ServiceId;
-  });
-
   return (
     <StyledBody>
       {open ? <LoginModal handleClick={handleClick} /> : null}
-      <BackgroundImage image={state.service.inner_image}>
+      <BackgroundImage image={detail.inner_image}>
         <ScrapButton>
           {state.isLogin && isScrap ? (
             <>

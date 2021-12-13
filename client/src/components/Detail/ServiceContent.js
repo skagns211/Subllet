@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { selectPlan } from "../../actions";
@@ -62,13 +62,26 @@ const Price = styled.span`
   margin-right: 1rem;
 `;
 
-const ServiceContent = ({ detail }) => {
-  const state = useSelector((state) => state);
+const ServiceContent = ({ detail, prices }) => {
   const dispatch = useDispatch();
 
+  const [serviceMsg, setServiceMsg] = useState();
+
+  useEffect(() => {
+    if (detail.prices && serviceMsg === undefined) {
+      setServiceMsg(detail.prices[0].message.split("-").slice(1));
+    }
+  });
+
   const checked = (e) => {
-    let plan = e.target.value.split(",");
+    const plan = e.target.value.split(",");
     dispatch(selectPlan(plan));
+
+    const filterMsg = detail.prices.filter((price) => {
+      return price.title === plan[0];
+    });
+
+    setServiceMsg(filterMsg[0].message.split("-").slice(1));
   };
 
   const mvPage = () => {
@@ -84,12 +97,13 @@ const ServiceContent = ({ detail }) => {
             {detail.prices &&
               detail.prices.map((price, idx) => {
                 return (
-                  <label key={idx}>
+                  <label key={price.id}>
                     <input
                       type="radio"
                       name="price"
                       value={`${price.title}, ${price.price}`}
                       onChange={checked}
+                      defaultChecked={idx === 0}
                     />
                     {`${price.title} 월 ${price.price}`}
                   </label>
@@ -100,11 +114,10 @@ const ServiceContent = ({ detail }) => {
         <span>
           <ServiceOption>Service</ServiceOption>
           <ServiceDetail>
-            {/* 1. 로켓배송상품 무료배송 <br />
-            2. 새벽배송 (19시전까지 주문시) <br />
-            3. 저녁배송 (09시전까지 주문시 당일배송) <br />
-            4. 로켓배송상품 30일 무료반품 <br />
-            5.쿠팡플레이 무료이용 */}
+            {serviceMsg &&
+              serviceMsg.map((message, idx) => {
+                return <div key={idx}>{`- ${message}`}</div>;
+              })}
           </ServiceDetail>
         </span>
       </Service>

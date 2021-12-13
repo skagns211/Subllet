@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const StyledBody = styled.div`
   color: white;
-  background-color: #252a3b;
+  background-color: black;
   border-radius: 10px;
   width: 32rem;
   max-width: 28rem;
