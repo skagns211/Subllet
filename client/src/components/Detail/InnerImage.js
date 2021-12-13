@@ -10,7 +10,7 @@ const StyledBody = styled.section`
   max-width: 100%;
 `;
 const BackgroundImage = styled.div`
-  background-image: url(${(props) => props.detail});
+  background-image: url(${(props) => props.image});
   background-repeat: no-repeat;
   background-size: contain;
   opacity: 0.7;
@@ -19,7 +19,7 @@ const BackgroundImage = styled.div`
   justify-content: space-between;
   border-radius: 5px;
   @media only screen and (min-device-width: 800px) {
-    background-image: url(${(props) => props.detail});
+    background-image: url(${(props) => props.image});
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -145,7 +145,7 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
   return (
     <StyledBody>
       {open ? <LoginModal handleClick={handleClick} /> : null}
-      <BackgroundImage image={state.service.inner_image}>
+      <BackgroundImage image={detail.inner_image}>
         <ScrapButton>
           {state.isLogin && isScrap ? (
             <>

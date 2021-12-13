@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 import styled from "styled-components";
 import dummy from "../../dummy/dummy";
 import PlusIcon from "../../IMG/PlusIcon.png";
@@ -161,9 +163,19 @@ const SelectBox = styled.select`
     sans-serif;
   font-size: 18px;
   color: #60666d;
+  .date {
+    width: 40%;
+  }
 `;
 
-const MyScirbe = () => {
+const MyScirbe = ({ myScribe }) => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  console.log(myScribe);
+  console.log(state.services);
+  const allServices = state.services;
+  console.log(allServices[0].Prices);
+
   const [isModify, setIsModify] = useState(false);
   const scribeHandler = () => {
     setIsModify(!isModify);
@@ -197,37 +209,42 @@ const MyScirbe = () => {
           <div className="categoryTab">카테고리</div>
         </CategoryBox>
         {isModify === false
-          ? dummy.map((el) => {
+          ? myScribe.map((el) => {
               return (
                 <ListBox>
                   <div className="name">
-                    <img src={el.service.outer_image} />
+                    <img src={el.Service.outer_image} />
                   </div>
                   <div className="plan">
                     {el.planname},{[el.planprice]}
                   </div>
                   <div className="date">매달 {el.paydate}일</div>
-                  <div className="category">{el.service.category}</div>
+                  <div className="category">{el.Service.category}</div>
                 </ListBox>
               );
             })
-          : dummy.map((el) => {
+          : allServices.map((service) => {
               return (
                 <ListBox>
                   <div className="name">
-                    <img src={el.service.outer_image} />
+                    <img src={service.outer_image} />
                   </div>
                   <div className="plan">
                     <SelectBox name="modifyPlan">
-                      <option selected>
-                        {el.planname},{[el.planprice]}
-                      </option>
-                      <option>바나나</option>
-                      <option>레몬</option>
+                      {service.Prices.map((el) => {
+                        return (
+                          <option selected>
+                            {el.title},{[el.price]}
+                          </option>
+                        );
+                      })}
+                      {/* <option selected>
+                        {service.price.planname},{[service.planprice]}
+                      </option> */}
                     </SelectBox>
                   </div>
-                  <div className="date">매달 {el.paydate}일</div>
-                  <div className="category">{el.service.category}</div>
+                  <div className="date">매달 0일</div>
+                  <div className="category">{service.category}</div>
                 </ListBox>
               );
             })}
