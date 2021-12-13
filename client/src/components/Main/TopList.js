@@ -64,7 +64,7 @@ const TopList = () => {
   });
 
   const handleIntoDetail = (path) => {
-    navigate(`Detail/${path}`);
+    navigate(`/detail/${path}`);
   };
 
   const topList = top5.map((el, idx) => {

@@ -7,6 +7,7 @@ import Video from "../components/Main/Video";
 import Music from "../components/Main/Music";
 import Shoping from "../components/Main/Shopping";
 import Pick from "../components/Main/Pick";
+import Book from "../components/Main/Book";
 import Life from "../components/Main/Life";
 
 const StyledTopBody = styled.section`
@@ -33,6 +34,7 @@ const Main = () => {
         <Music />
         <Shoping />
         <Pick />
+        <Book />
         <Life />
       </StyledBottomBody>
     </>
