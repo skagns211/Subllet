@@ -21,6 +21,7 @@ const Detail = () => {
   const [scrapNum, setScrapNum] = useState();
   const [isScrap, setIsScrap] = useState();
   const [isSub, setIsSub] = useState();
+  const [prices, setPrices] = useState();
 
   const [comments, setComments] = useState([]);
 
@@ -29,6 +30,7 @@ const Detail = () => {
       setDetail(res.data.service);
       setScrapNum(res.data.service.scrapNum);
       setComments(res.data.service.Comments);
+      setPrices(res.data.service.prices);
     });
   }, [isScrap]);
 
@@ -43,7 +45,7 @@ const Detail = () => {
         isSub={isSub}
         setIsSub={setIsSub}
       />
-      <ServiceContent detail={detail} />
+      <ServiceContent detail={detail} prices={prices} />
       <Comment
         detail={detail}
         ServiceId={ServiceId}

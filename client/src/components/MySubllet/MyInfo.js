@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import IU from "../../IMG/아이유.jpeg";
 
@@ -102,8 +103,12 @@ const MyInfo = () => {
           <div>총금액: 100,000원</div>
           <div>스크랩: 20개</div>
           <div>
-            <Button>회원정보 변경</Button>
-            <Button>회원 탈퇴</Button>
+            <Link to="/changeinfo">
+              <Button>회원정보 변경</Button>
+            </Link>
+            <Link to="/delete">
+              <Button>회원 탈퇴</Button>
+            </Link>
           </div>
         </RightBox>
       </MyInfoBox>

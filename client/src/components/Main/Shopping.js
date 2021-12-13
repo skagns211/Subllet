@@ -108,7 +108,7 @@ const Shoping = () => {
   };
 
   const handleIntoDetail = (path) => {
-    navigate(`Detail/${path}`);
+    navigate(`/detail/${path}`);
   };
 
   useEffect(() => {

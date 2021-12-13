@@ -105,7 +105,7 @@ function App() {
         .catch((err) => {
           logoutHandler();
         });
-    }, 1799000);
+    }, 1790000);
   }
 
   useEffect(() => {
@@ -125,7 +125,7 @@ function App() {
         <Pages>
           <Routes>
             <Route exact path="/" element={<Landing />} />
-            <Route exact path="/main" element={<Main />} />
+            <Route path="/main" element={<Main />} />
             <Route path="/allview" element={<AllView />} />
             <Route path="/changeinfo" element={<ChangeInfo />} />
             <Route path="/customercenter" element={<CustomerCenter />} />
