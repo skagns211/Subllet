@@ -4,9 +4,10 @@ const { User } = require("../models");
 const {
   generateAccessToken,
   generateRefreshToken,
+  sendAccessToken,
+  sendRefreshToken,
 } = require("../utils/tokenFunctions");
-// const emailSend = require("../utils/emails/send");
-// const { emailVerify } = require("../utils/emails/content");
+const redis = require("../utils/redis");
 
 module.exports = {
   google: {
@@ -31,7 +32,6 @@ module.exports = {
             "content-type": "application/x-www-form-urlencoded",
           },
         });
-        // console.log(response);
 
         const { access_token } = response.data;
 
@@ -61,10 +61,15 @@ module.exports = {
           const accessToken = generateAccessToken(userInfo.dataValues);
           const refreshToken = generateRefreshToken(userId);
 
-          return res.json({ userInfo, accessToken, refreshToken });
+          await redis.set(userInfo.id, refreshToken, "ex", 1209600);
+
+          sendAccessToken(res, accessToken);
+          sendRefreshToken(res, refreshToken);
+
+          return res.json({ userInfo });
         }
       } catch (err) {
-        // console.error(err);
+        console.error(err);
         return res.status(400).json("Client error");
       }
     },
@@ -76,12 +81,11 @@ module.exports = {
         if (!authorizationCode) {
           return res.status(400).send("Bad request");
         }
-        // console.log(authorizationCode);
+
         const client_id = process.env.NAVER_CLIENT_ID;
         const client_secret = process.env.NAVER_SECRET;
         const endPoint = "https://nid.naver.com/oauth2.0/token";
         const grant_type = "authorization_code";
-        // const state = Math.random().toString(36).slice(2);
         const state = "1234567";
 
         const url = `${endPoint}?grant_type=${grant_type}&client_id=${client_id}&client_secret=${client_secret}&code=${authorizationCode}&state=${state}`;
@@ -115,7 +119,12 @@ module.exports = {
           const accessToken = generateAccessToken(userInfo.dataValues);
           const refreshToken = generateRefreshToken(userId);
 
-          return res.json({ userInfo, accessToken, refreshToken });
+          await redis.set(userInfo.id, refreshToken, "ex", 1209600);
+
+          sendAccessToken(res, accessToken);
+          sendRefreshToken(res, refreshToken);
+
+          return res.json({ userInfo });
         }
       } catch (err) {
         console.error(err);
@@ -178,7 +187,12 @@ module.exports = {
           const accessToken = generateAccessToken(userInfo.dataValues);
           const refreshToken = generateRefreshToken(userId);
 
-          return res.json({ userInfo, accessToken, refreshToken });
+          await redis.set(userInfo.id, refreshToken, "ex", 1209600);
+
+          sendAccessToken(res, accessToken);
+          sendRefreshToken(res, refreshToken);
+
+          return res.json({ userInfo });
         }
       } catch (err) {
         console.error(err);
@@ -208,8 +222,10 @@ module.exports = {
       const accessToken = generateAccessToken(userInfo.dataValues);
       const refreshToken = generateRefreshToken(userId);
 
+      sendAccessToken(res, accessToken);
+      sendRefreshToken(res, refreshToken);
       try {
-        return res.status(201).json({ userInfo, accessToken, refreshToken });
+        return res.status(201).json({ userInfo });
       } catch (err) {
         console.error(err);
         return res.status(500).send("Server error");

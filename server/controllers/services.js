@@ -1,42 +1,6 @@
 const { Service, Comment, Price, Scrap } = require("../models");
-const { comment } = require("./comments");
 
 module.exports = {
-  // service: {
-  //   get: async (req, res) => {
-  //     const service = await Service.findAll({
-  //       include: [
-  //         {
-  //           model: Price,
-  //         },
-  //       ],
-  //     });
-
-  //     const comment = await Service.findAll({
-  //       attributes: [],
-  //       include: [
-  //         {
-  //           model: Comment,
-  //         },
-  //       ],
-  //     });
-
-  //     const services = service.map((el) => el.dataValues);
-  //     const comments = comment.map((el) => el.dataValues);
-
-  //     for (let i = 0; i < services.length; i++) {
-  //       services[i].comments = comments[i].Comments;
-  //     }
-
-  //     try {
-  //       return res.json({ services });
-  //     } catch (err) {
-  //       console.error(err);
-  //       return res.status(500).json("Server error");
-  //     }
-  //   },
-  // },
-
   services: {
     get: async (req, res) => {
       const services = await Service.findAll({
@@ -46,7 +10,6 @@ module.exports = {
           "outer_image",
           "category",
           "demo",
-          "total_likes",
         ],
         include: [
           {
@@ -73,8 +36,6 @@ module.exports = {
           "message",
           "inner_image",
           "url",
-          "total_comments",
-          "total_likes",
         ],
         where: { id },
         include: {

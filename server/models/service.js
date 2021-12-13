@@ -35,9 +35,6 @@ module.exports = (sequelize, DataTypes) => {
       category: DataTypes.STRING,
       url: DataTypes.STRING,
       demo: DataTypes.BOOLEAN,
-      total_comments: DataTypes.INTEGER,
-      total_likes: DataTypes.INTEGER,
-      total_scraps: DataTypes.INTEGER,
     },
     {
       sequelize,

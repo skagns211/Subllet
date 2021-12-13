@@ -9,7 +9,6 @@ router.post("/login", controllers.login.post, emailRedirection);
 router.post("/logout", authorization, controllers.logout.post);
 router.post("/email", controllers.email.post);
 router.post("/nickname", controllers.nickname.post);
-router.post("/render", controllers.render.get);
 router.post("/refresh", controllers.refresh.post);
 router.get("/confirm/email", controllers.confirm.get);
 

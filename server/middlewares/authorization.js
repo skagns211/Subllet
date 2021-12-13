@@ -1,9 +1,7 @@
-const { isAuthorized, checkAccessToken } = require("../utils/tokenFunctions");
+const { checkAccessToken } = require("../utils/tokenFunctions");
 const { User } = require("../models");
 
 const authorization = async (req, res, next) => {
-  // const { accesstoken } = req.headers;
-
   const { accessToken } = req.cookies;
 
   if (!accessToken) {
@@ -11,8 +9,6 @@ const authorization = async (req, res, next) => {
   }
 
   const accessTokenData = checkAccessToken(accessToken);
-
-  // const accessTokenData = await isAuthorized(req);
 
   const userInfo = await User.findOne({
     where: { id: accessTokenData.id },

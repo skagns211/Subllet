@@ -7,7 +7,6 @@ const {
 const {
   generateAccessToken,
   generateRefreshToken,
-  isAuthorized,
   checkRefeshToken,
   checkAccessToken,
   sendAccessToken,
@@ -21,7 +20,7 @@ const { emailVerify } = require("../utils/emails/content");
 
 module.exports = {
   signup: {
-    post: async (req, res, next) => {
+    post: async (req, res) => {
       const { email, nickname, password } = req.body;
       if (!email || !nickname || !password) {
         return res.status(400).send("Empty body");
@@ -91,11 +90,7 @@ module.exports = {
       sendRefreshToken(res, refreshToken);
 
       try {
-        return res.json({
-          userInfo: userInfo.dataValues,
-          // accessToken,
-          // refreshToken,
-        });
+        return res.json({ userInfo: userInfo.dataValues });
       } catch (err) {
         console.error(err);
         res.status(500).send("Server error");
@@ -104,13 +99,6 @@ module.exports = {
   },
   logout: {
     post: async (req, res) => {
-      // console.log(req.headers);
-      // const { id } = isAuthorized(req);
-      // const { accessToken } = req.cookies;
-      // const accessTokenData = checkAccessToken(accessToken);
-      // console.log(req);
-      // console.log(accessToken);
-      // console.log(accessTokenData);
       const id = req.id;
 
       await redis.del(id);
@@ -174,22 +162,9 @@ module.exports = {
       }
     },
   },
-  render: {
-    get: async (req, res) => {
-      try {
-        res.send("Ok");
-      } catch (err) {
-        res.status(500).send("Server error");
-      }
-    },
-  },
   refresh: {
     post: async (req, res) => {
-      // const { accesstoken, refreshtoken } = req.headers;
       const { accessToken, refreshToken } = req.cookies;
-      console.log(req.cookies);
-      console.log(accessToken);
-      console.log(refreshToken);
 
       if (!accessToken || !refreshToken) {
         return res.status(400).send("Not exist token");
@@ -201,10 +176,6 @@ module.exports = {
       if (refreshTokenData === null) {
         return res.status(401).send("Expiration");
       }
-
-      // if (accessTokenData.id !== refreshTokenData.data) { // id를 못찾음
-      //   return res.status(401).send("UserId inconsistency");
-      // }
 
       const redisRefreshToken = await redis.get(`${accessTokenData.id}`);
 
@@ -223,8 +194,6 @@ module.exports = {
       delete userInfo.dataValues.password;
       delete userInfo.dataValues.salt;
       const newAccessToken = generateAccessToken(userInfo.dataValues);
-
-      // sendAccessToken(res, newAccessToken);
 
       try {
         sendAccessToken(res, newAccessToken);
