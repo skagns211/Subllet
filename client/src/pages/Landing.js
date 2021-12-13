@@ -35,9 +35,11 @@ const HeaderLanding = styled.div`
   align-items: center;
   height: 100vh;
   div {
-    margin-left: 25rem;
+    /* margin-left: 25rem; */
+    margin-left: 20rem;
     font-size: 2rem;
     color: white;
+    flex-shrink: 0;
     h1 {
       text-decoration: underline;
     }
@@ -46,10 +48,24 @@ const HeaderLanding = styled.div`
     }
   }
   img {
-    width: 50rem;
-    height: 60%;
-    margin-right: 10rem;
+    width: 40%;
+    height: 50%;
+    margin-right: 15rem;
+    margin-left: 3rem;
     border-radius: 0.5rem;
+  }
+
+  @media only screen and (max-width: 1050px) {
+    display: flex;
+    flex-direction: column;
+    div {
+      margin: auto;
+    }
+    img {
+      margin: auto;
+      margin-bottom: 3rem;
+      width: 80%;
+    }
   }
 `;
 
@@ -92,6 +108,7 @@ const WheelContainer = styled.div`
     position: relative;
     width: 400px;
     height: 400px;
+    padding-bottom: 45rem;
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
     -webkit-transform-origin: 50% 50%;
@@ -113,6 +130,22 @@ const WheelContainer = styled.div`
     backface-visibility: hidden;
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
+  }
+  @media only screen and (max-width: 1050px) {
+    flex-direction: column;
+    justify-content: between-around;
+    .wheel {
+      width: 50%;
+      height: auto;
+    }
+    .wheelText {
+      margin: 0;
+    }
+  }
+  @media only screen and (min-width: 1050px) {
+    .wheel {
+      right: 10rem;
+    }
   }
 `;
 
@@ -138,6 +171,9 @@ const MainText = styled.div`
   }
   img {
     margin-left: 13rem;
+  }
+  @media only screen and (max-width: 1050px) {
+    flex-direction: column;
   }
 `;
 

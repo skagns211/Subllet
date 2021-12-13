@@ -113,12 +113,13 @@ const InnerImage = ({
         setIsScrap(false);
       });
   };
-
+  console.log(state);
   const addSub = () => {
     axios
       .post(
         `/subscribe/${ServiceId}`,
         {
+          paydate: new Date().toDateString().slice(8, 10),
           planname: state.selectPlan.planname,
           planprice: state.selectPlan.planprice,
         },

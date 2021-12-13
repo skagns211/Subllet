@@ -95,18 +95,21 @@ function App() {
       });
   };
 
-  if (state.isLogin) {
-    setInterval(() => {
-      axios
-        .post("/auth/refresh", null)
-        .then((res) => {
-          console.log("new token");
-        })
-        .catch((err) => {
-          logoutHandler();
-        });
-    }, 1770000);
-  }
+  useEffect(() => {
+    if (state.isLogin) {
+      const time = 1000 * 60 * 29.5;
+      setInterval(() => {
+        axios
+          .post("/auth/refresh", null)
+          .then((res) => {
+            console.log("new token");
+          })
+          .catch((err) => {
+            logoutHandler();
+          });
+      }, 30000);
+    }
+  }, []);
 
   useEffect(() => {
     axios
@@ -120,7 +123,11 @@ function App() {
       {/* <Routes> */}
       {/* </Routes> */}
       <SectionStyle>
-        {currentUrl === "/" ? null : <Nav />}
+        {currentUrl === "/" ? null : (
+          <>
+            <Nav />
+          </>
+        )}
         <SearchBar />
         <Pages>
           <Routes>

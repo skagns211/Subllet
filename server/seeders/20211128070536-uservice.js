@@ -32,8 +32,8 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        title: "유튜브 프리미엄",
-        message: "유튜브 프리미엄 설명메세지",
+        title: "유튜브",
+        message: "유튜브 설명메세지",
         inner_image: "https://i.ibb.co/T2pw71c/2021-12-03-22-51-30.png",
         outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/VYFz026D5l.png",
         category: "video",

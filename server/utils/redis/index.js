@@ -1,7 +1,7 @@
-// const Redis = require("ioredis");
-// const redis = new Redis(6379, "127.0.0.1");
+const Redis = require("ioredis");
+const redis = new Redis(6379, "127.0.0.1");
 
-// module.exports = redis;
+module.exports = redis;
 
 // const redis = require("redis");
 
