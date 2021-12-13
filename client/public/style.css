@@ -1,0 +1,138 @@
+body {
+  background-color: #222;
+  color: #ddd;
+  font-size: 18px;
+  line-height: 1.4;
+  font-weight: 300;
+}
+h1,
+h2 {
+  color: white;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+.panel pre.prettyprint {
+  font-size: 20px;
+  text-align: left;
+  width: auto;
+  font-weight: normal;
+  margin: 10px;
+  border: none;
+}
+.prettyprint .linenums {
+  padding: 0;
+  list-style: none;
+}
+.prettyprint ol li {
+  background-color: black;
+}
+
+.panel.red .prettyprint .linenums > li:nth-child(n + 7):nth-child(-n + 9),
+.panel.gray .prettyprint .linenums > li:nth-child(10),
+.panel.purple .prettyprint .linenums > li:nth-child(4),
+.panel.green .prettyprint .linenums > li:nth-child(n + 6):nth-child(-n + 10) {
+  background-color: #222;
+}
+
+.box {
+  width: 100px;
+  height: 80px;
+  text-align: center;
+  line-height: 80px;
+  background-color: white;
+  border-radius: 8px;
+  color: #222;
+  font-weight: 700;
+  margin-left: 20px;
+  will-change: transform;
+}
+.box.active {
+  background-color: orange;
+  border: 2px solid white;
+}
+
+.description {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  min-height: 100vh;
+}
+
+.description2 {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  min-height: 100vh;
+  background-color: black;
+}
+
+.mainContainer {
+  display: flex;
+}
+
+.wheelContainer {
+  display: flex;
+}
+
+.mainText {
+  margin-right: 10rem;
+}
+
+.secondText {
+  margin-right: 20rem;
+}
+
+.mainImg {
+  width: 50rem;
+}
+
+.container {
+  width: 500%;
+  height: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.wheelContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+}
+
+.wheel {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+}
+
+.txt {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font-size: 70px;
+  font-weight: 900;
+  font-stretch: 400%;
+  text-transform: uppercase;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+/* .panel {
+  font-weight: 300;
+} */

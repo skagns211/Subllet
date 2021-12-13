@@ -12,8 +12,8 @@ const StyleSlider = styled.div`
 
 const Wrap = styled.div`
   margin: 0.5rem 0rem 2rem 0.5rem;
-  @media only screen and (max-width: 530px) {
-    margin-left: 2rem;
+  @media only screen and (max-width: 500px) {
+    margin: auto;
     width: 90%;
     .slick-prev:before {
       display: none;

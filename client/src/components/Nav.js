@@ -8,29 +8,39 @@ import logo from "../IMG/favicon.png";
 import defaultImg from "../IMG/default.png";
 
 const NavHeader = styled.header`
-  @media only screen and (min-width: 800px) {
-    display: flex;
-    justify-content: space-around;
-    /* justify-content: space-between; //둘 중 하나 골라야함 */
-    background-color: #0f0f0f;
-    width: 100%;
-    height: 70px;
-  }
-  @media only screen and (max-width: 800px) {
-    display: flex;
-    justify-content: space-around;
-    /* justify-content: space-between; */
-    background-color: #0f0f0f;
-    width: 100%;
-    height: 70px;
-    /* border: 1px solid white; */
+  display: flex;
+  justify-content: space-around;
+  /* justify-content: space-between; //둘 중 하나 골라야함 */
+  background-color: #0f0f0f;
+  width: 100%;
+  height: 70px;
+  @media only screen and (max-width: 500px) {
+    padding-left: 1rem;
   }
 `;
 
 const MinNavTap = styled.span`
-  @media only screen and (max-width: 800px) {
-    display: flex;
-    flex-shrink: 0;
+  display: flex;
+  flex-shrink: 0;
+  a {
+    color: #ff8a00;
+  }
+  @media only screen and (max-width: 500px) {
+    font-size: 0.8rem;
+    span {
+      display: flex;
+      flex-shrink: 0;
+      justify-content: space-around;
+      margin-top: 2.7rem;
+      :not(:last-child) {
+        /* margin-left: 1.5rem; */
+      }
+      :last-child {
+        margin-left: 0.5rem;
+      }
+    }
+  }
+  @media only screen and (max-width: 800px) and (min-width: 500px) {
     span {
       display: flex;
       flex-shrink: 0;
@@ -42,9 +52,6 @@ const MinNavTap = styled.span`
       :last-child {
         margin-left: 1rem;
       }
-    }
-    a {
-      color: #ff8a00;
     }
   }
   @media only screen and (min-width: 800px) {
@@ -111,21 +118,26 @@ const Font = styled.span`
 
   span {
     cursor: pointer;
-    @media only screen and (max-width: 800px) {
-      margin-left: 1.5rem;
-    }
     @media only screen and (max-width: 500px) {
+      margin-top: 1rem;
       font-size: 2.5rem;
       /* padding-right: 3.3rem; */
+    }
+    @media only screen and (max-width: 800px) and (min-width: 500px) {
+      margin-left: 1.5rem;
     }
   }
   img {
     margin-top: 0.6rem;
     width: 4rem;
     height: 3rem;
+    @media only screen and (max-width: 500px) {
+      margin-top: 1.3rem;
+    }
     @media only screen and (max-width: 800px) {
-      width: 3rem;
-      height: 2rem;
+      width: 4rem;
+      height: 3rem;
+      margin-top: 0.6rem;
     }
   }
   a {
@@ -157,11 +169,11 @@ const RightNav = styled.span`
 const Test = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   img {
     width: 3.7rem;
     border-radius: 2rem;
     margin: 0.4rem 0rem 0.4rem 0;
-
     /* margin-top: 0.4rem;
     margin-right: 1.6rem; */
   }
@@ -180,6 +192,16 @@ const Test = styled.div`
     opacity: 0.8;
     left: 5rem;
     visibility: hidden;
+  }
+  @media only screen and (max-width: 500px) {
+    img {
+      width: 3rem;
+      border-radius: 2rem;
+      margin: 1rem 0rem 0rem 1.2rem;
+
+      /* margin-top: 0.4rem; */
+      /* margin-right: 1.6rem; */
+    }
   }
 `;
 
@@ -207,7 +229,6 @@ const Nav = () => {
           profile: "",
         };
         dispatch(setLoginUserInfo(loginUserInfo));
-        dispatch(setAccessToken(""));
         dispatch(setIsLogin(false));
         window.location.href = currentUrl;
       })
@@ -228,7 +249,7 @@ const Nav = () => {
           </span>
         </MinNavTap>
         <Font>
-          <span onClick={() => window.location.replace("/")}>Subllet</span>
+          <span onClick={() => window.location.replace("/main")}>Subllet</span>
           <img alt="logo" src={logo}></img>
           <SearchBar type="search" placeholder="서비스를 검색해보세요" />
         </Font>

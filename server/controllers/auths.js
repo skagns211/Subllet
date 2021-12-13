@@ -85,7 +85,7 @@ module.exports = {
       const accessToken = generateAccessToken(userInfo.dataValues);
       const refreshToken = generateRefreshToken(userId);
 
-      // await redis.set(userInfo.id, refreshToken, "ex", 1209600);
+      await redis.set(userInfo.id, refreshToken, "ex", 1209600);
 
       sendAccessToken(res, accessToken);
       sendRefreshToken(res, refreshToken);
@@ -106,8 +106,15 @@ module.exports = {
     post: async (req, res) => {
       // console.log(req.headers);
       // const { id } = isAuthorized(req);
+      // const { accessToken } = req.cookies;
+      // const accessTokenData = checkAccessToken(accessToken);
+      // console.log(req);
+      // console.log(accessToken);
+      // console.log(accessTokenData);
+      const id = req.id;
 
-      // redis.del(id);
+      await redis.del(id);
+
       res.cookie("accessToken", null, { maxAge: 0 });
       res.cookie("refreshToken", null, { maxAge: 0 });
 
@@ -178,27 +185,30 @@ module.exports = {
   },
   refresh: {
     post: async (req, res) => {
-      const { accesstoken, refreshtoken } = req.headers;
-      // const { accesstoken, refreshtoken } = req.cookies;
+      // const { accesstoken, refreshtoken } = req.headers;
+      const { accessToken, refreshToken } = req.cookies;
+      console.log(req.cookies);
+      console.log(accessToken);
+      console.log(refreshToken);
 
-      if (!accesstoken || !refreshtoken) {
+      if (!accessToken || !refreshToken) {
         return res.status(400).send("Not exist token");
       }
 
-      const accessTokenData = checkAccessToken(accesstoken);
-      const refreshTokenData = checkRefeshToken(refreshtoken);
+      const accessTokenData = checkAccessToken(accessToken);
+      const refreshTokenData = checkRefeshToken(refreshToken);
 
-      if (accessTokenData.id !== refreshTokenData.data) {
-        return res.status(401).send("UserId inconsistency");
-      }
-
-      if (refreshTokenData.exp <= Date.now() / 1000) {
+      if (refreshTokenData === null) {
         return res.status(401).send("Expiration");
       }
 
+      // if (accessTokenData.id !== refreshTokenData.data) { // id를 못찾음
+      //   return res.status(401).send("UserId inconsistency");
+      // }
+
       const redisRefreshToken = await redis.get(`${accessTokenData.id}`);
 
-      if (refreshtoken !== redisRefreshToken) {
+      if (refreshToken !== redisRefreshToken) {
         return res.status(401).send("RefreshToken inconsistency");
       }
 
@@ -217,7 +227,7 @@ module.exports = {
       // sendAccessToken(res, newAccessToken);
 
       try {
-        res.json({ newAccessToken });
+        sendAccessToken(res, newAccessToken);
         res.send("Success");
       } catch (err) {
         console.error(err);
