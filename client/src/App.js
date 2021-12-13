@@ -105,7 +105,7 @@ function App() {
         .catch((err) => {
           logoutHandler();
         });
-    }, 1790000);
+    }, 1770000);
   }
 
   useEffect(() => {
