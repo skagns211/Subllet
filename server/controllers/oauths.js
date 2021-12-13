@@ -7,6 +7,7 @@ const {
   sendAccessToken,
   sendRefreshToken,
 } = require("../utils/tokenFunctions");
+const redis = require("../utils/redis");
 // const emailSend = require("../utils/emails/send");
 // const { emailVerify } = require("../utils/emails/content");
 
@@ -117,6 +118,7 @@ module.exports = {
           const accessToken = generateAccessToken(userInfo.dataValues);
           const refreshToken = generateRefreshToken(userId);
 
+          await redis.set(userInfo.id, refreshToken, "ex", 1209600);
           sendAccessToken(res, accessToken);
           sendRefreshToken(res, refreshToken);
           return res.json({ userInfo });

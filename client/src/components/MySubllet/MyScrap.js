@@ -62,41 +62,20 @@ const ScrapImg = styled.img`
   /* border-radius: 0.5rem; */
 `;
 
-const MyScrap = () => {
-  // const state = useSelector((state) => state);
-  // const dispatch = useDispatch();
-  // const [myScribe, setMyScribe] = useState([]);
-
-  // useEffect(() => {
-  //   axios.get("/subscribe").then((res) => {
-  //     console.log(res.data.subscribes);
-  //     const myScribeData = res.data.subscribes;
-  //     setMyScribe(myScribeData);
-  //   });
-  // }, []);
-
+const MyScrap = ({ myScrap }) => {
   return (
     <MyScrapContainer>
       <TitleBox>
         <MyScrapTitle>My Scrap</MyScrapTitle>
       </TitleBox>
       <MyScrapBox>
-        {dummy.map((el) => {
+        {myScrap.map((el) => {
           return (
             <div>
-              <ScrapImg src={el.service.outer_image} />
+              <ScrapImg src={el.outer_image} />
             </div>
           );
         })}
-        <div>
-          <ScrapImg src={wavve_scrap} />
-        </div>
-        <div>
-          <ScrapImg src={wavve_scrap} />
-        </div>
-        <div>
-          <ScrapImg src={wavve_scrap} />
-        </div>
       </MyScrapBox>
     </MyScrapContainer>
   );

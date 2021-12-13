@@ -85,7 +85,7 @@ module.exports = {
       const accessToken = generateAccessToken(userInfo.dataValues);
       const refreshToken = generateRefreshToken(userId);
 
-      // await redis.set(userInfo.id, refreshToken, "ex", 1209600);
+      await redis.set(userInfo.id, refreshToken, "ex", 1209600);
 
       sendAccessToken(res, accessToken);
       sendRefreshToken(res, refreshToken);

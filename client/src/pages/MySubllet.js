@@ -46,13 +46,19 @@ const MySubllet = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const [myScribe, setMyScribe] = useState([]);
+  const [myScrap, setMyScrap] = useState([]);
 
   useEffect(() => {
-    axios.get("/subscribe").then((res) => {
-      console.log(res.data.subscribes);
-      const myScribeData = res.data.subscribes;
-      setMyScribe(myScribeData);
-    });
+    axios.all([axios.get("/subscribe"), axios.get("/scrap")]).then(
+      axios.spread((res1, res2) => {
+        console.log(res2.data.scraps);
+        console.log(res1.data.subscribes);
+        const myScribeData = res1.data.subscribes;
+        const myScrapData = res2.data.scraps;
+        setMyScribe(myScribeData);
+        setMyScrap(myScrapData);
+      })
+    );
   }, []);
 
   return (
@@ -61,7 +67,7 @@ const MySubllet = () => {
       <MyInfo />
       <Line />
       <MyScribe myScribe={myScribe} />
-      <MyScrap />
+      <MyScrap myScrap={myScrap} />
     </MySublletContainer>
   );
 };
