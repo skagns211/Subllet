@@ -10,7 +10,7 @@ const StyledBody = styled.section`
   max-width: 100%;
 `;
 const BackgroundImage = styled.div`
-  background-image: url(${(props) => props.image});
+  background-image: url(${(props) => props.detail});
   background-repeat: no-repeat;
   background-size: contain;
   opacity: 0.7;
@@ -19,7 +19,7 @@ const BackgroundImage = styled.div`
   justify-content: space-between;
   border-radius: 5px;
   @media only screen and (min-device-width: 800px) {
-    background-image: url(${(props) => props.image});
+    background-image: url(${(props) => props.detail});
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -58,24 +58,17 @@ const DetailMessage = styled.div`
     opacity: 0.7;
     color: white;
   }
-  span {
-    color: white;
-  }
 `;
 
-const InnerImage = ({
-  isLogin,
-  ServiceId,
-  accessToken,
-  detail,
-  scrapNum,
-  isSub,
-  setIsSub,
-  isScrap,
-  setIsScrap,
-}) => {
+const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
   const state = useSelector((state) => state);
+
+  console.log(state.service[0]);
+
   const [open, setOpen] = useState(false);
+  const [isScrap, setIsScrap] = useState();
+  const [isSub, setIsSub] = useState();
+  const [scrapNum, setScrapNum] = useState();
 
   const handleClick = () => {
     setOpen(!open);
@@ -91,15 +84,19 @@ const InnerImage = ({
           axios.get(`/subscribe/${ServiceId}`, {
             headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
           }),
+          // axios.get(`/service/${ServiceId}`, {
+          //   headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+          // }),
         ])
         .then(
-          axios.spread((isScrap, isSub) => {
+          axios.spread((isScrap, isSub, scrapNum) => {
             setIsScrap(isScrap.data.isScrap);
             setIsSub(isSub.data.isSubscribe);
+            // setScrapNum(scrapNum.data.service.scrapNum);
           })
         );
     }
-  });
+  }, []);
 
   const addScrap = () => {
     axios
@@ -148,10 +145,14 @@ const InnerImage = ({
       });
   };
 
+  const ServiceDetail = state.services.filter((service) => {
+    return service.id === ServiceId;
+  });
+
   return (
     <StyledBody>
       {open ? <LoginModal handleClick={handleClick} /> : null}
-      <BackgroundImage image={detail.inner_image}>
+      <BackgroundImage image={state.service.inner_image}>
         <ScrapButton>
           {JSON.parse(isLogin) && isScrap ? (
             <>
@@ -171,7 +172,7 @@ const InnerImage = ({
           )}
         </ScrapButton>
         <DetailMessage>
-          <span>{detail.message}</span>
+          <span>로켓배송 상품 100% 무료배송</span>
           {JSON.parse(isLogin) && isSub ? (
             <button onClick={delSub}>구독중</button>
           ) : JSON.parse(isLogin) && !isSub ? (

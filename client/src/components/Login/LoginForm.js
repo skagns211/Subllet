@@ -235,7 +235,7 @@ const LoginForm = () => {
           // dispatch(setAccessToken(accessToken));
           dispatch(setIsLogin(true));
           // navigate("/");
-          window.location.replace("/"); //! navigate 사용시 isLogin에 따른 nav변경 안됨
+          window.location.replace("/main"); //! navigate 사용시 isLogin에 따른 nav변경 안됨
         })
         .catch((err) => {
           setIsWarning(true);
