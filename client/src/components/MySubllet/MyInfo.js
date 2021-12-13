@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -89,19 +91,30 @@ const Button = styled.button`
 `;
 
 const MyInfo = () => {
+  const state = useSelector((state) => state);
+  console.log(state.loginUserInfo);
+  const {
+    email,
+    nickname,
+    profile,
+    total_price,
+    total_scraps,
+    total_subscribes,
+  } = state.loginUserInfo;
+
   return (
     <MyInfoContainer>
       <MyInfoTitle>회원정보</MyInfoTitle>
       <MyInfoBox>
         <LeftBox>
-          <img src={IU} />
+          <img src={profile} />
         </LeftBox>
         <RightBox>
-          <div>닉네임: IU</div>
-          <div>이메일: iloveIU@gmail.com</div>
-          <div>구독중: 7개</div>
-          <div>총금액: 100,000원</div>
-          <div>스크랩: 20개</div>
+          <div>닉네임: {nickname}</div>
+          <div>이메일: {email}</div>
+          <div>구독중: {total_subscribes}</div>
+          <div>총금액: {total_price}</div>
+          <div>스크랩: {total_scraps}</div>
           <div>
             <Link to="/changeinfo">
               <Button>회원정보 변경</Button>

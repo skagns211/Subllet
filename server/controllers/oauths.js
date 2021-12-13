@@ -4,6 +4,8 @@ const { User } = require("../models");
 const {
   generateAccessToken,
   generateRefreshToken,
+  sendAccessToken,
+  sendRefreshToken,
 } = require("../utils/tokenFunctions");
 // const emailSend = require("../utils/emails/send");
 // const { emailVerify } = require("../utils/emails/content");
@@ -115,7 +117,9 @@ module.exports = {
           const accessToken = generateAccessToken(userInfo.dataValues);
           const refreshToken = generateRefreshToken(userId);
 
-          return res.json({ userInfo, accessToken, refreshToken });
+          sendAccessToken(res, accessToken);
+          sendRefreshToken(res, refreshToken);
+          return res.json({ userInfo });
         }
       } catch (err) {
         console.error(err);

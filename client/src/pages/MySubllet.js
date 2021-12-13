@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 import styled from "styled-components";
 import MyInfo from "../components/MySubllet/MyInfo";
 import MyScrap from "../components/MySubllet/MyScrap";
@@ -41,12 +43,24 @@ const Line = styled.div`
 `;
 
 const MySubllet = () => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const [myScribe, setMyScribe] = useState([]);
+
+  useEffect(() => {
+    axios.get("/subscribe").then((res) => {
+      console.log(res.data.subscribes);
+      const myScribeData = res.data.subscribes;
+      setMyScribe(myScribeData);
+    });
+  }, []);
+
   return (
     <MySublletContainer>
       <div className="Title">My subllet</div>
       <MyInfo />
       <Line />
-      <MyScribe />
+      <MyScribe myScribe={myScribe} />
       <MyScrap />
     </MySublletContainer>
   );

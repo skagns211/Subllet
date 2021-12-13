@@ -5,13 +5,14 @@ const authorization = async (req, res, next) => {
   // const { accesstoken } = req.headers;
 
   const { accessToken } = req.cookies;
+  console.log(accessToken);
 
   if (!accessToken) {
     return res.status(401).send("Not exist token");
   }
 
   const accessTokenData = checkAccessToken(accessToken);
-
+  console.log(accessTokenData);
   // const accessTokenData = await isAuthorized(req);
 
   const userInfo = await User.findOne({
