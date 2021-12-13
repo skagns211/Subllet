@@ -73,9 +73,6 @@ const AllView = () => {
     }
   }, [select]);
 
-  console.log(filter);
-  console.log(select);
-
   const filterServices = (category, price, free) => {
     if (category) {
       setCategoryName(category.target.textContent);
@@ -115,8 +112,6 @@ const AllView = () => {
       }
     }
   };
-
-  const test = () => {};
 
   // const filterCategory = (category) => {
   //   if (category.target.textContent === "모든 카테고리") {

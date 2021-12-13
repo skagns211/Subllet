@@ -131,7 +131,7 @@ module.exports = {
       {
         service_id: 7,
         title: "기본",
-        price: "9,900원",
+        price: "9900원",
         message:
           "-이용기기 모바일, 태블릿, PC, TV -화질 UHD(4k)화질 -동시시청 4명",
         createdAt: new Date(),

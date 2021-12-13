@@ -63,6 +63,7 @@ const Price = styled.span`
 `;
 
 const ServiceContent = ({ detail, prices }) => {
+  const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const [serviceMsg, setServiceMsg] = useState();
@@ -70,6 +71,7 @@ const ServiceContent = ({ detail, prices }) => {
   useEffect(() => {
     if (detail.prices && serviceMsg === undefined) {
       setServiceMsg(detail.prices[0].message.split("-").slice(1));
+      dispatch(selectPlan([detail.prices[0].title, detail.prices[0].price]));
     }
   });
 
