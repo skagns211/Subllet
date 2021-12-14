@@ -2,30 +2,6 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.addConstraint("Askings", {
-      fields: ["user_id"],
-      type: "foreign key",
-      references: {
-        table: "Users",
-        field: "id",
-      },
-    });
-    await queryInterface.addConstraint("Replys", {
-      fields: ["asking_id"],
-      type: "foreign key",
-      references: {
-        table: "Askings",
-        field: "id",
-      },
-    });
-    await queryInterface.addConstraint("Replys", {
-      fields: ["user_id"],
-      type: "foreign key",
-      references: {
-        table: "Users",
-        field: "id",
-      },
-    });
     await queryInterface.addConstraint("Comments", {
       fields: ["user_id"],
       type: "foreign key",

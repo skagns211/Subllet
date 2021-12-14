@@ -8,14 +8,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.User.hasMany(models.Asking, {
-        foreignKey: "user_id",
-        sourceKey: "id",
-      });
-      models.User.hasMany(models.Reply, {
-        foreignKey: "user_id",
-        sourceKey: "id",
-      });
       models.User.hasMany(models.Comment, {
         foreignKey: "user_id",
         sourceKey: "id",
@@ -39,9 +31,6 @@ module.exports = (sequelize, DataTypes) => {
       email_verified: DataTypes.BOOLEAN,
       email_key: DataTypes.STRING,
       signup_method: DataTypes.STRING,
-      total_scraps: DataTypes.INTEGER,
-      total_subscribes: DataTypes.INTEGER,
-      total_price: DataTypes.STRING,
     },
     {
       sequelize,

@@ -6,8 +6,6 @@ const servicesRouter = require("./services");
 const commentsRouter = require("./comments");
 const subscribesRouter = require("./subscribes");
 const scrapsRouter = require("./scraps");
-const askingsRouter = require("./askings");
-const replysRouter = require("./replys");
 const oauthsRouter = require("./oauths");
 const authorization = require("../middlewares/authorization");
 
@@ -17,8 +15,6 @@ router.use("/service", servicesRouter);
 router.use("/comment", authorization, commentsRouter);
 router.use("/subscribe", authorization, subscribesRouter);
 router.use("/scrap", authorization, scrapsRouter);
-router.use("/asking", askingsRouter);
-router.use("/reply", replysRouter);
 router.use("/oauth", oauthsRouter);
 
 module.exports = router;

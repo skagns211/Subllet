@@ -36,15 +36,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      total_scraps: {
-        type: Sequelize.INTEGER,
-      },
-      total_subscribes: {
-        type: Sequelize.INTEGER,
-      },
-      total_price: {
-        type: Sequelize.STRING,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
