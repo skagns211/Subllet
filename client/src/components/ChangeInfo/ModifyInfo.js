@@ -1,6 +1,8 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import AlertModal from "../AlertModal";
 
 const StyledBody = styled.div`
   color: white;
@@ -12,63 +14,90 @@ const StyledBody = styled.div`
 const StyledForm = styled.div`
   background-color: #262a3b;
   margin-top: 1rem;
-  height: 20rem;
   display: flex;
-  flex-direction: column;
-  border-radius: 5px;
-  img {
-    width: 10rem;
+  border-radius: 5px 5px 0 0;
+`;
+
+const ButtonForm = styled.div`
+  background-color: #262a3b;
+  border-radius: 0 0 5px 5px;
+  button {
+    padding: 1rem;
+    font-size: 1.5rem;
+    background-color: #3b3f51;
+    color: #ff8a00;
+    border: 0px;
+    border-radius: 5px;
+    margin: 3rem 21.2rem;
   }
 `;
 
-const DeleteLabel = styled.div`
+const ChangeLabel = styled.div`
   font-size: 2rem;
 `;
 
-const PasswordInput = styled.div`
-  text-align: center;
-  width: 21.2rem;
+const ImgForm = styled.div`
+  margin: 3rem 1rem 0 5rem;
+  height: 15rem;
+
+  img {
+    width: 15rem;
+    height: 15rem;
+    object-fit: cover;
+    border-radius: 7rem;
+  }
+`;
+
+const InfoForm = styled.div`
+  margin: 3rem 0 0 1rem;
+  height: 15rem;
+  font-size: 1.5rem;
+`;
+
+const InfoInput = styled.div`
   input {
-    padding: 0.5rem;
-    font-size: 1rem;
-    width: 20rem;
+    padding: 0.1rem;
+    font-size: 1.5rem;
+    width: 15rem;
+    margin-left: 0.3rem;
   }
   div {
-    text-align: left;
+    margin: 1rem 0;
   }
 `;
 
-const DeleteButton = styled.div`
-  margin: 0 auto;
-  button {
-    padding: 0.5rem 2rem;
-    font-size: 1.5rem;
-    background-color: #3b3f51;
-    color: #ff8a00;
-    border: 0px;
-    border-radius: 5px;
-  }
-`;
-
-const UploadFile = styled.div`
-  /* input {
-    display: "none";
-  } */
+const ChangeButton = styled.div`
+  button,
   label {
-    padding: 0.5rem 2rem;
+    padding: 1rem;
     font-size: 1.5rem;
     background-color: #3b3f51;
     color: #ff8a00;
     border: 0px;
     border-radius: 5px;
+    margin: 1rem 1rem 1rem 0;
   }
+`;
+
+const ErrMsg = styled.span`
+  display: block;
+  font-size: 1rem;
+  text-align: left;
+  color: ${(props) => props.color || "white"};
+  margin-top: 0.4rem;
 `;
 
 const ModifyInfo = () => {
-  const state = useSelector((state) => state);
-  console.log(state);
+  const UserInfo = useSelector((state) => state.loginUserInfo);
 
-  const [profile, setProfile] = useState();
+  const [open, setOpen] = useState(false);
+  const [alertMsg, setAlertMsg] = useState({});
+  const [profile, setProfile] = useState(UserInfo.profile);
+  const [nick, setNick] = useState();
+
+  const [goodNick, setGoodNick] = useState(false);
+  const [badNick, setBadNick] = useState(false);
+  const [checkNick, setCheckNick] = useState(false);
 
   const AWS = require("aws-sdk");
 
@@ -105,32 +134,91 @@ const ModifyInfo = () => {
     );
   };
 
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  const inputNickname = (e) => {
+    setNick(e.target.value);
+  };
+
+  const checkNickname = () => {
+    axios
+      .post("/user/nickname", {
+        nickname: nick,
+      })
+      .then((res) => {
+        setGoodNick(true);
+        setBadNick(false);
+        setCheckNick(true);
+      })
+      .catch((err) => {
+        setGoodNick(false);
+        setBadNick(true);
+        setCheckNick(false);
+      });
+  };
+
+  const changeInfo = () => {
+    if (checkNick) {
+      axios
+        .patch("/user", {
+          nickname: nick,
+          profile,
+        })
+        .then((res) => console.log(res));
+    } else {
+      setAlertMsg({
+        message: "닉네임 중복체크를 해주세요!",
+        button: "확인",
+      });
+      setOpen(!open);
+    }
+  };
+
   return (
     <StyledBody>
-      <DeleteLabel>회원정보변경</DeleteLabel>
+      {open ? (
+        <AlertModal alertMsg={alertMsg} handleClick={handleClick} />
+      ) : null}
+      <ChangeLabel>회원정보변경</ChangeLabel>
       <StyledForm>
-        <img src={profile} />
-        <PasswordInput>
-          <div>이메일</div>
-          <div>
-            닉네임:
-            <input type="text" placeholder="닉네임을 입력해주세요" />
-          </div>
-        </PasswordInput>
-        <DeleteButton>
-          <UploadFile>
-            <label for="file">프로필 사진변경</label>
+        <ImgForm>
+          <img src={profile} />
+        </ImgForm>
+        <InfoForm>
+          <InfoInput>
+            <div>{`이메일: ${UserInfo.email}`}</div>
+            <div>
+              닉네임:
+              <input
+                type="text"
+                placeholder="닉네임을 입력해주세요"
+                onChange={inputNickname}
+              />
+              {goodNick ? (
+                <ErrMsg color={"green"}>사용 가능한 닉네임입니다.</ErrMsg>
+              ) : null}
+              {badNick ? (
+                <ErrMsg color={"red"}>중복된 닉네임입니다.</ErrMsg>
+              ) : null}
+            </div>
+          </InfoInput>
+          <ChangeButton>
+            <label htmlFor="file">프로필 사진변경</label>
             <input
               type="file"
               id="file"
               style={{ display: "none" }}
               onChange={changeProfile}
             />
-          </UploadFile>
-          <button>닉네임 중복확인</button>
-          <button>수정 완료</button>
-        </DeleteButton>
+            <button onClick={checkNickname}>닉네임 중복확인</button>
+          </ChangeButton>
+        </InfoForm>
       </StyledForm>
+      <ButtonForm>
+        <button onClick={changeInfo}>수정 완료</button>
+      </ButtonForm>
     </StyledBody>
   );
 };

@@ -63,6 +63,7 @@ const Price = styled.span`
 `;
 
 const ServiceContent = ({ detail, prices }) => {
+  const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const [serviceMsg, setServiceMsg] = useState();

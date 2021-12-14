@@ -128,6 +128,7 @@ const InnerImage = ({
         }
       )
       .then(() => {
+        console.log("jojo");
         setIsSub(true);
       });
   };
