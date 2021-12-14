@@ -90,6 +90,7 @@ const MainCardBody = styled.div`
     margin-top: 1rem;
     padding: 0.5rem 5rem 0.5rem 2.5rem;
     width: 15rem;
+    overflow: auto;
   }
   @media only screen and (max-width: 500px) {
     .user {
@@ -118,6 +119,7 @@ const MainCardBottom = styled.div`
     padding-top: 0.5rem;
     width: 7.5rem;
     height: 10.3rem;
+    overflow: auto;
   }
   @media only screen and (max-width: 500px) {
     .subscribe {
@@ -171,7 +173,6 @@ const MainCard = () => {
     axios.all([axios.get("/subscribe"), axios.get("/scrap")]).then(
       axios.spread((res1, res2) => {
         const total_subscribes = res1.data.subscribes.length;
-        console.log(res1.data.subscribes[0]);
         const price =
           res1.data.subscribes &&
           res1.data.subscribes.map((el) => {
@@ -212,23 +213,15 @@ const MainCard = () => {
     );
   }, []);
 
-  // const nextPayDate = payDate.map((el) => {
-  //   const date = new Date();
-  //   let month = date.getMonth() + 1;
-  //   let year = date.getFullYear();
-  //   const nextDate = new Date(year, month, el);
-  //   const btMs = nextDate.getTime() - date.getTime();
-  //   const btDay = Math.round(btMs / (1000 * 60 * 60 * 24));
-  //   return btDay;
-  // });
-
-  const nextPayDate = [4, 1, 2];
-  const nextList = service.map(
-    (el) =>
-      nextPayDate.map((el2) => {
-        return `${el} : ${el2}일 전`;
-      })[0]
-  );
+  const nextPayDate = payDate.map((el) => {
+    const date = new Date();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    const nextDate = new Date(year, month, el);
+    const btMs = nextDate.getTime() - date.getTime();
+    const btDay = Math.round(btMs / (1000 * 60 * 60 * 24));
+    return btDay;
+  });
 
   return (
     <>
@@ -249,16 +242,27 @@ const MainCard = () => {
           </div>
           <hr></hr>
           <span className="totalPrice">
-            총 이용 금액: <br />
-            <div>₩ {total_price}</div>
+            <b>총 이용 금액:</b> <br />
+            <div>
+              ₩{" "}
+              {total_price
+                ? total_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                : 0}
+            </div>
           </span>
           <span className="nextPay">
-            다음 결제까지: <br />
-            {nextList}
+            <b>다음 결제까지:</b> <br />
+            {service.map((el, idx) => {
+              return (
+                <div>
+                  {el}: {nextPayDate[idx]}일 전
+                </div>
+              );
+            })}
           </span>
           <MainCardBottom>
             <span className="subscribe">
-              구독중
+              <b>구독중</b>
               <br />
               {service.map((el) => {
                 return <div>{el}</div>;

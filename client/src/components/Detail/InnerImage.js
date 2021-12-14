@@ -113,7 +113,7 @@ const InnerImage = ({
         setIsScrap(false);
       });
   };
-
+  console.log(state);
   const addSub = () => {
     axios
       .post(

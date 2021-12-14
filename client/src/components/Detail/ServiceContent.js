@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { selectPlan } from "../../actions";
@@ -77,6 +77,7 @@ const ServiceContent = ({ detail, prices }) => {
 
   const checked = (e) => {
     const plan = e.target.value.split(",");
+    console.log(plan);
     dispatch(selectPlan(plan));
 
     const filterMsg = detail.prices.filter((price) => {
