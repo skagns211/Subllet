@@ -119,6 +119,7 @@ const InnerImage = ({
       .post(
         `/subscribe/${ServiceId}`,
         {
+          paydate: new Date().toDateString().slice(8, 10),
           planname: state.selectPlan.planname,
           planprice: state.selectPlan.planprice,
         },
@@ -127,6 +128,7 @@ const InnerImage = ({
         }
       )
       .then(() => {
+        console.log("jojo");
         setIsSub(true);
       });
   };

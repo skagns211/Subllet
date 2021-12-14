@@ -221,7 +221,8 @@ const MainCard = () => {
   //   const btDay = Math.round(btMs / (1000 * 60 * 60 * 24));
   //   return btDay;
   // });
-  const nextPayDate = [4, 1, 2, 3];
+
+  const nextPayDate = [4, 1, 2];
   const nextList = service.map(
     (el) =>
       nextPayDate.map((el2) => {
