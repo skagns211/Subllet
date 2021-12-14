@@ -321,7 +321,7 @@ const SignUpForm = () => {
           setIsComplete(true);
           console.log("회원가입 요청이 성공적으로 전달되었습니다.");
           setTimeout(() => {
-            navigate("/");
+            navigate("/main");
           }, 2000);
         }
       });
