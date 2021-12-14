@@ -35,16 +35,49 @@ const AllView = () => {
     });
   }, [refresh]);
 
-  // useEffect(() => {
-  //   if (filter) {
-  //   }
-  // }, [select]);
+  useEffect(() => {
+    if (services) {
+      let filtered = services.filter((service) => {
+        if (!select.category && !select.price && select.free === "") {
+          return service;
+        }
+        if (!select.price && select.free === "") {
+          return service.category === select.category;
+        } else if (!select.category && select.free === "") {
+          return Number(service.Prices[0].price.slice(0, -1)) <= select.price;
+        } else if (!select.category && !select.price) {
+          return service.demo === select.free;
+        } else if (!select.category) {
+          return (
+            Number(service.Prices[0].price.slice(0, -1)) <= select.price &&
+            service.demo === select.free
+          );
+        } else if (!select.price) {
+          return (
+            service.category === select.category && service.demo === select.free
+          );
+        } else if (select.free === "") {
+          return (
+            service.category === select.category &&
+            Number(service.Prices[0].price.slice(0, -1)) <= select.price
+          );
+        } else {
+          return (
+            service.category === select.category &&
+            Number(service.Prices[0].price.slice(0, -1)) <= select.price &&
+            service.demo === select.free
+          );
+        }
+      });
+      setFilter(filtered);
+    }
+  }, [select]);
 
   const filterServices = (category, price, free) => {
     if (category) {
       setCategoryName(category.target.textContent);
       if (category.target.textContent === "모든 카테고리") {
-        setSelect({ ...select, category: "all" });
+        setSelect({ ...select, category: "" });
       } else {
         setSelect({
           ...select,
@@ -54,7 +87,7 @@ const AllView = () => {
     } else if (price) {
       setpriceName(price.target.textContent);
       if (price.target.textContent === "모든 가격") {
-        setSelect({ ...select, price: "all" });
+        setSelect({ ...select, price: "" });
       } else {
         setSelect({
           ...select,
@@ -64,7 +97,7 @@ const AllView = () => {
     } else if (free) {
       setfreeName(free.target.textContent);
       if (free.target.textContent === "모든 체험") {
-        setSelect({ ...select, free: "all" });
+        setSelect({ ...select, free: "" });
       } else {
         let boolean;
         if (free.target.textContent === "유") {
@@ -78,15 +111,6 @@ const AllView = () => {
         });
       }
     }
-
-    let filtered = filter.filter((service) => {
-      return (
-        service.category === select.category ||
-        Number(service.Prices[0].price.slice(0, -1)) === select.price ||
-        service.demo === select.free
-      );
-    });
-    console.log(filtered);
   };
 
   // const filterCategory = (category) => {
@@ -134,6 +158,14 @@ const AllView = () => {
 
   const refreshFilter = () => {
     setRefresh(!refresh);
+    setCategoryName("카테고리");
+    setpriceName("가격");
+    setfreeName("체험하기 유무");
+    setSelect({
+      category: "",
+      price: "",
+      free: "",
+    });
   };
 
   return (

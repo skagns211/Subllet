@@ -3,8 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import axios from "axios";
-import { setAuthCode, setAuthUserInfo } from "../../actions/index";
+import {
+  setAuthCode,
+  setAuthUserInfo,
+  setLoginUserInfo,
+  setIsLogin,
+} from "../../actions/index";
 import AgreeCheck from "./AgreeCheck";
+import LoadingSpinner from "./../LodingSpinner";
 
 const AfterPageContainer = styled.main`
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
@@ -150,7 +156,9 @@ const Button = styled.button`
 const KakaoAuthHandler = () => {
   const state = useSelector((state) => state); //! state 사용 함수
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isCheck, setIsCheck] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   //! Authorization Code
   let authoCode = new URL(window.location.href).searchParams.get("code");
@@ -165,22 +173,30 @@ const KakaoAuthHandler = () => {
       .post("/oauth/kakao", {
         authorizationCode: authoCode,
       })
-      .then((response) => {
-        console.log(response);
-        const authUser = {
-          email: response.data.email,
-          nickname: "",
-          profile: response.data.profile,
-          signup_method: response.data.signup_method,
-        };
-        dispatch(setAuthUserInfo(authUser));
+      .then((res) => {
+        if (res.data.userInfo) {
+          const { userInfo } = res.data;
+          const loginUserInfo = userInfo;
+          dispatch(setLoginUserInfo(loginUserInfo));
+          dispatch(setIsLogin(true));
+          navigate("/main");
+        } else {
+          console.log(res);
+          setIsLoading(true);
+          const authUser = {
+            email: res.data.email,
+            nickname: "",
+            profile: res.data.profile,
+            signup_method: res.data.signup_method,
+          };
+          dispatch(setAuthUserInfo(authUser));
+        }
       })
       .catch((err) => {
         console.error(err);
       });
   }, []);
 
-  const navigate = useNavigate();
   // useEffect(() => {}, [state.authUserInfo]);
   console.log(state.authUserInfo);
 
@@ -215,7 +231,7 @@ const KakaoAuthHandler = () => {
       .post("/oauth/signup", state.authUserInfo)
       .then((res) => {
         setIsComplete(true);
-        navigate("/");
+        navigate("/main");
       })
       .catch((err) => {
         throw err;
@@ -224,33 +240,37 @@ const KakaoAuthHandler = () => {
 
   return (
     <AfterPageContainer>
-      <InnerBox>
-        <SignUpTitle className="SignUpTitle">추가 정보 입력</SignUpTitle>
-        <Line />
-        <ElementTitle>이메일</ElementTitle>
-        <EmailDiv>{state.authUserInfo.email}</EmailDiv>
-        <Line />
-        <ElementBox>
-          <ElementTitle>닉네임</ElementTitle>
-          <div className="validText">중복되지 않는 닉네임을 입력해주세요</div>
-          <InputBox
-            placeholder="닉네임"
-            onChange={(e) =>
-              dispatch(setAuthUserInfo({ nickname: e.target.value }))
-            }
-          />
-          {isDupNickname ? (
-            <ErrorMessage className="good">{nicknameMessage}</ErrorMessage>
-          ) : state.authUserInfo.nickname === 0 ? (
-            <ErrorMessage></ErrorMessage>
-          ) : (
-            <ErrorMessage>{nicknameMessage}</ErrorMessage>
-          )}
-          <Button onClick={() => checkNickname()}>닉네임 중복검사</Button>
-        </ElementBox>
-        <AgreeCheck isCheck={isCheck} setIsCheck={setIsCheck} />
-        <Button onClick={() => handleComplete()}>회원가입</Button>
-      </InnerBox>
+      {!isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <InnerBox>
+          <SignUpTitle className="SignUpTitle">추가 정보 입력</SignUpTitle>
+          <Line />
+          <ElementTitle>이메일</ElementTitle>
+          <EmailDiv>{state.authUserInfo.email}</EmailDiv>
+          <Line />
+          <ElementBox>
+            <ElementTitle>닉네임</ElementTitle>
+            <div className="validText">중복되지 않는 닉네임을 입력해주세요</div>
+            <InputBox
+              placeholder="닉네임"
+              onChange={(e) =>
+                dispatch(setAuthUserInfo({ nickname: e.target.value }))
+              }
+            />
+            {isDupNickname ? (
+              <ErrorMessage className="good">{nicknameMessage}</ErrorMessage>
+            ) : state.authUserInfo.nickname === 0 ? (
+              <ErrorMessage></ErrorMessage>
+            ) : (
+              <ErrorMessage>{nicknameMessage}</ErrorMessage>
+            )}
+            <Button onClick={() => checkNickname()}>닉네임 중복검사</Button>
+          </ElementBox>
+          <AgreeCheck isCheck={isCheck} setIsCheck={setIsCheck} />
+          <Button onClick={() => handleComplete()}>회원가입</Button>
+        </InnerBox>
+      )}
     </AfterPageContainer>
   );
 };

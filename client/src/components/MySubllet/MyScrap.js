@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 import styled from "styled-components";
 import dummy from "../../dummy/dummy";
 
@@ -60,29 +62,20 @@ const ScrapImg = styled.img`
   /* border-radius: 0.5rem; */
 `;
 
-const MyScrap = () => {
+const MyScrap = ({ myScrap }) => {
   return (
     <MyScrapContainer>
       <TitleBox>
         <MyScrapTitle>My Scrap</MyScrapTitle>
       </TitleBox>
       <MyScrapBox>
-        {dummy.map((el) => {
+        {myScrap.map((el) => {
           return (
             <div>
-              <ScrapImg src={el.service.outer_image} />
+              <ScrapImg src={el.outer_image} />
             </div>
           );
         })}
-        <div>
-          <ScrapImg src={wavve_scrap} />
-        </div>
-        <div>
-          <ScrapImg src={wavve_scrap} />
-        </div>
-        <div>
-          <ScrapImg src={wavve_scrap} />
-        </div>
       </MyScrapBox>
     </MyScrapContainer>
   );

@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       profile: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(1234),
       },
       email_verified: {
         allowNull: false,
