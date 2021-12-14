@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import Slider from "react-slick";
 
@@ -123,7 +123,7 @@ const Shoping = () => {
     <StyleSlider>
       <TopContent>
         <div>Shoping</div>
-        <a>전체보기</a>
+        <Link to="/allview">전체보기</Link>
       </TopContent>
       <Wrap>
         <Slider {...isSetting}>

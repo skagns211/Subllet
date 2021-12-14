@@ -9,6 +9,11 @@ const StyledTopList = styled.span`
   margin-top: 2rem;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
+  .top {
+    padding: 0 0 0.6rem 0.5rem;
+    font-weight: bold;
+    text-decoration: underline;
+  }
 `;
 
 const TopImg = styled.span`
@@ -81,7 +86,7 @@ const TopList = () => {
 
   return (
     <StyledTopList>
-      <div>Top 5</div>
+      <div className="top">Top 5</div>
       <TopImg>{topList}</TopImg>
     </StyledTopList>
   );

@@ -17,6 +17,8 @@ require("dotenv").config();
 const redis = require("../utils/redis");
 const emailSend = require("../utils/emails/send");
 const { emailVerify } = require("../utils/emails/content");
+const { access } = require("fs");
+let count = 0;
 
 module.exports = {
   signup: {
@@ -41,8 +43,8 @@ module.exports = {
       const url =
         process.env.SERVER_ORIGIN + "/auth/confirm/email?key=" + emailKey;
 
-      const emailContent = emailVerify(email, nickname, url);
-      emailSend(emailContent);
+      // const emailContent = emailVerify(email, nickname, url);
+      // emailSend(emailContent);
 
       try {
         res.status(201).send("Signup success");
@@ -165,15 +167,17 @@ module.exports = {
   refresh: {
     post: async (req, res) => {
       const { accessToken, refreshToken } = req.cookies;
+      console.log(accessToken);
 
       if (!accessToken || !refreshToken) {
         return res.status(400).send("Not exist token");
       }
-
       const accessTokenData = checkAccessToken(accessToken);
       const refreshTokenData = checkRefeshToken(refreshToken);
+      count++;
       console.log(accessTokenData);
       console.log(new Date());
+      console.log(count);
       if (refreshTokenData === null) {
         return res.status(401).send("Expiration");
       }
@@ -191,13 +195,12 @@ module.exports = {
       if (!userInfo) {
         return res.status(401).send("Not exist user");
       }
-
+      res.clearCookie("accessToken");
       delete userInfo.dataValues.password;
       delete userInfo.dataValues.salt;
       const newAccessToken = generateAccessToken(userInfo.dataValues);
-
+      sendAccessToken(res, newAccessToken);
       try {
-        sendAccessToken(res, newAccessToken);
         res.send("Success");
       } catch (err) {
         console.error(err);
