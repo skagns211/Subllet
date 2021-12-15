@@ -108,11 +108,7 @@ const Video = () => {
   };
 
   const handleIntoDetail = (path) => {
-<<<<<<< HEAD
-    navigate(`detail/${path}`);
-=======
     navigate(`/detail/${path}`);
->>>>>>> dev
   };
 
   useEffect(() => {

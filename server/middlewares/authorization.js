@@ -10,7 +10,7 @@ const authorization = async (req, res, next) => {
   }
 
   const accessTokenData = checkAccessToken(accessToken);
-
+  console.log(accessTokenData);
   const userInfo = await User.findOne({
     where: { id: accessTokenData.id },
   });
