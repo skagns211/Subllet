@@ -230,7 +230,7 @@ const LoginForm = () => {
           console.log(res.status);
           const { userInfo } = res.data; //! refreshToken을 어디로 받을지 상의필요
           const loginUserInfo = userInfo;
-          // console.log(loginUserInfo);
+          console.log(loginUserInfo);
           dispatch(setLoginUserInfo(loginUserInfo));
           // dispatch(setAccessToken(accessToken));
           dispatch(setIsLogin(true));

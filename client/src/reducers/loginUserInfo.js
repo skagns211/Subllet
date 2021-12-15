@@ -3,6 +3,7 @@
 import { LOGIN_USER_INFO, SUB_COUNT, CHANGE_USER_INFO } from "../actions";
 
 const loginUserInfo = {
+  id: 0,
   email: "",
   nickname: "",
   profile: "",
@@ -16,6 +17,7 @@ const userReducer = (state = loginUserInfo, action) => {
     case LOGIN_USER_INFO:
       return {
         ...state,
+        id: action.payload.id,
         email: action.payload.email,
         nickname: action.payload.nickname,
         profile: action.payload.profile,

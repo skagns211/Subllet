@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoginUserInfo, setIsLogin, setAccessToken } from "./actions";
+import { setLoginUserInfo, setIsLogin } from "./actions";
 import axios from "axios";
 
 import Nav from "./components/Nav";
@@ -23,7 +23,7 @@ import KakaoAuthHandler from "./components/Signup/KakaoAuthHandler";
 import NaverAuthHandler from "./components/Signup/NaverAuthHandler";
 import GoogleAuthHandler from "./components/Signup/GoogleAuthHandler";
 import Landing from "./pages/Landing";
-import { setServices, setService } from "./actions";
+import { setServices } from "./actions";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -76,52 +76,47 @@ function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   const currentUrl = location.pathname;
-  const [token, setToken] = useState();
   console.log(currentUrl);
 
-  const logoutHandler = () => {
-    axios
-      .post("/auth/logout", null)
-      .then((res) => {
-        const loginUserInfo = {
-          email: "",
-          nickname: "",
-          profile: "",
-        };
-        dispatch(setLoginUserInfo(loginUserInfo));
-        dispatch(setIsLogin(false));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const logoutHandler = () => {
+  //   axios
+  //     .post("/auth/logout", null)
+  //     .then((res) => {
+  //       const loginUserInfo = {
+  //         email: "",
+  //         nickname: "",
+  //         profile: "",
+  //       };
+  //       dispatch(setLoginUserInfo(loginUserInfo));
+  //       dispatch(setIsLogin(false));
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
-  const refreshToken = async () => {
-    await axios
-      .post("/auth/refresh", null)
-      .then((res) => {
-        return true;
-      })
-      .catch((err) => {
-        return false;
-      });
-  };
-
-  useEffect(() => {
-    if (state.isLogin) {
-      setInterval(() => {
-        if (!refreshToken()) {
-          logoutHandler();
-        }
-      }, 3000);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const time = 1000 * 60 * 60 * 24;
+  //   if (state.isLogin) {
+  //     setInterval(() => {
+  //       axios
+  //         .post("/auth/refresh", null)
+  //         .then((res) => {
+  //           console.log("new Token!!!!!!!!!!!!!!!");
+  //         })
+  //         .catch((err) => {
+  //           console.log(err.response);
+  //           logoutHandler();
+  //         });
+  //     }, time);
+  //   }
+  // }, [state.isLogin]);
 
   useEffect(() => {
     axios
       .get("/service")
       .then((res) => dispatch(setServices(res.data.services)));
-  }, []);
+  }, [setServices]);
 
   return (
     <>
@@ -132,9 +127,9 @@ function App() {
         {currentUrl === "/" ? null : (
           <>
             <Nav />
+            <SearchBar />
           </>
         )}
-        <SearchBar />
         <Pages>
           <Routes>
             <Route exact path="/" element={<Landing />} />

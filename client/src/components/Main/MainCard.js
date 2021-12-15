@@ -5,7 +5,7 @@ import styled from "styled-components";
 import TopList from "./TopList";
 import { IMG } from "./imageUrl";
 import axios from "axios";
-import { setLoginUserInfo } from "../../actions";
+import { setLoginUserInfo, setIsLogin } from "../../actions";
 
 const randomIdx = Math.floor(Math.random() * IMG["backImg"].length);
 const randomBackImg = IMG.backImg[randomIdx];
@@ -182,6 +182,7 @@ const MainCard = () => {
   const [payDate, setPayDate] = useState([]);
   const [serviceLink, setServiceLink] = useState();
   const {
+    id,
     email,
     nickname,
     profile,
@@ -190,53 +191,85 @@ const MainCard = () => {
     total_subscribes,
   } = state.loginUserInfo; //! user정보
 
-  useEffect(() => {
-    axios.all([axios.get("/subscribe"), axios.get("/scrap")]).then(
-      axios.spread((res1, res2) => {
-        const total_subscribes = res1.data.subscribes.length;
-        const price =
-          res1.data.subscribes &&
-          res1.data.subscribes.map((el) => {
-            return el.planprice.replace(/[^0-9]/g, "") * 1;
-          });
-        let total_price = 0;
-        price.length !== 0
-          ? (total_price =
-              res1.data.subscribes &&
-              price.reduce((acc, cur) => {
-                return acc + cur;
-              }))
-          : (total_price = 0);
-        const total_scraps = res2.data.scraps.length;
-        console.log(total_scraps);
+  const logoutHandler = () => {
+    axios
+      .post("/auth/logout", { id })
+      .then((res) => {
+        console.log("then");
         const loginUserInfo = {
-          email,
-          nickname,
-          profile,
-          total_subscribes,
-          total_price,
-          total_scraps,
+          email: "",
+          nickname: "",
+          profile: "",
         };
         dispatch(setLoginUserInfo(loginUserInfo));
-        if (res1.data.subscribes.length !== 0) {
-          setService(
-            res1.data.subscribes.map((el) => {
-              return el.Service.title;
-            })
-          );
-          setServiceLink(
-            res1.data.subscribes.map((el) => {
-              return el.Service.id;
-            })
-          );
-          setPayDate(
-            res1.data.subscribes.map((el) => {
-              return el.paydate;
-            })
-          );
-        }
+        alert("세션이 만료되어 로그아웃 되었습니다. 로그인 해주세요.");
+        dispatch(setIsLogin(false));
+        // window.location.href = "/userlogin";
       })
-    );
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    axios
+      .all([axios.get("/subscribe"), axios.get("/scrap")])
+      .then(
+        axios.spread((res1, res2) => {
+          const total_subscribes = res1.data.subscribes.length;
+          const price =
+            res1.data.subscribes &&
+            res1.data.subscribes.map((el) => {
+              return el.planprice.replace(/[^0-9]/g, "") * 1;
+            });
+          let total_price = 0;
+          price.length !== 0
+            ? (total_price =
+                res1.data.subscribes &&
+                price.reduce((acc, cur) => {
+                  return acc + cur;
+                }))
+            : (total_price = 0);
+          const total_scraps = res2.data.scraps.length;
+          console.log(total_scraps);
+          const loginUserInfo = {
+            id,
+            email,
+            nickname,
+            profile,
+            total_subscribes,
+            total_price,
+            total_scraps,
+          };
+          dispatch(setLoginUserInfo(loginUserInfo));
+          if (res1.data.subscribes.length !== 0) {
+            setService(
+              res1.data.subscribes.map((el) => {
+                return el.Service.title;
+              })
+            );
+            setServiceLink(
+              res1.data.subscribes.map((el) => {
+                return el.Service.id;
+              })
+            );
+            setPayDate(
+              res1.data.subscribes.map((el) => {
+                return el.paydate;
+              })
+            );
+          }
+        })
+      )
+      .catch((err) => {
+        if (
+          err.response &&
+          err.response.status === 401 &&
+          state.isLogin === true
+        ) {
+          logoutHandler();
+        }
+      });
   }, []);
   console.log(serviceLink && serviceLink);
 
@@ -286,7 +319,7 @@ const MainCard = () => {
             {payDate.length !== 0
               ? service.map((el, idx) => {
                   return (
-                    <div>
+                    <div key={idx}>
                       {el} : {nextPayDate[idx]}일 전
                     </div>
                   );
@@ -299,7 +332,10 @@ const MainCard = () => {
               <br />
               {service.map((el, idx) => {
                 return (
-                  <div onClick={() => handleIntoDetail(serviceLink[idx])}>
+                  <div
+                    key={idx}
+                    onClick={() => handleIntoDetail(serviceLink[idx])}
+                  >
                     {el}
                   </div>
                 );

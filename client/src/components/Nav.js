@@ -212,15 +212,12 @@ const Nav = () => {
   const { profile } = state.loginUserInfo;
   const accessToken = window.localStorage.getItem("accessToken");
   const currentUrl = location.pathname;
+  console.log(state.loginUserInfo);
 
   const logoutHandler = () => {
     console.log("click1");
     axios
-      .post("/auth/logout", null, {
-        headers: {
-          authorization: `Bearer ${JSON.parse(accessToken)}`,
-        },
-      })
+      .post("/auth/logout", null)
       .then((res) => {
         console.log("then");
         const loginUserInfo = {

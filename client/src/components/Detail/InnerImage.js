@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+import { setLoginUserInfo, setIsLogin } from "../../actions";
 
 import LoginModal from "../LoginModal";
 
@@ -85,7 +86,9 @@ const InnerImage = ({
   setIsSub,
 }) => {
   const state = useSelector((state) => state);
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const { id } = state.loginUserInfo;
 
   const handleClick = () => {
     setOpen(!open);
@@ -108,52 +111,79 @@ const InnerImage = ({
     }
   });
 
+  const logoutHandler = () => {
+    axios
+      .post("/auth/logout", { id })
+      .then((res) => {
+        const loginUserInfo = {
+          email: "",
+          nickname: "",
+          profile: "",
+        };
+        dispatch(setLoginUserInfo(loginUserInfo));
+        alert("세션이 만료되어 로그아웃 되었습니다. 로그인 해주세요.");
+        dispatch(setIsLogin(false));
+        window.location.href = "/main";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const addScrap = () => {
     axios
-      .post(`/scrap/${ServiceId}`, null, {
-        headers: { authorization: `Bearer ${state.accessToken}` },
-      })
+      .post(`/scrap/${ServiceId}`, null)
       .then(() => {
         setIsScrap(true);
+      })
+      .catch((err) => {
+        if (err.response.status === 401 && state.isLogin === true) {
+          logoutHandler();
+        }
       });
   };
 
   const delScrap = () => {
     axios
-      .delete(`/scrap/${ServiceId}`, {
-        headers: { authorization: `Bearer ${state.accessToken}` },
-      })
+      .delete(`/scrap/${ServiceId}`)
       .then(() => {
         setIsScrap(false);
+      })
+      .catch((err) => {
+        if (err.response.status === 401 && state.isLogin === true) {
+          logoutHandler();
+        }
       });
   };
 
   const addSub = () => {
     axios
-      .post(
-        `/subscribe/${ServiceId}`,
-        {
-          paydate: new Date().toDateString().slice(8, 10),
-          planname: state.selectPlan.planname,
-          planprice: state.selectPlan.planprice,
-        },
-        {
-          headers: { authorization: `Bearer ${state.accessToken}` },
-        }
-      )
+      .post(`/subscribe/${ServiceId}`, {
+        paydate: new Date().toDateString().slice(8, 10),
+        planname: state.selectPlan.planname,
+        planprice: state.selectPlan.planprice,
+      })
       .then(() => {
         console.log("jojo");
         setIsSub(true);
+      })
+      .catch((err) => {
+        if (err.response.status === 401 && state.isLogin === true) {
+          logoutHandler();
+        }
       });
   };
 
   const delSub = () => {
     axios
-      .delete(`/subscribe/${ServiceId}`, {
-        headers: { authorization: `Bearer ${state.accessToken}` },
-      })
+      .delete(`/subscribe/${ServiceId}`)
       .then(() => {
         setIsSub(false);
+      })
+      .catch((err) => {
+        if (err.response.status === 401 && state.isLogin === true) {
+          logoutHandler();
+        }
       });
   };
 

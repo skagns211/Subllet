@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import AlertModal from "../AlertModal";
+import { setLoginUserInfo, setIsLogin } from "../../actions";
 
 const StyledBody = styled.div`
   color: white;
@@ -58,6 +60,8 @@ const ChangeButton = styled.div`
 `;
 
 const ModifyPwd = () => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState({});
   const [pwd, setPwd] = useState("");
@@ -68,9 +72,29 @@ const ModifyPwd = () => {
   const [validPwd, setValidPwd] = useState(true);
   const [samePwd, setSamePwd] = useState(true);
   const [allInput, setAllinput] = useState(true);
+  const { id } = state.loginUserInfo;
 
   const handleClick = () => {
     setOpen(!open);
+  };
+
+  const logoutHandler = () => {
+    axios
+      .post("/auth/logout", { id })
+      .then((res) => {
+        const loginUserInfo = {
+          email: "",
+          nickname: "",
+          profile: "",
+        };
+        dispatch(setLoginUserInfo(loginUserInfo));
+        alert("세션이 만료되어 로그아웃 되었습니다. 로그인 해주세요.");
+        dispatch(setIsLogin(false));
+        window.location.href = "/main";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const changePwd = () => {
@@ -91,6 +115,9 @@ const ModifyPwd = () => {
         })
         .catch((err) => {
           setCheckPwd(false);
+          if (err.response.status === 401 && state.isLogin === true) {
+            logoutHandler();
+          }
         });
     }
   };
