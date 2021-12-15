@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-// import { useNavigate } from "react-router";
+import { setLoginUserInfo, setIsLogin } from "../../actions";
+
 
 import AlertModal from "../AlertModal";
 
@@ -100,9 +101,12 @@ const InnerImage = ({
   // const navigate = useNavigate();
 
   const state = useSelector((state) => state);
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const { id } = state.loginUserInfo;
   const [alertMsg, setAlertMsg] = useState();
   const [notLogin, setNotLogin] = useState(false);
+
 
   const handleClick = () => {
     setOpen(!open);
@@ -129,16 +133,49 @@ const InnerImage = ({
     }
   });
 
+  const logoutHandler = () => {
+    axios
+      .post("/auth/logout", { id })
+      .then((res) => {
+        const loginUserInfo = {
+          email: "",
+          nickname: "",
+          profile: "",
+        };
+        dispatch(setLoginUserInfo(loginUserInfo));
+        alert("세션이 만료되어 로그아웃 되었습니다. 로그인 해주세요.");
+        dispatch(setIsLogin(false));
+        window.location.href = "/main";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const addScrap = () => {
-    axios.post(`/scrap/${ServiceId}`, null).then(() => {
-      setIsScrap(true);
-    });
+    axios
+      .post(`/scrap/${ServiceId}`, null)
+      .then(() => {
+        setIsScrap(true);
+      })
+      .catch((err) => {
+        if (err.response.status === 401 && state.isLogin === true) {
+          logoutHandler();
+        }
+      });
   };
 
   const delScrap = () => {
-    axios.delete(`/scrap/${ServiceId}`).then(() => {
-      setIsScrap(false);
-    });
+    axios
+      .delete(`/scrap/${ServiceId}`)
+      .then(() => {
+        setIsScrap(false);
+      })
+      .catch((err) => {
+        if (err.response.status === 401 && state.isLogin === true) {
+          logoutHandler();
+        }
+      });
   };
 
   const addSub = () => {
@@ -150,14 +187,25 @@ const InnerImage = ({
       })
       .then(() => {
         setIsSub(true);
+      })
+      .catch((err) => {
+        if (err.response.status === 401 && state.isLogin === true) {
+          logoutHandler();
+        }
       });
   };
 
   const delSub = () => {
-    axios.delete(`/subscribe/${ServiceId}`).then(() => {
-      setIsSub(false);
-    });
-  };
+    axios
+      .delete(`/subscribe/${ServiceId}`)
+      .then(() => {
+        setIsSub(false);
+      })
+      .catch((err) => {
+        if (err.response.status === 401 && state.isLogin === true) {
+          logoutHandler();
+        }
+      });
 
   const prePage = () => {
     if (ServiceId - 1 > 0) {
@@ -173,7 +221,6 @@ const InnerImage = ({
     }
   };
 
-  console.log(ServiceId);
   return (
     <StyledBody>
       {open ? (

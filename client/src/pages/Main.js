@@ -9,6 +9,7 @@ import Shoping from "../components/Main/Shopping";
 import Pick from "../components/Main/Pick";
 import Book from "../components/Main/Book";
 import Life from "../components/Main/Life";
+import axios from "axios";
 
 const StyledTopBody = styled.section`
   max-width: 1100px;

@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import AlertModal from "../AlertModal";
+import { setLoginUserInfo, setIsLogin } from "../../actions";
 
 const StyledBody = styled.section`
   max-width: 100%;
@@ -135,6 +136,7 @@ const Comment = ({
   setChange,
 }) => {
   const state = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   const [text, setText] = useState("");
   const [like, setLike] = useState(true);
@@ -144,6 +146,7 @@ const Comment = ({
   const [del, setDel] = useState(false);
   const [notLogin, setNotLogin] = useState(false);
   const [totalComments, setTotalComments] = useState();
+  const { id } = state.loginUserInfo;
 
   useEffect(() => {
     if (detail.Comments) {
@@ -171,6 +174,11 @@ const Comment = ({
         (comment) => comment.commenter !== state.loginUserInfo.nickname
       );
       setComments([...del]);
+    })
+    .catch((err) => {
+      if (err.response.status === 401 && state.isLogin === true) {
+      logoutHandler();
+      }
     });
   };
 
@@ -180,6 +188,25 @@ const Comment = ({
 
   const handleSelect = (e) => {
     setLike(e.target.value);
+  };
+
+  const logoutHandler = () => {
+    axios
+      .post("/auth/logout", { id })
+      .then((res) => {
+        const loginUserInfo = {
+          email: "",
+          nickname: "",
+          profile: "",
+        };
+        dispatch(setLoginUserInfo(loginUserInfo));
+        alert("세션이 만료되어 로그아웃 되었습니다. 로그인 해주세요.");
+        dispatch(setIsLogin(false));
+        window.location.href = "/main";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const sendComment = () => {
@@ -197,9 +224,17 @@ const Comment = ({
             setChange(!change);
           })
           .catch((err) => {
-            setAlertMsg({ message: "이미 작성하셨습니다", button: "확인" });
-            setOpen(!open);
-            setText("");
+            if (
+              err.response &&
+              err.response.status === 401 &&
+              state.isLogin === true
+            ) {
+              logoutHandler();
+            } else {
+              setAlertMsg({ message: "이미 작성하셨습니다", button: "확인" });
+              setOpen(!open);
+              setText("");
+            }
           });
       } else {
         setAlertMsg({ message: "모두 입력해주세요", button: "확인" });
@@ -214,6 +249,7 @@ const Comment = ({
       }
     }
   };
+
 
   const delComment = () => {
     setAlertMsg({ message: "댓글을 삭제하시겠습니까?", button: "확인" });

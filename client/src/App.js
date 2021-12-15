@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoginUserInfo, setIsLogin, setAccessToken } from "./actions";
+import { setLoginUserInfo, setIsLogin } from "./actions";
 import axios from "axios";
 
 import Nav from "./components/Nav";
@@ -24,7 +24,7 @@ import KakaoAuthHandler from "./components/Signup/KakaoAuthHandler";
 import NaverAuthHandler from "./components/Signup/NaverAuthHandler";
 import GoogleAuthHandler from "./components/Signup/GoogleAuthHandler";
 import Landing from "./pages/Landing";
-import { setServices, setService } from "./actions";
+import { setServices } from "./actions";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -82,14 +82,12 @@ function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   const currentUrl = location.pathname;
-  const [token, setToken] = useState();
-  console.log(currentUrl);
 
   useEffect(() => {
     axios
       .get("/service")
       .then((res) => dispatch(setServices(res.data.services)));
-  }, []);
+  }, [setServices]);
 
   return (
     <>
@@ -106,9 +104,6 @@ function App() {
         <div className="mobileNav">
           <NavSelectServiceDown />
         </div>
-        {/* <div className="searchBox"> */}
-        {/* </div> */}
-
         <Pages>
           <Routes>
             <Route exact path="/" element={<Landing />} />

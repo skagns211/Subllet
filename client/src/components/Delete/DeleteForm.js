@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+import { setLoginUserInfo, setIsLogin } from "../../actions";
 
 const StyledBody = styled.div`
   color: white;
@@ -49,13 +51,35 @@ const DeleteButton = styled.div`
 `;
 
 const DeleteForm = () => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
   const [pwd, setPwd] = useState();
   const [emptyPwd, setEmptyPwd] = useState(false);
   const [wrongPwd, setWrongPwd] = useState(false);
+  const { id } = state.loginUserInfo;
 
   const inputPwd = (e) => {
     setPwd(e.target.value);
     setEmptyPwd(false);
+  };
+
+  const logoutHandler = () => {
+    axios
+      .post("/auth/logout", { id })
+      .then((res) => {
+        const loginUserInfo = {
+          email: "",
+          nickname: "",
+          profile: "",
+        };
+        dispatch(setLoginUserInfo(loginUserInfo));
+        alert("세션이 만료되어 로그아웃 되었습니다. 로그인 해주세요.");
+        dispatch(setIsLogin(false));
+        window.location.href = "/main";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const delAccount = () => {
@@ -70,7 +94,9 @@ const DeleteForm = () => {
           console.log(res);
         })
         .catch((err) => {
-          console.log(err);
+          if (err.response.status === 401 && state.isLogin === true) {
+            logoutHandler();
+          }
           if (err.response && err.response.status === 400) {
             setWrongPwd(true);
           }

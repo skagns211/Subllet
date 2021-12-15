@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import AlertModal from "../AlertModal";
-import { changeUserInfo } from "../../actions";
+import { changeUserInfo, setIsLogin, setLoginUserInfo } from "../../actions";
 
 const StyledBody = styled.div`
   color: white;
@@ -96,6 +96,7 @@ const ErrMsg = styled.span`
 `;
 
 const ModifyInfo = () => {
+  const state = useSelector((state) => state);
   const UserInfo = useSelector((state) => state.loginUserInfo);
   const dispatch = useDispatch();
 
@@ -105,7 +106,10 @@ const ModifyInfo = () => {
   const [nick, setNick] = useState(UserInfo.nickname);
   const [emptyNick, setEmptyNick] = useState(false);
   const [duplicate, setDuplicate] = useState(false);
+  const { id } = state.loginUserInfo;
+
   const [success, setSuccess] = useState(false);
+
 
   const AWS = require("aws-sdk");
 
@@ -156,6 +160,25 @@ const ModifyInfo = () => {
     setNick(e.target.value);
   };
 
+  const logoutHandler = () => {
+    axios
+      .post("/auth/logout", { id })
+      .then((res) => {
+        const loginUserInfo = {
+          email: "",
+          nickname: "",
+          profile: "",
+        };
+        dispatch(setLoginUserInfo(loginUserInfo));
+        alert("세션이 만료되어 로그아웃 되었습니다. 로그인 해주세요.");
+        dispatch(setIsLogin(false));
+        window.location.href = "/main";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const changeInfo = () => {
     if (!nick) {
       setEmptyNick(true);
@@ -175,6 +198,9 @@ const ModifyInfo = () => {
           setSuccess(true);
         })
         .catch((err) => {
+          if (err.response.status === 401 && state.isLogin === true) {
+            logoutHandler();
+          }
           if (err.response && err.response.status === 400) {
             setDuplicate(true);
           }

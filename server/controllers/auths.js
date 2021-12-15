@@ -81,10 +81,10 @@ module.exports = {
       if (!result) {
         return res.status(400).send("Password inconsistency");
       }
-      const userId = userInfo.id;
+
       delete userInfo.dataValues.password;
       const accessToken = generateAccessToken(userInfo.dataValues);
-      const refreshToken = generateRefreshToken(userId);
+      const refreshToken = generateRefreshToken(userInfo.id);
 
       await redis.set(userInfo.id, refreshToken, "ex", 1209600);
 
@@ -101,8 +101,7 @@ module.exports = {
   },
   logout: {
     post: async (req, res) => {
-      const id = req.id;
-
+      const { id } = req.body;
       await redis.del(id);
 
       res.clearCookie("accessToken");
@@ -167,7 +166,6 @@ module.exports = {
   refresh: {
     post: async (req, res) => {
       const { accessToken, refreshToken } = req.cookies;
-      console.log(accessToken);
 
       if (!accessToken || !refreshToken) {
         return res.status(400).send("Not exist token");
@@ -182,9 +180,7 @@ module.exports = {
         return res.status(401).send("Expiration");
       }
 
-      const userId = refreshTokenData.id;
-      const redisRefreshToken = await redis.get(userId);
-
+      const redisRefreshToken = await redis.get(refreshTokenData.data);
       if (refreshToken !== redisRefreshToken) {
         return res.status(401).send("RefreshToken inconsistency");
       }
@@ -192,14 +188,13 @@ module.exports = {
       const userInfo = await User.findOne({
         where: { id: accessTokenData.id },
       });
-
       if (!userInfo) {
         return res.status(401).send("Not exist user");
+        res.clearCookie("accessToken");
+        delete userInfo.dataValues.password;
+        const newAccessToken = generateAccessToken(userInfo.dataValues);
+        sendAccessToken(res, newAccessToken);
       }
-      res.clearCookie("accessToken");
-      delete userInfo.dataValues.password;
-      const newAccessToken = generateAccessToken(userInfo);
-      sendAccessToken(res, newAccessToken);
       try {
         res.send("Success");
       } catch (err) {
