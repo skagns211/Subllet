@@ -4,6 +4,8 @@ import { setLoginUserInfo, setIsLogin, setAccessToken } from "../actions";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+import { SelectService } from "./MySubllet/Select";
+import { NavSelectService } from "./MySubllet/Select";
 import logo from "../IMG/favicon.png";
 import defaultImg from "../IMG/default.png";
 
@@ -14,6 +16,7 @@ const NavHeader = styled.header`
   background-color: #0f0f0f;
   width: 100%;
   height: 70px;
+  /* border: 1px solid white; */
   @media only screen and (max-width: 500px) {
     padding-left: 1rem;
   }
@@ -64,6 +67,7 @@ const MaxNavTap = styled.div`
   justify-self: right;
   flex-shrink: 0;
   margin-right: 2rem;
+  /* border: 1px solid white; */
   div {
     display: flex;
     justify-content: flex-end;
@@ -108,6 +112,7 @@ const SearchBar = styled.input`
 `;
 
 const Font = styled.span`
+  /* width: 50rem; */
   display: flex;
   color: #ff8a00;
   font-size: 3.8rem;
@@ -115,8 +120,14 @@ const Font = styled.span`
   /* @media only screen and (min-width: 800px) {
     margin-left: 2rem;
   } */
-
+  /* border: 1px solid white; */
   span {
+    &.search {
+      display: flex;
+      align-items: center;
+      /* border: 1px solid white; */
+      padding-bottom: 1rem;
+    }
     cursor: pointer;
     @media only screen and (max-width: 500px) {
       margin-top: 1rem;
@@ -143,6 +154,9 @@ const Font = styled.span`
   a {
     color: #ff8a00;
   }
+  div {
+    font-size: 1rem;
+  }
 `;
 
 const RightNav = styled.span`
@@ -150,6 +164,7 @@ const RightNav = styled.span`
   /* :hover ul {
     visibility: visible;
   } */
+  /* border: 1px solid white; */
 
   li {
     padding: 0.5rem 0;
@@ -248,7 +263,10 @@ const Nav = () => {
         <Font>
           <span onClick={() => window.location.replace("/main")}>Subllet</span>
           <img alt="logo" src={logo}></img>
-          <SearchBar type="search" placeholder="서비스를 검색해보세요" />
+          {/* <SearchBar type="search" placeholder="서비스를 검색해보세요" /> */}
+          <span className="search">
+            <NavSelectService />
+          </span>
         </Font>
         <RightNav>
           <MaxNavTap>

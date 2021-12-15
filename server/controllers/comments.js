@@ -35,10 +35,14 @@ module.exports = {
         where: { id: created.id },
       });
 
-      if (likes) {
+      const service = await Service.findOne({
+        where: { id: service_id },
+      });
+
+      if (likes === true) {
         await Service.update(
           {
-            total_likes: total_likes + 1,
+            total_likes: service.total_likes + 1,
           },
           {
             where: { id: service_id },
@@ -65,15 +69,21 @@ module.exports = {
         },
       });
 
-      if (isLike.likes) {
-        await Service.update(
-          {
-            total_likes: total_likes - 1,
-          },
-          {
-            where: { id: service_id },
-          }
-        );
+      const service = await Service.findOne({
+        where: { id: service_id },
+      });
+
+      if (isLike) {
+        if (isLike.likes) {
+          await Service.update(
+            {
+              total_likes: service.total_likes - 1,
+            },
+            {
+              where: { id: service_id },
+            }
+          );
+        }
       }
 
       await Comment.destroy({

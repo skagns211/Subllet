@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Select from "react-select";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import styled from "styled-components";
-
-import { SelectDate2 } from "./Select";
-
-import dummy from "../../dummy/dummy";
-import PlusIcon from "../../IMG/PlusIcon.png";
+import { SelectDate2, SelectPrice } from "./Select";
 import AddModal from "./AddModal";
-
-const plusicon = PlusIcon;
 
 const MyScribeContainer = styled.main`
   width: 100%;
@@ -45,6 +39,7 @@ const AllviewTab = styled.div`
   align-items: center;
   justify-content: right;
   color: #ff8a00;
+  cursor: pointer;
   /* border: 0.5px solid white; */
 `;
 
@@ -107,7 +102,7 @@ const ListBox = styled.div`
   margin-bottom: 1rem;
   background-color: #3a3f51;
   color: white;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   display: inline-flex;
   border-radius: 0.5rem;
   /* border: 0.5px solid white; */
@@ -115,6 +110,7 @@ const ListBox = styled.div`
   div {
     /* flex-direction: column; */
     /* flex-shrink: 0; */
+    /* font-family: "Geo", sans-serif; */
     font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
       sans-serif;
     /* display: flex; */
@@ -127,14 +123,22 @@ const ListBox = styled.div`
       align-items: center;
       justify-content: center;
       flex: 1;
+      cursor: pointer;
       /* border: 0.5px solid white; */
     }
     &.plan {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      text-align: center;
       flex: 1.3;
       /* border: 0.5px solid white; */
+      span {
+        /* border: 0.5px solid white; */
+        padding-top: 0.1rem;
+        padding-bottom: 0.1rem;
+      }
     }
     &.date {
       flex: 1;
@@ -159,18 +163,20 @@ const ListBox = styled.div`
       flex: 0.4;
       color: #ff8a00;
       font-size: 1rem;
+      /* font-weight: bold; */
       /* border: 0.5px solid white; */
       div {
-        width: 90%;
-        height: 1.2rem;
+        width: 75%;
+        height: 1.5rem;
         margin-top: 0.2rem;
         margin-bottom: 0.2rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        /* background-color: #817c8d; */
+        background-color: #252a3c;
         border-radius: 0.5rem;
-        border: 1px solid #817c8d;
+        cursor: pointer;
+        /* border: 1px solid #252a3c; */
       }
     }
   }
@@ -213,13 +219,16 @@ const SelectBox = styled.select`
   }
 `;
 
-const MyScirbe = ({ myScribe }) => {
+const MyScribe = ({ myScribe, sortedMyScribe, setMyScribe, test, setTest }) => {
   const state = useSelector((state) => state);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const sortedMyScribe = myScribe.sort((a, b) => {
-    return a.Service.id - b.Service.id;
-  });
+  // const sortedMyScribe = myScribe.sort((a, b) => {
+  //   return a.Service.id - b.Service.id;
+  // });
+  // console.log(sortedMyScribe);
   const allServices = state.services;
+  // const copyAllServices = state.services.slice();
 
   const ID = myScribe.map((el) => {
     return el.Service.id;
@@ -232,23 +241,53 @@ const MyScirbe = ({ myScribe }) => {
     }
   });
 
+  console.log(myScribeInfo);
+
   const [isModify, setIsModify] = useState(false);
+  const [index, setIndex] = useState("");
+  const [patchBody, setPatchBody] = useState({
+    id: "",
+    planname: "",
+    planprice: "",
+    paydate: "",
+  });
+  useEffect(() => {
+    console.log(patchBody);
+  }, [patchBody]);
+
   const scribeHandler = (idx) => {
     setIsModify(!isModify);
     setIndex(idx);
+    if (
+      patchBody.id !== "" ||
+      patchBody.planname !== "" ||
+      patchBody.planprice !== "" ||
+      patchBody.paydate !== ""
+    ) {
+      axios.patch(`/subscribe/${patchBody.id}`, patchBody).then((res) => {
+        setTest(!test);
+        console.log(res);
+      });
+    } else {
+      console.log("변화없음");
+    }
     console.log(idx);
-  };
-  const [index, setIndex] = useState("");
-
-  const [isAdd, setIsAdd] = useState(false);
-  const addHandler = () => {
-    setIsAdd(!isAdd);
   };
 
   const [isOpen, setIsOpen] = useState(false); //! 구독추가 모달 상태
   const openModalHandler = () => {
     setIsOpen(!isOpen);
   }; //! 모달 오픈 핸들러
+  const deleteHandler = (idx) => {
+    const id = sortedMyScribe[idx].Service.id;
+    const copy = myScribe.slice();
+    copy.splice(idx, 1);
+    axios.delete(`/subscribe/${id}`).then((res) => {
+      setMyScribe(copy);
+      console.log("삭제완료");
+    });
+  };
+
   let filtered = [];
 
   return (
@@ -274,39 +313,49 @@ const MyScirbe = ({ myScribe }) => {
         </CategoryBox>
         {sortedMyScribe.map((el, idx) => {
           return (
-            <ListBox id={el.id}>
-              <div className="name">
+            <ListBox key={el.id}>
+              <div
+                className="name"
+                onClick={() => {
+                  navigate(`/detail/${el.Service.id}`);
+                }}
+              >
                 <img src={el.Service.outer_image} />
               </div>
               {idx === index ? (
                 <div className="plan">
-                  <SelectBox>
-                    {myScribeInfo.filter((service, i) => {
-                      if (i === idx) {
-                        filtered = service;
-                      }
+                  {myScribeInfo.filter((service, i) => {
+                    if (i === idx) {
+                      filtered = service;
+                    }
+                  })}
+                  <SelectPrice
+                    options={filtered.Prices.map((el) => {
+                      return {
+                        label: `${el.title} (${el.price})`,
+                        value: {
+                          planname: el.title,
+                          planprice: el.price,
+                          id: filtered.id,
+                        },
+                      };
                     })}
-                    {filtered.Prices.map((el) => {
-                      return (
-                        <option selected>
-                          {el.title},{[el.price]}
-                        </option>
-                      );
-                    })}
-                  </SelectBox>
+                    patchBody={patchBody}
+                    setPatchBody={setPatchBody}
+                  />
                 </div>
               ) : (
                 <div className="plan">
-                  {el.planname},{[el.planprice]}
+                  <span>{el.planname}</span>
+                  <span>({el.planprice})</span>
                 </div>
               )}
-
-              {/* <div className="plan">
-                {el.planname},{[el.planprice]}
-              </div> */}
               {idx === index ? (
                 <div className="date">
-                  <SelectDate2 />
+                  <SelectDate2
+                    patchBody={patchBody}
+                    setPatchBody={setPatchBody}
+                  />
                 </div>
               ) : (
                 <div className="date">매달 {el.paydate}일</div>
@@ -315,9 +364,9 @@ const MyScirbe = ({ myScribe }) => {
               <div className="category">{el.Service.category}</div>
               <div className="fix">
                 {idx === index && isModify === true ? (
-                  <div onClick={() => scribeHandler("")}>수정완료</div>
+                  <div onClick={() => scribeHandler("")}>완료</div>
                 ) : (
-                  <div onClick={() => scribeHandler(idx)}>수정하기</div>
+                  <div onClick={() => scribeHandler(idx)}>수정</div>
                 )}
                 {/* {isModify === false ? (
                   <div onClick={() => scribeHandler(idx)}>수정하기</div>
@@ -325,24 +374,31 @@ const MyScirbe = ({ myScribe }) => {
                   <div onClick={() => scribeHandler("")}>수정완료</div>
                 )} */}
                 {/* <div onClick={() => scribeHandler(idx)}>수정하기</div> */}
-                <div>삭제</div>
+                <div onClick={() => deleteHandler(idx)}>삭제</div>
               </div>
             </ListBox>
           );
         })}
-        {!isAdd ? null : <ListBox></ListBox>}
+
         {/* {!isModify ? null : (
           <AddBox>
             <Plus src={plusicon} onClick={openModalHandler} />
           </AddBox>
         )} */}
-        {isOpen ? <AddModal openModalHandler={openModalHandler} /> : null}
+        {isOpen ? (
+          <AddModal
+            openModalHandler={openModalHandler}
+            setIsOpen={setIsOpen}
+            myScribe={myScribe}
+            setMyScribe={setMyScribe}
+          />
+        ) : null}
       </MyScribeBox>
     </MyScribeContainer>
   );
 };
 
-export default MyScirbe;
+export default MyScribe;
 
 // allServices.map((service) => {
 //   return (

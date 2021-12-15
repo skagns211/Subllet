@@ -43,8 +43,8 @@ module.exports = {
       const url =
         process.env.SERVER_ORIGIN + "/auth/confirm/email?key=" + emailKey;
 
-      // const emailContent = emailVerify(email, nickname, url);
-      // emailSend(emailContent);
+      const emailContent = emailVerify(email, nickname, url);
+      emailSend(emailContent);
 
       try {
         res.status(201).send("Signup success");
@@ -70,11 +70,11 @@ module.exports = {
         return res.status(404).send("Non-existent account");
       }
 
-      // if (!userInfo.email_verified) {
-      //   req.id = userInfo.id;
-      //   next();
-      //   return;
-      // }
+      if (!userInfo.email_verified) {
+        req.id = userInfo.id;
+        next();
+        return;
+      }
 
       const result = await checkPassword(password, userInfo.password);
 

@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { setLoginUserInfo, setIsLogin } from "../../actions";
 
-import LoginModal from "../LoginModal";
+
+import AlertModal from "../AlertModal";
 
 const StyledBody = styled.section`
   margin-top: 1rem;
@@ -20,11 +21,23 @@ const BackgroundImage = styled.div`
   flex-direction: column;
   justify-content: space-between;
   border-radius: 5px;
-  height: 30rem;
-  @media only screen and (min-width: 800px) {
+  height: 20rem;
+  @media only screen and (min-width: 768px) {
     height: 35rem;
   }
 `;
+
+const MoveButton = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-weight: lighter;
+  font-size: 5rem;
+  color: white;
+  @media only screen and (min-width: 768px) {
+    font-size: 10rem;
+  }
+`;
+
 const ScrapButton = styled.div`
   margin-top: 2rem;
   padding: 1rem;
@@ -85,13 +98,22 @@ const InnerImage = ({
   isSub,
   setIsSub,
 }) => {
+  // const navigate = useNavigate();
+
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const { id } = state.loginUserInfo;
+  const [alertMsg, setAlertMsg] = useState();
+  const [notLogin, setNotLogin] = useState(false);
+
 
   const handleClick = () => {
     setOpen(!open);
+    setAlertMsg({ message: "로그인을 먼저 해주세요", button: "로그인" });
+    if (!state.isLogin) {
+      setNotLogin(true);
+    }
   };
 
   useEffect(() => {
@@ -164,7 +186,6 @@ const InnerImage = ({
         planprice: state.selectPlan.planprice,
       })
       .then(() => {
-        console.log("jojo");
         setIsSub(true);
       })
       .catch((err) => {
@@ -185,11 +206,30 @@ const InnerImage = ({
           logoutHandler();
         }
       });
+
+  const prePage = () => {
+    if (ServiceId - 1 > 0) {
+      window.location.replace(`/detail/${ServiceId - 1}`);
+      // navigate(`/detail/${test}`, { replace: true });
+    }
+  };
+
+  const nextPage = () => {
+    if (ServiceId + 1 <= state.services.length) {
+      window.location.replace(`/detail/${ServiceId + 1}`);
+      // navigate(`/detail/${ServiceId + 1}`, { replace: true });
+    }
   };
 
   return (
     <StyledBody>
-      {open ? <LoginModal handleClick={handleClick} /> : null}
+      {open ? (
+        <AlertModal
+          notLogin={notLogin}
+          alertMsg={alertMsg}
+          handleClick={handleClick}
+        />
+      ) : null}
       <BackgroundImage image={detail.inner_image}>
         <ScrapButton>
           {state.isLogin && isScrap ? (
@@ -209,8 +249,12 @@ const InnerImage = ({
             </>
           )}
         </ScrapButton>
+        <MoveButton>
+          <i onClick={prePage} class="fas fa-chevron-left"></i>
+          <i onClick={nextPage} class="fas fa-chevron-right"></i>
+        </MoveButton>
         <DetailMessage>
-          <span>{detail.message}</span>
+          <span>{detail.title}</span>
           {state.isLogin && isSub ? (
             <button onClick={delSub}>구독중</button>
           ) : state.isLogin && !isSub ? (

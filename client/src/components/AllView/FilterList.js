@@ -2,42 +2,57 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const StyledBody = styled.div``;
+const StyledBody = styled.section`
+  width: 100%;
+  margin-top: 2rem;
+`;
+
 const ServiceList = styled.div`
   list-style: none;
   background-color: #252a3b;
   border-radius: 5px;
-  display: flex;
-  flex-wrap: wrap;
-  margin: 2rem 2rem 0rem 2rem;
-  padding-top: 1.5rem;
+  margin: 1rem 1rem 1rem 1rem;
+  padding-top: 1rem;
+  padding-left: 2rem;
   a {
-    width: 18rem;
-    max-width: 30%;
-    /* min-width: 30%; */
-    margin: 0.5rem 0.5rem 0.5rem 1.6%;
+    margin: 0.5rem 0 0.5rem 0;
     img {
-      min-width: 100%;
-      max-height: 8rem;
+      width: 90%;
+      height: 9rem;
       border-radius: 5px;
+      margin: 1rem 0rem;
     }
   }
 
-  @media only screen and (max-width: 500px) {
-    img {
-      margin: 0 0 1.5rem 10%;
+  @media only screen and (min-width: 425px) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-top: 1rem;
+    padding-left: 0rem;
+    a {
+      margin: 0.5rem 0.5rem 0.5rem 2.8%;
+      width: 45%;
+      img {
+        width: 100%;
+        height: 100%;
+        margin: 0rem 0rem;
+      }
     }
   }
-  @media only screen and (min-width: 800px) {
-    img {
-      height: 10rem;
-      /* min-width: 9rem; */
-      /* width: 100%; */
-      max-width: 30%;
-      /* max-height: 8rem; */
-      object-fit: fill;
-      border-radius: 5px;
-      margin: 0 0 3% 2.5%;
+
+  @media only screen and (min-width: 768px) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    a {
+      margin: 0.5rem 0rem 0.5rem 2.5%;
+      width: 30%;
+      img {
+        width: 100%;
+        margin: 0rem 0rem;
+        height: 8rem;
+      }
     }
   }
 `;

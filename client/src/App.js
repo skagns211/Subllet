@@ -9,6 +9,7 @@ import axios from "axios";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import SearchBar from "./components/SearchBar";
+import { NavSelectServiceDown } from "./components/MySubllet/Select";
 
 import Main from "./pages/Main";
 import AllView from "./pages/AllView";
@@ -41,6 +42,7 @@ const GlobalStyle = createGlobalStyle`
     @media only screen and (max-width: 800px) {
     min-width: 370px;
   }
+  
   a {
     color: #ffffff;
     text-decoration: none;
@@ -49,6 +51,10 @@ const GlobalStyle = createGlobalStyle`
   header {
     position: fixed;
     z-index: 1000;
+    @media only screen and (max-width: 800px) {
+    position: relative;
+  }
+
   }
   .sc-pVTFL.fQyZWE {
     position: fixed;
@@ -61,9 +67,9 @@ const GlobalStyle = createGlobalStyle`
 
 //! Nav 고정 간격
 const Pages = styled.div`
-  /* @media only screen and (min-width: 800px) { */
-  padding-top: 5rem;
-  /* } */
+  @media only screen and (min-width: 800px) {
+    padding-top: 5rem;
+  }
 `;
 
 const SectionStyle = styled.section`
@@ -76,41 +82,6 @@ function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   const currentUrl = location.pathname;
-  console.log(currentUrl);
-
-  // const logoutHandler = () => {
-  //   axios
-  //     .post("/auth/logout", null)
-  //     .then((res) => {
-  //       const loginUserInfo = {
-  //         email: "",
-  //         nickname: "",
-  //         profile: "",
-  //       };
-  //       dispatch(setLoginUserInfo(loginUserInfo));
-  //       dispatch(setIsLogin(false));
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   const time = 1000 * 60 * 60 * 24;
-  //   if (state.isLogin) {
-  //     setInterval(() => {
-  //       axios
-  //         .post("/auth/refresh", null)
-  //         .then((res) => {
-  //           console.log("new Token!!!!!!!!!!!!!!!");
-  //         })
-  //         .catch((err) => {
-  //           console.log(err.response);
-  //           logoutHandler();
-  //         });
-  //     }, time);
-  //   }
-  // }, [state.isLogin]);
 
   useEffect(() => {
     axios
@@ -127,9 +98,12 @@ function App() {
         {currentUrl === "/" ? null : (
           <>
             <Nav />
-            <SearchBar />
+            {/* <SearchBar /> */}
           </>
         )}
+        <div className="mobileNav">
+          <NavSelectServiceDown />
+        </div>
         <Pages>
           <Routes>
             <Route exact path="/" element={<Landing />} />
