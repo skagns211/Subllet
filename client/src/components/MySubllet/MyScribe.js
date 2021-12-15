@@ -1,5 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Select from "react-select";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 import styled from "styled-components";
+
+import { SelectDate2 } from "./Select";
+
 import dummy from "../../dummy/dummy";
 import PlusIcon from "../../IMG/PlusIcon.png";
 import AddModal from "./AddModal";
@@ -103,26 +109,41 @@ const ListBox = styled.div`
   /* border: 0.5px solid white; */
 
   div {
-    display: flex;
+    /* flex-direction: column; */
+    /* flex-shrink: 0; */
     font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
       sans-serif;
-    align-items: center;
-    justify-content: center;
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
     /* border: 1px solid white; */
 
     &.name {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex: 0.6;
       /* border: 0.5px solid white; */
     }
     &.plan {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex: 1;
       /* border: 0.5px solid white; */
     }
     &.date {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       /* border: 0.5px solid white; */
     }
     &.category {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex: 1;
       /* border: 0.5px solid white; */
     }
@@ -161,9 +182,32 @@ const SelectBox = styled.select`
     sans-serif;
   font-size: 18px;
   color: #60666d;
+  .date {
+    width: 40%;
+  }
 `;
 
-const MyScirbe = () => {
+const MyScirbe = ({ myScribe }) => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  console.log(myScribe);
+  console.log(state.services);
+  const sortedMyScribe = myScribe.sort((a, b) => a - b);
+  const allServices = state.services;
+  console.log(sortedMyScribe);
+
+  const ID = myScribe.map((el) => {
+    return el.Service.id;
+  });
+  const myScribeInfo = allServices.filter((el) => {
+    for (let i = 0; i < ID.length; i++) {
+      if (el.id === ID[i]) {
+        return el;
+      }
+    }
+  });
+  console.log(myScribeInfo);
+
   const [isModify, setIsModify] = useState(false);
   const scribeHandler = () => {
     setIsModify(!isModify);
@@ -197,37 +241,42 @@ const MyScirbe = () => {
           <div className="categoryTab">카테고리</div>
         </CategoryBox>
         {isModify === false
-          ? dummy.map((el) => {
+          ? myScribe.map((el) => {
               return (
                 <ListBox>
                   <div className="name">
-                    <img src={el.service.outer_image} />
+                    <img src={el.Service.outer_image} />
                   </div>
                   <div className="plan">
                     {el.planname},{[el.planprice]}
                   </div>
                   <div className="date">매달 {el.paydate}일</div>
-                  <div className="category">{el.service.category}</div>
+                  <div className="category">{el.Service.category}</div>
                 </ListBox>
               );
             })
-          : dummy.map((el) => {
+          : myScribeInfo.map((service) => {
               return (
                 <ListBox>
                   <div className="name">
-                    <img src={el.service.outer_image} />
+                    <img src={service.outer_image} />
                   </div>
                   <div className="plan">
                     <SelectBox name="modifyPlan">
-                      <option selected>
-                        {el.planname},{[el.planprice]}
-                      </option>
-                      <option>바나나</option>
-                      <option>레몬</option>
+                      {service.Prices.map((el) => {
+                        return (
+                          <option selected>
+                            {el.title},{[el.price]}
+                          </option>
+                        );
+                      })}
                     </SelectBox>
                   </div>
-                  <div className="date">매달 {el.paydate}일</div>
-                  <div className="category">{el.service.category}</div>
+                  <div className="date">
+                    <SelectDate2 />
+                  </div>
+                  {/* <div className="date">매달 0일</div> */}
+                  <div className="category">{service.category}</div>
                 </ListBox>
               );
             })}
@@ -244,3 +293,29 @@ const MyScirbe = () => {
 };
 
 export default MyScirbe;
+
+// allServices.map((service) => {
+//   return (
+//     <ListBox>
+//       <div className="name">
+//         <img src={service.outer_image} />
+//       </div>
+//       <div className="plan">
+//         <SelectBox name="modifyPlan">
+//           {/* {service.Prices.map((el) => {
+//             return (
+//               <option selected>
+//                 {el.title},{[el.price]}
+//               </option>
+//             );
+//           })} */}
+//           <option selected>
+//             {service.price.planname},{[service.planprice]}
+//           </option>
+//         </SelectBox>
+//       </div>
+//       <div className="date">매달 0일</div>
+//       <div className="category">{service.category}</div>
+//     </ListBox>
+//   );
+// })

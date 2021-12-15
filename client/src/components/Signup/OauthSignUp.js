@@ -54,6 +54,13 @@ const OauthSignUp = () => {
   const NAVER_CALLBACK_URL = "https://localhost:3000/auth/naver/signup";
   const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&state=STATE_STRING&redirect_uri=${NAVER_CALLBACK_URL}`;
 
+  const GOOGLE_CLIENT_ID =
+    "109814742623-1el31kjtobn7c5nmdpsqd3843fdnlbkg.apps.googleusercontent.com";
+  const GOOGLE_SECRET = "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";
+  const GOOGLE_CALLBACK_URL = "https://localhost:3000/auth/google/signup";
+
+  const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_CALLBACK_URL}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email`;
+
   return (
     <OauthContainer>
       <div>SNS 계정으로 회원가입</div>
@@ -64,7 +71,9 @@ const OauthSignUp = () => {
         <a href={NAVER_AUTH_URL}>
           <img src={naver_oauth} />
         </a>
-        <img src={google_oauth} />
+        <a href={GOOGLE_AUTH_URL}>
+          <img src={google_oauth} />
+        </a>
       </IconBox>
     </OauthContainer>
   );

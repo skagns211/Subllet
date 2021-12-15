@@ -3,10 +3,24 @@ require("dotenv").config();
 
 module.exports = {
   generateAccessToken: (data) => {
-    return sign(data, process.env.ACCESS_SECRET, { expiresIn: "1d" });
+    return sign(data, process.env.ACCESS_SECRET, { expiresIn: "1m" });
   },
   generateRefreshToken: (data) => {
     return sign({ data }, process.env.REFRESH_SECRET, { expiresIn: "14d" });
+  },
+  sendAccessToken: (res, accessToken) => {
+    return res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      samesite: "none",
+      secure: true,
+    });
+  },
+  sendRefreshToken: (res, refreshToken) => {
+    return res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      samesite: "none",
+      secure: true,
+    });
   },
   isAuthorized: (req) => {
     const authorization = req.headers["authorization"];
@@ -39,21 +53,4 @@ module.exports = {
       return null;
     }
   },
-  // checkRefreshToken: (req) => {
-  //   const authorization = req.headers["authorization"];
-  //   if (!authorization) {
-  //     return null;
-  //   }
-  //   const token = authorization.split(" ")[1];
-
-  //   const { decode } = verify(token, process.env.REFRESH_SECRET);
-
-  //   redis.get(`${decode}`, (err, result) => {
-  //     if (result) {
-  //       return decode;
-  //     } else {
-  //       return null;
-  //     }
-  //   });
-  // },
 };

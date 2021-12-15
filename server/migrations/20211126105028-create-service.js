@@ -35,15 +35,6 @@ module.exports = {
       demo: {
         type: Sequelize.BOOLEAN
       },
-      total_comments: {
-        type: Sequelize.INTEGER
-      },
-      total_likes: {
-        type: Sequelize.INTEGER
-      },
-      total_scraps: {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

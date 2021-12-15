@@ -10,7 +10,7 @@ const StyledBody = styled.section`
   max-width: 100%;
 `;
 const BackgroundImage = styled.div`
-  background-image: url(${(props) => props.detail});
+  background-image: url(${(props) => props.image});
   background-repeat: no-repeat;
   background-size: contain;
   opacity: 0.7;
@@ -19,7 +19,7 @@ const BackgroundImage = styled.div`
   justify-content: space-between;
   border-radius: 5px;
   @media only screen and (min-device-width: 800px) {
-    background-image: url(${(props) => props.detail});
+    background-image: url(${(props) => props.image});
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -50,6 +50,7 @@ const DetailMessage = styled.div`
   justify-content: space-between;
   padding-bottom: 1rem;
   margin: 0rem 1rem;
+  color: white;
   button {
     padding: 1rem;
     font-size: 1.5rem;
@@ -60,48 +61,43 @@ const DetailMessage = styled.div`
   }
 `;
 
-const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
+const InnerImage = ({
+  ServiceId,
+  detail,
+  scrapNum,
+  isScrap,
+  setIsScrap,
+  isSub,
+  setIsSub,
+}) => {
   const state = useSelector((state) => state);
-
-  console.log(state.service[0]);
-
   const [open, setOpen] = useState(false);
-  const [isScrap, setIsScrap] = useState();
-  const [isSub, setIsSub] = useState();
-  const [scrapNum, setScrapNum] = useState();
 
   const handleClick = () => {
     setOpen(!open);
   };
 
   useEffect(() => {
-    if (JSON.parse(isLogin)) {
+    if (state.isLogin) {
       axios
         .all([
-          axios.get(`/scrap/${ServiceId}`, {
-            headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
-          }),
-          axios.get(`/subscribe/${ServiceId}`, {
-            headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
-          }),
-          // axios.get(`/service/${ServiceId}`, {
-          //   headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
-          // }),
+          axios.get(`/scrap/${ServiceId}`),
+          axios.get(`/subscribe/${ServiceId}`),
         ])
         .then(
-          axios.spread((isScrap, isSub, scrapNum) => {
+          axios.spread((isScrap, isSub) => {
             setIsScrap(isScrap.data.isScrap);
             setIsSub(isSub.data.isSubscribe);
-            // setScrapNum(scrapNum.data.service.scrapNum);
           })
-        );
+        )
+        .catch((err) => console.log(err));
     }
   }, []);
 
   const addScrap = () => {
     axios
       .post(`/scrap/${ServiceId}`, null, {
-        headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+        headers: { authorization: `Bearer ${state.accessToken}` },
       })
       .then(() => {
         setIsScrap(true);
@@ -111,26 +107,28 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
   const delScrap = () => {
     axios
       .delete(`/scrap/${ServiceId}`, {
-        headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+        headers: { authorization: `Bearer ${state.accessToken}` },
       })
       .then(() => {
         setIsScrap(false);
       });
   };
-
+  console.log(state);
   const addSub = () => {
     axios
       .post(
         `/subscribe/${ServiceId}`,
         {
+          paydate: new Date().toDateString().slice(8, 10),
           planname: state.selectPlan.planname,
           planprice: state.selectPlan.planprice,
         },
         {
-          headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+          headers: { authorization: `Bearer ${state.accessToken}` },
         }
       )
       .then(() => {
+        console.log("jojo");
         setIsSub(true);
       });
   };
@@ -138,28 +136,24 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
   const delSub = () => {
     axios
       .delete(`/subscribe/${ServiceId}`, {
-        headers: { authorization: `Bearer ${JSON.parse(accessToken)}` },
+        headers: { authorization: `Bearer ${state.accessToken}` },
       })
       .then(() => {
         setIsSub(false);
       });
   };
 
-  const ServiceDetail = state.services.filter((service) => {
-    return service.id === ServiceId;
-  });
-
   return (
     <StyledBody>
       {open ? <LoginModal handleClick={handleClick} /> : null}
-      <BackgroundImage image={state.service.inner_image}>
+      <BackgroundImage image={detail.inner_image}>
         <ScrapButton>
-          {JSON.parse(isLogin) && isScrap ? (
+          {state.isLogin && isScrap ? (
             <>
               <i onClick={delScrap} className="fas fa-star fa-2x"></i>
               <div>{scrapNum}</div>
             </>
-          ) : JSON.parse(isLogin) && !isScrap ? (
+          ) : state.isLogin && !isScrap ? (
             <>
               <i onClick={addScrap} className="far fa-star fa-2x"></i>
               <div>{scrapNum}</div>
@@ -172,10 +166,10 @@ const InnerImage = ({ isLogin, ServiceId, accessToken, detail }) => {
           )}
         </ScrapButton>
         <DetailMessage>
-          <span>로켓배송 상품 100% 무료배송</span>
-          {JSON.parse(isLogin) && isSub ? (
+          <span>{detail.message}</span>
+          {state.isLogin && isSub ? (
             <button onClick={delSub}>구독중</button>
-          ) : JSON.parse(isLogin) && !isSub ? (
+          ) : state.isLogin && !isSub ? (
             <button onClick={addSub}>내 구독 목록에 추가</button>
           ) : (
             <button onClick={handleClick}>내 구독 목록에 추가</button>

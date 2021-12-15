@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       profile: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(1234),
       },
       email_verified: {
         allowNull: false,
@@ -34,15 +34,6 @@ module.exports = {
       },
       signup_method: {
         allowNull: false,
-        type: Sequelize.STRING,
-      },
-      total_scraps: {
-        type: Sequelize.INTEGER,
-      },
-      total_subscribes: {
-        type: Sequelize.INTEGER,
-      },
-      total_price: {
         type: Sequelize.STRING,
       },
       createdAt: {

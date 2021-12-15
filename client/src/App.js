@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import { setLoginUserInfo, setIsLogin, setAccessToken } from "./actions";
+import axios from "axios";
 
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
@@ -20,6 +21,8 @@ import MySubllet from "./pages/MySubllet";
 import SignUp from "./pages/SignUp";
 import KakaoAuthHandler from "./components/Signup/KakaoAuthHandler";
 import NaverAuthHandler from "./components/Signup/NaverAuthHandler";
+import GoogleAuthHandler from "./components/Signup/GoogleAuthHandler";
+import Landing from "./pages/Landing";
 import { setServices, setService } from "./actions";
 
 const GlobalStyle = createGlobalStyle`
@@ -41,7 +44,26 @@ const GlobalStyle = createGlobalStyle`
   a {
     color: #ffffff;
     text-decoration: none;
-  }}
+  }
+  //! Nav 고정
+  header {
+    position: fixed;
+    z-index: 1000;
+  }
+  .sc-pVTFL.fQyZWE {
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+    padding-top: 5rem;
+  }
+  }
+`;
+
+//! Nav 고정 간격
+const Pages = styled.div`
+  /* @media only screen and (min-width: 800px) { */
+  padding-top: 5rem;
+  /* } */
 `;
 
 const SectionStyle = styled.section`
@@ -50,7 +72,44 @@ const SectionStyle = styled.section`
 `;
 
 function App() {
+  const state = useSelector((state) => state);
   const dispatch = useDispatch();
+  const location = useLocation();
+  const currentUrl = location.pathname;
+  console.log(currentUrl);
+
+  const logoutHandler = () => {
+    axios
+      .post("/auth/logout", null)
+      .then((res) => {
+        const loginUserInfo = {
+          email: "",
+          nickname: "",
+          profile: "",
+        };
+        dispatch(setLoginUserInfo(loginUserInfo));
+        dispatch(setIsLogin(false));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    if (state.isLogin) {
+      const time = 1000 * 60 * 29.5;
+      setInterval(() => {
+        axios
+          .post("/auth/refresh", null)
+          .then((res) => {
+            console.log("new token");
+          })
+          .catch((err) => {
+            logoutHandler();
+          });
+      }, 30000);
+    }
+  }, []);
 
   useEffect(() => {
     axios
@@ -59,27 +118,37 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <>
       <GlobalStyle />
+      {/* <Routes> */}
+      {/* </Routes> */}
       <SectionStyle>
-        <Nav />
+        {currentUrl === "/" ? null : (
+          <>
+            <Nav />
+          </>
+        )}
         <SearchBar />
-        <Routes>
-          <Route exact path="/" element={<Main />} />
-          <Route path="/allview" element={<AllView />} />
-          <Route path="/changeinfo" element={<ChangeInfo />} />
-          <Route path="/customercenter" element={<CustomerCenter />} />
-          <Route path="/delete" element={<Delete />} />
-          <Route path="/detail/:id" element={<Detail />} />
-          <Route path="/userlogin" element={<Login />} />
-          <Route path="/mysubllet" element={<MySubllet />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/auth/kakao/callback" element={<KakaoAuthHandler />} />
-          <Route path="/auth/naver/signup" element={<NaverAuthHandler />} />
-        </Routes>
+        <Pages>
+          <Routes>
+            <Route exact path="/" element={<Landing />} />
+            <Route path="/main" element={<Main />} />
+            <Route path="/allview" element={<AllView />} />
+            <Route path="/changeinfo" element={<ChangeInfo />} />
+            <Route path="/customercenter" element={<CustomerCenter />} />
+            <Route path="/delete" element={<Delete />} />
+            <Route path="/detail/:id" element={<Detail />} />
+            <Route path="/userlogin" element={<Login />} />
+            <Route path="/mysubllet" element={<MySubllet />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/auth/kakao/callback" element={<KakaoAuthHandler />} />
+            <Route path="/auth/naver/signup" element={<NaverAuthHandler />} />
+            <Route path="/auth/google/signup" element={<GoogleAuthHandler />} />
+          </Routes>
+        </Pages>
         <Footer />
       </SectionStyle>
-    </BrowserRouter>
+    </>
   );
 }
 

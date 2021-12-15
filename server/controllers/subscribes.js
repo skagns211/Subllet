@@ -1,4 +1,4 @@
-const { Subscribe, Service } = require("../Models");
+const { Subscribe, Service } = require("../models");
 
 module.exports = {
   subscribe: {
@@ -6,7 +6,7 @@ module.exports = {
       const user_id = req.id;
 
       const subscribes = await Subscribe.findAll({
-        attributes: ["id", "paydate", "planname", "planprice"],
+        attributes: ["id", "paydate", "planname", "planprice", "createdAt"],
         where: { user_id },
         include: [
           {
@@ -53,7 +53,7 @@ module.exports = {
       });
 
       const subscribe = await Subscribe.findOne({
-        attributes: ["paydate", "planname", "planprice"],
+        attributes: ["paydate", "planname", "planprice", "createdAt"],
         where: { id: created.id },
         include: [
           {

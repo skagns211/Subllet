@@ -79,11 +79,11 @@ const TopContent = styled.div`
   }
 `;
 
-const Shoping = () => {
+const Book = () => {
   const state = useSelector((state) => state);
   const navigate = useNavigate();
   const serviceList = state.services;
-  const shopingList = serviceList.filter((el) => el.category === "shoping");
+  const bookList = serviceList.filter((el) => el.category === "book");
 
   const [isSetting, setIsSetting] = useState({
     dots: true,
@@ -122,16 +122,16 @@ const Shoping = () => {
   return (
     <StyleSlider>
       <TopContent>
-        <div>Shoping</div>
+        <div>Book</div>
         <a>전체보기</a>
       </TopContent>
       <Wrap>
         <Slider {...isSetting}>
-          {shopingList.map((el, idx) => {
+          {bookList.map((el, idx) => {
             return (
               <img
                 key={idx}
-                alt="shopingImg"
+                alt="bookImg"
                 src={el.outer_image}
                 onClick={() => handleIntoDetail(el.id)}
               ></img>
@@ -143,4 +143,4 @@ const Shoping = () => {
   );
 };
 
-export default Shoping;
+export default Book;

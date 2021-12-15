@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { setServices } from "../../actions";
 
 const StyledBody = styled.div`
   color: white;
@@ -30,6 +31,13 @@ const StyledDropDown = styled.div`
     margin-top: 2rem;
   }
   label:hover {
+    cursor: pointer;
+  }
+  i {
+    margin: 2.4rem 0 0 0;
+    color: #e69332;
+  }
+  i:hover {
     cursor: pointer;
   }
   @media only screen and (min-width: 800px) {
@@ -78,7 +86,22 @@ const DropDown = styled.div`
   }
 `;
 
-const Filter = ({ category, setCategory, price, setPrice, free, setFree }) => {
+const Filter = ({
+  category,
+  setCategory,
+  price,
+  setPrice,
+  free,
+  setFree,
+  filterServices,
+  refreshFilter,
+  categoryName,
+  priceName,
+  freeName,
+  filterCategory,
+  filterPrice,
+  filterFree,
+}) => {
   const categoryClick = () => {
     setCategory(!category);
     setPrice(false);
@@ -102,36 +125,66 @@ const Filter = ({ category, setCategory, price, setPrice, free, setFree }) => {
       </FilterLabel>
       <StyledDropDown>
         <DropDown>
-          <label onClick={categoryClick}>카테고리</label>
+          <label onClick={categoryClick}>{categoryName}</label>
           {category ? (
             <ul onClick={categoryClick}>
-              <li>Video</li>
-              <li>Music</li>
-              <li>Shopping</li>
-              <li>Life</li>
+              <li onClick={(category) => filterServices(category, price, free)}>
+                모든 카테고리
+              </li>
+              <li onClick={(category) => filterServices(category, price, free)}>
+                Video
+              </li>
+              <li onClick={(category) => filterServices(category, price, free)}>
+                Book
+              </li>
+              <li onClick={(category) => filterServices(category, price, free)}>
+                Music
+              </li>
+              <li onClick={(category) => filterServices(category, price, free)}>
+                Life
+              </li>
             </ul>
           ) : null}
         </DropDown>
         <DropDown>
-          <label onClick={priceClick}>가격</label>
+          <label onClick={priceClick}>{priceName}</label>
           {price ? (
             <ul onClick={priceClick}>
-              <li>5000</li>
-              <li>10000</li>
-              <li>15000</li>
-              <li>20000</li>
+              <li onClick={(price) => filterServices(category, price, free)}>
+                모든 가격
+              </li>
+              <li onClick={(price) => filterServices(category, price, free)}>
+                5000
+              </li>
+              <li onClick={(price) => filterServices(category, price, free)}>
+                10000
+              </li>
+              <li onClick={(price) => filterServices(category, price, free)}>
+                15000
+              </li>
+              <li onClick={(price) => filterServices(category, price, free)}>
+                20000
+              </li>
             </ul>
           ) : null}
         </DropDown>
         <DropDown>
-          <label onClick={freeClick}>체험하기 유무</label>
+          <label onClick={freeClick}>{freeName}</label>
           {free ? (
             <ul onClick={freeClick}>
-              <li>유</li>
-              <li>무</li>
+              <li onClick={(free) => filterServices(category, price, free)}>
+                모든 체험
+              </li>
+              <li onClick={(free) => filterServices(category, price, free)}>
+                유
+              </li>
+              <li onClick={(free) => filterServices(category, price, free)}>
+                무
+              </li>
             </ul>
           ) : null}
         </DropDown>
+        <i onClick={refreshFilter} className="fas fa-sync-alt fa-2x"></i>
       </StyledDropDown>
     </StyledBody>
   );

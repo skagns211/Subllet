@@ -1,7 +1,8 @@
 import { React, useState, useEffect } from "react";
-import Slider from "react-slick";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { IMG } from "./imageUrl";
+import Slider from "react-slick";
 
 const StyleSlider = styled.div`
   color: #ff8a00;
@@ -11,8 +12,8 @@ const StyleSlider = styled.div`
 
 const Wrap = styled.div`
   margin: 0.5rem 0rem 2rem 0.5rem;
-  @media only screen and (max-width: 530px) {
-    margin-left: 2rem;
+  @media only screen and (max-width: 500px) {
+    margin: auto;
     width: 90%;
     .slick-prev:before {
       display: none;
@@ -54,6 +55,7 @@ const Wrap = styled.div`
   }
   img {
     width: 40rem;
+    cursor: pointer;
     @media only screen and (max-width: 800px) {
       width: 100%;
       height: 100%;
@@ -62,9 +64,6 @@ const Wrap = styled.div`
       width: 59rem;
     }
   }
-  /* div {
-      width: 40rem;
-    } */
 `;
 
 const TopContent = styled.div`
@@ -81,6 +80,11 @@ const TopContent = styled.div`
 `;
 
 const Music = () => {
+  const state = useSelector((state) => state);
+  const navigate = useNavigate();
+  const serviceList = state.services;
+  const musicList = serviceList.filter((el) => el.category === "music");
+
   const [isSetting, setIsSetting] = useState({
     dots: true,
     infinite: true,
@@ -103,6 +107,10 @@ const Music = () => {
         });
   };
 
+  const handleIntoDetail = (path) => {
+    navigate(`/detail/${path}`);
+  };
+
   useEffect(() => {
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -114,13 +122,20 @@ const Music = () => {
   return (
     <StyleSlider>
       <TopContent>
-        <span>Music</span>
+        <div>Music</div>
         <a>전체보기</a>
       </TopContent>
       <Wrap>
         <Slider {...isSetting}>
-          {IMG["music"].map((el, idx) => {
-            return <img key={idx} alt="musicImg" src={el}></img>;
+          {musicList.map((el, idx) => {
+            return (
+              <img
+                key={idx}
+                alt="musicImg"
+                src={el.outer_image}
+                onClick={() => handleIntoDetail(el.id)}
+              ></img>
+            );
           })}
         </Slider>
       </Wrap>

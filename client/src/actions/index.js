@@ -14,14 +14,16 @@
 // 위와 같은 방법으로 Action 함수 작성, export 후 import해서 사용
 
 export const LOGIN_USER_INFO = "LOGIN_USER_INFO";
-export const ACCESS_TOKEN = "ACCESS_TOKEN";
+export const SUB_COUNT = "SUB_COUNT";
 export const IS_LOGIN = "IS_LOGIN";
-export const KAKAO_AUTH_CODE = "KAKAO_AUTH_CODE";
 export const AUTH_NICKNAME = "AUTH_NICKNAME";
 export const AUTH_USERINFO = "AUTH_USERINFO";
 export const SERVICE_DETAIL = "SERVICE_DETAIL";
 export const SERVICECS_LIST = "SERVICECS_LIST";
 export const SELECT_PLAN = "SELECT_PLAN"; // Detail Page
+// export const KAKAO_AUTH_CODE = "KAKAO_AUTH_CODE";
+export const NAVER_AUTH_CODE = "NAVER_AUTH_CODE";
+export const AUTH_CODE = "AUTH_CODE";
 
 export const setLoginUserInfo = (loginUserInfo) => {
   console.log(loginUserInfo);
@@ -31,10 +33,10 @@ export const setLoginUserInfo = (loginUserInfo) => {
   };
 };
 
-export const setAccessToken = (token) => {
+export const setSubscribesCount = (data) => {
   return {
-    type: ACCESS_TOKEN,
-    payload: token,
+    type: SUB_COUNT,
+    payload: data,
   };
 };
 
@@ -45,9 +47,23 @@ export const setIsLogin = (data) => {
   };
 };
 
-export const setKakaoAuthCode = (data) => {
+// export const setKakaoAuthCode = (data) => {
+//   return {
+//     type: KAKAO_AUTH_CODE,
+//     payload: data,
+//   };
+// };
+
+export const setAuthCode = (data) => {
   return {
-    type: KAKAO_AUTH_CODE,
+    type: AUTH_CODE,
+    payload: data,
+  };
+};
+
+export const setNaverAuthCode = (data) => {
+  return {
+    type: NAVER_AUTH_CODE,
     payload: data,
   };
 };

@@ -7,9 +7,10 @@ const {
 const {
   generateAccessToken,
   generateRefreshToken,
-  isAuthorized,
   checkRefeshToken,
   checkAccessToken,
+  sendAccessToken,
+  sendRefreshToken,
 } = require("../utils/tokenFunctions");
 const { User } = require("../models");
 require("dotenv").config();
@@ -19,7 +20,7 @@ const { emailVerify } = require("../utils/emails/content");
 
 module.exports = {
   signup: {
-    post: async (req, res, next) => {
+    post: async (req, res) => {
       const { email, nickname, password } = req.body;
       if (!email || !nickname || !password) {
         return res.status(400).send("Empty body");
@@ -83,14 +84,13 @@ module.exports = {
       const accessToken = generateAccessToken(userInfo.dataValues);
       const refreshToken = generateRefreshToken(userId);
 
-      // await redis.set(userInfo.id, refreshToken, "ex", 1209600);
+      await redis.set(userInfo.id, refreshToken, "ex", 1209600);
+
+      sendAccessToken(res, accessToken);
+      sendRefreshToken(res, refreshToken);
 
       try {
-        return res.json({
-          userInfo: userInfo.dataValues,
-          accessToken,
-          refreshToken,
-        });
+        return res.json({ userInfo: userInfo.dataValues });
       } catch (err) {
         console.error(err);
         res.status(500).send("Server error");
@@ -99,10 +99,12 @@ module.exports = {
   },
   logout: {
     post: async (req, res) => {
-      // console.log(req.headers);
-      // const { id } = isAuthorized(req);
+      const id = req.id;
 
-      // redis.del(id);
+      await redis.del(id);
+
+      res.cookie("accessToken", null, { maxAge: 0 });
+      res.cookie("refreshToken", null, { maxAge: 0 });
 
       try {
         res.send("Logout success");
@@ -160,38 +162,25 @@ module.exports = {
       }
     },
   },
-  render: {
-    get: async (req, res) => {
-      try {
-        res.send("Ok");
-      } catch (err) {
-        res.status(500).send("Server error");
-      }
-    },
-  },
   refresh: {
     post: async (req, res) => {
-      const { accesstoken, refreshtoken } = req.headers;
-      console.log(accesstoken);
+      const { accessToken, refreshToken } = req.cookies;
 
-      if (!accesstoken || !refreshtoken) {
+      if (!accessToken || !refreshToken) {
         return res.status(400).send("Not exist token");
       }
 
-      const accessTokenData = checkAccessToken(accesstoken);
-      const refreshTokenData = checkRefeshToken(refreshtoken);
-
-      if (accessTokenData.id !== refreshTokenData.data) {
-        return res.status(401).send("UserId inconsistency");
-      }
-
-      if (refreshTokenData.exp <= Date.now() / 1000) {
+      const accessTokenData = checkAccessToken(accessToken);
+      const refreshTokenData = checkRefeshToken(refreshToken);
+      console.log(accessTokenData);
+      console.log(new Date());
+      if (refreshTokenData === null) {
         return res.status(401).send("Expiration");
       }
 
       const redisRefreshToken = await redis.get(`${accessTokenData.id}`);
 
-      if (refreshtoken !== redisRefreshToken) {
+      if (refreshToken !== redisRefreshToken) {
         return res.status(401).send("RefreshToken inconsistency");
       }
 
@@ -208,7 +197,8 @@ module.exports = {
       const newAccessToken = generateAccessToken(userInfo.dataValues);
 
       try {
-        res.json({ newAccessToken });
+        sendAccessToken(res, newAccessToken);
+        res.send("Success");
       } catch (err) {
         console.error(err);
         res.status(500).send("Server error");

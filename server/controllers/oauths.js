@@ -4,9 +4,10 @@ const { User } = require("../models");
 const {
   generateAccessToken,
   generateRefreshToken,
+  sendAccessToken,
+  sendRefreshToken,
 } = require("../utils/tokenFunctions");
-const emailSend = require("../utils/emails/send");
-const { emailVerify } = require("../utils/emails/content");
+const redis = require("../utils/redis");
 
 module.exports = {
   google: {
@@ -21,8 +22,7 @@ module.exports = {
         const client_secret = process.env.GOOGLE_SECRET;
         const endPoint = "https://oauth2.googleapis.com/token";
         const grant_type = "authorization_code";
-        const redirect_uri =
-          process.env.CLIENT_ORIGIN + "/auth/google/callback";
+        const redirect_uri = process.env.CLIENT_ORIGIN + "/auth/google/signup";
         const url = `${endPoint}?code=${authorizationCode}&client_id=${client_id}&client_secret=${client_secret}&redirect_uri=${redirect_uri}&grant_type=${grant_type}`;
 
         const response = await axios({
@@ -32,15 +32,16 @@ module.exports = {
             "content-type": "application/x-www-form-urlencoded",
           },
         });
+
         const { access_token } = response.data;
 
         const googleUserInfo = await axios.get(
           "https://www.googleapis.com/oauth2/v1/userinfo",
           { headers: { Authorization: `Bearer ${access_token}` } }
         );
-
+        console.log(googleUserInfo);
         const { email, picture } = googleUserInfo.data;
-
+        console.log(email);
         const userInfo = await User.findOne({
           where: { email },
         });
@@ -60,7 +61,12 @@ module.exports = {
           const accessToken = generateAccessToken(userInfo.dataValues);
           const refreshToken = generateRefreshToken(userId);
 
-          return res.json({ userInfo, accessToken, refreshToken });
+          await redis.set(userInfo.id, refreshToken, "ex", 1209600);
+
+          sendAccessToken(res, accessToken);
+          sendRefreshToken(res, refreshToken);
+
+          return res.json({ userInfo });
         }
       } catch (err) {
         console.error(err);
@@ -80,18 +86,19 @@ module.exports = {
         const client_secret = process.env.NAVER_SECRET;
         const endPoint = "https://nid.naver.com/oauth2.0/token";
         const grant_type = "authorization_code";
-        const state = Math.random().toString(36).slice(2);
+        const state = "1234567";
 
         const url = `${endPoint}?grant_type=${grant_type}&client_id=${client_id}&client_secret=${client_secret}&code=${authorizationCode}&state=${state}`;
         const response = await axios.post(url);
         const { access_token } = response.data;
-
+        console.log(access_token);
         const NaverUserInfo = await axios.get(
           "https://openapi.naver.com/v1/nid/me",
           { headers: { Authorization: `Bearer ${access_token}` } }
         );
+        console.log(NaverUserInfo.data);
 
-        const { email, profile_image } = NaverUserInfo.response;
+        const { email, profile_image } = NaverUserInfo.data.response;
 
         const userInfo = await User.findOne({
           where: { email },
@@ -112,7 +119,12 @@ module.exports = {
           const accessToken = generateAccessToken(userInfo.dataValues);
           const refreshToken = generateRefreshToken(userId);
 
-          return res.json({ userInfo, accessToken, refreshToken });
+          await redis.set(userInfo.id, refreshToken, "ex", 1209600);
+
+          sendAccessToken(res, accessToken);
+          sendRefreshToken(res, refreshToken);
+
+          return res.json({ userInfo });
         }
       } catch (err) {
         console.error(err);
@@ -175,7 +187,12 @@ module.exports = {
           const accessToken = generateAccessToken(userInfo.dataValues);
           const refreshToken = generateRefreshToken(userId);
 
-          return res.json({ userInfo, accessToken, refreshToken });
+          await redis.set(userInfo.id, refreshToken, "ex", 1209600);
+
+          sendAccessToken(res, accessToken);
+          sendRefreshToken(res, refreshToken);
+
+          return res.json({ userInfo });
         }
       } catch (err) {
         console.error(err);
@@ -205,8 +222,10 @@ module.exports = {
       const accessToken = generateAccessToken(userInfo.dataValues);
       const refreshToken = generateRefreshToken(userId);
 
+      sendAccessToken(res, accessToken);
+      sendRefreshToken(res, refreshToken);
       try {
-        return res.status(201).json({ userInfo, accessToken, refreshToken });
+        return res.status(201).json({ userInfo });
       } catch (err) {
         console.error(err);
         return res.status(500).send("Server error");

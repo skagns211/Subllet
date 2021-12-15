@@ -12,7 +12,7 @@ const LoginStyled = styled.div`
   flex-direction: column;
   align-items: center;
   .loginFormContainer {
-    background-color: #252a3c;
+    background-color: #272729;
     padding: 0 5rem 10rem 5rem;
     margin-top: 5rem;
     border-radius: 1rem;
@@ -156,10 +156,12 @@ const emailList = [
 const LoginForm = () => {
   const state = useSelector((state) => state); //! state 사용 함수
   const dispatch = useDispatch(); //! action 사용 함수
+
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
   });
+  const [isPassword, setIsPassword] = useState(true);
 
   const handleEmailValue = (key) => (e) => {
     const atIndex = loginInfo.email.indexOf("@");
@@ -180,27 +182,7 @@ const LoginForm = () => {
     });
   };
 
-  console.log(loginInfo);
-
   const [isSelectSelf, setIsSelectSelf] = useState(false);
-
-  useEffect(() => {
-    window.localStorage.setItem(
-      "loginUserInfo",
-      JSON.stringify(state.loginUserInfo)
-    );
-  }, [state.loginUserInfo]);
-
-  useEffect(() => {
-    window.localStorage.setItem(
-      "accessToken",
-      JSON.stringify(state.accessToken)
-    );
-  }, [state.accessToken]);
-
-  useEffect(() => {
-    window.localStorage.setItem("isLogin", JSON.stringify(state.isLogin));
-  }, [state.isLogin]);
 
   //! email이 이미 선택되어 있으면 id에 재선택된 email을 붙여줌
   //! email option이 "직접입력"이면 option을 text로 바꿔줌
@@ -244,18 +226,16 @@ const LoginForm = () => {
           password,
         })
         .then((res) => {
+          console.log(res);
           console.log(res.status);
-          const { accessToken, userInfo } = res.data; //! refreshToken을 어디로 받을지 상의필요
-          console.log(accessToken);
-          if (res.statusText === "OK") {
-            const loginUserInfo = userInfo;
-            // console.log(loginUserInfo);
-            dispatch(setLoginUserInfo(loginUserInfo));
-            dispatch(setAccessToken(accessToken));
-            dispatch(setIsLogin(true));
-            // navigate("/");
-            window.location.replace("/"); //! navigate 사용시 isLogin에 따른 nav변경 안됨
-          }
+          const { userInfo } = res.data; //! refreshToken을 어디로 받을지 상의필요
+          const loginUserInfo = userInfo;
+          // console.log(loginUserInfo);
+          dispatch(setLoginUserInfo(loginUserInfo));
+          // dispatch(setAccessToken(accessToken));
+          dispatch(setIsLogin(true));
+          // navigate("/");
+          window.location.replace("/main"); //! navigate 사용시 isLogin에 따른 nav변경 안됨
         })
         .catch((err) => {
           setIsWarning(true);

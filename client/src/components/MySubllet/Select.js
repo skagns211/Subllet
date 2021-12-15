@@ -66,6 +66,52 @@ const styles = {
   clearIndicator: (provided) => ({ ...provided, color: "gray" }),
 };
 
+//!----------------------------------------------
+
+const SelectTab2 = styled(Select)`
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  width: 80%;
+  .Select__control {
+    height: auto;
+    border: 0.5px solid #ff8a00;
+    border-radius: 0.2em;
+    background-color: black;
+    color: white !important;
+    cursor: pointer;
+    text-align: center;
+    :hover {
+      border-color: white;
+      background-color: #3a3f51;
+    }
+  }
+  .Select__placeholder {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+  .Select__option {
+    background-color: black;
+    color: #ff8a00;
+  }
+  .Select__input {
+    color: white !important;
+  }
+  .Select__menu {
+    color: #ff8a00;
+    background-color: black;
+    border: 0.5px solid #ff8a00;
+    text-align: center;
+  }
+
+  .Select__control--is-focused {
+    /* box-shadow: 0 0 0 1px #ff8a00; */
+    outline: none;
+  }
+
+  .Select__indicator-separator {
+    display: none;
+  }
+`;
+
 //!--------------------------------------------------
 const List = styled.div`
   /* text-align: center; */
@@ -201,5 +247,41 @@ export const SelectDate = () => {
   );
 };
 
+export const SelectDate2 = () => {
+  const [data, setData] = useState({
+    value: { label: "", value: "" },
+  });
+  console.log(data.value);
+
+  const days = () => {
+    let arr = [];
+    for (let i = 1; i <= 31; i++) {
+      arr.push({ label: `매달 ${i}일`, value: i });
+    }
+    return arr;
+  };
+
+  const options = days();
+
+  const handleChange = (value) => {
+    setData({ value: value });
+  };
+
+  return (
+    <SelectTab2
+      classNamePrefix="Select"
+      options={options}
+      search
+      // value={data.value}
+      styles={styles}
+      onChange={(value) => handleChange(value)}
+      noOptionsMessage={({ inputValue }) =>
+        !inputValue ? null : "해당하는 날짜가 존재하지 않습니다."
+      }
+      placeholder="결제일을 선택해주세요."
+      isClearable
+    />
+  );
+};
 // export default SelectBox;
 // export default SelectBox2;

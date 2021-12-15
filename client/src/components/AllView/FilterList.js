@@ -13,15 +13,14 @@ const ServiceList = styled.div`
   margin: 2rem 2rem 0rem 2rem;
   padding-top: 1.5rem;
   a {
+    width: 18rem;
+    max-width: 30%;
+    /* min-width: 30%; */
+    margin: 0.5rem 0.5rem 0.5rem 1.6%;
     img {
-      width: 100%;
-      height: 100%;
-      min-width: 10rem;
-      max-width: 35%;
+      min-width: 100%;
       max-height: 8rem;
-      object-fit: cover;
       border-radius: 5px;
-      margin: 0 0 1.5rem 10%;
     }
   }
 
@@ -43,25 +42,18 @@ const ServiceList = styled.div`
     }
   }
 `;
-const FilterList = () => {
-  const [services, setServices] = useState([]);
-
-  // useEffect(() => {
-  //   axios.get("/service").then((res) => {
-  //     setServices(res.data.services);
-  //   });
-  // }, []);
-
+const FilterList = ({ services, filter }) => {
   return (
     <StyledBody>
       <ServiceList>
-        {services.map((service) => {
-          return (
-            <Link key={service.id} to={`/detail/${service.id}`}>
-              <img src={service.outer_image} alt="detail 이미지" />
-            </Link>
-          );
-        })}
+        {filter &&
+          filter.map((service) => {
+            return (
+              <Link key={service.id} to={`/detail/${service.id}`}>
+                <img src={service.outer_image} alt="detail 이미지" />
+              </Link>
+            );
+          })}
       </ServiceList>
     </StyledBody>
   );

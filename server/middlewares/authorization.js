@@ -1,18 +1,15 @@
-const { isAuthorized, checkAccessToken } = require("../utils/tokenFunctions");
+const { checkAccessToken } = require("../utils/tokenFunctions");
 const { User } = require("../models");
 
 const authorization = async (req, res, next) => {
-  // const { accesstoken } = req.headers;
+  const { accessToken } = req.cookies;
+  console.log(accessToken);
 
-  // if (!accesstoken) {
-  //   return res.status(401).send("Not exist token");
-  // }
+  if (!accessToken) {
+    return res.status(401).send("Not exist token");
+  }
 
-  // const accessTokenData = checkAccessToken(accesstoken);
-  // console.log("req.headers : " + req.headers);
-  const accessTokenData = await isAuthorized(req);
-
-  // console.log("accessTokenData : " + accessTokenData);
+  const accessTokenData = checkAccessToken(accessToken);
 
   const userInfo = await User.findOne({
     where: { id: accessTokenData.id },

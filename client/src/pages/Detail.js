@@ -6,6 +6,7 @@ import Comment from "../components/Detail/Comment";
 import { useParams } from "react-router";
 import { setService, setServices } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 const StyledBody = styled.section`
   max-width: 950px;
@@ -14,49 +15,29 @@ const StyledBody = styled.section`
 `;
 
 const Detail = () => {
-  const isLogin = window.localStorage.getItem("isLogin");
-  const loginUserInfo = window.localStorage.getItem("loginUserInfo");
-  const accessToken = window.localStorage.getItem("accessToken");
-
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state);
   const ServiceId = Number(useParams().id);
 
-  const [comments, setComments] = useState([]);
   const [detail, setDetail] = useState([]);
   const [scrapNum, setScrapNum] = useState();
   const [isScrap, setIsScrap] = useState();
   const [isSub, setIsSub] = useState();
+  const [prices, setPrices] = useState();
+
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    loginUserInfo &&
-      window.localStorage.setItem("loginUserInfo", loginUserInfo);
-  }, [loginUserInfo]);
-
-  useEffect(() => {
-    accessToken && window.localStorage.setItem("accessToken", accessToken);
-  }, [accessToken]);
-
-  useEffect(() => {
-    isLogin && window.localStorage.setItem("isLogin", isLogin);
-  }, [isLogin]);
-
-  useEffect(() => {
-    dispatch(
-      setService(
-        state.services.filter((service) => {
-          return service.id === ServiceId;
-        })
-      )
-    );
-  }, [state.services]);
+    axios.get(`/service/${ServiceId}`).then((res) => {
+      setDetail(res.data.service);
+      setScrapNum(res.data.service.scrapNum);
+      setComments(res.data.service.Comments);
+      setPrices(res.data.service.prices);
+    });
+  }, [isScrap]);
 
   return (
     <StyledBody>
       <InnerImage
-        isLogin={isLogin}
         ServiceId={ServiceId}
-        accessToken={accessToken}
         detail={detail}
         scrapNum={scrapNum}
         isScrap={isScrap}
@@ -64,14 +45,12 @@ const Detail = () => {
         isSub={isSub}
         setIsSub={setIsSub}
       />
-      <ServiceContent detail={detail} />
+      <ServiceContent detail={detail} prices={prices} />
       <Comment
         detail={detail}
         ServiceId={ServiceId}
         comments={comments}
         setComments={setComments}
-        accessToken={accessToken}
-        loginUserInfo={loginUserInfo}
       />
     </StyledBody>
   );
