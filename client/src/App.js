@@ -96,26 +96,26 @@ function App() {
       });
   };
 
-  const refreshToken = async () => {
-    await axios
-      .post("/auth/refresh", null)
-      .then((res) => {
-        return true;
-      })
-      .catch((err) => {
-        return false;
-      });
-  };
+  // const refreshToken = async () => {
+  //   await axios
+  //     .post("/auth/refresh", null)
+  //     .then((res) => {
+  //       return true;
+  //     })
+  //     .catch((err) => {
+  //       return false;
+  //     });
+  // };
 
-  useEffect(() => {
-    if (state.isLogin) {
-      setInterval(() => {
-        if (!refreshToken()) {
-          logoutHandler();
-        }
-      }, 3000);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (state.isLogin) {
+  //     setInterval(() => {
+  //       if (!refreshToken()) {
+  //         logoutHandler();
+  //       }
+  //     }, 3000);
+  //   }
+  // }, []);
 
   useEffect(() => {
     axios

@@ -40,7 +40,7 @@ const ServiceDetail = styled.div`
     font-size: 1.5rem;
     min-height: 20rem;
     flex-wrap: nowrap;
-    margin: 1rem 0 1rem 0;
+    margin: 1rem 1rem 1rem 1rem;
   }
 `;
 
@@ -60,7 +60,7 @@ const LinkButton = styled.div`
   @media only screen and (min-width: 768px) {
     button {
       font-size: 1.5rem;
-      margin: 0 0 1rem 0;
+      margin: 0 1rem 1rem 1rem;
       padding: 1rem;
     }
   }
@@ -70,7 +70,7 @@ const ServiceOption = styled.div`
   font-size: 1.5rem;
   color: #e37b02;
   @media only screen and (min-width: 768px) {
-    margin: 1rem 0 0 0;
+    margin: 1rem 0 0 1rem;
     font-size: 2rem;
   }
 `;

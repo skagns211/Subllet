@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Filter from "../components/AllView/Filter";
 import FilterList from "../components/AllView/FilterList";
 
-const StyledBody = styled.section`
+const StyledBody = styled.article`
   max-width: 950px;
   margin: 0 auto;
 `;
