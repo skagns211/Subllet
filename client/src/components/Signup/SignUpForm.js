@@ -179,7 +179,6 @@ const SignUpForm = () => {
     nickname: userInfo.nickname,
     password: userInfo.password,
   };
-  console.log(userData);
 
   //!유효성검사 관련 State
   const [isEmail, setIsEmail] = useState(false);
@@ -266,7 +265,7 @@ const SignUpForm = () => {
           setEmailMessage("사용가능한 이메일입니다.");
         })
         .catch((err) => {
-          console.log(err.response.data);
+          console.log(err.response);
           const resMsg = err.response.data;
           if (resMsg === "Overlap") {
             setIsDupEmail(false);

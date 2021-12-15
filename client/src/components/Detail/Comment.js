@@ -15,8 +15,10 @@ const StyledBody = styled.section`
   }
 `;
 
-const ServiceOption = styled.p`
-  margin: 1rem 0 1rem 1rem;
+const ServiceOption = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 1rem 1rem 1rem;
   font-size: 1.5rem;
   color: #e37b02;
   @media only screen and (min-width: 768px) {
@@ -70,11 +72,12 @@ const SendButton = styled.div`
     font-size: 1rem;
     color: #e37b02;
     border-radius: 5px;
-    padding: 0.3rem 3rem;
+    padding: 1rem 3rem;
   }
   @media only screen and (min-width: 768px) {
     button {
       font-size: 1.5rem;
+      padding: 1rem 3rem;
     }
   }
 `;
@@ -123,13 +126,23 @@ const CommentLike = styled.div`
   }
 `;
 
-const Comment = ({ comments, setComments, ServiceId, detail }) => {
+const Comment = ({
+  comments,
+  setComments,
+  ServiceId,
+  detail,
+  change,
+  setChange,
+}) => {
   const state = useSelector((state) => state);
 
   const [text, setText] = useState("");
   const [like, setLike] = useState(true);
   const [open, setOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState();
+
+  const [del, setDel] = useState(false);
+  const [notLogin, setNotLogin] = useState(false);
   const [totalComments, setTotalComments] = useState();
 
   useEffect(() => {
@@ -149,6 +162,18 @@ const Comment = ({ comments, setComments, ServiceId, detail }) => {
     setOpen(!open);
   };
 
+  const clickDel = () => {
+    setOpen(!open);
+    setDel(!del);
+    axios.delete(`/comment/${ServiceId}`).then((res) => {
+      setChange(!change);
+      let del = comments.filter(
+        (comment) => comment.commenter !== state.loginUserInfo.nickname
+      );
+      setComments([...del]);
+    });
+  };
+
   const inputText = (e) => {
     setText(e.target.value);
   };
@@ -161,56 +186,65 @@ const Comment = ({ comments, setComments, ServiceId, detail }) => {
     if (state.isLogin) {
       if (text && like) {
         axios
-          .post(
-            `/comment/${ServiceId}`,
-            {
-              commenter: state.loginUserInfo.nickname,
-              message: text,
-              likes: like,
-            },
-            {
-              headers: { authorization: `Bearer ${state.accessToken}` },
-            }
-          )
+          .post(`/comment/${ServiceId}`, {
+            commenter: state.loginUserInfo.nickname,
+            message: text,
+            likes: like,
+          })
           .then((res) => {
             setComments([...comments, res.data.comment]);
+            setText("");
+            setChange(!change);
           })
           .catch((err) => {
             setAlertMsg({ message: "이미 작성하셨습니다", button: "확인" });
             setOpen(!open);
+            setText("");
           });
       } else {
         setAlertMsg({ message: "모두 입력해주세요", button: "확인" });
         setOpen(!open);
       }
     } else {
-      setAlertMsg({ message: "로그인을 먼저 해주세요", button: "확인" });
+      setAlertMsg({ message: "로그인을 먼저 해주세요", button: "로그인" });
       setOpen(!open);
+      setText("");
+      if (!state.isLogin) {
+        setNotLogin(true);
+      }
     }
   };
 
-  const delComment = (e) => {
-    axios
-      .delete(`/comment/${ServiceId}`, {
-        headers: { authorization: `Bearer ${state.accessToken}` },
-      })
-      .then((res) => {
-        let del = comments.filter(
-          (comment) => comment.commenter !== state.loginUserInfo.nickname
-        );
-        setComments([...del]);
-      });
+  const delComment = () => {
+    setAlertMsg({ message: "댓글을 삭제하시겠습니까?", button: "확인" });
+    setOpen(!open);
+    setDel(!del);
   };
 
   return (
     <StyledBody>
       {open ? (
-        <AlertModal alertMsg={alertMsg} handleClick={handleClick} />
+        <AlertModal
+          notLogin={notLogin}
+          alertMsg={alertMsg}
+          handleClick={handleClick}
+          clickDel={clickDel}
+          del={del}
+        />
       ) : null}
-      <ServiceOption>Comment {totalComments}개</ServiceOption>
+      <ServiceOption>
+        <div>Comment {totalComments}개</div>
+        <div>
+          추천: {detail.total_likes} 비추천: {detail.total_unlikes}
+        </div>
+      </ServiceOption>
       <CommentBody>
         <InputComment>
-          <textarea onChange={inputText} placeholder="댓글을 입력해주세요" />
+          <textarea
+            value={text}
+            onChange={inputText}
+            placeholder="댓글을 입력해주세요"
+          />
           <Likes>
             <input
               type="radio"

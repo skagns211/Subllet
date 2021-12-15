@@ -1,20 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 
-const StyledBody = styled.div`
+const StyledBody = styled.section`
   color: white;
 `;
 
 const FilterLabel = styled.div`
-  margin-top: 2rem;
+  margin-top: 4rem;
   width: 75%;
   font-size: 2rem;
   div {
     padding-left: 20%;
   }
-  @media only screen and (max-width: 1024px) {
-  }
   @media only screen and (min-width: 800px) {
+    margin-top: 1rem;
     div {
       padding-left: 5%;
     }
@@ -24,46 +23,12 @@ const FilterLabel = styled.div`
 const StyledDropDown = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 3rem;
-  label {
-    border-radius: 5px;
-    border: 1px solid #e69332;
-    width: 70%;
-    padding: 0.5rem 0rem;
-    margin-top: 2rem;
-  }
-  label:hover {
-    cursor: pointer;
-  }
-  i {
-    margin: 2.4rem 0 0 0;
-    color: #e69332;
-  }
-  i:hover {
-    cursor: pointer;
-  }
-  @media only screen and (min-width: 800px) {
-    flex-direction: row;
-    /* justify-content: space-evenly; */
-    label {
-      min-width: 14rem;
-      max-width: 1000%;
-    }
-  }
-  @media only screen and (max-width: 1024px) {
-    /* flex-direction: row; */
-    /* justify-content: space-evenly; */
-    /* margin-left: 3%; */
-    label {
-      /* width: 100% */
-      /* min-width: 16rem; */
-      /* max-width: 18rem; */
-    }
-  }
-`;
 
-const RefreshBtn = styled.div`
-  margin-left: 1rem;
+  @media only screen and (min-width: 768px) {
+    flex-direction: row;
+    margin-left: 0.6rem;
+    /* justify-content: space-evenly; */
+  }
 `;
 
 const DropDown = styled.div`
@@ -72,7 +37,19 @@ const DropDown = styled.div`
   align-items: center;
   text-align: center;
   font-size: 1.5rem;
-  margin-left: 0.4rem;
+  width: 100%;
+  div {
+    border-radius: 5px;
+    border: 1px solid #e69332;
+    width: 70%;
+    min-width: 18rem;
+    max-width: 25rem;
+    padding: 0.5rem 1rem;
+    margin-top: 2rem;
+  }
+  div:hover {
+    cursor: pointer;
+  }
   ul {
     border-radius: 5px;
     list-style: none;
@@ -83,8 +60,9 @@ const DropDown = styled.div`
     margin-top: 5rem;
     background-color: #130d0a;
     opacity: 0.9;
-    width: 70%;
-    max-width: 41.5rem;
+    width: 75%;
+    min-width: 20rem;
+    max-width: 27rem;
     li {
       padding: 1rem;
       background-color: #130d0a;
@@ -95,9 +73,18 @@ const DropDown = styled.div`
     }
   }
 
-  @media only screen and (min-width: 800px) {
+  @media only screen and (min-width: 768px) {
+    div {
+      width: 80%;
+      min-width: 10rem;
+      margin-right: 0.5rem;
+    }
     ul {
-      width: 18rem;
+      width: 30%;
+      min-width: 10rem;
+      max-width: 17.7rem;
+
+      margin-right: 0.5rem;
     }
   }
 `;
@@ -138,7 +125,7 @@ const Filter = ({
       </FilterLabel>
       <StyledDropDown>
         <DropDown>
-          <label onClick={categoryClick}>{categoryName}</label>
+          <div onClick={categoryClick}>{categoryName}</div>
           {category ? (
             <ul onClick={categoryClick}>
               <li onClick={(category) => filterServices(category, price, free)}>
@@ -160,7 +147,7 @@ const Filter = ({
           ) : null}
         </DropDown>
         <DropDown>
-          <label onClick={priceClick}>{priceName}</label>
+          <div onClick={priceClick}>{priceName}</div>
           {price ? (
             <ul onClick={priceClick}>
               <li onClick={(price) => filterServices(category, price, free)}>
@@ -182,7 +169,7 @@ const Filter = ({
           ) : null}
         </DropDown>
         <DropDown>
-          <label onClick={freeClick}>{freeName}</label>
+          <div onClick={freeClick}>{freeName}</div>
           {free ? (
             <ul onClick={freeClick}>
               <li onClick={(free) => filterServices(category, price, free)}>
@@ -197,9 +184,6 @@ const Filter = ({
             </ul>
           ) : null}
         </DropDown>
-        <RefreshBtn>
-          <i onClick={refreshFilter} className="fas fa-sync-alt fa-2x"></i>
-        </RefreshBtn>
       </StyledDropDown>
     </StyledBody>
   );
