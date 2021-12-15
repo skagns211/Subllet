@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "react-select";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import Netflix from "../../IMG/Logo/netflix_scrap.png";
 
@@ -34,7 +35,7 @@ const SelectTab = styled(Select)`
     color: #ff8a00;
     background-color: black;
     border: 0.5px solid #ff8a00;
-    text-align: center;
+    /* text-align: center; */
   }
 
   .Select__control--is-focused {
@@ -98,6 +99,7 @@ const SelectTab2 = styled(Select)`
   .Select__menu {
     color: #ff8a00;
     background-color: black;
+    font-size: 0.8rem;
     border: 0.5px solid #ff8a00;
     text-align: center;
   }
@@ -136,25 +138,29 @@ const List = styled.div`
 //   object-fit: cover;
 // `;
 
-export const SelectService = () => {
+export const SelectService = ({ index, setIndex }) => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const allServices = state.services;
+  // console.log(state.services);
+
   const [data, setData] = useState({
     value: { label: "", value: "" },
   });
-  console.log(data.value);
+  // console.log(data.value);
 
-  const options = [
-    {
+  const options2 = allServices.map((service, idx) => {
+    return {
       label: (
-        <List>
-          <img src={Netflix} />
-          <div>NETFLIX</div>
+        <List onClick={() => setIndex(idx)}>
+          <img src={service.outer_image} />
+          <div>{service.title}</div>
         </List>
       ),
-      value: "NETFLIX",
-    },
-    { label: 2020, value: 2020 },
-    { label: 2019, value: 2019 },
-  ];
+      value: service.title,
+    };
+  });
+  console.log(index);
 
   const handleChange = (value) => {
     setData({ value: value });
@@ -163,7 +169,7 @@ export const SelectService = () => {
   return (
     <SelectTab
       classNamePrefix="Select"
-      options={options}
+      options={options2}
       search
       // value={data.value}
       styles={styles}
@@ -177,12 +183,23 @@ export const SelectService = () => {
   );
 };
 
-export const SelectPlanPrice = () => {
+export const SelectPlanPrice = ({ index, setIndex, filtered, prices }) => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const allServices = state.services;
+  console.log(allServices);
+
   const [data, setData] = useState({
     value: { label: "", value: "" },
   });
-  console.log(data.value);
-
+  console.log(filtered);
+  // const options2 = filtered[0].Prices.map((el) => {
+  //   return {
+  //     label: `${el.title + "," + el.price}`,
+  //     value: `${el.title + "," + el.price}`,
+  //   };
+  // });
+  const option = [{ label: "서비스륾 먼저 선택해주세요.", value: "" }];
   const options = [
     { label: "2인용 요금제, 3000원", value: "2인용 요금제, 3000원" },
     { label: "3인용 요금제, 5000원", value: "3인용 요금제, 5000원" },
@@ -196,7 +213,16 @@ export const SelectPlanPrice = () => {
   return (
     <SelectTab
       classNamePrefix="Select"
-      options={options}
+      options={
+        filtered.length === 0
+          ? option
+          : filtered[0].Prices.map((el) => {
+              return {
+                label: `${el.title + "," + el.price}`,
+                value: `${el.title + "," + el.price}`,
+              };
+            })
+      }
       search
       // value={data.value}
       styles={styles}

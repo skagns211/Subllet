@@ -103,8 +103,8 @@ module.exports = {
 
       await redis.del(id);
 
-      res.cookie("accessToken", null, { maxAge: 0 });
-      res.cookie("refreshToken", null, { maxAge: 0 });
+      res.clearCookie("accessToken");
+      res.clearCookie("refreshToken");
 
       try {
         res.send("Logout success");
@@ -172,13 +172,14 @@ module.exports = {
 
       const accessTokenData = checkAccessToken(accessToken);
       const refreshTokenData = checkRefeshToken(refreshToken);
-      console.log(accessTokenData);
+      console.log("auth=", accessTokenData);
       console.log(new Date());
       if (refreshTokenData === null) {
         return res.status(401).send("Expiration");
       }
 
-      const redisRefreshToken = await redis.get(`${accessTokenData.id}`);
+      const userId = refreshTokenData.id;
+      const redisRefreshToken = await redis.get(userId);
 
       if (refreshToken !== redisRefreshToken) {
         return res.status(401).send("RefreshToken inconsistency");
@@ -194,8 +195,7 @@ module.exports = {
 
       res.clearCookie("accessToken");
       delete userInfo.dataValues.password;
-      delete userInfo.dataValues.salt;
-      const newAccessToken = generateAccessToken(userInfo.dataValues);
+      const newAccessToken = generateAccessToken(userInfo);
 
       try {
         sendAccessToken(res, newAccessToken);
@@ -239,7 +239,7 @@ module.exports = {
           }
         );
 
-        const url = process.env.CLIENT_ORIGIN;
+        const url = `${process.env.CLIENT_ORIGIN}/main`;
         res.redirect(url);
       } catch (err) {
         console.error(err);

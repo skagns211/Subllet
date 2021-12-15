@@ -39,9 +39,9 @@ module.exports = {
       return null;
     }
   },
-  checkAccessToken: (accesstoken) => {
+  checkAccessToken: (accessToken) => {
     try {
-      return verify(accesstoken, process.env.ACCESS_SECRET);
+      return verify(accessToken, process.env.ACCESS_SECRET);
     } catch (err) {
       return null;
     }

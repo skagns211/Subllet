@@ -1,4 +1,4 @@
-const { Comment } = require("../models");
+const { Comment, Service } = require("../models");
 
 module.exports = {
   comment: {
@@ -35,6 +35,17 @@ module.exports = {
         where: { id: created.id },
       });
 
+      if (likes) {
+        await Service.update(
+          {
+            total_likes: total_likes + 1,
+          },
+          {
+            where: { id: service_id },
+          }
+        );
+      }
+
       try {
         return res.status(201).json({ comment });
       } catch (err) {
@@ -46,11 +57,30 @@ module.exports = {
       const user_id = req.id;
       const service_id = req.params.id;
 
-      try {
-        await Comment.destroy({
-          where: { user_id, service_id },
-        });
+      const isLike = await Comment.findOne({
+        attributes: ["likes"],
+        where: {
+          user_id,
+          service_id,
+        },
+      });
 
+      if (isLike.likes) {
+        await Service.update(
+          {
+            total_likes: total_likes - 1,
+          },
+          {
+            where: { id: service_id },
+          }
+        );
+      }
+
+      await Comment.destroy({
+        where: { user_id, service_id },
+      });
+
+      try {
         return res.status(204).send("Success");
       } catch (err) {
         console.error(err);
