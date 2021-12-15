@@ -35,8 +35,8 @@ const HeaderLanding = styled.div`
   align-items: center;
   height: 100vh;
   div {
-    /* margin-left: 25rem; */
-    margin-left: 20rem;
+    /* margin-left: 10rem; 25rem; */
+    margin-left: 10rem; 20rem;
     font-size: 2rem;
     color: white;
     flex-shrink: 0;
@@ -51,7 +51,7 @@ const HeaderLanding = styled.div`
     width: 40%;
     height: 50%;
     margin-right: 15rem;
-    margin-left: 3rem;
+    margin-left: 10rem; 3rem;
     border-radius: 0.5rem;
   }
 
@@ -77,6 +77,10 @@ const MainLanding = styled.main`
   }
   .main0 {
     background-color: #445;
+    height: 100vh;
+    @media only screen and (max-width: 1050px) {
+      height: 120vh;
+    }
   }
   .main1 {
     background-color: #362;
@@ -99,15 +103,18 @@ const WheelContainer = styled.div`
   .wheelText {
     color: white;
     font-size: 2rem;
-    margin: 40rem 22rem 0 0;
+    margin: auto;
+    margin-top: 17rem;
     p {
       color: gray;
     }
   }
   .wheel {
     position: relative;
-    width: 400px;
-    height: 400px;
+    margin: auto;
+    /* width: 400px; */
+    width: 20%;
+    height: auto;
     padding-bottom: 45rem;
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
@@ -160,8 +167,10 @@ const MainText = styled.div`
   text-align: center;
   font-size: 2rem;
   text-align: left;
+
   div {
-    margin-left: 16rem;
+    margin: auto;
+    padding-left: 3rem;
   }
   h1 {
     text-decoration: underline;
@@ -170,10 +179,14 @@ const MainText = styled.div`
     color: gray;
   }
   img {
-    margin-left: 13rem;
+    margin: auto;
+    width: 40%;
   }
   @media only screen and (max-width: 1050px) {
     flex-direction: column;
+    align-items: center;
+    margin-top: 20rem;
+    margin-bottom: 10rem;
   }
 `;
 
@@ -384,7 +397,7 @@ const Landing = () => {
       </HeaderLanding>
       <MainLanding className="Landing-main">
         <div ref={addTorefs}>
-          <WheelContainer className="container">
+          <WheelContainer className="container main0">
             <div className="wheelText">
               <h1>다양한 서비스</h1>
               <p>Video, Music, Shoping, Book, Life 등,</p>

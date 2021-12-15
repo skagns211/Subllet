@@ -15,7 +15,7 @@ module.exports = {
     const compiledFunction = pug.compileFile(fileURL);
 
     const emailContent = {
-      from: '"Subllet" <hello@subllet.co.kr>',
+      from: '"Subllet" <contact@subllet.co.kr>',
       to: email,
       subject: `${nickname}님! 회원가입 이메일 인증을 진행해주세요.`,
       html: compiledFunction(options),

@@ -1,8 +1,9 @@
 import { React, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import Slider from "react-slick";
+import AllView from "../../pages/AllView";
 
 const StyleSlider = styled.div`
   color: #ff8a00;
@@ -108,11 +109,7 @@ const Video = () => {
   };
 
   const handleIntoDetail = (path) => {
-<<<<<<< HEAD
-    navigate(`detail/${path}`);
-=======
     navigate(`/detail/${path}`);
->>>>>>> dev
   };
 
   useEffect(() => {
@@ -127,7 +124,7 @@ const Video = () => {
     <StyleSlider>
       <TopContent>
         <div>Video</div>
-        <a>전체보기</a>
+        <Link to="/allview">전체보기</Link>
       </TopContent>
       <Wrap>
         <Slider {...isSetting}>

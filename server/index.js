@@ -2,19 +2,14 @@ const express = require("express");
 const fs = require("fs");
 const https = require("https");
 const app = express();
-// const session = require("express-session");
-// const passport = require("passport");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const indexRouter = require("./routes");
-// const bodyParser = require("body-parser");
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
-    origin: ["https://localhost:3000"],
+    origin: `${process.env.CLIENT_ORIGIN}`,
     credentials: true,
     methods: ["GET", "POST", "OPTIONS", "PATCH", "DELETE"],
   })

@@ -1,6 +1,6 @@
 // import {  } from "../actions/index";
 
-import { LOGIN_USER_INFO, SUB_COUNT } from "../actions";
+import { LOGIN_USER_INFO, SUB_COUNT, CHANGE_USER_INFO } from "../actions";
 
 const loginUserInfo = {
   email: "",
@@ -12,7 +12,6 @@ const loginUserInfo = {
 };
 
 const userReducer = (state = loginUserInfo, action) => {
-  console.log(action.payload);
   switch (action.type) {
     case LOGIN_USER_INFO:
       return {
@@ -30,6 +29,12 @@ const userReducer = (state = loginUserInfo, action) => {
         total_subscribes: action.payload.total_subscribes,
         total_price: action.payload.total_price,
         total_scrpas: action.payload.total_scraps,
+      };
+    case CHANGE_USER_INFO:
+      return {
+        ...state,
+        nickname: action.payload.nickname,
+        profile: action.payload.profile,
       };
     default:
       return state;

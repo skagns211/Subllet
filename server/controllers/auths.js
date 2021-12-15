@@ -17,6 +17,8 @@ require("dotenv").config();
 const redis = require("../utils/redis");
 const emailSend = require("../utils/emails/send");
 const { emailVerify } = require("../utils/emails/content");
+const { access } = require("fs");
+let count = 0;
 
 module.exports = {
   signup: {
@@ -41,8 +43,8 @@ module.exports = {
       const url =
         process.env.SERVER_ORIGIN + "/auth/confirm/email?key=" + emailKey;
 
-      const emailContent = emailVerify(email, nickname, url);
-      emailSend(emailContent);
+      // const emailContent = emailVerify(email, nickname, url);
+      // emailSend(emailContent);
 
       try {
         res.status(201).send("Signup success");
@@ -103,8 +105,8 @@ module.exports = {
 
       await redis.del(id);
 
-      res.cookie("accessToken", null, { maxAge: 0 });
-      res.cookie("refreshToken", null, { maxAge: 0 });
+      res.clearCookie("accessToken");
+      res.clearCookie("refreshToken");
 
       try {
         res.send("Logout success");
@@ -165,20 +167,23 @@ module.exports = {
   refresh: {
     post: async (req, res) => {
       const { accessToken, refreshToken } = req.cookies;
+      console.log(accessToken);
 
       if (!accessToken || !refreshToken) {
         return res.status(400).send("Not exist token");
       }
-
       const accessTokenData = checkAccessToken(accessToken);
       const refreshTokenData = checkRefeshToken(refreshToken);
+      count++;
       console.log(accessTokenData);
       console.log(new Date());
+      console.log(count);
       if (refreshTokenData === null) {
         return res.status(401).send("Expiration");
       }
 
-      const redisRefreshToken = await redis.get(`${accessTokenData.id}`);
+      const userId = refreshTokenData.id;
+      const redisRefreshToken = await redis.get(userId);
 
       if (refreshToken !== redisRefreshToken) {
         return res.status(401).send("RefreshToken inconsistency");
@@ -191,13 +196,11 @@ module.exports = {
       if (!userInfo) {
         return res.status(401).send("Not exist user");
       }
-
+      res.clearCookie("accessToken");
       delete userInfo.dataValues.password;
-      delete userInfo.dataValues.salt;
-      const newAccessToken = generateAccessToken(userInfo.dataValues);
-
+      const newAccessToken = generateAccessToken(userInfo);
+      sendAccessToken(res, newAccessToken);
       try {
-        sendAccessToken(res, newAccessToken);
         res.send("Success");
       } catch (err) {
         console.error(err);
@@ -238,7 +241,7 @@ module.exports = {
           }
         );
 
-        const url = process.env.CLIENT_ORIGIN;
+        const url = `${process.env.CLIENT_ORIGIN}/main`;
         res.redirect(url);
       } catch (err) {
         console.error(err);

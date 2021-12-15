@@ -12,39 +12,46 @@ const StyledBody = styled.section`
 const BackgroundImage = styled.div`
   background-image: url(${(props) => props.image});
   background-repeat: no-repeat;
+  background-position: center;
   background-size: contain;
   opacity: 0.7;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-radius: 5px;
-  @media only screen and (min-device-width: 800px) {
-    background-image: url(${(props) => props.image});
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
+  height: 30rem;
+  @media only screen and (min-width: 800px) {
     height: 35rem;
-    opacity: 0.7;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
   }
 `;
 const ScrapButton = styled.div`
+  margin-top: 2rem;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   div {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: yellow;
   }
   i {
     color: yellow;
+    font-size: 1.5rem;
+  }
+  @media only screen and (min-width: 768px) {
+    div {
+      font-size: 2rem;
+    }
+    i {
+      font-size: 2rem;
+    }
+  }
+  @media only screen and (min-width: 800px) {
+    margin-top: 0;
   }
 `;
 const DetailMessage = styled.div`
-  font-size: 2rem;
+  font-size: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -52,12 +59,19 @@ const DetailMessage = styled.div`
   margin: 0rem 1rem;
   color: white;
   button {
-    padding: 1rem;
+    padding: 0.5rem;
     font-size: 1.5rem;
     border-radius: 0.5rem;
     background-color: black;
     opacity: 0.7;
     color: white;
+  }
+  @media only screen and (min-width: 768px) {
+    font-size: 2rem;
+    button {
+      padding: 1rem;
+      font-size: 2rem;
+    }
   }
 `;
 
@@ -92,7 +106,7 @@ const InnerImage = ({
         )
         .catch((err) => console.log(err));
     }
-  }, []);
+  });
 
   const addScrap = () => {
     axios
@@ -113,7 +127,7 @@ const InnerImage = ({
         setIsScrap(false);
       });
   };
-  console.log(state);
+
   const addSub = () => {
     axios
       .post(

@@ -113,49 +113,6 @@ const AllView = () => {
     }
   };
 
-  // const filterCategory = (category) => {
-  //   if (category.target.textContent === "모든 카테고리") {
-  //     let filtered = services.filter((service) => {
-  //       return service.category;
-  //     });
-  //     setFilter(filtered);
-  //   } else {
-  //     let filtered = filter.filter((service) => {
-  //       return service.category === category.target.textContent.toLowerCase();
-  //     });
-  //     setFilter(filtered);
-  //   }
-  // };
-
-  // const filterPrice = (price) => {
-  //   if (price.target.textContent === "모든 가격") {
-  //     setFilter(services);
-  //   } else {
-  //     let filtered = filter.filter((service) => {
-  //       return (
-  //         Number(service.Prices[0].price.slice(0, -1)) <=
-  //         Number(price.target.textContent)
-  //       );
-  //     });
-  //     setFilter(filtered);
-  //   }
-  // };
-
-  // const filterFree = (free) => {
-  //   if (free.target.textContent === "모든 체험") {
-  //     setFilter(services);
-  //   } else {
-  //     let filtered = filter.filter((service) => {
-  //       if (free.target.textContent === "유") {
-  //         return service.demo === true;
-  //       } else {
-  //         return service.demo === false;
-  //       }
-  //     });
-  //     setFilter(filtered);
-  //   }
-  // };
-
   const refreshFilter = () => {
     setRefresh(!refresh);
     setCategoryName("카테고리");
@@ -184,12 +141,8 @@ const AllView = () => {
             categoryName={categoryName}
             priceName={priceName}
             freeName={freeName}
-            // filterCategory={filterCategory}
-            // filterPrice={filterPrice}
-            // filterFree={filterFree}
-            select={select}
           />
-          <FilterList services={services} filter={filter} />
+          <FilterList filter={filter} />
         </StyledBody>
       ) : price ? (
         <StyledBody>
@@ -205,12 +158,8 @@ const AllView = () => {
             categoryName={categoryName}
             priceName={priceName}
             freeName={freeName}
-            // filterCategory={filterCategory}
-            // filterPrice={filterPrice}
-            // filterFree={filterFree}
-            select={select}
           />
-          <FilterList services={services} filter={filter} />
+          <FilterList filter={filter} />
         </StyledBody>
       ) : free ? (
         <StyledBody>
@@ -226,12 +175,8 @@ const AllView = () => {
             categoryName={categoryName}
             priceName={priceName}
             freeName={freeName}
-            // filterCategory={filterCategory}
-            // filterPrice={filterPrice}
-            // filterFree={filterFree}
-            select={select}
           />
-          <FilterList services={services} filter={filter} />
+          <FilterList filter={filter} />
         </StyledBody>
       ) : (
         <StyledBody>
@@ -247,12 +192,8 @@ const AllView = () => {
             categoryName={categoryName}
             priceName={priceName}
             freeName={freeName}
-            // filterCategory={filterCategory}
-            // filterPrice={filterPrice}
-            // filterFree={filterFree}
-            select={select}
           />
-          <FilterList services={services} filter={filter} />
+          <FilterList filter={filter} />
         </StyledBody>
       )}
     </>

@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { setServices } from "../../actions";
 
 const StyledBody = styled.div`
   color: white;
@@ -13,6 +12,8 @@ const FilterLabel = styled.div`
   div {
     padding-left: 20%;
   }
+  @media only screen and (max-width: 1024px) {
+  }
   @media only screen and (min-width: 800px) {
     div {
       padding-left: 5%;
@@ -23,6 +24,7 @@ const FilterLabel = styled.div`
 const StyledDropDown = styled.div`
   display: flex;
   flex-direction: column;
+  margin-left: 3rem;
   label {
     border-radius: 5px;
     border: 1px solid #e69332;
@@ -42,13 +44,26 @@ const StyledDropDown = styled.div`
   }
   @media only screen and (min-width: 800px) {
     flex-direction: row;
-    justify-content: space-evenly;
-
+    /* justify-content: space-evenly; */
     label {
-      width: 100%;
-      min-width: 18rem;
+      min-width: 14rem;
+      max-width: 1000%;
     }
   }
+  @media only screen and (max-width: 1024px) {
+    /* flex-direction: row; */
+    /* justify-content: space-evenly; */
+    /* margin-left: 3%; */
+    label {
+      /* width: 100% */
+      /* min-width: 16rem; */
+      /* max-width: 18rem; */
+    }
+  }
+`;
+
+const RefreshBtn = styled.div`
+  margin-left: 1rem;
 `;
 
 const DropDown = styled.div`
@@ -57,7 +72,7 @@ const DropDown = styled.div`
   align-items: center;
   text-align: center;
   font-size: 1.5rem;
-
+  margin-left: 0.4rem;
   ul {
     border-radius: 5px;
     list-style: none;
@@ -79,6 +94,7 @@ const DropDown = styled.div`
       cursor: pointer;
     }
   }
+
   @media only screen and (min-width: 800px) {
     ul {
       width: 18rem;
@@ -98,9 +114,6 @@ const Filter = ({
   categoryName,
   priceName,
   freeName,
-  filterCategory,
-  filterPrice,
-  filterFree,
 }) => {
   const categoryClick = () => {
     setCategory(!category);
@@ -184,7 +197,9 @@ const Filter = ({
             </ul>
           ) : null}
         </DropDown>
-        <i onClick={refreshFilter} className="fas fa-sync-alt fa-2x"></i>
+        <RefreshBtn>
+          <i onClick={refreshFilter} className="fas fa-sync-alt fa-2x"></i>
+        </RefreshBtn>
       </StyledDropDown>
     </StyledBody>
   );
