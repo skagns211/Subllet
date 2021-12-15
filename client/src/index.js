@@ -5,7 +5,7 @@ import App from "./App";
 import store from "./store/store";
 import { Provider } from "react-redux";
 
-axios.defaults.baseURL = "https://localhost:4000";
+axios.defaults.baseURL = "http://ec2-18-212-9-107.compute-1.amazonaws.com";
 axios.defaults.withCredentials = true;
 
 ReactDOM.render(
