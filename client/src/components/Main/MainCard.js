@@ -30,7 +30,7 @@ const MainCardBody = styled.div`
   background-repeat: no-repeat;
   background-size: 100% 100%;
   border-radius: 1rem;
-  margin: 3.6rem 0.7rem 0.5rem 0.5rem;
+  margin: 1rem 0.7rem 0.5rem 0.5rem;
   padding: 0;
   width: auto;
   height: auto;

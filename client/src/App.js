@@ -9,6 +9,7 @@ import axios from "axios";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import SearchBar from "./components/SearchBar";
+import { NavSelectServiceDown } from "./components/MySubllet/Select";
 
 import Main from "./pages/Main";
 import AllView from "./pages/AllView";
@@ -41,6 +42,7 @@ const GlobalStyle = createGlobalStyle`
     @media only screen and (max-width: 800px) {
     min-width: 370px;
   }
+  
   a {
     color: #ffffff;
     text-decoration: none;
@@ -49,6 +51,10 @@ const GlobalStyle = createGlobalStyle`
   header {
     position: fixed;
     z-index: 1000;
+    @media only screen and (max-width: 800px) {
+    position: relative;
+  }
+
   }
   .sc-pVTFL.fQyZWE {
     position: fixed;
@@ -61,9 +67,9 @@ const GlobalStyle = createGlobalStyle`
 
 //! Nav 고정 간격
 const Pages = styled.div`
-  /* @media only screen and (min-width: 800px) { */
-  padding-top: 5rem;
-  /* } */
+  @media only screen and (min-width: 800px) {
+    padding-top: 5rem;
+  }
 `;
 
 const SectionStyle = styled.section`
@@ -108,12 +114,13 @@ function App() {
   };
 
   useEffect(() => {
+    const time = 1000 * 60 * 60 * 24;
     if (state.isLogin) {
       setInterval(() => {
         if (!refreshToken()) {
           logoutHandler();
         }
-      }, 3000);
+      }, time);
     }
   }, []);
 
@@ -132,9 +139,15 @@ function App() {
         {currentUrl === "/" ? null : (
           <>
             <Nav />
+            {/* <SearchBar /> */}
           </>
         )}
-        <SearchBar />
+        <div className="mobileNav">
+          <NavSelectServiceDown />
+        </div>
+        {/* <div className="searchBox"> */}
+        {/* </div> */}
+
         <Pages>
           <Routes>
             <Route exact path="/" element={<Landing />} />

@@ -84,6 +84,7 @@ const Button = styled.button`
   font-family: "paybooc-Medium";
   font-size: 1.1rem;
   color: #ff8a00;
+  cursor: pointer;
   :hover {
     color: rgba(255, 255, 255, 0.85);
     box-shadow: rgba(30, 22, 54, 0.7) 0 5rem 0rem 2rem inset;

@@ -67,6 +67,10 @@ module.exports = {
           sendRefreshToken(res, refreshToken);
 
           return res.json({ userInfo });
+        } else {
+          return res
+            .status(400)
+            .json({ signup_method: userInfo.signup_method });
         }
       } catch (err) {
         console.error(err);
@@ -125,6 +129,10 @@ module.exports = {
           sendRefreshToken(res, refreshToken);
 
           return res.json({ userInfo });
+        } else {
+          return res
+            .status(400)
+            .json({ signup_method: userInfo.signup_method });
         }
       } catch (err) {
         console.error(err);
@@ -193,6 +201,10 @@ module.exports = {
           sendRefreshToken(res, refreshToken);
 
           return res.json({ userInfo });
+        } else {
+          return res
+            .status(400)
+            .json({ signup_method: userInfo.signup_method });
         }
       } catch (err) {
         console.error(err);

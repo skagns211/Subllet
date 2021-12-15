@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import styled from "styled-components";
@@ -45,29 +46,57 @@ const Line = styled.div`
 const MySubllet = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [myScribe, setMyScribe] = useState([]);
   const [myScrap, setMyScrap] = useState([]);
+  const [sortedMyScribe, setSortedMyScribe] = useState([]);
+  const [test, setTest] = useState(false);
 
   useEffect(() => {
     axios.all([axios.get("/subscribe"), axios.get("/scrap")]).then(
       axios.spread((res1, res2) => {
-        console.log(res2.data.scraps);
         console.log(res1.data.subscribes);
+        console.log(res2.data.scraps);
         const myScribeData = res1.data.subscribes;
         const myScrapData = res2.data.scraps;
+        // const sorted = myScribeData.sort((a, b) => {
+        //   return a.Service.id - b.Service.id;
+        // });
         setMyScribe(myScribeData);
+        // setSortedMyScribe(sorted);
         setMyScrap(myScrapData);
       })
     );
-  }, []);
+  }, [test]);
+
+  useEffect(() => {
+    const sorted = myScribe.sort((a, b) => {
+      return a.Service.id - b.Service.id;
+    });
+    setSortedMyScribe(sorted);
+  }, [myScribe]);
+  console.log(myScrap);
+  console.log(sortedMyScribe);
 
   return (
     <MySublletContainer>
-      <div className="Title">My subllet</div>
-      <MyInfo />
-      <Line />
-      <MyScribe myScribe={myScribe} />
-      <MyScrap myScrap={myScrap} />
+      {state.isLogin === false ? (
+        navigate("/userlogin")
+      ) : (
+        <>
+          <div className="Title">My subllet</div>
+          <MyInfo />
+          <Line />
+          <MyScribe
+            myScribe={myScribe}
+            setMyScribe={setMyScribe}
+            sortedMyScribe={sortedMyScribe}
+            test={test}
+            setTest={setTest}
+          />
+          <MyScrap myScrap={myScrap} />
+        </>
+      )}
     </MySublletContainer>
   );
 };
