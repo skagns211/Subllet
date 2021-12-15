@@ -6,6 +6,8 @@
     "start": "nodemon --inspect index.js"
   },
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.43.0",
+    "@aws-sdk/credential-provider-node": "^3.41.0",
     "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
