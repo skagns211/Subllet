@@ -85,45 +85,6 @@ function App() {
   const [token, setToken] = useState();
   console.log(currentUrl);
 
-  const logoutHandler = () => {
-    axios
-      .post("/auth/logout", null)
-      .then((res) => {
-        const loginUserInfo = {
-          email: "",
-          nickname: "",
-          profile: "",
-        };
-        dispatch(setLoginUserInfo(loginUserInfo));
-        dispatch(setIsLogin(false));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const refreshToken = async () => {
-    await axios
-      .post("/auth/refresh", null)
-      .then((res) => {
-        return true;
-      })
-      .catch((err) => {
-        return false;
-      });
-  };
-
-  useEffect(() => {
-    const time = 1000 * 60 * 60 * 24;
-    if (state.isLogin) {
-      setInterval(() => {
-        if (!refreshToken()) {
-          logoutHandler();
-        }
-      }, time);
-    }
-  }, []);
-
   useEffect(() => {
     axios
       .get("/service")

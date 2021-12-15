@@ -9,7 +9,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
-    origin: `${process.env.CLIENT_ORIGIN}`,
+    origin: process.env.CLIENT_ORIGIN,
+    // origin: "https://evil-crab-54.loca.lt",
+    // origin: "*",
     credentials: true,
     methods: ["GET", "POST", "OPTIONS", "PATCH", "DELETE"],
   })

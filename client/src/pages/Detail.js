@@ -19,18 +19,17 @@ const Detail = () => {
   const [scrapNum, setScrapNum] = useState();
   const [isScrap, setIsScrap] = useState();
   const [isSub, setIsSub] = useState();
-  const [prices, setPrices] = useState();
 
   const [comments, setComments] = useState([]);
+  const [change, setChange] = useState("");
 
   useEffect(() => {
     axios.get(`/service/${ServiceId}`).then((res) => {
       setDetail(res.data.service);
       setScrapNum(res.data.service.scrapNum);
       setComments(res.data.service.Comments);
-      setPrices(res.data.service.prices);
     });
-  }, [isScrap]);
+  }, [isScrap, change]);
 
   return (
     <StyledBody>
@@ -49,6 +48,8 @@ const Detail = () => {
         ServiceId={ServiceId}
         comments={comments}
         setComments={setComments}
+        setChange={setChange}
+        change={change}
       />
     </StyledBody>
   );

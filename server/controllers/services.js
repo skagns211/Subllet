@@ -8,6 +8,7 @@ module.exports = {
           "id",
           "title",
           "outer_image",
+          "total_likes",
           "category",
           "demo",
         ],
@@ -32,11 +33,7 @@ module.exports = {
       const id = req.params.id;
 
       const service = await Service.findOne({
-        attributes: [
-          "message",
-          "inner_image",
-          "url",
-        ],
+        attributes: ["title", "message", "inner_image", "total_likes", "url"],
         where: { id },
         include: {
           attributes: [
@@ -64,6 +61,13 @@ module.exports = {
         },
       });
 
+      const commentNum = await Comment.count({
+        where: { service_id: id },
+      });
+
+      const total_unlikes = commentNum - service.total_likes;
+
+      service.dataValues.total_unlikes = total_unlikes;
       service.dataValues.scrapNum = scrapNum;
       service.dataValues.prices = price.dataValues.Prices;
 

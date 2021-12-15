@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const StyledBody = styled.div`
   color: white;
   background-color: black;
   border-radius: 10px;
-  width: 32rem;
+  width: 18rem;
   max-width: 28rem;
   height: 10rem;
   position: fixed;
@@ -26,6 +27,11 @@ const StyledBody = styled.div`
     padding: 0.5rem 1rem;
     color: #ff8a00;
   }
+  @media only screen and (min-width: 768px) {
+    width: 32rem;
+    max-width: 28rem;
+    height: 10rem;
+  }
 `;
 const ModalBack = styled.div`
   width: 100%;
@@ -38,13 +44,33 @@ const ModalBack = styled.div`
   border: 2px solid white;
 `;
 
-const AlertModal = ({ handleClick, alertMsg }) => {
+const AlertModal = ({
+  handleClick,
+  alertMsg,
+  clickDel,
+  del,
+  notLogin,
+  success,
+}) => {
+  console.log(notLogin);
   return (
     <>
       <ModalBack onClick={handleClick} />
       <StyledBody>
         <div>{alertMsg.message}</div>
-        <button onClick={handleClick}>{alertMsg.button}</button>
+        {del ? (
+          <button onClick={clickDel}>{alertMsg.button}</button>
+        ) : success ? (
+          <Link to="/mysubllet">
+            <button>{alertMsg.button}</button>
+          </Link>
+        ) : notLogin ? (
+          <Link to="/userlogin">
+            <button>{alertMsg.button}</button>
+          </Link>
+        ) : (
+          <button onClick={handleClick}>{alertMsg.button}</button>
+        )}
       </StyledBody>
     </>
   );

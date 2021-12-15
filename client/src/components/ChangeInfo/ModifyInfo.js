@@ -17,20 +17,7 @@ const StyledForm = styled.div`
   margin-top: 1rem;
   display: flex;
   border-radius: 5px 5px 0 0;
-`;
-
-const ButtonForm = styled.div`
-  background-color: #262a3b;
-  border-radius: 0 0 5px 5px;
-  button {
-    padding: 1rem;
-    font-size: 1.5rem;
-    background-color: #3b3f51;
-    color: #ff8a00;
-    border: 0px;
-    border-radius: 5px;
-    margin: 3rem 21.2rem;
-  }
+  height: 28rem;
 `;
 
 const ChangeLabel = styled.div`
@@ -39,20 +26,53 @@ const ChangeLabel = styled.div`
 
 const ImgForm = styled.div`
   margin: 3rem 1rem 0 5rem;
-  height: 15rem;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   img {
     width: 15rem;
     height: 15rem;
     object-fit: cover;
     border-radius: 7rem;
   }
+  div {
+    margin-top: 1rem;
+    label,
+    button {
+      background-color: #3b3f51;
+      color: #ff8a00;
+      padding: 1rem;
+      border-radius: 5px;
+      font-size: 1.5rem;
+      border: 0;
+      margin: 1rem 1rem;
+    }
+    label:hover,
+    button:hover {
+      cursor: pointer;
+    }
+  }
 `;
 
 const InfoForm = styled.div`
-  margin: 3rem 0 0 1rem;
+  margin: 4rem 0 0 1rem;
   height: 15rem;
   font-size: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  button {
+    margin: 3rem;
+    padding: 1rem;
+    font-size: 1.5rem;
+    background-color: #3b3f51;
+    color: #ff8a00;
+    border: 0px;
+    border-radius: 5px;
+  }
+  button:hover {
+    cursor: pointer;
+  }
 `;
 
 const InfoInput = styled.div`
@@ -63,19 +83,7 @@ const InfoInput = styled.div`
     margin-left: 0.3rem;
   }
   div {
-    margin: 1rem 0;
-  }
-`;
-
-const ChangeButton = styled.div`
-  label {
-    padding: 1rem;
-    font-size: 1.5rem;
-    background-color: #3b3f51;
-    color: #ff8a00;
-    border: 0px;
-    border-radius: 5px;
-    margin: 1rem 1rem 1rem 0;
+    margin: 3rem 0;
   }
 `;
 
@@ -97,6 +105,7 @@ const ModifyInfo = () => {
   const [nick, setNick] = useState(UserInfo.nickname);
   const [emptyNick, setEmptyNick] = useState(false);
   const [duplicate, setDuplicate] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const AWS = require("aws-sdk");
 
@@ -133,6 +142,10 @@ const ModifyInfo = () => {
     );
   };
 
+  const delProfile = () => {
+    setProfile(null);
+  };
+
   const handleClick = () => {
     setOpen(!open);
   };
@@ -159,6 +172,7 @@ const ModifyInfo = () => {
           });
           setOpen(!open);
           dispatch(changeUserInfo(res.data.userInfo));
+          setSuccess(true);
         })
         .catch((err) => {
           if (err.response && err.response.status === 400) {
@@ -171,12 +185,30 @@ const ModifyInfo = () => {
   return (
     <StyledBody>
       {open ? (
-        <AlertModal alertMsg={alertMsg} handleClick={handleClick} />
+        <AlertModal
+          success={success}
+          alertMsg={alertMsg}
+          handleClick={handleClick}
+        />
       ) : null}
       <ChangeLabel>회원정보변경</ChangeLabel>
       <StyledForm>
         <ImgForm>
-          <img src={profile} />
+          {profile ? (
+            <img src={profile} />
+          ) : (
+            <img src="https://subllet-profile.s3.ap-northeast-2.amazonaws.com/istockphoto-1223671392-170667a.jpeg" />
+          )}
+          <div>
+            <label htmlFor="file">사진 변경</label>
+            <input
+              type="file"
+              id="file"
+              style={{ display: "none" }}
+              onChange={changeProfile}
+            />
+            <button onClick={delProfile}>사진 삭제</button>
+          </div>
         </ImgForm>
         <InfoForm>
           <InfoInput>
@@ -197,20 +229,9 @@ const ModifyInfo = () => {
               ) : null}
             </div>
           </InfoInput>
-          <ChangeButton>
-            <label htmlFor="file">프로필 사진변경</label>
-            <input
-              type="file"
-              id="file"
-              style={{ display: "none" }}
-              onChange={changeProfile}
-            />
-          </ChangeButton>
+          <button onClick={changeInfo}>수정 완료</button>
         </InfoForm>
       </StyledForm>
-      <ButtonForm>
-        <button onClick={changeInfo}>수정 완료</button>
-      </ButtonForm>
     </StyledBody>
   );
 };
