@@ -53,8 +53,14 @@ module.exports = {
       const id = req.id;
       const { nickname, profile } = req.body;
 
-      if (!nickname) {
-        return res.status(400).send("Empty body");
+      const findUser = await User.findOne({
+        where: { nickname },
+      });
+
+      if (findUser) {
+        if (findUser.id !== id) {
+          return res.status(400).send("Overlap");
+        }
       }
 
       await User.update(
@@ -104,30 +110,6 @@ module.exports = {
         return res.status(204).send("Success");
       } catch (err) {
         console.error(err);
-      }
-    },
-  },
-  nickname: {
-    post: async (req, res) => {
-      const { nickname } = req.body;
-
-      if (!nickname) {
-        return res.status(400).send("Empty body");
-      }
-
-      const isNickname = await User.findOne({
-        where: { nickname },
-      });
-
-      if (isNickname) {
-        return res.status(400).send("Overlap");
-      }
-
-      try {
-        return res.send("Ok");
-      } catch (err) {
-        console.error(err);
-        return res.status(500).send("Server error");
       }
     },
   },

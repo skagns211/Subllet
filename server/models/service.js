@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       message: DataTypes.TEXT,
       inner_image: DataTypes.STRING,
       outer_image: DataTypes.STRING,
+      total_likes: DataTypes.INTEGER,
       category: DataTypes.STRING,
       url: DataTypes.STRING,
       demo: DataTypes.BOOLEAN,
