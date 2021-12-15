@@ -1,10 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
+import React from "react";
 import styled from "styled-components";
-import dummy from "../../dummy/dummy";
-
-import wavve_scrap from "../../IMG/Logo/wavve_scrap.png";
+import { useNavigate } from "react-router-dom";
 
 const MyScrapContainer = styled.main`
   /* width: 100%; */
@@ -63,6 +59,7 @@ const ScrapImg = styled.img`
 `;
 
 const MyScrap = ({ myScrap }) => {
+  const navigate = useNavigate();
   return (
     <MyScrapContainer>
       <TitleBox>
@@ -71,7 +68,11 @@ const MyScrap = ({ myScrap }) => {
       <MyScrapBox>
         {myScrap.map((el) => {
           return (
-            <div>
+            <div
+              onClick={() => {
+                navigate(`/`);
+              }}
+            >
               <ScrapImg src={el.outer_image} />
             </div>
           );

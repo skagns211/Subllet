@@ -53,7 +53,7 @@ module.exports = {
       });
 
       const subscribe = await Subscribe.findOne({
-        attributes: ["paydate", "planname", "planprice", "createdAt"],
+        attributes: ["id", "paydate", "planname", "planprice", "createdAt"],
         where: { id: created.id },
         include: [
           {
@@ -71,12 +71,9 @@ module.exports = {
       }
     },
     patch: async (req, res) => {
-      const id = req.params.id;
+      const user_id = req.id;
+      const service_id = req.params.id;
       const { paydate, planname, planprice } = req.body;
-
-      if (!planname || !planprice) {
-        return res.status(400).send("Empty body");
-      }
 
       const updated = await Subscribe.update(
         {
@@ -85,7 +82,7 @@ module.exports = {
           planprice,
         },
         {
-          where: { id },
+          where: { user_id, service_id },
         }
       );
 

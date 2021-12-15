@@ -48,25 +48,6 @@ const SelectTab = styled(Select)`
   }
 `;
 
-const styles = {
-  singleValue: (provided, state) => ({
-    ...provided,
-    color: "#ff8a00",
-  }),
-  noOptionsMessage: (provided, state) => ({
-    ...provided,
-    color: "white",
-  }),
-  option: (provided, state) => ({
-    ...provided,
-    ":hover": {
-      fontWeight: "regular",
-      background: "#3a3f51",
-    },
-  }),
-  clearIndicator: (provided) => ({ ...provided, color: "gray" }),
-};
-
 //!----------------------------------------------
 
 const SelectTab2 = styled(Select)`
@@ -114,6 +95,150 @@ const SelectTab2 = styled(Select)`
   }
 `;
 
+//!-------------------------------------------------
+const SelectTabNav = styled(Select)`
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  height: 1rem;
+  width: 20rem;
+  font-size: 1rem;
+  display: flex;
+  @media only screen and (max-width: 800px) {
+    display: none;
+  }
+  .Select__control {
+    width: 100%;
+    height: auto;
+    border: 0.5px solid #ff8a00;
+    border-radius: 0.2em;
+    background-color: black;
+    color: white !important;
+    cursor: pointer;
+    text-align: center;
+    :hover {
+      border-color: white;
+      background-color: #3a3f51;
+    }
+    @media only screen and (max-width: 1050px) and (min-width: 800px) {
+      width: 15rem;
+    }
+  }
+  .Select__placeholder {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+  .Select__option {
+    background-color: black;
+    color: #ff8a00;
+    /* font-size: 1rem; */
+  }
+  .Select__input {
+    color: white !important;
+  }
+  .Select__menu {
+    color: #ff8a00;
+    background-color: black;
+    font-size: 0.8rem;
+    border: 0.5px solid #ff8a00;
+    /* text-align: center; */
+  }
+  .Select__label {
+  }
+
+  .Select__control--is-focused {
+    /* box-shadow: 0 0 0 1px #ff8a00; */
+    outline: none;
+  }
+
+  .Select__indicator-separator {
+    display: none;
+  }
+`;
+//!--------------------------------------------------
+const SelectTabNavDown = styled(Select)`
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  height: 1rem;
+  width: 20rem;
+  font-size: 1rem;
+  display: flex;
+  @media only screen and (max-width: 800px) {
+    width: 95%;
+    margin: auto;
+  }
+
+  .Select__control {
+    width: 100%;
+    height: auto;
+    font-size: 1rem;
+    border: 0.5px solid #ff8a00;
+    border-radius: 0.2em;
+    background-color: black;
+    color: white !important;
+    cursor: pointer;
+    text-align: center;
+    :hover {
+      border-color: white;
+      background-color: #3a3f51;
+    }
+    @media only screen and (max-width: 1050px) and (min-width: 800px) {
+      width: 15rem;
+    }
+  }
+  .Select__placeholder {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+  .Select__option {
+    background-color: black;
+    color: #ff8a00;
+    font-size: 1rem;
+  }
+  .Select__input {
+    color: white !important;
+  }
+  .Select__menu {
+    color: #ff8a00;
+    background-color: black;
+    font-size: 0.8rem;
+    border: 0.5px solid #ff8a00;
+    /* text-align: center; */
+  }
+  .Select__label {
+  }
+
+  .Select__control--is-focused {
+    /* box-shadow: 0 0 0 1px #ff8a00; */
+    outline: none;
+  }
+
+  .Select__indicator-separator {
+    display: none;
+  }
+`;
+
+//!--------------------------------------------------
+const styles = {
+  singleValue: (provided, state) => ({
+    ...provided,
+    color: "#ff8a00",
+  }),
+  noOptionsMessage: (provided, state) => ({
+    ...provided,
+    color: "white",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    ":hover": {
+      fontWeight: "regular",
+      background: "#3a3f51",
+    },
+  }),
+  menu: (provided, state) => ({
+    ...provided,
+    fontSize: 1,
+  }),
+  clearIndicator: (provided) => ({ ...provided, color: "gray" }),
+};
+
 //!--------------------------------------------------
 const List = styled.div`
   /* text-align: center; */
@@ -138,16 +263,11 @@ const List = styled.div`
 //   object-fit: cover;
 // `;
 
-export const SelectService = ({ index, setIndex }) => {
+export const SelectService = ({ index, setIndex, postBody, setPostBody }) => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const allServices = state.services;
   // console.log(state.services);
-
-  const [data, setData] = useState({
-    value: { label: "", value: "" },
-  });
-  // console.log(data.value);
 
   const options2 = allServices.map((service, idx) => {
     return {
@@ -157,23 +277,28 @@ export const SelectService = ({ index, setIndex }) => {
           <div>{service.title}</div>
         </List>
       ),
-      value: service.title,
+      value: { title: service.title, id: service.id },
     };
   });
   console.log(index);
 
   const handleChange = (value) => {
-    setData({ value: value });
+    if (value !== null) {
+      setPostBody({ ...postBody, id: value.value.id });
+    } else {
+      setPostBody({ ...postBody, id: "" });
+    }
+    // console.log(value.value.id);
   };
 
   return (
     <SelectTab
       classNamePrefix="Select"
       options={options2}
+      onChange={(value) => handleChange(value)}
       search
       // value={data.value}
       styles={styles}
-      onChange={(value) => handleChange(value)}
       noOptionsMessage={({ inputValue }) =>
         !inputValue ? null : "해당하는 구독이 없습니다."
       }
@@ -183,15 +308,18 @@ export const SelectService = ({ index, setIndex }) => {
   );
 };
 
-export const SelectPlanPrice = ({ index, setIndex, filtered, prices }) => {
+export const SelectPlanPrice = ({
+  index,
+  setIndex,
+  filtered,
+  postBody,
+  setPostBody,
+}) => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const allServices = state.services;
   console.log(allServices);
 
-  const [data, setData] = useState({
-    value: { label: "", value: "" },
-  });
   console.log(filtered);
   // const options2 = filtered[0].Prices.map((el) => {
   //   return {
@@ -199,15 +327,28 @@ export const SelectPlanPrice = ({ index, setIndex, filtered, prices }) => {
   //     value: `${el.title + "," + el.price}`,
   //   };
   // });
-  const option = [{ label: "서비스륾 먼저 선택해주세요.", value: "" }];
-  const options = [
-    { label: "2인용 요금제, 3000원", value: "2인용 요금제, 3000원" },
-    { label: "3인용 요금제, 5000원", value: "3인용 요금제, 5000원" },
-    { label: "4인용 요금제, 6000원", value: "4인용 요금제, 6000원" },
-  ];
+
+  const option = [{ label: "서비스를 먼저 선택해주세요.", value: "" }];
+  // const options = [
+  //   { label: "2인용 요금제, 3000원", value: "2인용 요금제, 3000원" },
+  //   { label: "3인용 요금제, 5000원", value: "3인용 요금제, 5000원" },
+  //   { label: "4인용 요금제, 6000원", value: "4인용 요금제, 6000원" },
+  // ];
 
   const handleChange = (value) => {
-    setData({ value: value });
+    if (value !== null) {
+      setPostBody({
+        ...postBody,
+        planname: value.value[0].title,
+        planprice: value.value[0].price,
+      });
+    } else {
+      setPostBody({
+        ...postBody,
+        planname: "",
+        planprice: "",
+      });
+    }
   };
 
   return (
@@ -219,7 +360,7 @@ export const SelectPlanPrice = ({ index, setIndex, filtered, prices }) => {
           : filtered[0].Prices.map((el) => {
               return {
                 label: `${el.title + "," + el.price}`,
-                value: `${el.title + "," + el.price}`,
+                value: [{ title: el.title, price: el.price }],
               };
             })
       }
@@ -236,12 +377,7 @@ export const SelectPlanPrice = ({ index, setIndex, filtered, prices }) => {
   );
 };
 
-export const SelectDate = () => {
-  const [data, setData] = useState({
-    value: { label: "", value: "" },
-  });
-  console.log(data.value);
-
+export const SelectDate = ({ postBody, setPostBody }) => {
   const days = () => {
     let arr = [];
     for (let i = 1; i <= 31; i++) {
@@ -253,7 +389,17 @@ export const SelectDate = () => {
   const options = days();
 
   const handleChange = (value) => {
-    setData({ value: value });
+    if (value !== null) {
+      setPostBody({
+        ...postBody,
+        paydate: value.value,
+      });
+    } else {
+      setPostBody({
+        ...postBody,
+        paydate: "",
+      });
+    }
   };
 
   return (
@@ -261,7 +407,6 @@ export const SelectDate = () => {
       classNamePrefix="Select"
       options={options}
       search
-      // value={data.value}
       styles={styles}
       onChange={(value) => handleChange(value)}
       noOptionsMessage={({ inputValue }) =>
@@ -273,12 +418,7 @@ export const SelectDate = () => {
   );
 };
 
-export const SelectDate2 = () => {
-  const [data, setData] = useState({
-    value: { label: "", value: "" },
-  });
-  console.log(data.value);
-
+export const SelectDate2 = ({ patchBody, setPatchBody }) => {
   const days = () => {
     let arr = [];
     for (let i = 1; i <= 31; i++) {
@@ -286,11 +426,20 @@ export const SelectDate2 = () => {
     }
     return arr;
   };
-
   const options = days();
 
   const handleChange = (value) => {
-    setData({ value: value });
+    if (value !== null) {
+      setPatchBody({
+        ...patchBody,
+        paydate: value.value,
+      });
+    } else {
+      setPatchBody({
+        ...patchBody,
+        paydate: "",
+      });
+    }
   };
 
   return (
@@ -309,5 +458,129 @@ export const SelectDate2 = () => {
     />
   );
 };
+
+export const SelectPrice = ({ options, patchBody, setPatchBody }) => {
+  const handleChange = (value) => {
+    if (value !== null) {
+      setPatchBody({
+        ...patchBody,
+        id: value.value.id,
+        planname: value.value.planname,
+        planprice: value.value.planprice,
+      });
+    } else {
+      setPatchBody({
+        ...patchBody,
+        id: "",
+        planname: "",
+        planprice: "",
+      });
+    }
+    console.log(value);
+  };
+
+  return (
+    <SelectTab2
+      classNamePrefix="Select"
+      options={options}
+      search
+      styles={styles}
+      onChange={(value) => handleChange(value)}
+      noOptionsMessage={({ inputValue }) =>
+        !inputValue ? null : "해당하는 요금제가 존재하지 않습니다."
+      }
+      placeholder="요금제를 선택해주세요."
+      isClearable
+    />
+  );
+};
 // export default SelectBox;
 // export default SelectBox2;
+
+export const NavSelectService = ({ setIndex, postBody, setPostBody }) => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const allServices = state.services;
+  // console.log(state.services);
+
+  const options2 = allServices.map((service, idx) => {
+    return {
+      label: (
+        <List>
+          <img src={service.outer_image} />
+          <div>{service.title}</div>
+        </List>
+      ),
+      value: service.title,
+    };
+  });
+
+  const handleChange = (value) => {
+    if (value !== null) {
+      setPostBody({ ...postBody, id: value.value.id });
+    } else {
+      setPostBody({ ...postBody, id: "" });
+    }
+    // console.log(value.value.id);
+  };
+
+  return (
+    <SelectTabNav
+      classNamePrefix="Select"
+      options={options2}
+      // onChange={(value) => handleChange(value)}
+      search
+      // value={data.value}
+      styles={styles}
+      noOptionsMessage={({ inputValue }) =>
+        !inputValue ? null : "해당하는 구독이 없습니다."
+      }
+      placeholder="구독을 선택해주세요."
+      isClearable
+    />
+  );
+};
+
+export const NavSelectServiceDown = ({ setIndex, postBody, setPostBody }) => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const allServices = state.services;
+  // console.log(state.services);
+
+  const options2 = allServices.map((service, idx) => {
+    return {
+      label: (
+        <List>
+          <img src={service.outer_image} />
+          <div>{service.title}</div>
+        </List>
+      ),
+      value: service.title,
+    };
+  });
+
+  const handleChange = (value) => {
+    if (value !== null) {
+      setPostBody({ ...postBody, id: value.value.id });
+    } else {
+      setPostBody({ ...postBody, id: "" });
+    }
+    // console.log(value.value.id);
+  };
+
+  return (
+    <SelectTabNavDown
+      classNamePrefix="Select"
+      options={options2}
+      // onChange={(value) => handleChange(value)}
+      search
+      // value={data.value}
+      styles={styles}
+      noOptionsMessage={({ inputValue }) =>
+        !inputValue ? null : "해당하는 구독이 없습니다."
+      }
+      placeholder="구독을 선택해주세요."
+      isClearable
+    />
+  );
+};

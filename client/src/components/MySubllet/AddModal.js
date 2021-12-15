@@ -90,7 +90,7 @@ const Button = styled.button`
   }
 `;
 
-const AddModal = ({ openModalHandler }) => {
+const AddModal = ({ openModalHandler, setIsOpen, myScribe, setMyScribe }) => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -99,7 +99,37 @@ const AddModal = ({ openModalHandler }) => {
 
   const [index, setIndex] = useState("");
   const [filtered, setFiltered] = useState([]);
-  const [prices, setPrices] = useState([]);
+  const [postBody, setPostBody] = useState({
+    id: "",
+    planname: "",
+    planprice: "",
+    paydate: "",
+  });
+
+  const scribeAddHandler = () => {
+    axios
+      .post(`/subscribe/${postBody.id}`, postBody)
+      .then((res) => {
+        if (res.data.subscribe) {
+          console.log(res.data.subscribe);
+          setMyScribe([...myScribe, res.data.subscribe]);
+          setIsOpen(false);
+          console.log("추가완료");
+          navigate("/mysubllet");
+        }
+      })
+      .catch((err) => {
+        console.error(err.response);
+        if (err.response.data === "Overlap") {
+          alert("이미 구독중인 서비스입니다.");
+        } else if (err.response.data === "Empty body") {
+          alert("입력사항을 모두 선택해주세요.");
+        }
+      });
+  };
+  useEffect(() => {
+    console.log(postBody);
+  }, [postBody]);
 
   useEffect(() => {
     setFiltered(
@@ -124,21 +154,27 @@ const AddModal = ({ openModalHandler }) => {
         <ContentBox>
           <AddHeader> 구독을 추가해주세요! </AddHeader>
           <Title>Service</Title>
-          <SelectService index={index} setIndex={setIndex} />
+          <SelectService
+            index={index}
+            setIndex={setIndex}
+            setPostBody={setPostBody}
+            postBody={postBody}
+          />
           <Title>Plan & Price</Title>
           <SelectPlanPrice
             index={index}
             setIndex={setIndex}
             filtered={filtered}
-            prices={prices}
+            setPostBody={setPostBody}
+            postBody={postBody}
           />
           <Title>PayDate</Title>
-          <SelectDate />
+          <SelectDate setPostBody={setPostBody} postBody={postBody} />
           <span>
             <Button
               onClick={() => {
                 // navigate("/mysubllet");
-                openModalHandler();
+                scribeAddHandler();
               }}
             >
               구독추가
