@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { selectPlan } from "../../actions";
 
-const StyledBody = styled.div`
+const StyledBody = styled.section`
   max-width: 100%;
 `;
 
 const Service = styled.div`
-  @media only screen and (min-width: 800px) {
+  @media only screen and (min-width: 768px) {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -21,20 +21,26 @@ const Service = styled.div`
 const ServiceDetail = styled.div`
   background-color: #252a3b;
   color: white;
-  font-size: 2rem;
+  font-size: 1rem;
   border-radius: 5px;
   padding: 1rem;
-  margin: 0.5rem 0rem;
+  margin: 0.5rem 1rem;
   display: flex;
   flex-direction: column;
   input {
-    margin: 1rem;
+    margin-right: 0.5rem;
   }
-
-  @media only screen and (min-width: 800px) {
-    height: 20rem;
-    /* width: 37rem; */
+  label {
+    margin: 0.5rem 0 0rem 0rem;
+  }
+  div {
+    margin: 0.5rem 0 0rem 0rem;
+  }
+  @media only screen and (min-width: 768px) {
+    font-size: 1.5rem;
+    min-height: 20rem;
     flex-wrap: nowrap;
+    margin: 1rem 0 1rem 0;
   }
 `;
 
@@ -43,27 +49,37 @@ const LinkButton = styled.div`
   justify-content: center;
   button {
     background-color: #252a3b;
-    margin: 0.5rem 0rem;
-    font-size: 2rem;
+    margin: 0.5rem 1rem;
+    font-size: 1rem;
     border-radius: 5px;
     width: 100%;
     border: 0px;
     padding: 0.5rem;
     color: #e37b02;
   }
+  @media only screen and (min-width: 768px) {
+    button {
+      font-size: 1.5rem;
+      margin: 0 0 1rem 0;
+      padding: 1rem;
+    }
+  }
 `;
 const ServiceOption = styled.div`
-  margin: 1rem 3rem;
-  font-size: 2rem;
+  margin: 1rem 0 0 1rem;
+  font-size: 1.5rem;
   color: #e37b02;
+  @media only screen and (min-width: 768px) {
+    margin: 1rem 0 0 0;
+    font-size: 2rem;
+  }
 `;
 
 const Price = styled.span`
   margin-right: 1rem;
 `;
 
-const ServiceContent = ({ detail, prices }) => {
-  const state = useSelector((state) => state);
+const ServiceContent = ({ detail }) => {
   const dispatch = useDispatch();
 
   const [serviceMsg, setServiceMsg] = useState();
@@ -73,7 +89,7 @@ const ServiceContent = ({ detail, prices }) => {
       setServiceMsg(detail.prices[0].message.split("-").slice(1));
       dispatch(selectPlan([detail.prices[0].title, detail.prices[0].price]));
     }
-  });
+  }, [detail.prices, serviceMsg, dispatch]);
 
   const checked = (e) => {
     const plan = e.target.value.split(",");
@@ -119,7 +135,7 @@ const ServiceContent = ({ detail, prices }) => {
           <ServiceDetail>
             {serviceMsg &&
               serviceMsg.map((message, idx) => {
-                return <div key={idx}>{`- ${message}`}</div>;
+                return <div key={idx}>- {`${message}`}</div>;
               })}
           </ServiceDetail>
         </span>

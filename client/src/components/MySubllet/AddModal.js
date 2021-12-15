@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import styled from "styled-components";
 import { SelectService, SelectPlanPrice, SelectDate } from "./Select";
 
 const ModalBackdrop = styled.div`
@@ -89,7 +91,27 @@ const Button = styled.button`
 `;
 
 const AddModal = ({ openModalHandler }) => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  // console.log(state.services);
+  const allServices = state.services;
+
+  const [index, setIndex] = useState("");
+  const [filtered, setFiltered] = useState([]);
+  const [prices, setPrices] = useState([]);
+
+  useEffect(() => {
+    setFiltered(
+      allServices.filter((service, i) => {
+        if (i === index) {
+          return service;
+        }
+      })
+    );
+  }, [index]);
+  // console.log(filtered);
+  useEffect(() => {}, [filtered]);
 
   return (
     <>
@@ -102,9 +124,14 @@ const AddModal = ({ openModalHandler }) => {
         <ContentBox>
           <AddHeader> 구독을 추가해주세요! </AddHeader>
           <Title>Service</Title>
-          <SelectService />
+          <SelectService index={index} setIndex={setIndex} />
           <Title>Plan & Price</Title>
-          <SelectPlanPrice />
+          <SelectPlanPrice
+            index={index}
+            setIndex={setIndex}
+            filtered={filtered}
+            prices={prices}
+          />
           <Title>PayDate</Title>
           <SelectDate />
           <span>

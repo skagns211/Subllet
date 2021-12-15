@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const StyledBody = styled.div`
@@ -48,6 +49,35 @@ const DeleteButton = styled.div`
 `;
 
 const DeleteForm = () => {
+  const [pwd, setPwd] = useState();
+  const [emptyPwd, setEmptyPwd] = useState(false);
+  const [wrongPwd, setWrongPwd] = useState(false);
+
+  const inputPwd = (e) => {
+    setPwd(e.target.value);
+    setEmptyPwd(false);
+  };
+
+  const delAccount = () => {
+    if (!pwd) {
+      setEmptyPwd(true);
+    } else {
+      axios
+        .post("/user", {
+          password: pwd,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response && err.response.status === 400) {
+            setWrongPwd(true);
+          }
+        });
+    }
+  };
+
   return (
     <StyledBody>
       <DeleteLabel>회원 탈퇴</DeleteLabel>
@@ -55,11 +85,17 @@ const DeleteForm = () => {
         <div>
           <PasswordInput>
             <div>비밀번호</div>
-            <input type="password" placeholder="비밀번호를 입력해주세요" />
+            <input
+              type="password"
+              placeholder="비밀번호를 입력해주세요"
+              onChange={inputPwd}
+            />
+            {emptyPwd ? <div>비밀번호를 입력해주세요</div> : null}
+            {wrongPwd ? <div>잘못된 비밀번호입니다.</div> : null}
           </PasswordInput>
         </div>
         <DeleteButton>
-          <button>탈퇴</button>
+          <button onClick={delAccount}>탈퇴</button>
         </DeleteButton>
       </StyledForm>
     </StyledBody>

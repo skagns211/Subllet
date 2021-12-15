@@ -24,6 +24,7 @@ export const SELECT_PLAN = "SELECT_PLAN"; // Detail Page
 // export const KAKAO_AUTH_CODE = "KAKAO_AUTH_CODE";
 export const NAVER_AUTH_CODE = "NAVER_AUTH_CODE";
 export const AUTH_CODE = "AUTH_CODE";
+export const CHANGE_USER_INFO = "CHANGE_USER_INFO";
 
 export const setLoginUserInfo = (loginUserInfo) => {
   console.log(loginUserInfo);
@@ -80,6 +81,13 @@ export const setAuthUserInfo = (data) => {
       payload: data,
     };
   }
+};
+
+export const changeUserInfo = (data) => {
+  return {
+    type: CHANGE_USER_INFO,
+    payload: data,
+  };
 };
 
 export const selectPlan = (plan) => {
