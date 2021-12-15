@@ -190,11 +190,11 @@ const SelectBox = styled.select`
 const MyScirbe = ({ myScribe }) => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  console.log(myScribe);
-  console.log(state.services);
-  const sortedMyScribe = myScribe.sort((a, b) => a - b);
+
+  const sortedMyScribe = myScribe.sort((a, b) => {
+    return a.Service.id - b.Service.id;
+  });
   const allServices = state.services;
-  console.log(sortedMyScribe);
 
   const ID = myScribe.map((el) => {
     return el.Service.id;
@@ -206,7 +206,6 @@ const MyScirbe = ({ myScribe }) => {
       }
     }
   });
-  console.log(myScribeInfo);
 
   const [isModify, setIsModify] = useState(false);
   const scribeHandler = () => {
@@ -221,6 +220,19 @@ const MyScirbe = ({ myScribe }) => {
   const openModalHandler = () => {
     setIsOpen(!isOpen);
   }; //! 모달 오픈 핸들러
+
+  const [testing, setTesting] = useState();
+  const [testing2, setTesting2] = useState(false);
+
+  const test = (idx) => {
+    setTesting2(!testing2);
+    setTesting(idx);
+  };
+
+  // let test4 = test3.Prices[0].map((price) => price);
+
+  // console.log(test3.Prices[0]);
+  // console.log(test4);
 
   return (
     <MyScribeContainer>
@@ -241,17 +253,63 @@ const MyScirbe = ({ myScribe }) => {
           <div className="categoryTab">카테고리</div>
         </CategoryBox>
         {isModify === false
-          ? myScribe.map((el) => {
+          ? sortedMyScribe.map((el, idx) => {
               return (
                 <ListBox>
                   <div className="name">
                     <img src={el.Service.outer_image} />
                   </div>
-                  <div className="plan">
-                    {el.planname},{[el.planprice]}
-                  </div>
-                  <div className="date">매달 {el.paydate}일</div>
-                  <div className="category">{el.Service.category}</div>
+
+                  {testing === idx ? (
+                    <>
+                      {testing2 ? (
+                        // myScribeInfo.map((service) => {
+                        //   return (
+                        //     <div className="plan">
+                        //       <SelectBox name="modifyPlan">
+                        //         {service.Prices.map((el) => {
+                        //           return (
+                        //             <option selected>
+                        //               {el.title},{[el.price]}
+                        //             </option>
+                        //           );
+                        //         })}
+                        //       </SelectBox>
+                        //     </div>
+                        //   );
+                        // })
+                        myScribeInfo
+                          .filter((service, index) => index === 1)
+                          .Prices[0].map((price) => {
+                            <div>
+                              {el.title},{[el.price]}
+                            </div>;
+                          })
+                      ) : (
+                        <div className="plan">
+                          {el.planname},{[el.planprice]}
+                        </div>
+                      )}
+                      <div className="date">매달 {el.paydate}일</div>
+                      <div className="category">{el.Service.category}</div>
+                      {testing2 ? (
+                        <button onClick={() => test(idx)}>수정완료</button>
+                      ) : (
+                        <button onClick={() => test(idx)}>수정하기</button>
+                      )}
+                      <button>삭제</button>
+                    </>
+                  ) : (
+                    <>
+                      <div className="plan">
+                        {el.planname},{[el.planprice]}
+                      </div>
+                      <div className="date">매달 {el.paydate}일</div>
+                      <div className="category">{el.Service.category}</div>
+                      <button onClick={() => test(idx)}>수정하기</button>
+                      <button>삭제</button>
+                    </>
+                  )}
                 </ListBox>
               );
             })

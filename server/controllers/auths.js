@@ -41,8 +41,8 @@ module.exports = {
       const url =
         process.env.SERVER_ORIGIN + "/auth/confirm/email?key=" + emailKey;
 
-      const emailContent = emailVerify(email, nickname, url);
-      emailSend(emailContent);
+      // const emailContent = emailVerify(email, nickname, url);
+      // emailSend(emailContent);
 
       try {
         res.status(201).send("Signup success");
@@ -192,6 +192,7 @@ module.exports = {
         return res.status(401).send("Not exist user");
       }
 
+      res.clearCookie("accessToken");
       delete userInfo.dataValues.password;
       delete userInfo.dataValues.salt;
       const newAccessToken = generateAccessToken(userInfo.dataValues);

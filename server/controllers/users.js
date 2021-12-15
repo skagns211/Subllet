@@ -53,8 +53,14 @@ module.exports = {
       const id = req.id;
       const { nickname, profile } = req.body;
 
-      if (!nickname) {
-        return res.status(400).send("Empty body");
+      const findUser = await User.findOne({
+        where: { nickname },
+      });
+
+      if (findUser) {
+        if (findUser.id !== id) {
+          return res.status(400).send("Overlap");
+        }
       }
 
       await User.update(

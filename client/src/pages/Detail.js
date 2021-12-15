@@ -4,11 +4,9 @@ import InnerImage from "../components/Detail/InnerImage";
 import ServiceContent from "../components/Detail/ServiceContent";
 import Comment from "../components/Detail/Comment";
 import { useParams } from "react-router";
-import { setService, setServices } from "../actions";
-import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
-const StyledBody = styled.section`
+const StyledBody = styled.article`
   max-width: 950px;
   margin: 0 auto;
   transition: 0.4s;
@@ -45,7 +43,7 @@ const Detail = () => {
         isSub={isSub}
         setIsSub={setIsSub}
       />
-      <ServiceContent detail={detail} prices={prices} />
+      <ServiceContent detail={detail} />
       <Comment
         detail={detail}
         ServiceId={ServiceId}

@@ -33,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: #130D0A;
     box-sizing: border-box;
     position: relative;
-    min-width: 530px;
+    /* min-width: 530px; */
     min-height: 100vh;
     /* display: flex; */
     /* overflow: hidden; */
@@ -95,19 +95,24 @@ function App() {
       });
   };
 
+  const refreshToken = async () => {
+    axios
+      .post("/auth/refresh", null)
+      .then((res) => {
+        return true;
+      })
+      .catch((err) => {
+        return false;
+      });
+  };
+
   useEffect(() => {
     if (state.isLogin) {
-      const time = 1000 * 60 * 29.5;
       setInterval(() => {
-        axios
-          .post("/auth/refresh", null)
-          .then((res) => {
-            console.log("new token");
-          })
-          .catch((err) => {
-            logoutHandler();
-          });
-      }, 30000);
+        if (!refreshToken()) {
+          logoutHandler();
+        }
+      }, 3000);
     }
   }, []);
 
