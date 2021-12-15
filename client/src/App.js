@@ -33,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: #130D0A;
     box-sizing: border-box;
     position: relative;
-    min-width: 530px;
+    /* min-width: 530px; */
     min-height: 100vh;
     /* display: flex; */
     /* overflow: hidden; */

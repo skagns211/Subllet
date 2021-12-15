@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import AlertModal from "../AlertModal";
+import { changeUserInfo } from "../../actions";
 
 const StyledBody = styled.div`
   color: white;
@@ -67,7 +68,6 @@ const InfoInput = styled.div`
 `;
 
 const ChangeButton = styled.div`
-  button,
   label {
     padding: 1rem;
     font-size: 1.5rem;
@@ -89,15 +89,14 @@ const ErrMsg = styled.span`
 
 const ModifyInfo = () => {
   const UserInfo = useSelector((state) => state.loginUserInfo);
+  const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState({});
   const [profile, setProfile] = useState(UserInfo.profile);
-  const [nick, setNick] = useState();
-
-  const [goodNick, setGoodNick] = useState(false);
-  const [badNick, setBadNick] = useState(false);
-  const [checkNick, setCheckNick] = useState(false);
+  const [nick, setNick] = useState(UserInfo.nickname);
+  const [emptyNick, setEmptyNick] = useState(false);
+  const [duplicate, setDuplicate] = useState(false);
 
   const AWS = require("aws-sdk");
 
@@ -139,40 +138,33 @@ const ModifyInfo = () => {
   };
 
   const inputNickname = (e) => {
+    setDuplicate(false);
+    setEmptyNick(false);
     setNick(e.target.value);
   };
 
-  const checkNickname = () => {
-    axios
-      .post("/user/nickname", {
-        nickname: nick,
-      })
-      .then((res) => {
-        setGoodNick(true);
-        setBadNick(false);
-        setCheckNick(true);
-      })
-      .catch((err) => {
-        setGoodNick(false);
-        setBadNick(true);
-        setCheckNick(false);
-      });
-  };
-
   const changeInfo = () => {
-    if (checkNick) {
+    if (!nick) {
+      setEmptyNick(true);
+    } else {
       axios
         .patch("/user", {
           nickname: nick,
           profile,
         })
-        .then((res) => console.log(res));
-    } else {
-      setAlertMsg({
-        message: "닉네임 중복체크를 해주세요!",
-        button: "확인",
-      });
-      setOpen(!open);
+        .then((res) => {
+          setAlertMsg({
+            message: "정보가 변경되었습니다.",
+            button: "확인",
+          });
+          setOpen(!open);
+          dispatch(changeUserInfo(res.data.userInfo));
+        })
+        .catch((err) => {
+          if (err.response && err.response.status === 400) {
+            setDuplicate(true);
+          }
+        });
     }
   };
 
@@ -195,12 +187,13 @@ const ModifyInfo = () => {
                 type="text"
                 placeholder="닉네임을 입력해주세요"
                 onChange={inputNickname}
+                value={nick}
               />
-              {goodNick ? (
-                <ErrMsg color={"green"}>사용 가능한 닉네임입니다.</ErrMsg>
-              ) : null}
-              {badNick ? (
+              {duplicate ? (
                 <ErrMsg color={"red"}>중복된 닉네임입니다.</ErrMsg>
+              ) : null}
+              {emptyNick ? (
+                <ErrMsg color={"red"}>닉네임을 입력해주세요.</ErrMsg>
               ) : null}
             </div>
           </InfoInput>
@@ -212,7 +205,6 @@ const ModifyInfo = () => {
               style={{ display: "none" }}
               onChange={changeProfile}
             />
-            <button onClick={checkNickname}>닉네임 중복확인</button>
           </ChangeButton>
         </InfoForm>
       </StyledForm>

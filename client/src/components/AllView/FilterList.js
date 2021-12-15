@@ -1,5 +1,4 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -42,7 +41,7 @@ const ServiceList = styled.div`
     }
   }
 `;
-const FilterList = ({ services, filter }) => {
+const FilterList = ({ filter }) => {
   return (
     <StyledBody>
       <ServiceList>

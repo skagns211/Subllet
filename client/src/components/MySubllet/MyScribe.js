@@ -216,13 +216,10 @@ const SelectBox = styled.select`
 const MyScirbe = ({ myScribe }) => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  console.log(myScribe);
-  console.log(state.services);
   const sortedMyScribe = myScribe.sort((a, b) => {
     return a.Service.id - b.Service.id;
   });
   const allServices = state.services;
-  console.log(sortedMyScribe);
 
   const ID = myScribe.map((el) => {
     return el.Service.id;
@@ -234,7 +231,6 @@ const MyScirbe = ({ myScribe }) => {
       }
     }
   });
-  console.log(myScribeInfo);
 
   const [isModify, setIsModify] = useState(false);
   const scribeHandler = (idx) => {
@@ -253,7 +249,6 @@ const MyScirbe = ({ myScribe }) => {
   const openModalHandler = () => {
     setIsOpen(!isOpen);
   }; //! 모달 오픈 핸들러
-
   let filtered = [];
 
   return (
@@ -335,7 +330,6 @@ const MyScirbe = ({ myScribe }) => {
             </ListBox>
           );
         })}
-
         {!isAdd ? null : <ListBox></ListBox>}
         {/* {!isModify ? null : (
           <AddBox>

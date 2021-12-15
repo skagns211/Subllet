@@ -1,10 +1,10 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import AlertModal from "../AlertModal";
 
-const StyledBody = styled.div`
+const StyledBody = styled.section`
   max-width: 100%;
   margin-bottom: 1rem;
   .fa-thumbs-up {
@@ -16,35 +16,46 @@ const StyledBody = styled.div`
 `;
 
 const ServiceOption = styled.p`
-  margin: 1rem 3rem;
-  font-size: 2rem;
+  margin: 1rem 0 1rem 1rem;
+  font-size: 1.5rem;
   color: #e37b02;
+  @media only screen and (min-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 const CommentBody = styled.div`
   background-color: #252a3b;
   color: white;
-  margin: 0.5rem 0rem;
-  font-size: 2rem;
+  margin: 0.5rem 1rem;
+  font-size: 1.5rem;
   border-radius: 5px;
   padding: 1rem;
+  @media only screen and (min-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 const InputComment = styled.div`
   display: flex;
+  flex-direction: column;
   textarea {
     width: 90%;
-    height: 3.5rem;
     resize: none;
-    font-size: 1.5rem;
+    font-size: 1rem;
     padding: 1rem;
+  }
+  @media only screen and (min-width: 768px) {
+    flex-direction: row;
+    textarea {
+      font-size: 1.5rem;
+    }
   }
 `;
 
 const Likes = styled.div`
   display: flex;
   align-items: center;
-
   input {
     margin: 1rem;
   }
@@ -56,16 +67,20 @@ const SendButton = styled.div`
   button {
     background-color: #3a3f51;
     border: 0px;
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: #e37b02;
     border-radius: 5px;
     padding: 0.3rem 3rem;
+  }
+  @media only screen and (min-width: 768px) {
+    button {
+      font-size: 1.5rem;
+    }
   }
 `;
 
 const Comments = styled.div`
   display: flex;
-  /* justify-content: space-between; */
 `;
 
 const CommentList = styled.div`
@@ -74,12 +89,16 @@ const CommentList = styled.div`
   background-color: #3a3f51;
   border-radius: 5px;
   margin: 1rem 0;
+  font-size: 1rem;
   div {
     display: flex;
     justify-content: space-between;
     i {
       color: red;
     }
+  }
+  @media only screen and (min-width: 768px) {
+    font-size: 1.5rem;
   }
 `;
 
@@ -92,23 +111,32 @@ const CommentInfo = styled.div`
 const CommentLike = styled.div`
   display: flex;
   align-items: center;
-  margin: 0rem 3rem;
+  margin: 0 0 0 1rem;
+  i {
+    font-size: 1.5rem;
+  }
+  @media only screen and (min-width: 768px) {
+    margin: 0 1rem 0 2rem;
+    i {
+      font-size: 2rem;
+    }
+  }
 `;
 
-const Comment = ({
-  comments,
-  setComments,
-  ServiceId,
-  accessToken,
-  loginUserInfo,
-  detail,
-}) => {
+const Comment = ({ comments, setComments, ServiceId, detail }) => {
   const state = useSelector((state) => state);
 
   const [text, setText] = useState("");
-  const [like, setLike] = useState();
+  const [like, setLike] = useState(true);
   const [open, setOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState();
+  const [totalComments, setTotalComments] = useState();
+
+  useEffect(() => {
+    if (detail.Comments) {
+      setTotalComments(detail.Comments.length);
+    }
+  }, [detail.Comments]);
 
   const day = (createdAt) => {
     let year = createdAt.slice(0, 4);
@@ -179,7 +207,7 @@ const Comment = ({
       {open ? (
         <AlertModal alertMsg={alertMsg} handleClick={handleClick} />
       ) : null}
-      <ServiceOption>Comment {detail.total_comments}개</ServiceOption>
+      <ServiceOption>Comment {totalComments}개</ServiceOption>
       <CommentBody>
         <InputComment>
           <textarea onChange={inputText} placeholder="댓글을 입력해주세요" />
@@ -189,6 +217,7 @@ const Comment = ({
               name="likes"
               value="true"
               onChange={handleSelect}
+              defaultChecked={like}
             />
             <i className="fas fa-thumbs-up"></i>
             <input
@@ -214,14 +243,19 @@ const Comment = ({
                   </CommentInfo>
                   <div>
                     {comment.message}
-                    <i className="fas fa-minus-circle" onClick={delComment}></i>
+                    {state.loginUserInfo.nickname === comment.commenter ? (
+                      <i
+                        className="fas fa-minus-circle"
+                        onClick={delComment}
+                      ></i>
+                    ) : null}
                   </div>
                 </CommentList>
                 <CommentLike>
                   {comment.likes ? (
-                    <i className="fas fa-thumbs-up fa-2x"></i>
+                    <i className="fas fa-thumbs-up"></i>
                   ) : (
-                    <i className="fas fa-thumbs-down fa-2x"></i>
+                    <i className="fas fa-thumbs-down"></i>
                   )}
                 </CommentLike>
               </Comments>
