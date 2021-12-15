@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
@@ -76,6 +76,7 @@ function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   const currentUrl = location.pathname;
+  const [token, setToken] = useState();
   console.log(currentUrl);
 
   const logoutHandler = () => {
@@ -96,7 +97,7 @@ function App() {
   };
 
   const refreshToken = async () => {
-    axios
+    await axios
       .post("/auth/refresh", null)
       .then((res) => {
         return true;

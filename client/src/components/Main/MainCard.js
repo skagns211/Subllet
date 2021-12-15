@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import TopList from "./TopList";
@@ -78,6 +78,10 @@ const MainCardBody = styled.div`
     margin-top: 1rem;
     padding: 0.5rem 5rem 0.5rem 2.5rem;
     width: 15rem;
+    span {
+      text-decoration: underline;
+      font-weight: bold;
+    }
     div {
       text-align: center;
       margin-top: 0.7rem;
@@ -91,6 +95,14 @@ const MainCardBody = styled.div`
     padding: 0.5rem 5rem 0.5rem 2.5rem;
     width: 15rem;
     overflow: auto;
+    span {
+      margin: 0;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+    div {
+      padding-top: 0.4rem;
+    }
   }
   @media only screen and (max-width: 500px) {
     .user {
@@ -120,6 +132,15 @@ const MainCardBottom = styled.div`
     width: 7.5rem;
     height: 10.3rem;
     overflow: auto;
+    p {
+      font-weight: bold;
+      text-decoration: underline;
+      margin: 0.5rem 0 0 0;
+    }
+    div {
+      cursor: pointer;
+      padding-top: 0.4rem;
+    }
   }
   @media only screen and (max-width: 500px) {
     .subscribe {
@@ -138,6 +159,9 @@ const MainCardRightBottom = styled.div`
     padding: 0.5rem 0rem 0 1.5rem;
     width: 10.5rem;
     height: 5rem;
+    div {
+      padding-top: 0.4rem;
+    }
   }
   .addSub {
     padding: 0.5rem 1rem 0 0.5rem;
@@ -153,13 +177,10 @@ const MainCardRightBottom = styled.div`
 const MainCard = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const [service, setService] = useState([
-    "-",
-    "구독중인",
-    "서비스가",
-    "없습니다",
-  ]);
+  const navigate = useNavigate();
+  const [service, setService] = useState(["-"]);
   const [payDate, setPayDate] = useState([]);
+  const [serviceLink, setServiceLink] = useState();
   const {
     email,
     nickname,
@@ -203,6 +224,11 @@ const MainCard = () => {
               return el.Service.title;
             })
           );
+          setServiceLink(
+            res1.data.subscribes.map((el) => {
+              return el.Service.id;
+            })
+          );
           setPayDate(
             res1.data.subscribes.map((el) => {
               return el.paydate;
@@ -212,6 +238,7 @@ const MainCard = () => {
       })
     );
   }, []);
+  console.log(serviceLink && serviceLink);
 
   const nextPayDate = payDate.map((el) => {
     const date = new Date();
@@ -222,6 +249,10 @@ const MainCard = () => {
     const btDay = Math.round(btMs / (1000 * 60 * 60 * 24));
     return btDay;
   });
+
+  const handleIntoDetail = (path) => {
+    navigate(`/detail/${path}`);
+  };
 
   return (
     <>
@@ -242,7 +273,7 @@ const MainCard = () => {
           </div>
           <hr></hr>
           <span className="totalPrice">
-            <b>총 이용 금액:</b> <br />
+            <span>총 이용 금액:</span> <br />
             <div>
               ₩{" "}
               {total_price
@@ -251,21 +282,27 @@ const MainCard = () => {
             </div>
           </span>
           <span className="nextPay">
-            <b>다음 결제까지:</b> <br />
-            {service.map((el, idx) => {
-              return (
-                <div>
-                  {el}: {nextPayDate[idx]}일 전
-                </div>
-              );
-            })}
+            <span>다음 결제까지 :</span> <br />
+            {payDate.length !== 0
+              ? service.map((el, idx) => {
+                  return (
+                    <div>
+                      {el} : {nextPayDate[idx]}일 전
+                    </div>
+                  );
+                })
+              : "-"}
           </span>
           <MainCardBottom>
             <span className="subscribe">
-              <b>구독중</b>
+              <p>구독중</p>
               <br />
-              {service.map((el) => {
-                return <div>{el}</div>;
+              {service.map((el, idx) => {
+                return (
+                  <div onClick={() => handleIntoDetail(serviceLink[idx])}>
+                    {el}
+                  </div>
+                );
               })}
             </span>
             <MainCardRightBottom>

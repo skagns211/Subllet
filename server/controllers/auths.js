@@ -17,6 +17,8 @@ require("dotenv").config();
 const redis = require("../utils/redis");
 const emailSend = require("../utils/emails/send");
 const { emailVerify } = require("../utils/emails/content");
+const { access } = require("fs");
+let count = 0;
 
 module.exports = {
   signup: {
@@ -165,15 +167,17 @@ module.exports = {
   refresh: {
     post: async (req, res) => {
       const { accessToken, refreshToken } = req.cookies;
+      console.log(accessToken);
 
       if (!accessToken || !refreshToken) {
         return res.status(400).send("Not exist token");
       }
-
       const accessTokenData = checkAccessToken(accessToken);
       const refreshTokenData = checkRefeshToken(refreshToken);
-      console.log("auth=", accessTokenData);
+      count++;
+      console.log(accessTokenData);
       console.log(new Date());
+      console.log(count);
       if (refreshTokenData === null) {
         return res.status(401).send("Expiration");
       }
@@ -192,13 +196,11 @@ module.exports = {
       if (!userInfo) {
         return res.status(401).send("Not exist user");
       }
-
       res.clearCookie("accessToken");
       delete userInfo.dataValues.password;
       const newAccessToken = generateAccessToken(userInfo);
-
+      sendAccessToken(res, newAccessToken);
       try {
-        sendAccessToken(res, newAccessToken);
         res.send("Success");
       } catch (err) {
         console.error(err);

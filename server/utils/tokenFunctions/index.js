@@ -3,7 +3,7 @@ require("dotenv").config();
 
 module.exports = {
   generateAccessToken: (data) => {
-    return sign(data, process.env.ACCESS_SECRET, { expiresIn: "1m" });
+    return sign(data, process.env.ACCESS_SECRET, { expiresIn: "6s" });
   },
   generateRefreshToken: (data) => {
     return sign({ data }, process.env.REFRESH_SECRET, { expiresIn: "14d" });
