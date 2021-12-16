@@ -145,14 +145,7 @@ const Comment = ({
 
   const [del, setDel] = useState(false);
   const [notLogin, setNotLogin] = useState(false);
-  const [totalComments, setTotalComments] = useState();
   const { id } = state.loginUserInfo;
-
-  useEffect(() => {
-    if (detail.Comments) {
-      setTotalComments(detail.Comments.length);
-    }
-  }, [detail.Comments]);
 
   const day = (createdAt) => {
     let year = createdAt.slice(0, 4);
@@ -168,18 +161,20 @@ const Comment = ({
   const clickDel = () => {
     setOpen(!open);
     setDel(!del);
-    axios.delete(`/comment/${ServiceId}`).then((res) => {
-      setChange(!change);
-      let del = comments.filter(
-        (comment) => comment.commenter !== state.loginUserInfo.nickname
-      );
-      setComments([...del]);
-    })
-    .catch((err) => {
-      if (err.response.status === 401 && state.isLogin === true) {
-      logoutHandler();
-      }
-    });
+    axios
+      .delete(`/comment/${ServiceId}`)
+      .then((res) => {
+        setChange(!change);
+        let del = comments.filter(
+          (comment) => comment.commenter !== state.loginUserInfo.nickname
+        );
+        setComments([...del]);
+      })
+      .catch((err) => {
+        if (err.response.status === 401 && state.isLogin === true) {
+          logoutHandler();
+        }
+      });
   };
 
   const inputText = (e) => {
@@ -250,12 +245,14 @@ const Comment = ({
     }
   };
 
-
   const delComment = () => {
     setAlertMsg({ message: "댓글을 삭제하시겠습니까?", button: "확인" });
     setOpen(!open);
     setDel(!del);
   };
+
+  console.log(detail.total_likes);
+  console.log(detail.total_unlikes);
 
   return (
     <StyledBody>
@@ -269,9 +266,9 @@ const Comment = ({
         />
       ) : null}
       <ServiceOption>
-        <div>Comment {totalComments}개</div>
+        <div>Comment {comments.length}개</div>
         <div>
-          추천: {detail.total_likes} 비추천: {detail.total_unlikes}
+          추천: {totalLikes} 비추천: {totalUnLikes}
         </div>
       </ServiceOption>
       <CommentBody>

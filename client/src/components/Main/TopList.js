@@ -6,7 +6,7 @@ import styled from "styled-components";
 const StyledTopList = styled.span`
   color: #ff8a00;
   font-size: 1.5rem;
-  margin-top: 2rem;
+  // margin-top: 2rem;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
   .top {

@@ -97,8 +97,6 @@ const InnerImage = ({
   isSub,
   setIsSub,
 }) => {
-  // const navigate = useNavigate();
-
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -205,17 +203,16 @@ const InnerImage = ({
         }
       });
   };
+
   const prePage = () => {
     if (ServiceId - 1 > 0) {
       window.location.replace(`/detail/${ServiceId - 1}`);
-      // navigate(`/detail/${test}`, { replace: true });
     }
   };
 
   const nextPage = () => {
     if (ServiceId + 1 <= state.services.length) {
       window.location.replace(`/detail/${ServiceId + 1}`);
-      // navigate(`/detail/${ServiceId + 1}`, { replace: true });
     }
   };
 
@@ -248,8 +245,8 @@ const InnerImage = ({
           )}
         </ScrapButton>
         <MoveButton>
-          <i onClick={prePage} class="fas fa-chevron-left"></i>
-          <i onClick={nextPage} class="fas fa-chevron-right"></i>
+          <i onClick={prePage} className="fas fa-chevron-left"></i>
+          <i onClick={nextPage} className="fas fa-chevron-right"></i>
         </MoveButton>
         <DetailMessage>
           <span>{detail.title}</span>

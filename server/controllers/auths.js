@@ -7,8 +7,8 @@ const {
 const {
   generateAccessToken,
   generateRefreshToken,
-  checkRefeshToken,
-  checkAccessToken,
+  // checkRefeshToken,
+  // checkAccessToken,
   sendAccessToken,
   sendRefreshToken,
 } = require("../utils/tokenFunctions");
@@ -43,8 +43,8 @@ module.exports = {
       const url =
         process.env.SERVER_ORIGIN + "/auth/confirm/email?key=" + emailKey;
 
-      const emailContent = emailVerify(email, nickname, url);
-      emailSend(emailContent);
+      // const emailContent = emailVerify(email, nickname, url);
+      // emailSend(emailContent);
 
       try {
         res.status(201).send("Signup success");
@@ -70,11 +70,11 @@ module.exports = {
         return res.status(404).send("Non-existent account");
       }
 
-      if (!userInfo.email_verified) {
-        req.id = userInfo.id;
-        next();
-        return;
-      }
+      // if (!userInfo.email_verified) {
+      //   req.id = userInfo.id;
+      //   next();
+      //   return;
+      // }
 
       const result = await checkPassword(password, userInfo.password);
 
@@ -163,46 +163,46 @@ module.exports = {
       }
     },
   },
-  refresh: {
-    post: async (req, res) => {
-      const { accessToken, refreshToken } = req.cookies;
+  // refresh: {
+  //   post: async (req, res) => {
+  //     const { accessToken, refreshToken } = req.cookies;
 
-      if (!accessToken || !refreshToken) {
-        return res.status(400).send("Not exist token");
-      }
-      const accessTokenData = checkAccessToken(accessToken);
-      const refreshTokenData = checkRefeshToken(refreshToken);
-      count++;
-      console.log(accessTokenData);
-      console.log(new Date());
-      console.log(count);
-      if (refreshTokenData === null) {
-        return res.status(401).send("Expiration");
-      }
+  //     if (!accessToken || !refreshToken) {
+  //       return res.status(400).send("Not exist token");
+  //     }
+  //     const accessTokenData = checkAccessToken(accessToken);
+  //     const refreshTokenData = checkRefeshToken(refreshToken);
+  //     count++;
+  //     console.log(accessTokenData);
+  //     console.log(new Date());
+  //     console.log(count);
+  //     if (refreshTokenData === null) {
+  //       return res.status(401).send("Expiration");
+  //     }
 
-      const redisRefreshToken = await redis.get(refreshTokenData.data);
-      if (refreshToken !== redisRefreshToken) {
-        return res.status(401).send("RefreshToken inconsistency");
-      }
+  //     const redisRefreshToken = await redis.get(refreshTokenData.data);
+  //     if (refreshToken !== redisRefreshToken) {
+  //       return res.status(401).send("RefreshToken inconsistency");
+  //     }
 
-      const userInfo = await User.findOne({
-        where: { id: accessTokenData.id },
-      });
-      if (!userInfo) {
-        return res.status(401).send("Not exist user");
-        res.clearCookie("accessToken");
-        delete userInfo.dataValues.password;
-        const newAccessToken = generateAccessToken(userInfo.dataValues);
-        sendAccessToken(res, newAccessToken);
-      }
-      try {
-        res.send("Success");
-      } catch (err) {
-        console.error(err);
-        res.status(500).send("Server error");
-      }
-    },
-  },
+  //     const userInfo = await User.findOne({
+  //       where: { id: accessTokenData.id },
+  //     });
+  //     if (!userInfo) {
+  //       return res.status(401).send("Not exist user");
+  //       res.clearCookie("accessToken");
+  //       delete userInfo.dataValues.password;
+  //       const newAccessToken = generateAccessToken(userInfo.dataValues);
+  //       sendAccessToken(res, newAccessToken);
+  //     }
+  //     try {
+  //       res.send("Success");
+  //     } catch (err) {
+  //       console.error(err);
+  //       res.status(500).send("Server error");
+  //     }
+  //   },
+  // },
   confirm: {
     get: async (req, res) => {
       try {
