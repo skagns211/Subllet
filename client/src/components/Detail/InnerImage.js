@@ -203,6 +203,7 @@ const InnerImage = ({
         }
       });
   };
+
   const prePage = () => {
     if (ServiceId - 1 > 0) {
       window.location.replace(`/detail/${ServiceId - 1}`);
