@@ -275,7 +275,7 @@ const MainCard = () => {
 
   const nextPayDate = payDate.map((el) => {
     const date = new Date();
-    let month = date.getMonth() + 1;
+    let month = date.getMonth();
     let year = date.getFullYear();
     const nextDate = new Date(year, month, el);
     const btMs = nextDate.getTime() - date.getTime();
@@ -318,9 +318,12 @@ const MainCard = () => {
             <span>다음 결제까지 :</span> <br />
             {payDate.length !== 0
               ? service.map((el, idx) => {
+                  const sortedDate = nextPayDate.sort((a, b) => a - b);
                   return (
                     <div key={idx}>
-                      {el} : {nextPayDate[idx]}일 전
+                      {sortedDate[idx] >= 0 && sortedDate[idx] < 10
+                        ? `${el} : ${sortedDate[idx] + 1}일 전`
+                        : null}
                     </div>
                   );
                 })
