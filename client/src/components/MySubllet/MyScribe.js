@@ -5,6 +5,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { SelectDate2, SelectPrice } from "./Select";
 import AddModal from "./AddModal";
+import { setLoginUserInfo } from "../../actions";
 
 const MyScribeContainer = styled.main`
   width: 100%;
@@ -278,12 +279,52 @@ const MyScribe = ({ myScribe, sortedMyScribe, setMyScribe, test, setTest }) => {
   const openModalHandler = () => {
     setIsOpen(!isOpen);
   }; //! 모달 오픈 핸들러
+
+  const reGetHandler = () => {
+    axios
+      .all([axios.get("/subscribe"), axios.get("/scrap")])
+      .then(
+        axios.spread((res1, res2) => {
+          const total_subscribes = res1.data.subscribes.length;
+          const price =
+            res1.data.subscribes &&
+            res1.data.subscribes.map((el) => {
+              return el.planprice.replace(/[^0-9]/g, "") * 1;
+            });
+          let total_price = 0;
+          price.length !== 0
+            ? (total_price =
+                res1.data.subscribes &&
+                price.reduce((acc, cur) => {
+                  return acc + cur;
+                }))
+            : (total_price = 0);
+          const total_scraps = res2.data.scraps.length;
+          console.log(total_scraps);
+          const loginUserInfo = {
+            id: state.loginUserInfo.id,
+            email: state.loginUserInfo.email,
+            nickname: state.loginUserInfo.nickname,
+            profile: state.loginUserInfo.profile,
+            total_subscribes,
+            total_price,
+            total_scraps,
+          };
+          dispatch(setLoginUserInfo(loginUserInfo));
+        })
+      )
+      .catch((err) => {
+        console.error(err.response);
+      });
+  };
+
   const deleteHandler = (idx) => {
     const id = sortedMyScribe[idx].Service.id;
     const copy = myScribe.slice();
     copy.splice(idx, 1);
     axios.delete(`/subscribe/${id}`).then((res) => {
       setMyScribe(copy);
+      reGetHandler();
       console.log("삭제완료");
     });
   };
@@ -391,6 +432,7 @@ const MyScribe = ({ myScribe, sortedMyScribe, setMyScribe, test, setTest }) => {
             setIsOpen={setIsOpen}
             myScribe={myScribe}
             setMyScribe={setMyScribe}
+            reGetHandler={reGetHandler}
           />
         ) : null}
       </MyScribeBox>

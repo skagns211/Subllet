@@ -1,6 +1,11 @@
 // import {  } from "../actions/index";
 
-import { LOGIN_USER_INFO, SUB_COUNT, CHANGE_USER_INFO } from "../actions";
+import {
+  LOGIN_USER_INFO,
+  SUB_COUNT,
+  CHANGE_USER_INFO,
+  ADD_SUBSCRIBE,
+} from "../actions";
 
 const loginUserInfo = {
   id: 0,
@@ -37,6 +42,11 @@ const userReducer = (state = loginUserInfo, action) => {
         ...state,
         nickname: action.payload.nickname,
         profile: action.payload.profile,
+      };
+    case ADD_SUBSCRIBE:
+      return {
+        ...state,
+        total_subscribes: state.total_subscribes + 1,
       };
     default:
       return state;

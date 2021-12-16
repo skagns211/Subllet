@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import styled from "styled-components";
 import { SelectService, SelectPlanPrice, SelectDate } from "./Select";
+import { setAddSubscribe, setLoginUserInfo } from "../../actions";
 
 const ModalBackdrop = styled.div`
   //! Modal backdrop css
@@ -90,14 +91,20 @@ const Button = styled.button`
   }
 `;
 
-const AddModal = ({ openModalHandler, setIsOpen, myScribe, setMyScribe }) => {
+const AddModal = ({
+  openModalHandler,
+  setIsOpen,
+  myScribe,
+  setMyScribe,
+  reGetHandler,
+}) => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // console.log(state.services);
   const allServices = state.services;
 
-  const [index, setIndex] = useState("");
+  const [index, setIndex] = useState(0);
   const [filtered, setFiltered] = useState([]);
   const [postBody, setPostBody] = useState({
     id: "",
@@ -113,9 +120,10 @@ const AddModal = ({ openModalHandler, setIsOpen, myScribe, setMyScribe }) => {
         if (res.data.subscribe) {
           console.log(res.data.subscribe);
           setMyScribe([...myScribe, res.data.subscribe]);
+          reGetHandler();
           setIsOpen(false);
           console.log("추가완료");
-          navigate("/mysubllet");
+          dispatch(setAddSubscribe());
         }
       })
       .catch((err) => {
@@ -130,16 +138,18 @@ const AddModal = ({ openModalHandler, setIsOpen, myScribe, setMyScribe }) => {
   useEffect(() => {
     console.log(postBody);
   }, [postBody]);
+  useEffect(() => {}, [index]);
 
   useEffect(() => {
     setFiltered(
       allServices.filter((service, i) => {
-        if (i === index) {
+        // if (i === index) {
+        if (service.id === postBody.id) {
           return service;
         }
       })
     );
-  }, [index]);
+  }, [postBody]);
   // console.log(filtered);
   useEffect(() => {}, [filtered]);
 

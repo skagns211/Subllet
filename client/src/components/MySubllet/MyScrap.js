@@ -46,6 +46,7 @@ const MyScrapBox = styled.div`
     margin-top: 1%;
     margin-left: auto;
     margin-right: auto;
+    cursor: pointer;
     /* border: 0.5px solid white; */
   }
 `;
@@ -70,7 +71,7 @@ const MyScrap = ({ myScrap }) => {
           return (
             <div
               onClick={() => {
-                navigate(`/`);
+                navigate(`/detail/${el.id}`);
               }}
             >
               <ScrapImg src={el.outer_image} />

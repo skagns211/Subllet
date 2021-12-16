@@ -14,7 +14,12 @@ function LoadingSpinner() {
 
   return (
     <div className="sweet-loading">
-      <ScaleLoader color={color} css={override} size={250} />
+      <ScaleLoader
+        color={color}
+        setColor={setColor}
+        css={override}
+        size={250}
+      />
     </div>
   );
 }

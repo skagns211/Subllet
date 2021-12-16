@@ -16,7 +16,7 @@ module.exports = {
       for (const service of servicesId) {
         scraps.push(
           await Service.findOne({
-            attributes: ["outer_image"],
+            attributes: ["id", "outer_image"],
             where: { id: service },
           })
         );

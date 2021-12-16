@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { setLoginUserInfo, setIsLogin } from "../../actions";
 
-
 import AlertModal from "../AlertModal";
 
 const StyledBody = styled.section`
@@ -107,7 +106,6 @@ const InnerImage = ({
   const [alertMsg, setAlertMsg] = useState();
   const [notLogin, setNotLogin] = useState(false);
 
-
   const handleClick = () => {
     setOpen(!open);
     setAlertMsg({ message: "로그인을 먼저 해주세요", button: "로그인" });
@@ -206,7 +204,7 @@ const InnerImage = ({
           logoutHandler();
         }
       });
-
+  };
   const prePage = () => {
     if (ServiceId - 1 > 0) {
       window.location.replace(`/detail/${ServiceId - 1}`);

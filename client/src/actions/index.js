@@ -25,6 +25,7 @@ export const SELECT_PLAN = "SELECT_PLAN"; // Detail Page
 export const NAVER_AUTH_CODE = "NAVER_AUTH_CODE";
 export const AUTH_CODE = "AUTH_CODE";
 export const CHANGE_USER_INFO = "CHANGE_USER_INFO";
+export const ADD_SUBSCRIBE = "ADD_SUBSCRIBE";
 
 export const setLoginUserInfo = (loginUserInfo) => {
   console.log(loginUserInfo);
@@ -111,5 +112,11 @@ export const setServices = (data) => {
   return {
     type: SERVICECS_LIST,
     payload: data,
+  };
+};
+
+export const setAddSubscribe = () => {
+  return {
+    type: ADD_SUBSCRIBE,
   };
 };
