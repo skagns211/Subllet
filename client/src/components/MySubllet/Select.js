@@ -3,6 +3,7 @@ import Select from "react-select";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import Netflix from "../../IMG/Logo/netflix_scrap.png";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const SelectTab = styled(Select)`
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
@@ -25,6 +26,7 @@ const SelectTab = styled(Select)`
     font-size: 0.8rem;
   }
   .Select__option {
+    font-size: 1rem;
     background-color: black;
     color: #ff8a00;
   }
@@ -105,12 +107,17 @@ const SelectTabNav = styled(Select)`
   @media only screen and (max-width: 800px) {
     display: none;
   }
+  img{
+    width: 2rem;
+    height: 1rem;
+  }
   .Select__control {
     width: 100%;
     height: auto;
     border: 0.5px solid #ff8a00;
     border-radius: 0.2em;
     background-color: black;
+    font-size: 1rem !important;
     color: white !important;
     cursor: pointer;
     text-align: center;
@@ -127,14 +134,17 @@ const SelectTabNav = styled(Select)`
     font-size: 0.8rem;
   }
   .Select__option {
+    width: 100%
     background-color: black;
     color: #ff8a00;
     /* font-size: 1rem; */
   }
   .Select__input {
+    font-size: 1rem;
     color: white !important;
   }
   .Select__menu {
+    width: 100%;
     color: #ff8a00;
     background-color: black;
     font-size: 0.8rem;
@@ -227,6 +237,7 @@ const styles = {
   }),
   option: (provided, state) => ({
     ...provided,
+    height: "auto",
     ":hover": {
       fontWeight: "regular",
       background: "#3a3f51",
@@ -267,12 +278,13 @@ export const SelectService = ({ index, setIndex, postBody, setPostBody }) => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const allServices = state.services;
-  // console.log(state.services);
+  console.log(state.services);
 
   const options2 = allServices.map((service, idx) => {
     return {
       label: (
-        <List onClick={() => setIndex(idx)}>
+        // <List onClick={() => setIndex(idx)}>
+        <List onClick={() => setPostBody({ ...postBody, id: idx + 1 })}>
           <img src={service.outer_image} />
           <div>{service.title}</div>
         </List>
@@ -280,7 +292,7 @@ export const SelectService = ({ index, setIndex, postBody, setPostBody }) => {
       value: { title: service.title, id: service.id },
     };
   });
-  console.log(index);
+  console.log(index && index);
 
   const handleChange = (value) => {
     if (value !== null) {
@@ -320,7 +332,7 @@ export const SelectPlanPrice = ({
   const allServices = state.services;
   console.log(allServices);
 
-  console.log(filtered);
+  console.log(filtered && filtered);
   // const options2 = filtered[0].Prices.map((el) => {
   //   return {
   //     label: `${el.title + "," + el.price}`,
@@ -328,7 +340,9 @@ export const SelectPlanPrice = ({
   //   };
   // });
 
-  const option = [{ label: "서비스를 먼저 선택해주세요.", value: "" }];
+  const option = [
+    { label: "서비스를 먼저 선택해주세요.", value: null, isDisabled: true },
+  ];
   // const options = [
   //   { label: "2인용 요금제, 3000원", value: "2인용 요금제, 3000원" },
   //   { label: "3인용 요금제, 5000원", value: "3인용 요금제, 5000원" },
@@ -336,7 +350,7 @@ export const SelectPlanPrice = ({
   // ];
 
   const handleChange = (value) => {
-    if (value !== null) {
+    if (value) {
       setPostBody({
         ...postBody,
         planname: value.value[0].title,
@@ -373,6 +387,7 @@ export const SelectPlanPrice = ({
       }
       placeholder="요금제 및 금액을 선택해주세요."
       isClearable
+      // isDisabled={true}
     />
   );
 };
@@ -500,13 +515,18 @@ export const SelectPrice = ({ options, patchBody, setPatchBody }) => {
 export const NavSelectService = ({ setIndex, postBody, setPostBody }) => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const allServices = state.services;
   // console.log(state.services);
 
   const options2 = allServices.map((service, idx) => {
     return {
       label: (
-        <List>
+        <List
+          onClick={() => {
+            window.location.replace(`/detail/${service.id}`);
+          }}
+        >
           <img src={service.outer_image} />
           <div>{service.title}</div>
         </List>

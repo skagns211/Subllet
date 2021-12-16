@@ -185,6 +185,9 @@ const Test = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  a {
+    cursor: pointer;
+  }
   img {
     width: 3.7rem;
     border-radius: 2rem;
@@ -286,7 +289,13 @@ const Nav = () => {
               />
               <ul>
                 <li>
-                  <Link to="/mysubllet">MySubllet</Link>
+                  <a
+                    onClick={() => {
+                      window.location.replace("/mysubllet");
+                    }}
+                  >
+                    MySubllet
+                  </a>
                 </li>
                 <li>
                   <Link
