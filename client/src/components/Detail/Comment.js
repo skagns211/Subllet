@@ -145,22 +145,7 @@ const Comment = ({
 
   const [del, setDel] = useState(false);
   const [notLogin, setNotLogin] = useState(false);
-  const [totalComments, setTotalComments] = useState();
-  const [totalLikes, setTotalLikes] = useState(0);
-  const [totalUnLikes, setTotalUnLikes] = useState(0);
   const { id } = state.loginUserInfo;
-
-  useEffect(() => {
-    if (detail.Comments) {
-      setTotalComments(detail.Comments.length);
-    }
-    if (detail.total_likes) {
-      setTotalLikes(detail.total_likes);
-    }
-    if (detail.total_unlikes) {
-      setTotalUnLikes(detail.total_unlikes);
-    }
-  }, [detail.total_likes, detail.total_unlikes]);
 
   const day = (createdAt) => {
     let year = createdAt.slice(0, 4);
@@ -266,6 +251,9 @@ const Comment = ({
     setDel(!del);
   };
 
+  console.log(detail.total_likes);
+  console.log(detail.total_unlikes);
+
   return (
     <StyledBody>
       {open ? (
@@ -278,7 +266,7 @@ const Comment = ({
         />
       ) : null}
       <ServiceOption>
-        <div>Comment {totalComments}개</div>
+        <div>Comment {comments.length}개</div>
         <div>
           추천: {totalLikes} 비추천: {totalUnLikes}
         </div>

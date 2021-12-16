@@ -15,9 +15,7 @@ const AllView = () => {
   const [price, setPrice] = useState(false);
   const [free, setFree] = useState(false);
   const [services, setServices] = useState();
-  const [refresh, setRefresh] = useState(false);
   const [filter, setFilter] = useState();
-
   const [categoryName, setCategoryName] = useState("카테고리");
   const [priceName, setpriceName] = useState("가격");
   const [freeName, setfreeName] = useState("체험하기 유무");
@@ -33,7 +31,7 @@ const AllView = () => {
       setServices(res.data.services);
       setFilter(res.data.services);
     });
-  }, [refresh]);
+  }, []);
 
   useEffect(() => {
     if (services) {
@@ -113,90 +111,22 @@ const AllView = () => {
     }
   };
 
-  const refreshFilter = () => {
-    setRefresh(!refresh);
-    setCategoryName("카테고리");
-    setpriceName("가격");
-    setfreeName("체험하기 유무");
-    setSelect({
-      category: "",
-      price: "",
-      free: "",
-    });
-  };
-
   return (
-    <>
-      {category ? (
-        <StyledBody>
-          <Filter
-            category={category}
-            setCategory={setCategory}
-            price={price}
-            setPrice={setPrice}
-            free={free}
-            setFree={setFree}
-            filterServices={filterServices}
-            refreshFilter={refreshFilter}
-            categoryName={categoryName}
-            priceName={priceName}
-            freeName={freeName}
-          />
-          <FilterList filter={filter} />
-        </StyledBody>
-      ) : price ? (
-        <StyledBody>
-          <Filter
-            category={category}
-            setCategory={setCategory}
-            price={price}
-            setPrice={setPrice}
-            free={free}
-            setFree={setFree}
-            filterServices={filterServices}
-            refreshFilter={refreshFilter}
-            categoryName={categoryName}
-            priceName={priceName}
-            freeName={freeName}
-          />
-          <FilterList filter={filter} />
-        </StyledBody>
-      ) : free ? (
-        <StyledBody>
-          <Filter
-            category={category}
-            setCategory={setCategory}
-            price={price}
-            setPrice={setPrice}
-            free={free}
-            setFree={setFree}
-            filterServices={filterServices}
-            refreshFilter={refreshFilter}
-            categoryName={categoryName}
-            priceName={priceName}
-            freeName={freeName}
-          />
-          <FilterList filter={filter} />
-        </StyledBody>
-      ) : (
-        <StyledBody>
-          <Filter
-            category={category}
-            setCategory={setCategory}
-            price={price}
-            setPrice={setPrice}
-            free={free}
-            setFree={setFree}
-            filterServices={filterServices}
-            refreshFilter={refreshFilter}
-            categoryName={categoryName}
-            priceName={priceName}
-            freeName={freeName}
-          />
-          <FilterList filter={filter} />
-        </StyledBody>
-      )}
-    </>
+    <StyledBody>
+      <Filter
+        category={category}
+        setCategory={setCategory}
+        price={price}
+        setPrice={setPrice}
+        free={free}
+        setFree={setFree}
+        filterServices={filterServices}
+        categoryName={categoryName}
+        priceName={priceName}
+        freeName={freeName}
+      />
+      <FilterList filter={filter} />
+    </StyledBody>
   );
 };
 
