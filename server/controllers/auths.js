@@ -70,11 +70,11 @@ module.exports = {
         return res.status(404).send("Non-existent account");
       }
 
-      if (!userInfo.email_verified) {
-        req.id = userInfo.id;
-        next();
-        return;
-      }
+      // if (!userInfo.email_verified) {
+      //   req.id = userInfo.id;
+      //   next();
+      //   return;
+      // }
 
       const result = await checkPassword(password, userInfo.password);
 

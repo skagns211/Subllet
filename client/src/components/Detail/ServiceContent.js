@@ -93,7 +93,6 @@ const ServiceContent = ({ detail }) => {
 
   const checked = (e) => {
     const plan = e.target.value.split(",");
-    console.log(plan);
     dispatch(selectPlan(plan));
 
     const filterMsg = detail.prices.filter((price) => {
@@ -135,7 +134,7 @@ const ServiceContent = ({ detail }) => {
           <ServiceDetail>
             {serviceMsg &&
               serviceMsg.map((message, idx) => {
-                return <div key={idx}>- {`${message}`}</div>;
+                return <div key={idx}>- &nbsp;{`${message}`}</div>;
               })}
           </ServiceDetail>
         </span>

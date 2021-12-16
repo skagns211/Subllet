@@ -97,7 +97,6 @@ const Filter = ({
   free,
   setFree,
   filterServices,
-  refreshFilter,
   categoryName,
   priceName,
   freeName,
