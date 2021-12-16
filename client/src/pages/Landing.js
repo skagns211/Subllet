@@ -8,8 +8,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 const LandingNav = styled.header`
   display: flex;
-  justify-content: center;
+  position: fixed;
+  justify-content: flex-start;
   top: 0;
+  background-color: rgba(0, 0, 0, 0);
   width: 100%;
   height: 80px;
   background-color: #0f0f0f;
