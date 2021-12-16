@@ -268,7 +268,7 @@ const Comment = ({
       <ServiceOption>
         <div>Comment {comments.length}개</div>
         <div>
-          추천: {detail.total_likes} 비추천: {detail.total_unlikes}
+          추천: {totalLikes} 비추천: {totalUnLikes}
         </div>
       </ServiceOption>
       <CommentBody>
