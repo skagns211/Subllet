@@ -180,10 +180,12 @@ const SelectTabNav = styled(Select)`
 const SelectTabNavDown = styled(Select)`
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   height: 1rem;
-  width: 20rem;
+  width: 100%;
+  padding-bottom: 2rem;
   font-size: 1rem;
   padding-bottom: 2rem;
   display: flex;
+  /* border: 1px solid yellow; */
   @media only screen and (max-width: 800px) {
     width: 95%;
     margin: auto;
@@ -333,9 +335,9 @@ export const SelectService = ({ index, setIndex, postBody, setPostBody }) => {
       // value={data.value}
       styles={styles}
       noOptionsMessage={({ inputValue }) =>
-        !inputValue ? null : "해당하는 구독이 없습니다."
+        !inputValue ? null : "해당하는 서비스가 없습니다"
       }
-      placeholder="구독을 선택해주세요."
+      placeholder="서비스를 선택해 주세요"
       isClearable
     />
   );
@@ -362,7 +364,7 @@ export const SelectPlanPrice = ({
   // });
 
   const option = [
-    { label: "서비스를 먼저 선택해주세요.", value: null, isDisabled: true },
+    { label: "서비스를 먼저 선택해 주세요", value: null, isDisabled: true },
   ];
   // const options = [
   //   { label: "2인용 요금제, 3000원", value: "2인용 요금제, 3000원" },
@@ -404,9 +406,9 @@ export const SelectPlanPrice = ({
       styles={styles}
       onChange={(value) => handleChange(value)}
       noOptionsMessage={({ inputValue }) =>
-        !inputValue ? null : "해당하는 요금제가 없습니다."
+        !inputValue ? null : "해당하는 요금제가 없습니다"
       }
-      placeholder="요금제 및 금액을 선택해주세요."
+      placeholder="요금제 및 금액을 선택해 주세요"
       isClearable
       // isDisabled={true}
     />
@@ -446,15 +448,15 @@ export const SelectDate = ({ postBody, setPostBody }) => {
       styles={styles}
       onChange={(value) => handleChange(value)}
       noOptionsMessage={({ inputValue }) =>
-        !inputValue ? null : "해당하는 날짜가 존재하지 않습니다."
+        !inputValue ? null : "해당하는 날짜가 존재하지 않습니다"
       }
-      placeholder="결제일을 선택해주세요."
+      placeholder="결제일을 선택해 주세요"
       isClearable
     />
   );
 };
 
-export const SelectDate2 = ({ patchBody, setPatchBody }) => {
+export const SelectDate2 = ({ patchBody, setPatchBody, id }) => {
   const days = () => {
     let arr = [];
     for (let i = 1; i <= 31; i++) {
@@ -469,6 +471,7 @@ export const SelectDate2 = ({ patchBody, setPatchBody }) => {
       setPatchBody({
         ...patchBody,
         paydate: value.value,
+        id: id,
       });
     } else {
       setPatchBody({
@@ -487,15 +490,21 @@ export const SelectDate2 = ({ patchBody, setPatchBody }) => {
       styles={styles}
       onChange={(value) => handleChange(value)}
       noOptionsMessage={({ inputValue }) =>
-        !inputValue ? null : "해당하는 날짜가 존재하지 않습니다."
+        !inputValue ? null : "해당하는 날짜가 존재하지 않습니다"
       }
-      placeholder="결제일을 선택해주세요."
+      placeholder="결제일을 선택해 주세요"
       isClearable
     />
   );
 };
 
-export const SelectPrice = ({ options, patchBody, setPatchBody }) => {
+export const SelectPrice = ({
+  options,
+  patchBody,
+  setPatchBody,
+  planname,
+  planprice,
+}) => {
   const handleChange = (value) => {
     if (value !== null) {
       setPatchBody({
@@ -523,10 +532,11 @@ export const SelectPrice = ({ options, patchBody, setPatchBody }) => {
       styles={styles}
       onChange={(value) => handleChange(value)}
       noOptionsMessage={({ inputValue }) =>
-        !inputValue ? null : "해당하는 요금제가 존재하지 않습니다."
+        !inputValue ? null : "해당하는 요금제가 존재하지 않습니다"
       }
-      placeholder="요금제를 선택해주세요."
+      placeholder="요금제를 선택해 주세요"
       isClearable
+      // selectedValue={{ label: `${planname} (${planprice})`, value: "" }}
     />
   );
 };
@@ -574,9 +584,9 @@ export const NavSelectService = ({ setIndex, postBody, setPostBody }) => {
       // value={data.value}
       styles={styles}
       noOptionsMessage={({ inputValue }) =>
-        !inputValue ? null : "해당하는 구독이 없습니다."
+        !inputValue ? null : "해당하는 서비스가 없습니다"
       }
-      placeholder="구독을 선택해주세요."
+      placeholder="서비스를 검색해 보세요"
       isClearable
     />
   );
@@ -591,7 +601,11 @@ export const NavSelectServiceDown = ({ setIndex, postBody, setPostBody }) => {
   const options2 = allServices.map((service, idx) => {
     return {
       label: (
-        <List>
+        <List
+          onClick={() => {
+            window.location.replace(`/detail/${service.id}`);
+          }}
+        >
           <img src={service.outer_image} />
           <div>{service.title}</div>
         </List>
@@ -618,9 +632,9 @@ export const NavSelectServiceDown = ({ setIndex, postBody, setPostBody }) => {
       // value={data.value}
       styles={styles}
       noOptionsMessage={({ inputValue }) =>
-        !inputValue ? null : "해당하는 구독이 없습니다."
+        !inputValue ? null : "해당하는 구독이 없습니다"
       }
-      placeholder="구독을 선택해주세요."
+      placeholder="서비스를 검색해 보세요"
       isClearable
     />
   );

@@ -71,6 +71,11 @@ const Pages = styled.div`
 const SectionStyle = styled.section`
   padding-bottom: 70px;
   /* min-width: 540px; */
+  div {
+    &.mobileNav {
+      max-width: 800px;
+    }
+  }
 `;
 
 function App() {

@@ -10,6 +10,12 @@ const MyScrapContainer = styled.main`
   /* margin-top: 2rem; */
   /* border: 0.5px solid white; */
   /* flex-basis: auto; */
+  @media only screen and (max-width: 600px) {
+    width: 98%;
+    margin-top: 0rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 const TitleBox = styled.div`
   width: 100%;
@@ -22,9 +28,14 @@ const MyScrapTitle = styled.div`
   width: 100%;
   /* height: 10%; */
   display: flex;
+  align-items: center;
   font-size: 2rem;
   color: #ff8a00;
   /* border: 0.5px solid white; */
+  @media only screen and (max-width: 600px) {
+    width: 85%;
+    font-size: 1.6rem;
+  }
 `;
 
 const MyScrapBox = styled.div`
@@ -33,30 +44,39 @@ const MyScrapBox = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding-bottom: 1%;
-  display: inline-flex;
-  flex-wrap: wrap;
-  /* justify-content: center;
-  align-items: center; */
+  display: flex;
+  /* display: inline-flex; */
+  /* flex-wrap: wrap; */
+  justify-content: center;
+  /* align-items: center; */
   background-color: #252a3c;
   border-radius: 0.5rem;
-  /* border: 0.5px solid white; */
-  div {
-    width: 31%;
-    height: 20%;
+  /* border: 0.5px solid red; */
+`;
+const InBox = styled.div`
+  width: 95%;
+  display: inline-flex;
+  flex-wrap: wrap;
+  /* border: 1px solid white; */
+  span {
+    width: 33.3%;
     margin-top: 1%;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    justify-content: center;
     cursor: pointer;
-    /* border: 0.5px solid white; */
+    margin-right: 0rem;
+    @media only screen and (max-width: 600px) {
+      width: 49%;
+    }
   }
 `;
 
 const ScrapImg = styled.img`
-  width: 100%;
+  width: 98%;
   /* height: 10rem; */
   display: flex;
   object-fit: cover;
-  /* border-radius: 0.5rem; */
+  border-radius: 0.2rem;
 `;
 
 const MyScrap = ({ myScrap }) => {
@@ -67,17 +87,19 @@ const MyScrap = ({ myScrap }) => {
         <MyScrapTitle>My Scrap</MyScrapTitle>
       </TitleBox>
       <MyScrapBox>
-        {myScrap.map((el) => {
-          return (
-            <div
-              onClick={() => {
-                navigate(`/detail/${el.id}`);
-              }}
-            >
-              <ScrapImg src={el.outer_image} />
-            </div>
-          );
-        })}
+        <InBox>
+          {myScrap.map((el) => {
+            return (
+              <span
+                onClick={() => {
+                  navigate(`/detail/${el.id}`);
+                }}
+              >
+                <ScrapImg src={el.outer_image} />
+              </span>
+            );
+          })}
+        </InBox>
       </MyScrapBox>
     </MyScrapContainer>
   );

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import styled from "styled-components";
 import { SelectService, SelectPlanPrice, SelectDate } from "./Select";
-import { setAddSubscribe, setLoginUserInfo } from "../../actions";
+import { setAddSubscribe } from "../../actions";
 
 const ModalBackdrop = styled.div`
   //! Modal backdrop css
@@ -100,7 +99,6 @@ const AddModal = ({
 }) => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   // console.log(state.services);
   const allServices = state.services;
 
@@ -142,11 +140,11 @@ const AddModal = ({
 
   useEffect(() => {
     setFiltered(
-      allServices.filter((service, i) => {
-        // if (i === index) {
+      allServices.filter((service) => {
         if (service.id === postBody.id) {
           return service;
         }
+        return;
       })
     );
   }, [postBody]);

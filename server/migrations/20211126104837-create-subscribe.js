@@ -20,11 +20,9 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       planname: {
-        allowNull: false,
         type: Sequelize.STRING,
       },
       planprice: {
-        allowNull: false,
         type: Sequelize.STRING,
       },
       createdAt: {

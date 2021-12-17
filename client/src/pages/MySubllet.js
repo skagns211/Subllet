@@ -23,6 +23,7 @@ const MySublletContainer = styled.main`
   }
   @media only screen and (max-width: 800px) {
     width: 100%;
+    margin-top: 2rem;
   }
 `;
 const Line = styled.div`
@@ -33,6 +34,14 @@ const Line = styled.div`
   margin-bottom: 2rem;
   align-items: center;
   background: #cecece;
+  @media only screen and (max-width: 600px) {
+    width: 98%;
+    display: flex;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: auto;
+    margin-rignt: auto;
+  }
   /* @media only screen and (max-width: 534px) {
     width: 22rem;
     height: 1px;
@@ -81,7 +90,7 @@ const MySubllet = () => {
   return (
     <MySublletContainer>
       {state.isLogin === false ? (
-        navigate("/userlogin")
+        navigate("/main")
       ) : (
         <>
           <div className="Title">My subllet</div>

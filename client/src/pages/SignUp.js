@@ -7,8 +7,9 @@ require("dotenv").config();
 
 const SignUpContainer = styled.main`
   max-width: 500px;
-  height: 100vh;
+  /* height: 100vh; */
   margin: auto;
+  padding-bottom: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,10 +17,6 @@ const SignUpContainer = styled.main`
   /* background-color: #272729; */
   border-radius: 0.5rem;
   /* border: 1px solid white; */
-  /* @media only screen and (min-width: 800px) {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  } */
 `;
 
 const InnerBox = styled.div`
