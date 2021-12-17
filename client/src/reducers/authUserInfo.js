@@ -10,7 +10,6 @@ const authUserInfo = {
 const authUserReducer = (state = authUserInfo, action) => {
   switch (action.type) {
     case AUTH_USERINFO:
-      console.log(action.payload);
       return {
         ...state,
         email: action.payload.email,

@@ -1,8 +1,7 @@
-import { React, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { React, useState } from "react";
+import { useDispatch } from "react-redux";
 import Select from "react-select";
-import { setLoginUserInfo, setIsLogin, setAccessToken } from "../../actions";
+import { setLoginUserInfo, setIsLogin } from "../../actions";
 import styled from "styled-components";
 import OauthLogin from "./OauthLogin";
 import axios from "axios";
@@ -154,14 +153,12 @@ const emailList = [
 ];
 
 const LoginForm = () => {
-  const state = useSelector((state) => state); //! state 사용 함수
   const dispatch = useDispatch(); //! action 사용 함수
 
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
   });
-  const [isPassword, setIsPassword] = useState(true);
 
   const handleEmailValue = (key) => (e) => {
     const atIndex = loginInfo.email.indexOf("@");
@@ -190,7 +187,6 @@ const LoginForm = () => {
   const handleSelect = (value, key) => {
     const atIndex = loginInfo.email.indexOf("@");
     const justId = loginInfo.email.slice(0, atIndex);
-    console.log(justId);
     loginInfo.email.includes("@")
       ? setLoginInfo({
           ...loginInfo,
@@ -200,11 +196,9 @@ const LoginForm = () => {
           ...loginInfo,
           email: loginInfo.email + "@" + value.value,
         });
-    console.log(loginInfo);
     value.value === "직접 입력"
       ? setIsSelectSelf(true)
       : setIsSelectSelf(false);
-    console.log(loginInfo.email);
   };
   const [isEamilSelect, setIsEmailSelect] = useState("");
   const handleEmailSelect = (value) => {
@@ -226,11 +220,8 @@ const LoginForm = () => {
           password,
         })
         .then((res) => {
-          console.log(res);
-          console.log(res.status);
           const { userInfo } = res.data; //! refreshToken을 어디로 받을지 상의필요
           const loginUserInfo = userInfo;
-          console.log(loginUserInfo);
           dispatch(setLoginUserInfo(loginUserInfo));
           // dispatch(setAccessToken(accessToken));
           dispatch(setIsLogin(true));

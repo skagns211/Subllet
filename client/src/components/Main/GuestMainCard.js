@@ -29,7 +29,7 @@ const MainCardBody = styled.div`
   z-index: 500;
   background-size: 100% 100%;
   border-radius: 1rem;
-  margin: 3.6rem 0.7rem 0.5rem 0.5rem;
+  margin: 2rem 0.7rem 0.5rem 0.5rem;
   padding: 0;
   width: auto;
   height: auto;
@@ -239,7 +239,8 @@ const GuestMainCard = () => {
       <MainSection>
         <RequestWindow>
           <div>
-            로그인을 하시면 <br /> Subllet의 다양한 서비스를 <br />
+            로그인을 하시면 <br /> Subllet의
+            <br /> 다양한 서비스를 <br />
             이용하실 수 있어요!
           </div>
           <br />

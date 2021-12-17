@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { IMG } from "./imageUrl";
 
 const StylePick = styled.div`
   display: flex;
@@ -107,7 +106,6 @@ const Pick = () => {
   const forYou = serviceList[Math.floor(randomArr2)];
   const pickImg = pick && pick.outer_image;
   const forYouImg = forYou && forYou.outer_image;
-  console.log(pick && pick.outer_image);
   const handleIntoDetail = (path) => {
     navigate(`/detail/${path}`);
   };
@@ -123,7 +121,11 @@ const Pick = () => {
         ></img>
       </PickBox>
       <ForUserBox>
-        <div>For Guest</div>
+        {state.loginUserInfo.nickname ? (
+          <div>For {state.loginUserInfo.nickname}</div>
+        ) : (
+          <div>For Guest</div>
+        )}
         <img
           alt="pickImg"
           src={forYouImg}
