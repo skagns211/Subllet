@@ -17,14 +17,14 @@ app.use(
   })
 );
 app.use(cookieParser());
-app.use("/", indexRouter);
+app.use("/", indexRouter, (req, res) => {
+  res.send("안녕하세요! Subllet API입니다.")
+});
 
 const HTTPS_PORT = process.env.HTTPS_PORT || 4000;
 
-// const port = 4000;
-
-// app.listen(port, () => {
-//   console.log(`run http://localhost:${port}`);
+// app.listen(HTTPS_PORT, () => {
+//   console.log(`run http://localhost:${HTTPS_PORT}`);
 // });
 
 let server;
