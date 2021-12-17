@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Comment, Subscribe, Scrap } = require("../models");
 const {
   generateSalt,
   hashPassword,
@@ -97,16 +97,29 @@ module.exports = {
         where: { id },
       });
 
-      const result = checkPassword(password, findUser.password);
+      const result = await checkPassword(password, findUser.password);
 
       if (!result) {
         return res.status(400).send("Inconsistency");
       }
 
+      await Subscribe.destroy({
+        where: { user_id: id },
+      });
+
+      await Scrap.destroy({
+        where: { user_id: id },
+      });
+
+      await Comment.destroy({
+        where: { user_id: id },
+      });
+
+      await User.destroy({
+        where: { id },
+      });
+
       try {
-        await User.destroy({
-          where: { id },
-        });
         return res.status(204).send("Success");
       } catch (err) {
         console.error(err);
