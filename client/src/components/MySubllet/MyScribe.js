@@ -15,6 +15,11 @@ const MyScribeContainer = styled.main`
   /* margin-top: 2rem; */
   /* border: 0.5px solid white; */
   /* flex-basis: auto; */
+  @media only screen and (max-width: 600px) {
+    width: 98%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 const TitleBox = styled.div`
   width: 100%;
@@ -29,19 +34,27 @@ const MyScribeTitle = styled.div`
   display: flex;
   font-size: 2rem;
   color: #ff8a00;
+  align-items: center;
   /* border: 0.5px solid white; */
+  @media only screen and (max-width: 600px) {
+    width: 85%;
+    font-size: 1.6rem;
+  }
 `;
 
-const AllviewTab = styled.div`
-  width: 10%;
+const AddTab = styled.div`
+  width: 15%;
   /* height: 10%; */
   display: flex;
-  font-size: 1rem;
+  font-size: 1.2rem;
   align-items: center;
   justify-content: right;
   color: #ff8a00;
   cursor: pointer;
   /* border: 0.5px solid white; */
+  @media only screen and (max-width: 600px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const MyScribeBox = styled.div`
@@ -52,7 +65,7 @@ const MyScribeBox = styled.div`
   /* justify-content: center;
   align-items: center; */
   background-color: #252a3c;
-  border-radius: 1.2rem;
+  border-radius: 0.5rem;
   /* border: 0.5px solid white; */
 `;
 
@@ -67,6 +80,7 @@ const CategoryBox = styled.div`
   font-size: 1.2rem;
   color: #ff8a00;
   /* border: 0.5px solid white; */
+
   div {
     display: flex;
     align-items: center;
@@ -77,7 +91,7 @@ const CategoryBox = styled.div`
       /* border: 0.5px solid white; */
     }
     &.planTab {
-      flex: 1.3;
+      flex: 1.2;
       /* border: 0.5px solid white; */
     }
     &.dateTab {
@@ -85,13 +99,16 @@ const CategoryBox = styled.div`
       /* border: 0.5px solid white; */
     }
     &.categoryTab {
-      flex: 0.4;
+      flex: 0.6;
       /* border: 0.5px solid white; */
     }
     &.fixTab {
       flex: 0.4;
       /* border: 0.5px solid white; */
     }
+  }
+  @media only screen and (max-width: 600px) {
+    font-size: 0.9rem;
   }
 `;
 
@@ -107,16 +124,18 @@ const ListBox = styled.div`
   display: inline-flex;
   border-radius: 0.5rem;
   /* border: 0.5px solid white; */
+  @media only screen and (max-width: 600px) {
+    margin-bottom: 0.6rem;
+    font-size: 0.9rem;
+    height: 4.5rem;
+  }
 
   div {
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif;
     /* flex-direction: column; */
     /* flex-shrink: 0; */
     /* font-family: "Geo", sans-serif; */
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
-      sans-serif;
-    /* display: flex; */
-    /* align-items: center; */
-    /* justify-content: center; */
     /* border: 1px solid white; */
 
     &.name {
@@ -129,11 +148,11 @@ const ListBox = styled.div`
     }
     &.plan {
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
       text-align: center;
-      flex: 1.3;
+      flex: 1.2;
       /* border: 0.5px solid white; */
       span {
         /* border: 0.5px solid white; */
@@ -142,18 +161,18 @@ const ListBox = styled.div`
       }
     }
     &.date {
-      flex: 1;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
+      flex: 1;
+      flex-direction: column;
       /* border: 0.5px solid white; */
     }
     &.category {
       display: flex;
       align-items: center;
       justify-content: center;
-      flex: 0.4;
+      flex: 0.6;
       /* border: 0.5px solid white; */
     }
     &.fix {
@@ -178,6 +197,15 @@ const ListBox = styled.div`
         border-radius: 0.5rem;
         cursor: pointer;
         /* border: 1px solid #252a3c; */
+        @media only screen and (max-width: 600px) {
+          width: 90%;
+          font-size: 0.8rem;
+        }
+        :hover {
+          color: #252a3c;
+          font-weight: bold;
+          background-color: #ff8a00;
+        }
       }
     }
   }
@@ -186,7 +214,12 @@ const ListBox = styled.div`
     width: 90%;
     height: 90%;
     object-fit: cover;
-    /* border-radius: 0.5rem; */
+    border-radius: 0.2rem;
+    @media only screen and (max-width: 600px) {
+      width: 95%;
+      height: 50%;
+      object-fit: contain;
+    }
   }
 `;
 
@@ -336,16 +369,16 @@ const MyScribe = ({ myScribe, sortedMyScribe, setMyScribe, test, setTest }) => {
       <TitleBox>
         <MyScribeTitle>My Scribe</MyScribeTitle>
         {/* {!isModify ? (
-          <AllviewTab onClick={scribeHandler}>수정하기</AllviewTab>
+          <AddTab onClick={scribeHandler}>수정하기</AddTab>
         ) : (
-          <AllviewTab onClick={scribeHandler}>수정완료</AllviewTab>
+          <AddTab onClick={scribeHandler}>수정완료</AddTab>
         )} */}
-        <AllviewTab onClick={openModalHandler}>구독추가</AllviewTab>
+        <AddTab onClick={openModalHandler}>구독추가</AddTab>
       </TitleBox>
       <MyScribeBox>
         <CategoryBox>
-          <div className="nameTab">서비스명</div>
-          <div className="planTab">플랜,요금</div>
+          <div className="nameTab">서비스</div>
+          <div className="planTab">플랜&nbsp;(요금)</div>
           <div className="dateTab">결제일</div>
           <div className="categoryTab">카테고리</div>
           <div className="fixTab">
@@ -371,18 +404,24 @@ const MyScribe = ({ myScribe, sortedMyScribe, setMyScribe, test, setTest }) => {
                     }
                   })}
                   <SelectPrice
-                    options={filtered.Prices.map((el) => {
-                      return {
-                        label: `${el.title} (${el.price})`,
-                        value: {
-                          planname: el.title,
-                          planprice: el.price,
-                          id: filtered.id,
-                        },
-                      };
-                    })}
+                    options={
+                      filtered.length === 0
+                        ? null
+                        : filtered.Prices.map((el) => {
+                            return {
+                              label: `${el.title} (${el.price})`,
+                              value: {
+                                planname: el.title,
+                                planprice: el.price,
+                                id: filtered.id,
+                              },
+                            };
+                          })
+                    }
                     patchBody={patchBody}
                     setPatchBody={setPatchBody}
+                    planname={el.planname}
+                    planprice={el.planprice}
                   />
                 </div>
               ) : (
@@ -396,6 +435,7 @@ const MyScribe = ({ myScribe, sortedMyScribe, setMyScribe, test, setTest }) => {
                   <SelectDate2
                     patchBody={patchBody}
                     setPatchBody={setPatchBody}
+                    id={el.Service.id}
                   />
                 </div>
               ) : (

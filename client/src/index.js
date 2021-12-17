@@ -9,8 +9,8 @@ import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 
 // axios.defaults.baseURL = "https://moody-goose-35.loca.lt";
-axios.defaults.baseURL = "https://server.subllet.co.kr";
-// axios.defaults.baseURL = "https://localhost:4000";
+// axios.defaults.baseURL = "https://server.subllet.co.kr";
+axios.defaults.baseURL = "https://localhost:4000";
 axios.defaults.withCredentials = true;
 
 const persistor = persistStore(store);

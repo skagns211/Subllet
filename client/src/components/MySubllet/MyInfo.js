@@ -4,22 +4,33 @@ import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import IU from "../../IMG/아이유.jpeg";
-
 const MyInfoContainer = styled.main`
   width: 100%;
   height: 30rem;
   margin-top: 2rem;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  /* font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif; */
+  font-family: "InfinitySans-RegularA1";
   /* border: 0.5px solid white; */
   /* flex-basis: auto; */
+
+  @media only screen and (max-width: 600px) {
+    width: 98%;
+    height: 26rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 
 const MyInfoTitle = styled.div`
   height: 10%;
   font-size: 2rem;
   color: #ff8a00;
+  display: flex;
+  align-items: center;
   /* border: 0.5px solid white; */
+  @media only screen and (max-width: 600px) {
+    font-size: 1.3rem;
+  }
 `;
 
 const MyInfoBox = styled.div`
@@ -31,6 +42,9 @@ const MyInfoBox = styled.div`
   background-color: #252a3c;
   border-radius: 0.5rem;
   /* border: 0.5px solid red; */
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 const LeftBox = styled.span`
   width: 35%;
@@ -40,6 +54,14 @@ const LeftBox = styled.span`
   justify-content: center;
   align-items: center;
   /* border: 0.5px solid white; */
+  @media only screen and (min-width: 601px) and (max-width: 850px) {
+    width: 40%;
+  }
+
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+    height: 80%;
+  }
 
   img {
     border-radius: 50%;
@@ -48,10 +70,14 @@ const LeftBox = styled.span`
     margin: auto;
     /* border: 1px solid #b2b2b2; */
     object-fit: cover;
-  }
-
-  @media only screen and (max-width: 800px) {
-    width: 45%;
+    @media only screen and (min-width: 601px) and (max-width: 850px) {
+      width: 14rem;
+      height: 14rem;
+    }
+    @media only screen and (max-width: 600px) {
+      width: 9rem;
+      height: 9rem;
+    }
   }
 `;
 const RightBox = styled.span`
@@ -63,12 +89,34 @@ const RightBox = styled.span`
   /* border: 0.5px solid white; */
   justify-content: center;
   /* align-items: center; */
+  @media only screen and (max-width: 600px) {
+    display: grid;
+    width: 60%;
+    /* height: 50%; */
+  }
+
   div {
     font-size: 1.5rem;
     margin-top: 1.5rem;
-  }
-  @media only screen and (max-width: 800px) {
-    width: 45%;
+    /* border: 0.5px solid white; */
+    display: flex;
+    a {
+      width: 50%;
+      display: flex;
+      align-items: center;
+      text-align: center;
+    }
+    @media only screen and (min-width: 601px) and (max-width: 850px) {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+    @media only screen and (max-width: 600px) {
+      /* align-items: start; */
+      width: 100%;
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+      margin-bottom: 0.3rem;
+    }
   }
 `;
 
@@ -79,15 +127,27 @@ const Button = styled.button`
   height: 3rem;
   border: none;
   border-radius: 0.4rem;
-  margin-right: 1rem;
+  /* margin-right: 1rem; */
   background-color: #3a3f51;
   font-family: "paybooc-Medium";
   font-size: 1.1rem;
   color: #ff8a00;
   cursor: pointer;
   :hover {
-    color: rgba(255, 255, 255, 0.85);
-    box-shadow: rgba(30, 22, 54, 0.7) 0 5rem 0rem 2rem inset;
+    color: #3a3f51;
+    font-weight: bold;
+    box-shadow: #ff8a00 0 5rem 0rem 2rem inset;
+  }
+  @media only screen and (min-width: 601px) and (max-width: 850px) {
+    width: 7rem;
+    margin-top: 1rem;
+  }
+  @media only screen and (max-width: 600px) {
+    width: 93%;
+    height: 2rem;
+    font-size: 0.8rem;
+    margin-left: auto;
+    margin-right: auto;
   }
 `;
 

@@ -75,20 +75,32 @@ module.exports = {
       const service_id = req.params.id;
       const { paydate, planname, planprice } = req.body;
 
-      const updated = await Subscribe.update(
-        {
-          paydate,
-          planname,
-          planprice,
-        },
-        {
-          where: { user_id, service_id },
-        }
-      );
+      if (paydate) {
+        await Subscribe.update(
+          {
+            paydate,
+          },
+          {
+            where: { user_id, service_id },
+          }
+        );
+      }
+
+      if (planname && planprice) {
+        await Subscribe.update(
+          {
+            planname,
+            planprice,
+          },
+          {
+            where: { user_id, service_id },
+          }
+        );
+      }
 
       const subscribe = await Subscribe.findOne({
         attributes: ["paydate", "planname", "planprice"],
-        where: { id: updated[0] },
+        where: { user_id, service_id },
       });
 
       try {

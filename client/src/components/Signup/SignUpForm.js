@@ -50,7 +50,7 @@ const EmailTab = styled.div`
       width: 10%;
       font-size: 2rem;
       text-align: center;
-      color: gray;
+      color: white;
     }
   }
 `;
@@ -133,8 +133,8 @@ const Button = styled.button`
   font-size: 1rem;
   color: #ff8a00;
   :hover {
-    color: rgba(255, 255, 255, 0.85);
-    box-shadow: rgba(30, 22, 54, 0.7) 0 5rem 0rem 2rem inset;
+    color: #252a3c;
+    box-shadow: #ff8a00 0 5rem 0rem 2rem inset;
   }
 `;
 
@@ -216,21 +216,21 @@ const SignUpForm = () => {
     if (!regPassword.test(password)) {
       setIsPassword(false);
       setPasswordMessage(
-        "숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!"
+        "숫자+영문자+특수문자 조합으로 8자리 이상 입력해 주세요"
       );
     } else {
       setIsPassword(true);
-      setPasswordMessage("사용하기 좋은 비밀번호입니다:)");
+      setPasswordMessage("사용하기 좋은 비밀번호입니다");
     }
   };
   //! password 확인 유효성검사
   const equalPassword = (password, cheeckPassword) => {
     if (password === cheeckPassword) {
       setIsPwdCheck(true);
-      setPasswordCheckMessage("비밀번호가 일치합니다:)");
+      setPasswordCheckMessage("비밀번호가 일치합니다");
     } else {
       setIsPwdCheck(false);
-      setPasswordCheckMessage("비밀번호가 일치하지 않습니다.");
+      setPasswordCheckMessage("비밀번호가 일치하지 않습니다");
     }
   };
   //! Handler function-----------------------------------------------
@@ -254,7 +254,7 @@ const SignUpForm = () => {
     console.log(userData.email);
     if (frontEmail.length === 0 || backEmail.length === 0) {
       setIsDupEmail(false);
-      setEmailMessage("이메일이 입력되지 않았습니다. 이메일을 입력해주세요.");
+      setEmailMessage("이메일이 입력되지 않았습니다. 이메일을 입력해 주세요");
     } else {
       axios
         .post("/auth/email", { email: userData.email })
@@ -262,18 +262,18 @@ const SignUpForm = () => {
           console.log(res);
           setIsEmail(true);
           setIsDupEmail(true);
-          setEmailMessage("사용가능한 이메일입니다.");
+          setEmailMessage("사용 가능한 이메일입니다");
         })
         .catch((err) => {
           console.log(err.response);
           const resMsg = err.response.data;
           if (resMsg === "Overlap") {
             setIsDupEmail(false);
-            setEmailMessage("이미 회원가입된 이메일입니다.");
+            setEmailMessage("이미 회원가입된 이메일입니다");
           } else if (resMsg === "Empty body") {
             setIsDupEmail(false);
             setEmailMessage(
-              "이메일이 입력되지 않았습니다. 이메일을 입력해주세요."
+              "이메일이 입력되지 않았습니다. 이메일을 입력해 주세요"
             );
           }
         });
@@ -285,18 +285,18 @@ const SignUpForm = () => {
       .post("/auth/nickname", { nickname: userData.nickname })
       .then((res) => {
         setIsDupNickname(true);
-        setNicknameMessage("사용가능한 닉네임입니다:)");
+        setNicknameMessage("사용가능한 닉네임입니다");
       })
       .catch((err) => {
         console.error(err.response);
         const resMsg = err.response.data;
         if (resMsg === "Overlap") {
           setIsDupNickname(false);
-          setNicknameMessage("이미 사용중인 닉네임입니다.");
+          setNicknameMessage("이미 사용 중인 닉네임입니다");
         } else if (resMsg === "Empty body") {
           setIsDupNickname(false);
           setNicknameMessage(
-            "닉네임이 입력되지 않았습니다. 닉네임을 입력해주세요."
+            "닉네임이 입력되지 않았습니다. 닉네임을 입력해 주세요"
           );
         }
       });
@@ -311,17 +311,17 @@ const SignUpForm = () => {
       isPassword &&
       isPwdCheck === false
     ) {
-      console.log("회원가입 요청이 실패하였습니다.");
+      console.log("회원가입 요청이 실패하였습니다");
     } else {
       axios.post("/auth/signup", userData).then((res) => {
         console.log(res.data);
         const resMsg = res.data;
         if (resMsg === "Signup success") {
           setIsComplete(true);
-          console.log("회원가입 요청이 성공적으로 전달되었습니다.");
+          console.log("회원가입 요청이 성공적으로 전달되었습니다");
           setTimeout(() => {
             navigate("/main");
-          }, 2000);
+          }, 1000);
         }
       });
     }
@@ -348,7 +348,7 @@ const SignUpForm = () => {
             onChange={(value) => {
               handleEmailBackValue(value);
             }}
-            placeholder="선택해주세요"
+            placeholder="선택해 주세요"
           />
         </EmailTab>
         {isEmail ? (
@@ -360,9 +360,11 @@ const SignUpForm = () => {
       </ElementBox>
       <ElementBox>
         <ElementTitle>닉네임</ElementTitle>
-        <div className="validText">중복되지 않는 닉네임을 입력해주세요</div>
+        <div className="validText">중복되지 않는 닉네임을 입력해 주세요</div>
         <InputBox
+          type="text"
           placeholder="닉네임"
+          maxLength="8"
           onChange={handleInputValue("nickname")}
         />
         {isDupNickname ? (
@@ -377,7 +379,7 @@ const SignUpForm = () => {
       <ElementBox>
         <ElementTitle>비밀번호</ElementTitle>
         <div className="validText">
-          숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!
+          숫자+영문자+특수문자 조합으로 8자리 이상 입력해 주세요
         </div>
         <InputBox
           placeholder="비밀번호"

@@ -209,18 +209,18 @@ const NaverAuthHandler = () => {
       .post("/auth/nickname", { nickname: state.authUserInfo.nickname })
       .then((res) => {
         setIsDupNickname(true);
-        setNicknameMessage("사용가능한 닉네임입니다:)");
+        setNicknameMessage("사용 가능한 닉네임입니다");
       })
       .catch((err) => {
         // console.log(err.response.data);
         const resMsg = err.response.data;
         if (resMsg === "Overlap") {
           setIsDupNickname(false);
-          setNicknameMessage("이미 사용중인 닉네임입니다.");
+          setNicknameMessage("이이미 사용 중인 닉네임입니다");
         } else if (resMsg === "Empty body") {
           setIsDupNickname(false);
           setNicknameMessage(
-            "닉네임이 입력되지 않았습니다. 닉네임을 입력해주세요."
+            "닉네임이 입력되지 않았습니다. 닉네임을 입력해 주세요."
           );
         }
       });
@@ -251,7 +251,9 @@ const NaverAuthHandler = () => {
           <Line />
           <ElementBox>
             <ElementTitle>닉네임</ElementTitle>
-            <div className="validText">중복되지 않는 닉네임을 입력해주세요</div>
+            <div className="validText">
+              중복되지 않는 닉네임을 입력해 주세요
+            </div>
             <InputBox
               placeholder="닉네임"
               onChange={(e) =>
