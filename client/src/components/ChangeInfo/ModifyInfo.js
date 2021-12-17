@@ -9,81 +9,150 @@ const StyledBody = styled.div`
   color: white;
   margin: 2rem auto;
   width: 50rem;
-  max-width: 80%;
+  max-width: 100%;
 `;
 
 const StyledForm = styled.div`
-  background-color: #262a3b;
-  margin-top: 1rem;
+  background-color: #252a3c;
+  margin: 1rem;
   display: flex;
-  border-radius: 5px 5px 0 0;
+  flex-direction: column;
+  border-radius: 5px;
   height: 28rem;
+  @media only screen and (min-width: 768px) {
+    flex-direction: row;
+  }
 `;
 
 const ChangeLabel = styled.div`
   font-size: 2rem;
+  margin-left: 1rem;
 `;
 
 const ImgForm = styled.div`
-  margin: 3rem 1rem 0 5rem;
+  margin: 2rem 1rem 0 1rem;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
   img {
-    width: 15rem;
-    height: 15rem;
+    width: 9.5rem;
+    height: 9.5rem;
     object-fit: cover;
     border-radius: 7rem;
   }
+  @media only screen and (min-width: 768px) {
+    flex-direction: column;
+    margin: 0 1rem 0 4rem;
+    align-items: center;
+    img {
+      margin-left: 1rem;
+      width: 15rem;
+      height: 15rem;
+    }
+  }
+`;
+
+const ImgInput = styled.div`
+  margin: 1.5rem 0 0 0;
   div {
-    margin-top: 1rem;
-    label,
-    button {
-      background-color: #3b3f51;
+    display: block;
+    label {
+      background-color: #3a3f51;
       color: #ff8a00;
       padding: 1rem;
       border-radius: 5px;
       font-size: 1.5rem;
-      border: 0;
-      margin: 1rem 1rem;
+      margin: 2rem 0 0 1rem;
+      :hover {
+        cursor: pointer;
+        background-color: #ff8a00;
+        color: #252a3c;
+      }
     }
-    label:hover,
-    button:hover {
+  }
+  button {
+    background-color: #3a3f51;
+    color: #ff8a00;
+    padding: 1rem;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    border: 0;
+    margin: 2rem 0 0 1rem;
+    :hover {
       cursor: pointer;
+      background-color: #ff8a00;
+      color: #252a3c;
+    }
+  }
+
+  @media only screen and (min-width: 768px) {
+    margin: 0;
+    display: flex;
+    div {
+      label {
+        display: inline-flex;
+        margin-top: 3rem;
+      }
+    }
+    button {
+      margin-top: 3rem;
     }
   }
 `;
 
 const InfoForm = styled.div`
-  margin: 4rem 0 0 1rem;
-  height: 15rem;
-  font-size: 1.5rem;
+  margin: 0 1rem 0 1rem;
+  font-size: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   button {
-    margin: 3rem;
+    position: absolute;
+    top: 32.4rem;
     padding: 1rem;
     font-size: 1.5rem;
-    background-color: #3b3f51;
+    background-color: #3a3f51;
     color: #ff8a00;
     border: 0px;
     border-radius: 5px;
+    :hover {
+      cursor: pointer;
+      background-color: #ff8a00;
+      color: #252a3c;
+    }
   }
-  button:hover {
-    cursor: pointer;
+  @media only screen and (min-width: 768px) {
+    margin: 4rem 0 0 2rem;
+    font-size: 1.5rem;
+    button {
+      position: absolute;
+      top: 31.7rem;
+    }
+  }
+  @media only screen and (min-width: 800px) {
+    button {
+      position: absolute;
+      top: 32.4rem;
+    }
   }
 `;
 
 const InfoInput = styled.div`
   input {
-    padding: 0.1rem;
-    font-size: 1.5rem;
-    width: 15rem;
-    margin-left: 0.3rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 14rem;
+    margin-left: 0.2rem;
   }
   div {
-    margin: 3rem 0;
+    margin: 2rem 0 0 0;
+  }
+  @media only screen and (min-width: 768px) {
+    input {
+      font-size: 1.5rem;
+    }
+    div {
+      margin: 3rem 0;
+    }
   }
 `;
 
@@ -92,24 +161,26 @@ const ErrMsg = styled.span`
   font-size: 1rem;
   text-align: left;
   color: ${(props) => props.color || "white"};
-  margin-top: 0.4rem;
+  margin: 0.4rem 0 0 3rem;
+  @media only screen and (min-width: 768px) {
+    margin: 0.4rem 0 0 4.5rem;
+  }
 `;
 
 const ModifyInfo = () => {
   const state = useSelector((state) => state);
   const UserInfo = useSelector((state) => state.loginUserInfo);
   const dispatch = useDispatch();
+  const { id } = state.loginUserInfo;
 
   const [open, setOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState({});
+  const [success, setSuccess] = useState(false);
+
   const [profile, setProfile] = useState(UserInfo.profile);
   const [nick, setNick] = useState(UserInfo.nickname);
   const [emptyNick, setEmptyNick] = useState(false);
   const [duplicate, setDuplicate] = useState(false);
-  const { id } = state.loginUserInfo;
-
-  const [success, setSuccess] = useState(false);
-
 
   const AWS = require("aws-sdk");
 
@@ -221,20 +292,22 @@ const ModifyInfo = () => {
       <StyledForm>
         <ImgForm>
           {profile ? (
-            <img src={profile} />
+            <img src={profile} alt='profile 이미지'/>
           ) : (
-            <img src="https://subllet-profile.s3.ap-northeast-2.amazonaws.com/istockphoto-1223671392-170667a.jpeg" />
+            <img src="https://subllet-profile.s3.ap-northeast-2.amazonaws.com/istockphoto-1223671392-170667a.jpeg" alt='profile 기본이미지' />
           )}
-          <div>
-            <label htmlFor="file">사진 변경</label>
-            <input
-              type="file"
-              id="file"
-              style={{ display: "none" }}
-              onChange={changeProfile}
-            />
+          <ImgInput>
+            <div>
+              <label htmlFor="file">사진 변경</label>
+              <input
+                type="file"
+                id="file"
+                style={{ display: "none" }}
+                onChange={changeProfile}
+              />
+            </div>
             <button onClick={delProfile}>사진 삭제</button>
-          </div>
+          </ImgInput>
         </ImgForm>
         <InfoForm>
           <InfoInput>
@@ -246,6 +319,7 @@ const ModifyInfo = () => {
                 placeholder="닉네임을 입력해주세요"
                 onChange={inputNickname}
                 value={nick}
+                maxLength="8"
               />
               {duplicate ? (
                 <ErrMsg color={"red"}>중복된 닉네임입니다.</ErrMsg>

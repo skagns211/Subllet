@@ -89,7 +89,7 @@ const AllView = () => {
       } else {
         setSelect({
           ...select,
-          price: Number(price.target.textContent),
+          price: Number(price.target.textContent.slice(1)),
         });
       }
     } else if (free) {

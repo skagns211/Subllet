@@ -21,11 +21,16 @@ const StyledBody = styled.div`
   align-items: center;
   button {
     font-size: 1rem;
-    background-color: #3b3f51;
+    background-color: #3a3f51;
     border: 0;
     border-radius: 5px;
     padding: 0.5rem 1rem;
     color: #ff8a00;
+    :hover {
+      cursor: pointer;
+      background-color: #ff8a00;
+      color: #252a3c;
+    }
   }
   @media only screen and (min-width: 768px) {
     width: 32rem;
@@ -51,6 +56,7 @@ const AlertModal = ({
   del,
   notLogin,
   success,
+  delAcc,
 }) => {
   console.log(notLogin);
   return (
@@ -62,6 +68,10 @@ const AlertModal = ({
           <button onClick={clickDel}>{alertMsg.button}</button>
         ) : success ? (
           <Link to="/mysubllet">
+            <button>{alertMsg.button}</button>
+          </Link>
+        ) : delAcc ? (
+          <Link to="/main">
             <button>{alertMsg.button}</button>
           </Link>
         ) : notLogin ? (

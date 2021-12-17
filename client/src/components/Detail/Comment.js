@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import AlertModal from "../AlertModal";
@@ -8,12 +8,6 @@ import { setLoginUserInfo, setIsLogin } from "../../actions";
 const StyledBody = styled.section`
   max-width: 100%;
   margin-bottom: 1rem;
-  .fa-thumbs-up {
-    color: blue;
-  }
-  .fa-thumbs-down {
-    color: red;
-  }
 `;
 
 const ServiceOption = styled.div`
@@ -21,14 +15,14 @@ const ServiceOption = styled.div`
   justify-content: space-between;
   margin: 1rem 1rem 1rem 1rem;
   font-size: 1.5rem;
-  color: #e37b02;
+  color: #ff8a00;
   @media only screen and (min-width: 768px) {
     font-size: 2rem;
   }
 `;
 
 const CommentBody = styled.div`
-  background-color: #252a3b;
+  background-color: #252a3c;
   color: white;
   margin: 0.5rem 1rem;
   font-size: 1.5rem;
@@ -57,10 +51,20 @@ const InputComment = styled.div`
 `;
 
 const Likes = styled.div`
+  margin-top: 1rem;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   input {
-    margin: 1rem;
+    margin: 1rem 0.5rem 1rem 1rem;
+    :hover {
+      cursor: pointer;
+    }
+  }
+  div:hover {
+    cursor: pointer;
+  }
+  @media only screen and (min-width: 768px) {
   }
 `;
 
@@ -71,10 +75,16 @@ const SendButton = styled.div`
     background-color: #3a3f51;
     border: 0px;
     font-size: 1rem;
-    color: #e37b02;
+    color: #ff8a00;
     border-radius: 5px;
     padding: 1rem 3rem;
+    :hover {
+      background-color: #ff8a00;
+      color: #3a3f51;
+      cursor: pointer;
+    }
   }
+
   @media only screen and (min-width: 768px) {
     button {
       font-size: 1.5rem;
@@ -96,13 +106,26 @@ const CommentList = styled.div`
   font-size: 1rem;
   div {
     display: flex;
+    max-width: 50rem;
+    word-break: break-all;
     justify-content: space-between;
     i {
+      font-size: 1.5rem;
+      margin-left: 1rem;
       color: red;
+      :hover {
+        cursor: pointer;
+        color: #ff4d4d;
+      }
     }
   }
   @media only screen and (min-width: 768px) {
     font-size: 1.5rem;
+    div {
+      i {
+        font-size: 2rem;
+      }
+    }
   }
 `;
 
@@ -110,19 +133,18 @@ const CommentInfo = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
+  font-weight: bold;
 `;
 
 const CommentLike = styled.div`
   display: flex;
   align-items: center;
   margin: 0 0 0 1rem;
-  i {
-    font-size: 1.5rem;
-  }
+  font-size: 3rem;
   @media only screen and (min-width: 768px) {
     margin: 0 1rem 0 2rem;
     i {
-      font-size: 2rem;
+      font-size: 4rem;
     }
   }
 `;
@@ -188,7 +210,7 @@ const Comment = ({
   const logoutHandler = () => {
     axios
       .post("/auth/logout", { id })
-      .then((res) => {
+      .then(() => {
         const loginUserInfo = {
           email: "",
           nickname: "",
@@ -232,11 +254,11 @@ const Comment = ({
             }
           });
       } else {
-        setAlertMsg({ message: "모두 입력해주세요", button: "확인" });
+        setAlertMsg({ message: "내용을 입력해 주세요", button: "확인" });
         setOpen(!open);
       }
     } else {
-      setAlertMsg({ message: "로그인을 먼저 해주세요", button: "로그인" });
+      setAlertMsg({ message: "로그인 후 이용해 주세요", button: "로그인" });
       setOpen(!open);
       setText("");
       if (!state.isLogin) {
@@ -250,9 +272,6 @@ const Comment = ({
     setOpen(!open);
     setDel(!del);
   };
-
-  console.log(detail.total_likes);
-  console.log(detail.total_unlikes);
 
   return (
     <StyledBody>
@@ -268,7 +287,7 @@ const Comment = ({
       <ServiceOption>
         <div>Comment {comments.length}개</div>
         <div>
-          추천: {totalLikes} 비추천: {totalUnLikes}
+          추천: {detail.total_likes} 비추천: {detail.total_unlikes}
         </div>
       </ServiceOption>
       <CommentBody>
@@ -276,7 +295,7 @@ const Comment = ({
           <textarea
             value={text}
             onChange={inputText}
-            placeholder="댓글을 입력해주세요"
+            placeholder="댓글을 입력해 주세요"
           />
           <Likes>
             <input
@@ -286,14 +305,14 @@ const Comment = ({
               onChange={handleSelect}
               defaultChecked={like}
             />
-            <i className="fas fa-thumbs-up"></i>
+            <div>👍</div>
             <input
               type="radio"
               name="likes"
               value="false"
               onChange={handleSelect}
             />
-            <i className="fas fa-thumbs-down"></i>
+            <div>👎</div>
           </Likes>
         </InputComment>
         <SendButton>
@@ -319,11 +338,7 @@ const Comment = ({
                   </div>
                 </CommentList>
                 <CommentLike>
-                  {comment.likes ? (
-                    <i className="fas fa-thumbs-up"></i>
-                  ) : (
-                    <i className="fas fa-thumbs-down"></i>
-                  )}
+                  {comment.likes ? <div>👍</div> : <div>👎</div>}
                 </CommentLike>
               </Comments>
             );
