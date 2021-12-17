@@ -27,7 +27,6 @@ const StyledDropDown = styled.div`
   @media only screen and (min-width: 768px) {
     flex-direction: row;
     margin-left: 0.6rem;
-    /* justify-content: space-evenly; */
   }
 `;
 
@@ -40,15 +39,16 @@ const DropDown = styled.div`
   width: 100%;
   div {
     border-radius: 5px;
-    border: 1px solid #e69332;
+    border: 1px solid #ff8a00;
     width: 70%;
     min-width: 18rem;
     max-width: 25rem;
     padding: 0.5rem 1rem;
     margin-top: 2rem;
-  }
-  div:hover {
-    cursor: pointer;
+    :hover {
+      cursor: pointer;
+      background-color: #ff8a00;
+    }
   }
   ul {
     border-radius: 5px;
@@ -56,7 +56,7 @@ const DropDown = styled.div`
     padding-left: 0;
     position: absolute;
     z-index: 999;
-    border: 1px solid #e69332;
+    border: 1px solid #ff8a00;
     margin-top: 5rem;
     background-color: #130d0a;
     opacity: 0.9;
@@ -66,10 +66,10 @@ const DropDown = styled.div`
     li {
       padding: 1rem;
       background-color: #130d0a;
-    }
-    li:hover {
-      background-color: #e69332;
-      cursor: pointer;
+      :hover {
+        background-color: #ff8a00;
+        cursor: pointer;
+      }
     }
   }
 
@@ -153,16 +153,16 @@ const Filter = ({
                 모든 가격
               </li>
               <li onClick={(price) => filterServices(category, price, free)}>
-                5000
+                ~ 5000
               </li>
               <li onClick={(price) => filterServices(category, price, free)}>
-                10000
+                ~ 10000
               </li>
               <li onClick={(price) => filterServices(category, price, free)}>
-                15000
+                ~ 15000
               </li>
               <li onClick={(price) => filterServices(category, price, free)}>
-                20000
+                ~ 20000
               </li>
             </ul>
           ) : null}

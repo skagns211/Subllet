@@ -17,9 +17,8 @@ const Detail = () => {
 
   const [detail, setDetail] = useState([]);
   const [scrapNum, setScrapNum] = useState();
-  const [isScrap, setIsScrap] = useState();
-  const [isSub, setIsSub] = useState();
-
+  const [isScrap, setIsScrap] = useState(false);
+  const [isSub, setIsSub] = useState(false);
   const [comments, setComments] = useState([]);
   const [change, setChange] = useState("");
 

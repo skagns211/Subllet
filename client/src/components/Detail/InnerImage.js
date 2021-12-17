@@ -7,19 +7,21 @@ import { setLoginUserInfo, setIsLogin } from "../../actions";
 import AlertModal from "../AlertModal";
 
 const StyledBody = styled.section`
-  margin-top: 1rem;
+  margin-top: 2rem;
   max-width: 100%;
+  @media only screen and (min-width: 800px) {
+    margin-top: 1rem;
+  }
 `;
+
 const BackgroundImage = styled.div`
   background-image: url(${(props) => props.image});
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  opacity: 0.7;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   height: 20rem;
   @media only screen and (min-width: 768px) {
     height: 35rem;
@@ -30,26 +32,35 @@ const MoveButton = styled.div`
   display: flex;
   justify-content: space-between;
   font-weight: lighter;
-  font-size: 5rem;
-  color: white;
+  font-size: 3rem;
+  opacity: 0.7;
+  color: gray;
+  margin: 8rem 1rem 0rem 1rem;
+  i:hover {
+    cursor: pointer;
+    color: lightgray;
+  }
   @media only screen and (min-width: 768px) {
-    font-size: 10rem;
+    font-size: 5rem;
+    margin: 15rem 1rem 0rem 1rem;
   }
 `;
 
 const ScrapButton = styled.div`
-  margin-top: 2rem;
   padding: 1rem;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   div {
     font-size: 1.5rem;
-    color: yellow;
+    color: #ff8a00;
   }
   i {
-    color: yellow;
-    font-size: 1.5rem;
+    color: #ff8a00;
+    margin-right: 0.5rem;
+    :hover {
+      color: yellow;
+      cursor: pointer;
+    }
   }
   @media only screen and (min-width: 768px) {
     div {
@@ -59,32 +70,50 @@ const ScrapButton = styled.div`
       font-size: 2rem;
     }
   }
-  @media only screen and (min-width: 800px) {
-    margin-top: 0;
-  }
 `;
 const DetailMessage = styled.div`
+  background: ;
   font-size: 1.5rem;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding-bottom: 1rem;
-  margin: 0rem 1rem;
-  color: white;
+  color: #ff8a00;
+  font-weight: bold;
+  margin: 6rem 1rem;
   button {
     padding: 0.5rem;
     font-size: 1.5rem;
     border-radius: 0.5rem;
     background-color: black;
-    opacity: 0.7;
-    color: white;
+    opacity: 0.9;
+    color: #ff8a00;
+    border: 0;
+    :hover {
+      cursor: pointer;
+      background: #ff8a00;
+      color: white;
+    }
   }
   @media only screen and (min-width: 768px) {
     font-size: 2rem;
+    margin: 9rem 1rem;
     button {
       padding: 1rem;
       font-size: 2rem;
     }
+  }
+`;
+
+const DetailLabel = styled.div`
+  display: flex;
+  color: #ff8a00;
+  align-items: center;
+  justify-content: space-between;
+  div {
+    font-size: 2.5rem;
+  }
+  i {
+    font-size: 2rem;
   }
 `;
 
@@ -99,14 +128,15 @@ const InnerImage = ({
 }) => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
   const { id } = state.loginUserInfo;
+
+  const [open, setOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState();
   const [notLogin, setNotLogin] = useState(false);
 
   const handleClick = () => {
     setOpen(!open);
-    setAlertMsg({ message: "로그인을 먼저 해주세요", button: "로그인" });
+    setAlertMsg({ message: "로그인 후 이용해 주세요", button: "로그인" });
     if (!state.isLogin) {
       setNotLogin(true);
     }
@@ -132,7 +162,7 @@ const InnerImage = ({
   const logoutHandler = () => {
     axios
       .post("/auth/logout", { id })
-      .then((res) => {
+      .then(() => {
         const loginUserInfo = {
           email: "",
           nickname: "",
@@ -225,7 +255,8 @@ const InnerImage = ({
           handleClick={handleClick}
         />
       ) : null}
-      <BackgroundImage image={detail.inner_image}>
+      <DetailLabel>
+        <div>{detail.title}</div>
         <ScrapButton>
           {state.isLogin && isScrap ? (
             <>
@@ -244,18 +275,19 @@ const InnerImage = ({
             </>
           )}
         </ScrapButton>
+      </DetailLabel>
+      <BackgroundImage image={detail.inner_image}>
         <MoveButton>
           <i onClick={prePage} className="fas fa-chevron-left"></i>
           <i onClick={nextPage} className="fas fa-chevron-right"></i>
         </MoveButton>
         <DetailMessage>
-          <span>{detail.title}</span>
           {state.isLogin && isSub ? (
             <button onClick={delSub}>구독중</button>
           ) : state.isLogin && !isSub ? (
-            <button onClick={addSub}>내 구독 목록에 추가</button>
+            <button onClick={addSub}>구독 추가</button>
           ) : (
-            <button onClick={handleClick}>내 구독 목록에 추가</button>
+            <button onClick={handleClick}>구독 추가</button>
           )}
         </DetailMessage>
       </BackgroundImage>
