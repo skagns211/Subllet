@@ -25,7 +25,7 @@ import { setServices } from "./actions";
 
 const GlobalStyle = createGlobalStyle`
   body {
-    font-family: "Geo", sans-serif;
+    font-family:'Geo', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #130D0A;
@@ -39,7 +39,6 @@ const GlobalStyle = createGlobalStyle`
     @media only screen and (max-width: 800px) {
     min-width: 370px;
   }
-  
   a {
     color: #ffffff;
     text-decoration: none;

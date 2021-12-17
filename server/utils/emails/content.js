@@ -21,6 +21,7 @@ module.exports = {
       subject: `${nickname}님! 회원가입 이메일 인증을 진행해주세요.`,
       html: compiledFunction(options),
     };
+
     return emailContent;
   },
 };
