@@ -7,7 +7,6 @@ import styled from "styled-components";
 import { SelectService } from "./MySubllet/Select";
 import { NavSelectService } from "./MySubllet/Select";
 import logo from "../IMG/favicon.png";
-import defaultImg from "../IMG/default.png";
 
 const NavHeader = styled.header`
   display: flex;
@@ -171,6 +170,7 @@ const RightNav = styled.span`
     border-bottom: 1px solid #ff8a00;
     text-align: center;
     color: #ffffff;
+    cursor: pointer;
   }
   li:last-child {
     border-bottom: none;
@@ -185,12 +185,12 @@ const Test = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  a {
-    cursor: pointer;
-  }
+
   img {
-    width: 3.7rem;
-    border-radius: 2rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 70%;
+    object-fit: cover;
     margin: 0.4rem 0rem 0.4rem 0;
     /* margin-top: 0.4rem;
     margin-right: 1.6rem; */
@@ -200,8 +200,11 @@ const Test = styled.div`
   }
   ul {
     z-index: 1;
+    position: absolute;
     width: 6rem;
     margin: 0;
+    /* margin-top: 0.2rem; */
+    margin-left: 76%;
     padding: 0;
     list-style: none;
     top: 4.3rem;
@@ -214,11 +217,17 @@ const Test = styled.div`
   @media only screen and (max-width: 500px) {
     img {
       width: 3rem;
-      border-radius: 2rem;
+      height: 3rem;
+      border-radius: 70%;
       margin: 1rem 0rem 0rem 1.2rem;
-
-      /* margin-top: 0.4rem; */
-      /* margin-right: 1.6rem; */
+    }
+    ul {
+      margin-left 59%;
+    }
+  }
+  @media only screen and (min-width: 500px) and (max-width: 800px) {
+    ul {
+      margin-left: 70%;
     }
   }
 `;
@@ -230,14 +239,12 @@ const Nav = () => {
   const { profile } = state.loginUserInfo;
   const accessToken = window.localStorage.getItem("accessToken");
   const currentUrl = location.pathname;
-  console.log(state.loginUserInfo);
+  const defaultImg = "https://i.esdrop.com/d/z3v0lj8ztjvc/kXWkE8sPcW.png";
 
   const logoutHandler = () => {
-    console.log("click1");
     axios
       .post("/auth/logout", null)
       .then((res) => {
-        console.log("then");
         const loginUserInfo = {
           email: "",
           nickname: "",
@@ -288,24 +295,21 @@ const Nav = () => {
                 className="defaultImg"
               />
               <ul>
-                <li>
-                  <a
-                    onClick={() => {
-                      window.location.replace("/mysubllet");
-                    }}
-                  >
-                    MySubllet
-                  </a>
+                <li
+                  className="mysub"
+                  onClick={() => {
+                    window.location.replace("/mysubllet");
+                  }}
+                >
+                  MySubllet
                 </li>
-                <li>
-                  <Link
-                    to={currentUrl}
-                    onClick={() => {
-                      logoutHandler();
-                    }}
-                  >
-                    로그아웃
-                  </Link>
+
+                <li
+                  onClick={() => {
+                    logoutHandler();
+                  }}
+                >
+                  로그아웃
                 </li>
               </ul>
             </Test>

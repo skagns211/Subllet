@@ -1,14 +1,11 @@
 import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { createGlobalStyle } from "styled-components";
-import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { setLoginUserInfo, setIsLogin } from "./actions";
+import styled, { createGlobalStyle } from "styled-components";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
-import SearchBar from "./components/SearchBar";
 import { NavSelectServiceDown } from "./components/MySubllet/Select";
 
 import Main from "./pages/Main";
@@ -37,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
     /* min-width: 530px; */
     min-height: 100vh;
     /* display: flex; */
-    /* overflow: hidden; */
+    overflow: auto;
     /* height: 100%; */
     @media only screen and (max-width: 800px) {
     min-width: 370px;
@@ -78,7 +75,6 @@ const SectionStyle = styled.section`
 `;
 
 function App() {
-  const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const location = useLocation();
   const currentUrl = location.pathname;
@@ -87,7 +83,7 @@ function App() {
     axios
       .get("/service")
       .then((res) => dispatch(setServices(res.data.services)));
-  }, [setServices]);
+  }, [dispatch]);
 
   return (
     <>
@@ -98,12 +94,12 @@ function App() {
         {currentUrl === "/" ? null : (
           <>
             <Nav />
+            <div className="mobileNav">
+              <NavSelectServiceDown />
+            </div>
             {/* <SearchBar /> */}
           </>
         )}
-        <div className="mobileNav">
-          <NavSelectServiceDown />
-        </div>
         <Pages>
           <Routes>
             <Route exact path="/" element={<Landing />} />

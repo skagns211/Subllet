@@ -3,7 +3,6 @@ import { SERVICE_DETAIL } from "../actions";
 const service = "";
 
 const serviceReducer = (state = service, action) => {
-  // console.log(action.payload);
   switch (action.type) {
     case SERVICE_DETAIL:
       return (state = action.payload);

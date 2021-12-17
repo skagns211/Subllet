@@ -28,7 +28,6 @@ export const CHANGE_USER_INFO = "CHANGE_USER_INFO";
 export const ADD_SUBSCRIBE = "ADD_SUBSCRIBE";
 
 export const setLoginUserInfo = (loginUserInfo) => {
-  console.log(loginUserInfo);
   return {
     type: LOGIN_USER_INFO,
     payload: loginUserInfo,

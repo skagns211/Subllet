@@ -11,6 +11,7 @@ const randomIdx = Math.floor(Math.random() * IMG["backImg"].length);
 const randomBackImg = IMG.backImg[randomIdx];
 
 const MainSection = styled.section`
+  /* font-family: "InfinitySans-RegularA1"; */
   @media only screen and (max-width: 800px) {
     display: flex;
     flex-direction: column;
@@ -30,7 +31,7 @@ const MainCardBody = styled.div`
   background-repeat: no-repeat;
   background-size: 100% 100%;
   border-radius: 1rem;
-  margin: 1rem 0.7rem 0.5rem 0.5rem;
+  margin: 2rem 0.7rem 0.5rem 0.5rem;
   padding: 0;
   width: auto;
   height: auto;
@@ -54,18 +55,23 @@ const MainCardBody = styled.div`
     margin-top: 0;
   }
   span {
-    border-radius: 0.3rem;
+    border-radius: 0.5rem;
     background-color: #252a3c;
     color: white;
     height: 6rem;
     font-size: 1.2rem;
   }
   img {
-    width: 2.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
     margin-left: 1.5rem;
     margin-top: 1rem;
+    border-radius: 70%;
+    overflow: hidden;
+    object-fit: cover;
   }
   .user {
+    font-family: "Geo", sans-serif;
     background-color: transparent;
     align-self: flex-start;
     margin: 1rem 0 0 0;
@@ -104,6 +110,14 @@ const MainCardBody = styled.div`
       padding-top: 0.4rem;
     }
   }
+  .nextPay::-webkit-scrollbar {
+    width: 0.7rem;
+  }
+  .nextPay::-webkit-scrollbar-thumb {
+    background-color: #3a3f51;
+    border-radius: 1rem;
+  }
+
   @media only screen and (max-width: 500px) {
     .user {
       padding-right: 0;
@@ -142,6 +156,14 @@ const MainCardBottom = styled.div`
       padding-top: 0.4rem;
     }
   }
+  .subscribe::-webkit-scrollbar {
+    width: 0.7rem;
+  }
+  .subscribe::-webkit-scrollbar-thumb {
+    background-color: #3a3f51;
+    border-radius: 1rem;
+  }
+
   @media only screen and (max-width: 500px) {
     .subscribe {
       padding-left: 0.8rem;
@@ -195,7 +217,6 @@ const MainCard = () => {
     axios
       .post("/auth/logout", { id })
       .then((res) => {
-        console.log("then");
         const loginUserInfo = {
           email: "",
           nickname: "",
@@ -206,9 +227,7 @@ const MainCard = () => {
         dispatch(setIsLogin(false));
         // window.location.href = "/userlogin";
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -231,7 +250,6 @@ const MainCard = () => {
                 }))
             : (total_price = 0);
           const total_scraps = res2.data.scraps.length;
-          console.log(total_scraps);
           const loginUserInfo = {
             id,
             email,
@@ -270,8 +288,7 @@ const MainCard = () => {
           logoutHandler();
         }
       });
-  }, []);
-  console.log(serviceLink && serviceLink);
+  }, [dispatch, state.isLogin]);
 
   const nextPayDate = payDate.map((el) => {
     const date = new Date();
@@ -318,11 +335,10 @@ const MainCard = () => {
             <span>다음 결제까지 :</span> <br />
             {payDate.length !== 0
               ? service.map((el, idx) => {
-                  const sortedDate = nextPayDate.sort((a, b) => a - b);
                   return (
                     <div key={idx}>
-                      {sortedDate[idx] >= 0 && sortedDate[idx] < 10
-                        ? `${el} : ${sortedDate[idx] + 1}일 전`
+                      {nextPayDate[idx] >= 0 && nextPayDate[idx] < 11
+                        ? `${el} : ${nextPayDate[idx] + 1}일 전`
                         : null}
                     </div>
                   );
