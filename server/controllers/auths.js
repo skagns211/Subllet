@@ -7,8 +7,6 @@ const {
 const {
   generateAccessToken,
   generateRefreshToken,
-  // checkRefeshToken,
-  // checkAccessToken,
   sendAccessToken,
   sendRefreshToken,
 } = require("../utils/tokenFunctions");
@@ -17,8 +15,6 @@ require("dotenv").config();
 const redis = require("../utils/redis");
 const emailSend = require("../utils/emails/send");
 const { emailVerify } = require("../utils/emails/content");
-const { access } = require("fs");
-let count = 0;
 
 module.exports = {
   signup: {
@@ -163,46 +159,6 @@ module.exports = {
       }
     },
   },
-  // refresh: {
-  //   post: async (req, res) => {
-  //     const { accessToken, refreshToken } = req.cookies;
-
-  //     if (!accessToken || !refreshToken) {
-  //       return res.status(400).send("Not exist token");
-  //     }
-  //     const accessTokenData = checkAccessToken(accessToken);
-  //     const refreshTokenData = checkRefeshToken(refreshToken);
-  //     count++;
-  //     console.log(accessTokenData);
-  //     console.log(new Date());
-  //     console.log(count);
-  //     if (refreshTokenData === null) {
-  //       return res.status(401).send("Expiration");
-  //     }
-
-  //     const redisRefreshToken = await redis.get(refreshTokenData.data);
-  //     if (refreshToken !== redisRefreshToken) {
-  //       return res.status(401).send("RefreshToken inconsistency");
-  //     }
-
-  //     const userInfo = await User.findOne({
-  //       where: { id: accessTokenData.id },
-  //     });
-  //     if (!userInfo) {
-  //       return res.status(401).send("Not exist user");
-  //       res.clearCookie("accessToken");
-  //       delete userInfo.dataValues.password;
-  //       const newAccessToken = generateAccessToken(userInfo.dataValues);
-  //       sendAccessToken(res, newAccessToken);
-  //     }
-  //     try {
-  //       res.send("Success");
-  //     } catch (err) {
-  //       console.error(err);
-  //       res.status(500).send("Server error");
-  //     }
-  //   },
-  // },
   confirm: {
     get: async (req, res) => {
       try {

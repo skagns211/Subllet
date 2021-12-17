@@ -23,7 +23,6 @@ const authReducer = (state = authCode, action) => {
   // const { email, nickname, profile } = await action.payload;
   switch (action.type) {
     case AUTH_CODE:
-      console.log(action.payload);
       return (state = action.payload);
     default:
       return state;

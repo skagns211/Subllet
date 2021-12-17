@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import Slider from "react-slick";
-import AllView from "../../pages/AllView";
 
 const StyleSlider = styled.div`
   color: #ff8a00;

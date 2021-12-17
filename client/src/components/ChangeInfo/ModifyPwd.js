@@ -7,72 +7,101 @@ import { setLoginUserInfo, setIsLogin } from "../../actions";
 
 const StyledBody = styled.div`
   color: white;
-  margin: 3rem auto;
+  margin: 2rem auto;
   width: 50rem;
-  max-width: 80%;
+  max-width: 100%;
 `;
 
 const StyledForm = styled.div`
-  background-color: #262a3b;
-  margin-top: 1rem;
-  height: 32rem;
+  background-color: #262a3c;
+  margin: 1rem;
   display: flex;
   flex-direction: column;
   border-radius: 5px;
+  height: 28rem;
 `;
 
-const ChangeLabel = styled.div`
+const DeleteLabel = styled.div`
   font-size: 2rem;
+  margin-left: 1rem;
 `;
 
 const PasswordInput = styled.div`
-  text-align: center;
-  width: 21.2rem;
-  margin: 3rem auto 0 auto;
+  margin: 2rem 2rem 0 1.5rem;
+  div {
+    margin-bottom: 0.2rem;
+  }
   input {
     padding: 0.5rem;
     font-size: 1rem;
-    width: 20rem;
-    margin-top: 0.1rem;
+    width: 97%;
   }
-  div {
-    text-align: left;
+}
+  @media only screen and (min-width: 768px) {
+    display: flex;
+    justify-content: center;
+    margin: 3rem 2rem 0 1.5rem;
+    div {
+      display: flex;
+      align-items: center;
+      margin-right: 1rem;
+      margin-bottom: 0;
+      font-size: 1rem;
+    }
+    input {
+      margin-left: ${(props) => props.margin};
+      width: 50%;
+    }
   }
 `;
 
 const ErrMsg = styled.div`
+  margin: 0.5rem 0 0 1.5rem;
   font-size: 0.8rem;
-  text-align: left;
-  color: ${(props) => props.color || "red"};
-  margin-top: 0.4rem;
+  color: red;
+  @media only screen and (min-width: 768px) {
+    margin: 0.5rem 0 0 15.7rem;
+    font-size: 1rem;
+  }
 `;
 
 const ChangeButton = styled.div`
-  margin: 3rem auto;
+  margin: 2rem 0 2.5rem 0;
+  display: flex;
+  justify-content: center;
   button {
-    padding: 0.5rem 2rem;
+    position: absolute;
+    top: 65rem;
+    padding: 1rem 2rem;
     font-size: 1.5rem;
-    background-color: #3b3f51;
+    background-color: #3a3f51;
     color: #ff8a00;
     border: 0px;
     border-radius: 5px;
+  }
+  button:hover {
+    cursor: pointer;
+    background-color: #ff8a00;
+    color: #252a3c;
   }
 `;
 
 const ModifyPwd = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
+  const { id } = state.loginUserInfo;
+
   const [open, setOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState({});
+  const [success, setSuccess] = useState(false);
+
   const [pwd, setPwd] = useState("");
   const [newPwd, setNewPwd] = useState("");
   const [RePwd, setRePwd] = useState("");
-
   const [checkPwd, setCheckPwd] = useState(true);
   const [validPwd, setValidPwd] = useState(true);
   const [samePwd, setSamePwd] = useState(true);
   const [allInput, setAllinput] = useState(true);
-  const { id } = state.loginUserInfo;
 
   const handleClick = () => {
     setOpen(!open);
@@ -81,7 +110,7 @@ const ModifyPwd = () => {
   const logoutHandler = () => {
     axios
       .post("/auth/logout", { id })
-      .then((res) => {
+      .then(() => {
         const loginUserInfo = {
           email: "",
           nickname: "",
@@ -112,6 +141,7 @@ const ModifyPwd = () => {
             button: "확인",
           });
           setOpen(!open);
+          setSuccess(true);
         })
         .catch((err) => {
           setCheckPwd(false);
@@ -151,45 +181,51 @@ const ModifyPwd = () => {
   return (
     <StyledBody>
       {open ? (
-        <AlertModal alertMsg={alertMsg} handleClick={handleClick} />
+        <AlertModal
+          alertMsg={alertMsg}
+          success={success}
+          handleClick={handleClick}
+        />
       ) : null}
-      <ChangeLabel>비밀번호변경</ChangeLabel>
+      <DeleteLabel>비밀번호변경</DeleteLabel>
       <StyledForm>
-        <PasswordInput>
+        <PasswordInput margin={"1rem"}>
           <div>현재 비밀번호</div>
           <input
             type="password"
             placeholder="비밀번호를 입력해주세요"
             onChange={inputNowPwd}
           />
-          {checkPwd ? null : <ErrMsg>비밀번호가 일치하지 않습니다.</ErrMsg>}
         </PasswordInput>
+        <ErrMsg>
+          {checkPwd ? null : <div>비밀번호가 일치하지 않습니다.</div>}
+        </ErrMsg>
         <PasswordInput>
           <div>새로운 비밀번호</div>
-          <ErrMsg color={"white"}>
-            숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!
-          </ErrMsg>
+          {/* <label>숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!</label> */}
           <input
             type="password"
             placeholder="비밀번호를 입력해주세요"
             onChange={inputNewPwd}
           />
-          {validPwd ? null : (
-            <ErrMsg>
-              숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!
-            </ErrMsg>
-          )}
         </PasswordInput>
+        <ErrMsg>
+          {validPwd ? null : (
+            <div>숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!</div>
+          )}
+        </ErrMsg>
         <PasswordInput>
-          <div>새로운 비밀번호 확인</div>
+          <div>새로운 비밀번호</div>
           <input
             type="password"
             placeholder="비밀번호를 입력해주세요"
             onChange={checkNewPwd}
           />
-          {samePwd ? null : <ErrMsg>비밀번호가 일치하지 않습니다.</ErrMsg>}
-          {allInput ? null : <ErrMsg>모두 입력해주세요.</ErrMsg>}
         </PasswordInput>
+        <ErrMsg>
+          {samePwd ? null : <div>비밀번호가 일치하지 않습니다.</div>}
+          {allInput ? null : <div>모두 입력해주세요.</div>}
+        </ErrMsg>
         <ChangeButton>
           <button onClick={changePwd}>변경</button>
         </ChangeButton>

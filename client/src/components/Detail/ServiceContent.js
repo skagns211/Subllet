@@ -19,7 +19,7 @@ const Service = styled.div`
 `;
 
 const ServiceDetail = styled.div`
-  background-color: #252a3b;
+  background-color: #252a3c;
   color: white;
   font-size: 1rem;
   border-radius: 5px;
@@ -27,11 +27,18 @@ const ServiceDetail = styled.div`
   margin: 0.5rem 1rem;
   display: flex;
   flex-direction: column;
-  input {
-    margin-right: 0.5rem;
-  }
+
   label {
     margin: 0.5rem 0 0rem 0rem;
+    :hover {
+      cursor: pointer;
+    }
+    input {
+      margin-right: 0.5rem;
+      :hover {
+        cursor: pointer;
+      }
+    }
   }
   div {
     margin: 0.5rem 0 0rem 0rem;
@@ -48,14 +55,19 @@ const LinkButton = styled.div`
   display: flex;
   justify-content: center;
   button {
-    background-color: #252a3b;
+    background-color: #252a3c;
     margin: 0.5rem 1rem;
     font-size: 1rem;
     border-radius: 5px;
     width: 100%;
     border: 0px;
     padding: 0.5rem;
-    color: #e37b02;
+    color: #ff8a00;
+    :hover {
+      background-color: #ff8a00;
+      color: #252a3c;
+      cursor: pointer;
+    }
   }
   @media only screen and (min-width: 768px) {
     button {
@@ -68,7 +80,7 @@ const LinkButton = styled.div`
 const ServiceOption = styled.div`
   margin: 1rem 0 0 1rem;
   font-size: 1.5rem;
-  color: #e37b02;
+  color: #ff8a00;
   @media only screen and (min-width: 768px) {
     margin: 1rem 0 0 1rem;
     font-size: 2rem;

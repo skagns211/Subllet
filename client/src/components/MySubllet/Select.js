@@ -101,11 +101,11 @@ const SelectTab2 = styled(Select)`
 const SelectTabNav = styled(Select)`
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   height: 1rem;
-  width: 20rem;
-  margin-top: 1rem;
-  padding-bottom: 2rem;
+  width: 15rem;
   font-size: 1rem;
   display: flex;
+  margin-top: 1rem;
+  padding-bottom: 2rem;
   @media only screen and (max-width: 800px) {
     display: none;
   }
@@ -129,6 +129,17 @@ const SelectTabNav = styled(Select)`
     }
     @media only screen and (max-width: 1050px) and (min-width: 800px) {
       width: 15rem;
+    }
+  }
+  .Select__value-container {
+    width: 100%;
+    height: 100%;
+  }
+  .Select__single-value {
+    width: 100%;
+    height: 100%;
+    .sc-eCImPb.kcVkMP {
+      height: 100%;
     }
   }
   .Select__placeholder {
@@ -172,6 +183,7 @@ const SelectTabNavDown = styled(Select)`
   width: 100%;
   padding-bottom: 2rem;
   font-size: 1rem;
+  padding-bottom: 2rem;
   display: flex;
   /* border: 1px solid yellow; */
   @media only screen and (max-width: 800px) {
@@ -271,6 +283,11 @@ const List = styled.div`
     width: 5rem;
     height: 2rem;
     object-fit: cover;
+  }
+  .opImg {
+    width: 3rem;
+    height: 1.5rem;
+    margin: 0.3rem;
   }
 `;
 
@@ -541,7 +558,7 @@ export const NavSelectService = ({ setIndex, postBody, setPostBody }) => {
             window.location.replace(`/detail/${service.id}`);
           }}
         >
-          <img src={service.outer_image} />
+          <img className="opImg" src={service.outer_image} />
           <div>{service.title}</div>
         </List>
       ),

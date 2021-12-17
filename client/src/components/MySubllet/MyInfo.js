@@ -174,7 +174,12 @@ const MyInfo = () => {
           <div>닉네임: {nickname}</div>
           <div>이메일: {email}</div>
           <div>구독중: {total_subscribes}</div>
-          <div>총금액: {total_price}</div>
+          <div>
+            총금액:{" "}
+            {total_price &&
+              total_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            &nbsp;원
+          </div>
           <div>스크랩: {total_scraps}</div>
           <div>
             <Link to="/changeinfo">
