@@ -16,9 +16,9 @@ const NavHeader = styled.header`
   width: 100%;
   height: 70px;
   /* border: 1px solid white; */
-  @media only screen and (max-width: 500px) {
+  /* @media only screen and (max-width: 500px) {
     padding-left: 1rem;
-  }
+  } */
 `;
 
 const MinNavTap = styled.span`

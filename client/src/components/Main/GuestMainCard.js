@@ -96,12 +96,14 @@ const MainCardBody = styled.div`
     }
     .totalPrice {
       padding-left: 1.3rem;
+      width: 14rem;
     }
     .nextPay {
       padding-left: 1.3rem;
+      width: 14rem;
     }
     hr {
-      width: 21.5rem;
+      width: 90%;
     }
   }
 `;
@@ -146,6 +148,14 @@ const MainCardRightBottom = styled.div`
       font-size: 0.9rem;
     }
   }
+  @media only screen and (max-width: 500px) {
+    .info {
+      width: 9.5rem;
+    }
+    .addSub {
+      width: 9.5rem;
+    }
+  }
 `;
 
 const RequestWindow = styled.div`
@@ -154,10 +164,15 @@ const RequestWindow = styled.div`
   padding: 0 1rem 0 1rem;
   opacity: 0.8;
   z-index: 501;
+  .guest {
+    color: #ff8a00;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 
   @media only screen and (max-width: 800px) {
     margin: 11rem 0 0 0;
-    left: 23%;
+    left: 22%;
     width: 50%;
     height: 15rem;
     text-align: center;

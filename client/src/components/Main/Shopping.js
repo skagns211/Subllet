@@ -79,11 +79,11 @@ const TopContent = styled.div`
   }
 `;
 
-const Shoping = () => {
+const Shopping = () => {
   const state = useSelector((state) => state);
   const navigate = useNavigate();
   const serviceList = state.services;
-  const shopingList = serviceList.filter((el) => el.category === "shoping");
+  const shopingList = serviceList.filter((el) => el.category === "shopping");
 
   const [isSetting, setIsSetting] = useState({
     dots: true,
@@ -122,7 +122,7 @@ const Shoping = () => {
   return (
     <StyleSlider>
       <TopContent>
-        <div>Shoping</div>
+        <div>Shopping</div>
         <Link to="/allview">전체보기</Link>
       </TopContent>
       <Wrap>
@@ -143,4 +143,4 @@ const Shoping = () => {
   );
 };
 
-export default Shoping;
+export default Shopping;
