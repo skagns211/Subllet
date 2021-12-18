@@ -17,7 +17,7 @@ const LoginStyled = styled.div`
     border-radius: 1rem;
   }
   hr {
-    width: 23rem;
+    width: 95%;
     margin-top: 1rem;
     border: 1px solid #7e7e7e;
   }
@@ -30,28 +30,35 @@ const LoginStyled = styled.div`
   .emailTitle {
     color: #ffffff;
     font-size: 1.5rem;
-    margin: 3rem 19rem 1rem 0;
+    margin: 3rem 10rem 1rem 0;
   }
   .passwordTitle {
     color: #ffffff;
     font-size: 1.5rem;
-    margin: 3rem 17.5rem 1rem 0;
+    margin: 3rem 10rem 1rem 0;
   }
   .warning {
     margin: 1rem 6rem 0 0;
     color: #cf3c3c;
   }
-  .loginBtn {
-    color: #ff8a00;
-    font-size: 1rem;
-    background-color: #3a3f51;
-    border-color: #3f4660 #3f4660;
-    border-radius: 0.5rem;
-    margin-top: 4rem;
-    margin-bottom: 2rem;
-    margin: 4rem 0 2rem 4rem;
-    width: 16rem;
-    height: 2rem;
+`;
+
+const LoginBtn = styled.button`
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  /* position: relative; */
+  width: 97%;
+  height: 2.62rem;
+  border: none;
+  border-radius: 0.2rem;
+  /* margin-left: 0.2rem; */
+  background-color: #252a3c;
+  font-size: 1rem;
+  color: #ff8a00;
+  :hover {
+    color: #252a3c;
+    box-shadow: #ff8a00 0 5rem 0rem 2rem inset;
   }
 `;
 
@@ -297,12 +304,9 @@ const LoginForm = () => {
         {isEmpty ? (
           <div className="warning">이메일과 비밀번호를 모두 입력해주세요</div>
         ) : null}
-        <input
-          type="button"
-          className="loginBtn"
-          value="로그인"
-          onClick={() => postInfo()}
-        ></input>
+        <LoginBtn className="loginBtn" onClick={() => postInfo()}>
+          로그인
+        </LoginBtn>
         <hr />
         <OauthLogin />
       </div>

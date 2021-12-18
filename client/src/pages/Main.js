@@ -5,7 +5,7 @@ import MainCard from "../components/Main/MainCard";
 import GuestMainCard from "../components/Main/GuestMainCard";
 import Video from "../components/Main/Video";
 import Music from "../components/Main/Music";
-import Shoping from "../components/Main/Shopping";
+import Shopping from "../components/Main/Shopping";
 import Pick from "../components/Main/Pick";
 import Book from "../components/Main/Book";
 import Life from "../components/Main/Life";
@@ -33,7 +33,7 @@ const Main = () => {
       <StyledBottomBody>
         <Video />
         <Music />
-        <Shoping />
+        <Shopping />
         <Pick />
         <Book />
         <Life />

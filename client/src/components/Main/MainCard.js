@@ -124,12 +124,14 @@ const MainCardBody = styled.div`
     }
     .totalPrice {
       padding-left: 1.3rem;
+      width: 14rem;
     }
     .nextPay {
       padding-left: 1.3rem;
+      width: 14rem;
     }
     hr {
-      width: 21.1rem;
+      width: 90%;
     }
   }
 `;
@@ -193,6 +195,14 @@ const MainCardRightBottom = styled.div`
     font-size: 2rem;
     div {
       font-size: 0.9rem;
+    }
+  }
+  @media only screen and (max-width: 500px) {
+    .info {
+      width: 9.5rem;
+    }
+    .addSub {
+      width: 9.5rem;
     }
   }
 `;
@@ -362,7 +372,7 @@ const MainCard = () => {
             </span>
             <MainCardRightBottom>
               <span className="info">
-                Huni 님의 <br />
+                {state.loginUserInfo.nickname} 님의 <br />
                 <div>총 구독 수 : {total_subscribes}개</div>
                 <div>총 스크랩 수 : {total_scraps}개</div>
               </span>
