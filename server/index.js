@@ -16,7 +16,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use("/", indexRouter, (req, res) => {
-  res.send("안녕하세요! Subllet API입니다.")
+  res.send("안녕하세요! Subllet API입니다.");
 });
 
 const HTTPS_PORT = process.env.HTTPS_PORT || 4000;
