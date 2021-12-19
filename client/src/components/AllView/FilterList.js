@@ -16,6 +16,7 @@ const ServiceList = styled.div`
   border-radius: 5px;
   margin: 1rem 1rem 1rem 1rem;
   padding-top: 0.5rem;
+
   a {
     margin: 0.5rem 0 0.5rem 0;
     width: 50%;
@@ -44,6 +45,14 @@ const ServiceList = styled.div`
       }
     }
   }
+  div {
+    color: white;
+    width: 100%;
+    height: 8rem;
+    font-size: 2rem;
+    margin-top: 5rem;
+    text-align: center;
+  }
 
   @media only screen and (min-width: 768px) {
     display: flex;
@@ -60,18 +69,24 @@ const ServiceList = styled.div`
     }
   }
 `;
+
 const FilterList = ({ filter }) => {
+  console.log(filter);
   return (
     <StyledBody>
       <ServiceList>
-        {filter &&
+        {filter && filter.length > 0 ? (
+          filter &&
           filter.map((service) => {
             return (
               <Link key={service.id} to={`/detail/${service.id}`}>
                 <img src={service.outer_image} alt="detail 이미지" />
               </Link>
             );
-          })}
+          })
+        ) : (
+          <div>서비스가 없습니다</div>
+        )}
       </ServiceList>
     </StyledBody>
   );

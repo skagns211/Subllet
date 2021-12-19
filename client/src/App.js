@@ -21,6 +21,8 @@ import KakaoAuthHandler from "./components/Signup/KakaoAuthHandler";
 import NaverAuthHandler from "./components/Signup/NaverAuthHandler";
 import GoogleAuthHandler from "./components/Signup/GoogleAuthHandler";
 import Landing from "./pages/Landing";
+import NotFound from "./pages/NotFound";
+import Test from "./pages/Test";
 import { setServices } from "./actions";
 
 const GlobalStyle = createGlobalStyle`
@@ -92,8 +94,6 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      {/* <Routes> */}
-      {/* </Routes> */}
       <SectionStyle>
         {currentUrl === "/" ? null : (
           <>
@@ -101,7 +101,6 @@ function App() {
             <div className="mobileNav">
               <NavSelectServiceDown />
             </div>
-            {/* <SearchBar /> */}
           </>
         )}
         <Pages>
@@ -119,6 +118,10 @@ function App() {
             <Route path="/auth/kakao/callback" element={<KakaoAuthHandler />} />
             <Route path="/auth/naver/signup" element={<NaverAuthHandler />} />
             <Route path="/auth/google/signup" element={<GoogleAuthHandler />} />
+
+            <Route path="/test" element={<Test />} />
+
+            <Route path={"*"} element={<NotFound />} />
           </Routes>
         </Pages>
         <Footer />

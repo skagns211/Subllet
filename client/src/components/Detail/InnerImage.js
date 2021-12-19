@@ -47,7 +47,6 @@ const MoveButton = styled.div`
 `;
 
 const ScrapButton = styled.div`
-  padding: 1rem;
   display: flex;
   align-items: center;
   div {
@@ -105,6 +104,7 @@ const DetailMessage = styled.div`
 `;
 
 const DetailLabel = styled.div`
+  margin: 0 1rem 0.5rem 1rem;
   display: flex;
   color: #ff8a00;
   align-items: center;

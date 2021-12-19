@@ -7,6 +7,7 @@ import { setLoginUserInfo, setIsLogin } from "../../actions";
 
 const StyledBody = styled.section`
   max-width: 100%;
+  margin-top: 2rem;
   margin-bottom: 1rem;
 `;
 

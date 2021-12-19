@@ -91,6 +91,7 @@ const DeleteForm = () => {
   const [open, setOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState({});
   const [delAcc, setDelAcc] = useState();
+  const [checkDel, setCheckDel] = useState();
 
   const [pwd, setPwd] = useState();
   const [emptyPwd, setEmptyPwd] = useState(false);
@@ -104,6 +105,7 @@ const DeleteForm = () => {
 
   const handleClick = () => {
     setOpen(!open);
+    setCheckDel(!checkDel);
   };
 
   const logoutHandler = () => {
@@ -125,43 +127,53 @@ const DeleteForm = () => {
       });
   };
 
+  const SuccessDel = () => {
+    axios
+      .post("/user", {
+        password: pwd,
+      })
+      .then(() => {
+        const loginUserInfo = {
+          email: "",
+          nickname: "",
+          profile: "",
+        };
+        setAlertMsg({
+          message: "회원탈퇴가 완료되었습니다. 그동안 이용해주셔서 감사합니다.",
+          button: "확인",
+        });
+        setDelAcc(true);
+        setOpen(true);
+        setCheckDel(!checkDel);
+        dispatch(setLoginUserInfo(loginUserInfo));
+        dispatch(setIsLogin(false));
+      })
+      .catch((err) => {
+        setOpen(!open);
+        setCheckDel(!checkDel);
+        if (
+          err.response &&
+          err.response.status === 401 &&
+          state.isLogin === true
+        ) {
+          logoutHandler();
+        }
+        if (err.response.status === 400) {
+          setWrongPwd(true);
+        }
+      });
+  };
+
   const delAccount = () => {
     if (!pwd) {
       setEmptyPwd(true);
     } else {
-      axios
-        .post("/user", {
-          password: pwd,
-        })
-        .then(() => {
-          const loginUserInfo = {
-            email: "",
-            nickname: "",
-            profile: "",
-          };
-          setAlertMsg({
-            message:
-              "회원탈퇴가 완료되었습니다. 그동안 이용해주셔서 감사합니다.",
-            button: "확인",
-          });
-          setDelAcc(true);
-          setOpen(!open);
-          dispatch(setLoginUserInfo(loginUserInfo));
-          dispatch(setIsLogin(false));
-        })
-        .catch((err) => {
-          console.log(err);
-          if (
-            err.response &&
-            err.response.status === 401 &&
-            state.isLogin === true
-          ) {
-            logoutHandler();
-          }
-          if (err.response.status === 400) {
-            setWrongPwd(true);
-          }
-        });
+      setAlertMsg({
+        message: "정말로 회원탈퇴를 하시겠습니까?",
+        button: "확인",
+      });
+      setOpen(!open);
+      setCheckDel(!checkDel);
     }
   };
 
@@ -174,6 +186,8 @@ const DeleteForm = () => {
           alertMsg={alertMsg}
           handleClick={handleClick}
           delAcc={delAcc}
+          checkDel={checkDel}
+          SuccessDel={SuccessDel}
         />
       ) : null}
       <DeleteLabel>회원 탈퇴</DeleteLabel>
