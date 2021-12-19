@@ -131,7 +131,7 @@ const InfoForm = styled.div`
   @media only screen and (min-width: 800px) {
     button {
       position: absolute;
-      top: 32.4rem;
+      top: 33.3rem;
     }
   }
 `;
@@ -292,9 +292,12 @@ const ModifyInfo = () => {
       <StyledForm>
         <ImgForm>
           {profile ? (
-            <img src={profile} alt='profile 이미지'/>
+            <img src={profile} alt="profile 이미지" />
           ) : (
-            <img src="https://subllet-profile.s3.ap-northeast-2.amazonaws.com/istockphoto-1223671392-170667a.jpeg" alt='profile 기본이미지' />
+            <img
+              src="https://subllet-profile.s3.ap-northeast-2.amazonaws.com/istockphoto-1223671392-170667a.jpeg"
+              alt="profile 기본이미지"
+            />
           )}
           <ImgInput>
             <div>
