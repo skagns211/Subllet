@@ -41,6 +41,10 @@ const LoginStyled = styled.div`
     margin: 1rem 6rem 0 0;
     color: #cf3c3c;
   }
+  .verify {
+    margin: 1rem 6rem 0 0;
+    color: #cf3c3c;
+  }
 `;
 
 const LoginBtn = styled.button`
@@ -91,15 +95,6 @@ const EmailContainer = styled.div`
     height: 2rem;
     width: 6.5rem;
   }
-  .cancleBtn {
-    position: relative;
-    left: 8.5rem;
-    width: 1.5rem;
-    height: 1.5rem;
-    button {
-      padding: 0.8rem 1rem 0.25rem 1rem;
-    }
-  }
 `;
 
 const SelectEmail = styled(Select)`
@@ -147,21 +142,19 @@ const PassWordContainer = styled.div`
   }
 `;
 
-const emailList = [
-  { value: "naver.com", label: "naver.com" },
-  { value: "gmail.com", label: "gmail.com" },
-  { value: "hanmail.net", label: "hanmail.net" },
-  { value: "daum.net", label: "daum.net" },
-  { value: "nate.com", label: "nate.com" },
-  { value: "hotmail.com", label: "hotmail.com" },
-  { value: "outlook.com", label: "outlook.com" },
-  { value: "icloud.com", label: "icloud.com" },
-  { value: "직접 입력", label: "직접 입력" },
-];
-
 const LoginForm = () => {
   const dispatch = useDispatch(); //! action 사용 함수
 
+  const emailList = [
+    { value: "naver.com", label: "naver.com" },
+    { value: "gmail.com", label: "gmail.com" },
+    { value: "hanmail.net", label: "hanmail.net" },
+    { value: "daum.net", label: "daum.net" },
+    { value: "nate.com", label: "nate.com" },
+    { value: "hotmail.com", label: "hotmail.com" },
+    { value: "outlook.com", label: "outlook.com" },
+    { value: "icloud.com", label: "icloud.com" },
+  ];
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -186,11 +179,7 @@ const LoginForm = () => {
     });
   };
 
-  const [isSelectSelf, setIsSelectSelf] = useState(false);
-
   //! email이 이미 선택되어 있으면 id에 재선택된 email을 붙여줌
-  //! email option이 "직접입력"이면 option을 text로 바꿔줌
-  //! 직접 입력한 value 적용 필요!!!!!
   const handleSelect = (value, key) => {
     const atIndex = loginInfo.email.indexOf("@");
     const justId = loginInfo.email.slice(0, atIndex);
@@ -203,9 +192,6 @@ const LoginForm = () => {
           ...loginInfo,
           email: loginInfo.email + "@" + value.value,
         });
-    value.value === "직접 입력"
-      ? setIsSelectSelf(true)
-      : setIsSelectSelf(false);
   };
   const [isEamilSelect, setIsEmailSelect] = useState("");
   const handleEmailSelect = (value) => {
@@ -213,6 +199,7 @@ const LoginForm = () => {
   };
   const [isWarning, setIsWarning] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
+  const [isVerify, setIsVerify] = useState(false);
 
   const postInfo = () => {
     const { email, password } = loginInfo;
@@ -227,15 +214,19 @@ const LoginForm = () => {
           password,
         })
         .then((res) => {
-          const { userInfo } = res.data; //! refreshToken을 어디로 받을지 상의필요
+          const { userInfo } = res.data;
           const loginUserInfo = userInfo;
+          if (res.data === "Resended") {
+            setIsVerify(true);
+            setIsWarning(false);
+            return;
+          }
           dispatch(setLoginUserInfo(loginUserInfo));
-          // dispatch(setAccessToken(accessToken));
           dispatch(setIsLogin(true));
-          // navigate("/");
-          window.location.replace("/main"); //! navigate 사용시 isLogin에 따른 nav변경 안됨
+          window.location.replace("/main");
         })
         .catch((err) => {
+          console.log(err);
           setIsWarning(true);
           setIsEmpty(false);
         });
@@ -261,30 +252,14 @@ const LoginForm = () => {
               onKeyPress={inputEnter}
             ></input>
             <span>@</span>
-            {isSelectSelf ? (
-              <span>
-                <input
-                  className="inputEmail"
-                  type="text"
-                  onChange={(value) => handleEmailSelect(value)} //! 손봐야함
-                  value={isEamilSelect}
-                ></input>
-                <span className="cancleBtn">
-                  <button type="button" onClick={() => setIsSelectSelf(false)}>
-                    X
-                  </button>
-                </span>
-              </span>
-            ) : (
-              <SelectEmail
-                onChange={(value) => {
-                  handleSelect(value);
-                }}
-                classNamePrefix="Select"
-                options={emailList}
-                placeholder="선택해주세요"
-              ></SelectEmail>
-            )}
+            <SelectEmail
+              onChange={(value) => {
+                handleSelect(value);
+              }}
+              classNamePrefix="Select"
+              options={emailList}
+              placeholder="선택해주세요"
+            ></SelectEmail>
           </EmailContainer>
         </LoginContainer>
         <div className="passwordTitle">비밀번호</div>
@@ -303,6 +278,11 @@ const LoginForm = () => {
         ) : null}
         {isEmpty ? (
           <div className="warning">이메일과 비밀번호를 모두 입력해주세요</div>
+        ) : null}
+        {isVerify ? (
+          <div className="verify">
+            이메일 인증이 필요합니다.<br></br>발송된 이메일을 확인해 주세요.
+          </div>
         ) : null}
         <LoginBtn className="loginBtn" onClick={() => postInfo()}>
           로그인
