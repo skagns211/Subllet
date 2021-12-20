@@ -115,7 +115,7 @@ function App() {
             <Route path="/userlogin" element={<Login />} />
             <Route path="/mysubllet" element={<MySubllet />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/auth/kakao/callback" element={<KakaoAuthHandler />} />
+            <Route path="/auth/kakao/signup" element={<KakaoAuthHandler />} />
             <Route path="/auth/naver/signup" element={<NaverAuthHandler />} />
             <Route path="/auth/google/signup" element={<GoogleAuthHandler />} />
 

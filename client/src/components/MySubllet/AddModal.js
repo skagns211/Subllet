@@ -18,7 +18,14 @@ const ModalBackdrop = styled.div`
 `;
 const ModalContainer = styled.div`
   //!Modal 구현 css
-
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
   background-color: #252a3c;
   border-radius: 0.5rem;
   width: 25%;
@@ -60,9 +67,10 @@ const AddHeader = styled.h1`
 `;
 
 const Title = styled.div`
+  font-family: "Geo", sans-serif;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: #ff8a00;
   /* border: 0.5px solid white; */
 `;
@@ -80,7 +88,14 @@ const Button = styled.button`
   border-radius: 0.4rem;
   margin-left: 0.2rem;
   background-color: #817c8d;
-  font-family: "paybooc-Medium";
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
   font-size: 1rem;
   color: #ffffff;
   cursor: pointer;
@@ -174,7 +189,6 @@ const AddModal = ({
           <span>
             <Button
               onClick={() => {
-                // navigate("/mysubllet");
                 scribeAddHandler();
               }}
             >

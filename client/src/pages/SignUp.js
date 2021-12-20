@@ -48,14 +48,6 @@ const Line = styled.div`
   margin-bottom: 1rem;
   align-items: center;
   background: #cecece;
-  /* @media only screen and (max-width: 534px) {
-    width: 22rem;
-    height: 1px;
-    padding: 0;
-    margin-bottom: 0.5rem;
-    align-items: center;
-    background: #cecece;
-  } */
 `;
 
 const SignUp = () => {

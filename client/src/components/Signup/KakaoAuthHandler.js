@@ -157,16 +157,13 @@ const KakaoAuthHandler = () => {
   const state = useSelector((state) => state); //! state 사용 함수
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isCheck, setIsCheck] = useState(false);
+  const [isAgree, setIsAgree] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   //! Authorization Code
   let authoCode = new URL(window.location.href).searchParams.get("code");
-  console.log("authorizationCode=", authoCode);
   useEffect(() => dispatch(setAuthCode(authoCode)), [state.authCode]);
   dispatch(setAuthCode(authoCode));
-  console.log(state);
-  console.log(state.authCode);
 
   useEffect(() => {
     axios
@@ -181,7 +178,6 @@ const KakaoAuthHandler = () => {
           dispatch(setIsLogin(true));
           navigate("/main");
         } else {
-          console.log(res);
           setIsLoading(true);
           const authUser = {
             email: res.data.email,
@@ -197,11 +193,9 @@ const KakaoAuthHandler = () => {
       });
   }, []);
 
-  // useEffect(() => {}, [state.authUserInfo]);
-  console.log(state.authUserInfo);
-
   const [isDupNickname, setIsDupNickname] = useState(false);
   const [nicknameMessage, setNicknameMessage] = useState("");
+  const [allCheckMessage, setAllCheckMessage] = useState("");
   const [isComplete, setIsComplete] = useState(false);
 
   const checkNickname = () => {
@@ -227,15 +221,19 @@ const KakaoAuthHandler = () => {
   };
 
   const handleComplete = () => {
-    axios
-      .post("/oauth/signup", state.authUserInfo)
-      .then((res) => {
-        setIsComplete(true);
-        navigate("/main");
-      })
-      .catch((err) => {
-        throw err;
-      });
+    if (isAgree === true && isDupNickname === true) {
+      axios
+        .post("/oauth/signup", state.authUserInfo)
+        .then((res) => {
+          setIsComplete(true);
+          navigate("/main");
+        })
+        .catch((err) => {
+          console.error(err.response);
+        });
+    } else {
+      setAllCheckMessage("모든 정보를 정확하게 입력해 주세요");
+    }
   };
 
   return (
@@ -267,9 +265,13 @@ const KakaoAuthHandler = () => {
             ) : (
               <ErrorMessage>{nicknameMessage}</ErrorMessage>
             )}
+
             <Button onClick={() => checkNickname()}>닉네임 중복검사</Button>
+            {isDupNickname === true && isAgree === true ? null : (
+              <ErrorMessage>{allCheckMessage}</ErrorMessage>
+            )}
           </ElementBox>
-          <AgreeCheck isCheck={isCheck} setIsCheck={setIsCheck} />
+          <AgreeCheck isAgree={isAgree} setIsAgree={setIsAgree} />
           <Button onClick={() => handleComplete()}>회원가입</Button>
         </InnerBox>
       )}

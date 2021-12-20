@@ -7,6 +7,14 @@ import { setLoginUserInfo, setIsLogin } from "../../actions";
 import AlertModal from "../AlertModal";
 
 const StyledBody = styled.section`
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
   margin-top: 2rem;
   max-width: 100%;
   @media only screen and (min-width: 800px) {
@@ -110,7 +118,7 @@ const DetailLabel = styled.div`
   align-items: center;
   justify-content: space-between;
   div {
-    font-size: 2.5rem;
+    font-size: 2.3rem;
   }
   i {
     font-size: 2rem;

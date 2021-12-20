@@ -2,10 +2,17 @@ import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SelectTab = styled(Select)`
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
   width: 100%;
   .Select__control {
     height: 3.5rem;
@@ -22,7 +29,7 @@ const SelectTab = styled(Select)`
   }
   .Select__placeholder {
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
   .Select__option {
     font-size: 1rem;
@@ -52,7 +59,14 @@ const SelectTab = styled(Select)`
 //!----------------------------------------------
 
 const SelectTab2 = styled(Select)`
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
   width: 80%;
   .Select__control {
     height: auto;
@@ -69,7 +83,7 @@ const SelectTab2 = styled(Select)`
   }
   .Select__placeholder {
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
   .Select__option {
     background-color: black;
@@ -98,7 +112,14 @@ const SelectTab2 = styled(Select)`
 
 //!-------------------------------------------------
 const SelectTabNav = styled(Select)`
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
   height: 1rem;
   width: 15rem;
   font-size: 1rem;
@@ -177,7 +198,14 @@ const SelectTabNav = styled(Select)`
 `;
 //!--------------------------------------------------
 const SelectTabNavDown = styled(Select)`
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
   height: 1rem;
   width: 100%;
   padding-bottom: 2rem;
@@ -269,7 +297,14 @@ const styles = {
 //!--------------------------------------------------
 const List = styled.div`
   /* text-align: center; */
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
   font-size: 1.5rem;
   width: 100%;
   display: inline-flex;
@@ -290,17 +325,9 @@ const List = styled.div`
   }
 `;
 
-// const Logo = styled.img`
-//   width: 5rem;
-//   height: 2rem;
-//   object-fit: cover;
-// `;
-
 export const SelectService = ({ index, setIndex, postBody, setPostBody }) => {
   const state = useSelector((state) => state);
-  const dispatch = useDispatch();
   const allServices = state.services;
-  console.log(state.services);
 
   const options2 = allServices.map((service, idx) => {
     return {
@@ -314,7 +341,6 @@ export const SelectService = ({ index, setIndex, postBody, setPostBody }) => {
       value: { title: service.title, id: service.id },
     };
   });
-  console.log(index && index);
 
   const handleChange = (value) => {
     if (value !== null) {
@@ -322,7 +348,6 @@ export const SelectService = ({ index, setIndex, postBody, setPostBody }) => {
     } else {
       setPostBody({ ...postBody, id: "" });
     }
-    // console.log(value.value.id);
   };
 
   return (
@@ -352,24 +377,10 @@ export const SelectPlanPrice = ({
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const allServices = state.services;
-  console.log(allServices);
-
-  console.log(filtered && filtered);
-  // const options2 = filtered[0].Prices.map((el) => {
-  //   return {
-  //     label: `${el.title + "," + el.price}`,
-  //     value: `${el.title + "," + el.price}`,
-  //   };
-  // });
 
   const option = [
     { label: "서비스를 먼저 선택해 주세요", value: null, isDisabled: true },
   ];
-  // const options = [
-  //   { label: "2인용 요금제, 3000원", value: "2인용 요금제, 3000원" },
-  //   { label: "3인용 요금제, 5000원", value: "3인용 요금제, 5000원" },
-  //   { label: "4인용 요금제, 6000원", value: "4인용 요금제, 6000원" },
-  // ];
 
   const handleChange = (value) => {
     if (value) {
@@ -459,7 +470,7 @@ export const SelectDate2 = ({ patchBody, setPatchBody, id }) => {
   const days = () => {
     let arr = [];
     for (let i = 1; i <= 31; i++) {
-      arr.push({ label: `매달 ${i}일`, value: i });
+      arr.push({ label: `${i}일`, value: i });
     }
     return arr;
   };
@@ -479,6 +490,22 @@ export const SelectDate2 = ({ patchBody, setPatchBody, id }) => {
       });
     }
   };
+  const [holderMessage, setHolderMessage] = useState("결제일을 선택해 주세요");
+
+  const handleResize = () => {
+    const innerWidth = window.innerWidth;
+    innerWidth <= 816
+      ? setHolderMessage("Day")
+      : setHolderMessage("결제일을 선택해 주세요");
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <SelectTab2
@@ -491,7 +518,7 @@ export const SelectDate2 = ({ patchBody, setPatchBody, id }) => {
       noOptionsMessage={({ inputValue }) =>
         !inputValue ? null : "해당하는 날짜가 존재하지 않습니다"
       }
-      placeholder="결제일을 선택해 주세요"
+      placeholder={holderMessage}
       isClearable
     />
   );
@@ -520,8 +547,24 @@ export const SelectPrice = ({
         planprice: "",
       });
     }
-    console.log(value);
   };
+
+  const [holderMessage, setHolderMessage] = useState("요금제를 선택해 주세요");
+
+  const handleResize = () => {
+    const innerWidth = window.innerWidth;
+    innerWidth <= 816
+      ? setHolderMessage("Price")
+      : setHolderMessage("요금제를 선택해 주세요");
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <SelectTab2
@@ -533,7 +576,7 @@ export const SelectPrice = ({
       noOptionsMessage={({ inputValue }) =>
         !inputValue ? null : "해당하는 요금제가 존재하지 않습니다"
       }
-      placeholder="요금제를 선택해 주세요"
+      placeholder={holderMessage}
       isClearable
       // selectedValue={{ label: `${planname} (${planprice})`, value: "" }}
     />
@@ -544,12 +587,9 @@ export const SelectPrice = ({
 
 export const NavSelectService = ({ setIndex, postBody, setPostBody }) => {
   const state = useSelector((state) => state);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const allServices = state.services;
-  // console.log(state.services);
 
-  const options2 = allServices.map((service, idx) => {
+  const options = allServices.map((service, idx) => {
     return {
       label: (
         <List
@@ -565,19 +605,10 @@ export const NavSelectService = ({ setIndex, postBody, setPostBody }) => {
     };
   });
 
-  const handleChange = (value) => {
-    if (value !== null) {
-      setPostBody({ ...postBody, id: value.value.id });
-    } else {
-      setPostBody({ ...postBody, id: "" });
-    }
-    // console.log(value.value.id);
-  };
-
   return (
     <SelectTabNav
       classNamePrefix="Select"
-      options={options2}
+      options={options}
       // onChange={(value) => handleChange(value)}
       search
       // value={data.value}
@@ -595,7 +626,6 @@ export const NavSelectServiceDown = ({ setIndex, postBody, setPostBody }) => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const allServices = state.services;
-  // console.log(state.services);
 
   const options2 = allServices.map((service, idx) => {
     return {
@@ -619,7 +649,6 @@ export const NavSelectServiceDown = ({ setIndex, postBody, setPostBody }) => {
     } else {
       setPostBody({ ...postBody, id: "" });
     }
-    // console.log(value.value.id);
   };
 
   return (

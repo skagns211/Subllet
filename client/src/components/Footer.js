@@ -178,13 +178,13 @@ justify-content: space-around; */
 `;
 
 const FooterBox = styled.div`
-  max-width: 1600px;
+  max-width: 1350px;
   margin-left: auto;
   margin-right: auto;
   height: 100%;
   display: flex;
   justify-content: space-between;
-  /* border: 1px solid red; */
+  /* border: 1px solid red */
   div {
     display: flex;
     &.left {

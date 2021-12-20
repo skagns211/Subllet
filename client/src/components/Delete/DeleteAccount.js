@@ -6,6 +6,14 @@ const StyledBody = styled.div`
   color: white;
   margin: 2rem auto;
   max-width: 50rem;
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
 `;
 
 const StyledForm = styled.div`
@@ -22,6 +30,14 @@ const StyledForm = styled.div`
     font-size: 1rem;
   }
   a {
+    @font-face {
+      font-family: "InfinitySans-RegularA1";
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+        format("woff");
+      font-weight: normal;
+      font-style: normal;
+    }
+    font-family: "InfinitySans-RegularA1";
     margin-top: 1rem;
     border: 1px solid #ff8a00;
     border-radius: 5px;
@@ -37,7 +53,7 @@ const StyledForm = styled.div`
     }
     a {
       margin-top: 2rem;
-      font-size: 2rem;
+      font-size: 1.5rem;
     }
   }
 `;
@@ -46,7 +62,7 @@ const DeleteAccount = () => {
   return (
     <StyledBody>
       <StyledForm>
-        <div>그동안 서비스를 이용해 주셔서 감사합니다</div>
+        <div>그동안 서비스를 이용해 주셔서 감사합니다.</div>
         <Link to="/main">홈으로</Link>
       </StyledForm>
     </StyledBody>

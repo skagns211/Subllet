@@ -15,6 +15,15 @@ const MyScribeContainer = styled.main`
   /* margin-top: 2rem; */
   /* border: 0.5px solid white; */
   /* flex-basis: auto; */
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
+
   @media only screen and (max-width: 600px) {
     width: 98%;
     margin-left: auto;
@@ -35,6 +44,7 @@ const MyScribeTitle = styled.div`
   font-size: 2rem;
   color: #ff8a00;
   align-items: center;
+  font-family: "Geo", sans-serif;
   /* border: 0.5px solid white; */
   @media only screen and (max-width: 600px) {
     width: 85%;
@@ -46,7 +56,7 @@ const AddTab = styled.div`
   width: 15%;
   /* height: 10%; */
   display: flex;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   align-items: center;
   justify-content: right;
   color: #ff8a00;
@@ -67,6 +77,16 @@ const MyScribeBox = styled.div`
   background-color: #252a3c;
   border-radius: 0.5rem;
   /* border: 0.5px solid white; */
+  div {
+    &.noScribeMessage {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      display: flex;
+      justify-content: center;
+      color: white;
+    }
+  }
 `;
 
 const CategoryBox = styled.div`
@@ -108,7 +128,7 @@ const CategoryBox = styled.div`
     }
   }
   @media only screen and (max-width: 600px) {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 `;
 
@@ -131,11 +151,6 @@ const ListBox = styled.div`
   }
 
   div {
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
-      sans-serif;
-    /* flex-direction: column; */
-    /* flex-shrink: 0; */
-    /* font-family: "Geo", sans-serif; */
     /* border: 1px solid white; */
 
     &.name {
@@ -223,36 +238,6 @@ const ListBox = styled.div`
   }
 `;
 
-const AddBox = styled.div`
-  height: 4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Plus = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-`;
-
-const SelectBox = styled.select`
-  position: relative;
-  display: block;
-  width: 80%;
-  height: 2rem;
-  margin: 0 auto;
-  font-family: "Open Sans", "Helvetica Neue", "Segoe UI", "Calibri", "Arial",
-    sans-serif;
-  font-size: 18px;
-  color: #60666d;
-  .date {
-    width: 40%;
-  }
-`;
-
 const MyScribe = ({ myScribe, sortedMyScribe, setMyScribe, test, setTest }) => {
   const state = useSelector((state) => state);
   const navigate = useNavigate();
@@ -295,12 +280,8 @@ const MyScribe = ({ myScribe, sortedMyScribe, setMyScribe, test, setTest }) => {
     ) {
       axios.patch(`/subscribe/${patchBody.id}`, patchBody).then((res) => {
         setTest(!test);
-        console.log(res);
       });
-    } else {
-      console.log("변화없음");
     }
-    console.log(idx);
   };
 
   const [isOpen, setIsOpen] = useState(false); //! 구독추가 모달 상태
@@ -328,7 +309,6 @@ const MyScribe = ({ myScribe, sortedMyScribe, setMyScribe, test, setTest }) => {
                 }))
             : (total_price = 0);
           const total_scraps = res2.data.scraps.length;
-          console.log(total_scraps);
           const loginUserInfo = {
             id: state.loginUserInfo.id,
             email: state.loginUserInfo.email,
@@ -353,7 +333,6 @@ const MyScribe = ({ myScribe, sortedMyScribe, setMyScribe, test, setTest }) => {
     axios.delete(`/subscribe/${id}`).then((res) => {
       setMyScribe(copy);
       reGetHandler();
-      console.log("삭제완료");
     });
   };
 
@@ -380,81 +359,87 @@ const MyScribe = ({ myScribe, sortedMyScribe, setMyScribe, test, setTest }) => {
             <span></span>
           </div>
         </CategoryBox>
-        {sortedMyScribe.map((el, idx) => {
-          return (
-            <ListBox key={el.id}>
-              <div
-                className="name"
-                onClick={() => {
-                  navigate(`/detail/${el.Service.id}`);
-                }}
-              >
-                <img src={el.Service.outer_image} />
-              </div>
-              {idx === index ? (
-                <div className="plan">
-                  {myScribeInfo.filter((service, i) => {
-                    if (i === idx) {
-                      filtered = service;
-                    }
-                  })}
-                  <SelectPrice
-                    options={
-                      filtered.length === 0
-                        ? null
-                        : filtered.Prices.map((el) => {
-                            return {
-                              label: `${el.title} (${el.price})`,
-                              value: {
-                                planname: el.title,
-                                planprice: el.price,
-                                id: filtered.id,
-                              },
-                            };
-                          })
-                    }
-                    patchBody={patchBody}
-                    setPatchBody={setPatchBody}
-                    planname={el.planname}
-                    planprice={el.planprice}
-                  />
+        {myScribe.length === 0 ? (
+          <div className="noScribeMessage">
+            구독중인 서비스가 없습니다. 구독을 추가해주세요.
+          </div>
+        ) : (
+          sortedMyScribe.map((el, idx) => {
+            return (
+              <ListBox key={el.id}>
+                <div
+                  className="name"
+                  onClick={() => {
+                    navigate(`/detail/${el.Service.id}`);
+                  }}
+                >
+                  <img src={el.Service.outer_image} />
                 </div>
-              ) : (
-                <div className="plan">
-                  <span>{el.planname}</span>
-                  <span>({el.planprice})</span>
-                </div>
-              )}
-              {idx === index ? (
-                <div className="date">
-                  <SelectDate2
-                    patchBody={patchBody}
-                    setPatchBody={setPatchBody}
-                    id={el.Service.id}
-                  />
-                </div>
-              ) : (
-                <div className="date">매달 {el.paydate}일</div>
-              )}
-              {/* <div className="date">매달 {el.paydate}일</div> */}
-              <div className="category">{el.Service.category}</div>
-              <div className="fix">
-                {idx === index && isModify === true ? (
-                  <div onClick={() => scribeHandler("")}>완료</div>
+                {idx === index ? (
+                  <div className="plan">
+                    {myScribeInfo.filter((service, i) => {
+                      if (i === idx) {
+                        filtered = service;
+                      }
+                    })}
+                    <SelectPrice
+                      options={
+                        filtered.length === 0
+                          ? null
+                          : filtered.Prices.map((el) => {
+                              return {
+                                label: `${el.title} (${el.price})`,
+                                value: {
+                                  planname: el.title,
+                                  planprice: el.price,
+                                  id: filtered.id,
+                                },
+                              };
+                            })
+                      }
+                      patchBody={patchBody}
+                      setPatchBody={setPatchBody}
+                      planname={el.planname}
+                      planprice={el.planprice}
+                    />
+                  </div>
                 ) : (
-                  <div onClick={() => scribeHandler(idx)}>수정</div>
+                  <div className="plan">
+                    <span>{el.planname}</span>
+                    <span>({el.planprice})</span>
+                  </div>
                 )}
-                {/* {isModify === false ? (
+                {idx === index ? (
+                  <div className="date">
+                    <SelectDate2
+                      patchBody={patchBody}
+                      setPatchBody={setPatchBody}
+                      id={el.Service.id}
+                    />
+                  </div>
+                ) : (
+                  <div className="date">매달 {el.paydate}일</div>
+                )}
+                {/* <div className="date">매달 {el.paydate}일</div> */}
+                <div className="category">{el.Service.category}</div>
+                <div className="fix">
+                  {idx === index && isModify === true ? (
+                    <div onClick={() => scribeHandler("")}>완료</div>
+                  ) : (
+                    <div onClick={() => scribeHandler(idx)}>수정</div>
+                  )}
+                  {/* {isModify === false ? (
                   <div onClick={() => scribeHandler(idx)}>수정하기</div>
                 ) : (
                   <div onClick={() => scribeHandler("")}>수정완료</div>
                 )} */}
-                {/* <div onClick={() => scribeHandler(idx)}>수정하기</div> */}
-                <div onClick={() => deleteHandler(idx)}>삭제</div>
-              </div>
-            </ListBox>
-          );
-        })}
+                  {/* <div onClick={() => scribeHandler(idx)}>수정하기</div> */}
+                  <div onClick={() => deleteHandler(idx)}>삭제</div>
+                </div>
+              </ListBox>
+            );
+          })
+        )}
 
         {/* {!isModify ? null : (
           <AddBox>
@@ -476,74 +461,3 @@ const MyScribe = ({ myScribe, sortedMyScribe, setMyScribe, test, setTest }) => {
 };
 
 export default MyScribe;
-
-// allServices.map((service) => {
-//   return (
-//     <ListBox>
-//       <div className="name">
-//         <img src={service.outer_image} />
-//       </div>
-//       <div className="plan">
-//         <SelectBox name="modifyPlan">
-//           {/* {service.Prices.map((el) => {
-//             return (
-//               <option selected>
-//                 {el.title},{[el.price]}
-//               </option>
-//             );
-//           })} */}
-//           <option selected>
-//             {service.price.planname},{[service.planprice]}
-//           </option>
-//         </SelectBox>
-//       </div>
-//       <div className="date">매달 0일</div>
-//       <div className="category">{service.category}</div>
-//     </ListBox>
-//   );
-// })
-
-// {isModify === false ?
-//   sortedMyScribe.map((el, idx) => {
-//       return (
-//         <ListBox>
-//           <div className="name">
-//             <img src={el.Service.outer_image} />
-//           </div>
-//           <div className="plan">
-//             {el.planname},{[el.planprice]}
-//           </div>
-//           {isModify ===false ? <div className="date">매달 {el.paydate}일</div>: <div className="date">매월 {el.paydate}일</div>}
-//           {/* <div className="date">매달 {el.paydate}일</div> */}
-//           <div className="category">{el.Service.category}</div>
-//           <div className="fix">
-//             <div>수정하기</div>
-//             <div>삭제</div>
-//           </div>
-//         </ListBox>
-//       );
-//     })
-//   : myScribeInfo.map((service) => {
-//       return (
-//         <ListBox>
-//           <div className="name">
-//             <img src={service.outer_image} />
-//           </div>
-//           <div className="plan">
-//             <SelectBox name="modifyPlan">
-//               {service.Prices.map((el) => {
-//                 return (
-//                   <option selected>
-//                     {el.title},{[el.price]}
-//                   </option>
-//                 );
-//               })}
-//             </SelectBox>
-//           </div>
-//           <div className="date">
-//             <SelectDate2 />
-//           </div>
-//           <div className="category">{service.category}</div>
-//         </ListBox>
-//       );
-//     })}

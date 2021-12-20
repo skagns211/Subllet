@@ -22,6 +22,14 @@ const ServiceDetail = styled.div`
   background-color: #252a3c;
   color: white;
   font-size: 1rem;
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
   border-radius: 5px;
   padding: 1rem;
   margin: 0.5rem 1rem;
@@ -55,6 +63,14 @@ const LinkButton = styled.div`
   display: flex;
   justify-content: center;
   button {
+    @font-face {
+      font-family: "InfinitySans-RegularA1";
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+        format("woff");
+      font-weight: normal;
+      font-style: normal;
+    }
+    font-family: "InfinitySans-RegularA1";
     background-color: #252a3c;
     margin: 0.5rem 1rem;
     font-size: 1rem;

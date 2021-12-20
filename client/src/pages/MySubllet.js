@@ -64,8 +64,6 @@ const MySubllet = () => {
   useEffect(() => {
     axios.all([axios.get("/subscribe"), axios.get("/scrap")]).then(
       axios.spread((res1, res2) => {
-        console.log(res1.data.subscribes);
-        console.log(res2.data.scraps);
         const myScribeData = res1.data.subscribes;
         const myScrapData = res2.data.scraps;
         // const sorted = myScribeData.sort((a, b) => {
@@ -84,8 +82,6 @@ const MySubllet = () => {
     });
     setSortedMyScribe(sorted);
   }, [myScribe]);
-  console.log(myScrap);
-  console.log(sortedMyScribe);
 
   return (
     <MySublletContainer>
@@ -94,7 +90,7 @@ const MySubllet = () => {
       ) : (
         <>
           <div className="Title">My subllet</div>
-          <MyInfo />
+          <MyInfo myScrap={myScrap} />
           <Line />
           <MyScribe
             myScribe={myScribe}

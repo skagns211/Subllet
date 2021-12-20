@@ -40,7 +40,7 @@ const MyScrapTitle = styled.div`
 
 const MyScrapBox = styled.div`
   width: 100%;
-  height: 90%;
+  min-height: 5rem;
   margin-left: auto;
   margin-right: auto;
   padding-bottom: 1%;
@@ -58,6 +58,19 @@ const InBox = styled.div`
   display: inline-flex;
   flex-wrap: wrap;
   /* border: 1px solid white; */
+  div {
+    &.noScrapMessage {
+      width: 100%;
+      height: 75%;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+  }
   span {
     width: 33.3%;
     margin-top: 1%;
@@ -88,17 +101,21 @@ const MyScrap = ({ myScrap }) => {
       </TitleBox>
       <MyScrapBox>
         <InBox>
-          {myScrap.map((el) => {
-            return (
-              <span
-                onClick={() => {
-                  navigate(`/detail/${el.id}`);
-                }}
-              >
-                <ScrapImg src={el.outer_image} />
-              </span>
-            );
-          })}
+          {myScrap.length === 0 ? (
+            <div className="noScrapMessage">스크랩한 서비스가 없습니다.</div>
+          ) : (
+            myScrap.map((el) => {
+              return (
+                <span
+                  onClick={() => {
+                    navigate(`/detail/${el.id}`);
+                  }}
+                >
+                  <ScrapImg src={el.outer_image} />
+                </span>
+              );
+            })
+          )}
         </InBox>
       </MyScrapBox>
     </MyScrapContainer>

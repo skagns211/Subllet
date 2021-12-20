@@ -32,19 +32,19 @@ const StyledCheckBox = styled.div`
   height: 1.2rem;
   border: ${(props) =>
     props.isCheck ? "0.1rem solid black" : "0.1rem solid  #dddddd"};
-  background: ${(props) => (props.isCheck ? "black" : "white")};
+  background: ${(props) => (props.isAgree ? "black" : "white")};
   border-radius: 0.4rem;
   transition: all 150ms;
   /* border: 1px solid yellow; */
   ${Icon} {
-    visibility: ${(props) => (props.isCheck ? "visible" : "hidden")};
+    visibility: ${(props) => (props.isAgree ? "visible" : "hidden")};
   }
 `;
 
-const AgreeCheck = ({ isCheck, setIsCheck }) => {
+const AgreeCheck = ({ isAgree, setIsAgree }) => {
   return (
-    <CheckBoxContainer onClick={() => setIsCheck(!isCheck)}>
-      <StyledCheckBox isCheck={isCheck}>
+    <CheckBoxContainer onClick={() => setIsAgree(!isAgree)}>
+      <StyledCheckBox isAgree={isAgree}>
         <Icon viewBox="0 0 24 24">
           <polyline points="19 7 10 17 5 12" />
         </Icon>

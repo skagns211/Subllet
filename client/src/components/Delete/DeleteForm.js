@@ -9,6 +9,14 @@ const StyledBody = styled.section`
   color: white;
   margin: 2rem auto;
   max-width: 50rem;
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
 `;
 
 const StyledForm = styled.div`
@@ -57,6 +65,14 @@ const DeleteButton = styled.div`
   display: flex;
   justify-content: center;
   button {
+    @font-face {
+      font-family: "InfinitySans-RegularA1";
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+        format("woff");
+      font-weight: normal;
+      font-style: normal;
+    }
+    font-family: "InfinitySans-RegularA1";
     position: absolute;
     top: 22.5rem;
     padding: 0.5rem 2rem;

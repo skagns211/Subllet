@@ -10,6 +10,14 @@ const StyledBody = styled.div`
   margin: 2rem auto;
   width: 50rem;
   max-width: 100%;
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
 `;
 
 const StyledForm = styled.div`
@@ -70,6 +78,14 @@ const ImgInput = styled.div`
     }
   }
   button {
+    @font-face {
+      font-family: "InfinitySans-RegularA1";
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+        format("woff");
+      font-weight: normal;
+      font-style: normal;
+    }
+    font-family: "InfinitySans-RegularA1";
     background-color: #3a3f51;
     color: #ff8a00;
     padding: 1rem;
@@ -105,7 +121,16 @@ const InfoForm = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   button {
+    @font-face {
+      font-family: "InfinitySans-RegularA1";
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+        format("woff");
+      font-weight: normal;
+      font-style: normal;
+    }
+    font-family: "InfinitySans-RegularA1";
     position: absolute;
     top: 32.4rem;
     padding: 1rem;
@@ -288,7 +313,7 @@ const ModifyInfo = () => {
           handleClick={handleClick}
         />
       ) : null}
-      <ChangeLabel>회원정보변경</ChangeLabel>
+      <ChangeLabel>회원정보 변경</ChangeLabel>
       <StyledForm>
         <ImgForm>
           {profile ? (
@@ -328,7 +353,7 @@ const ModifyInfo = () => {
                 <ErrMsg color={"red"}>중복된 닉네임입니다.</ErrMsg>
               ) : null}
               {emptyNick ? (
-                <ErrMsg color={"red"}>닉네임을 입력해주세요.</ErrMsg>
+                <ErrMsg color={"red"}>닉네임을 입력해 주세요.</ErrMsg>
               ) : null}
             </div>
           </InfoInput>
