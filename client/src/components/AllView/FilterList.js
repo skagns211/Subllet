@@ -71,7 +71,6 @@ const ServiceList = styled.div`
 `;
 
 const FilterList = ({ filter }) => {
-  console.log(filter);
   return (
     <StyledBody>
       <ServiceList>

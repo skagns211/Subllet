@@ -10,8 +10,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
     origin: process.env.CLIENT_ORIGIN,
-    // origin: "https://shy-baboon-86.loca.lt",
-    // origin: "*",
     credentials: true,
     methods: ["GET", "POST", "OPTIONS", "PATCH", "DELETE"],
   })

@@ -266,7 +266,7 @@ const ModifyInfo = () => {
           });
           setOpen(!open);
           dispatch(changeUserInfo(res.data.userInfo));
-          setSuccess(true);
+          setSuccess(!success);
         })
         .catch((err) => {
           if (err.response.status === 401 && state.isLogin === true) {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import Netflix from "../../IMG/Logo/netflix_scrap.png";
+
 import { Navigate, useNavigate } from "react-router-dom";
 
 const SelectTab = styled(Select)`

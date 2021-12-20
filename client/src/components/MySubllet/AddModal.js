@@ -99,7 +99,6 @@ const AddModal = ({
 }) => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  // console.log(state.services);
   const allServices = state.services;
 
   const [index, setIndex] = useState(0);
@@ -116,16 +115,13 @@ const AddModal = ({
       .post(`/subscribe/${postBody.id}`, postBody)
       .then((res) => {
         if (res.data.subscribe) {
-          console.log(res.data.subscribe);
           setMyScribe([...myScribe, res.data.subscribe]);
           reGetHandler();
           setIsOpen(false);
-          console.log("추가완료");
           dispatch(setAddSubscribe());
         }
       })
       .catch((err) => {
-        console.error(err.response);
         if (err.response.data === "Overlap") {
           alert("이미 구독중인 서비스입니다.");
         } else if (err.response.data === "Empty body") {
@@ -133,9 +129,7 @@ const AddModal = ({
         }
       });
   };
-  useEffect(() => {
-    console.log(postBody);
-  }, [postBody]);
+  useEffect(() => {}, [postBody]);
   useEffect(() => {}, [index]);
 
   useEffect(() => {
@@ -148,7 +142,6 @@ const AddModal = ({
       })
     );
   }, [postBody]);
-  // console.log(filtered);
   useEffect(() => {}, [filtered]);
 
   return (

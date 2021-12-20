@@ -33,9 +33,6 @@ const AllView = () => {
     });
   }, []);
 
-  console.log(select);
-  console.log(services);
-
   useEffect(() => {
     if (services) {
       let filtered = services.filter((service) => {

@@ -202,7 +202,6 @@ const ModifyPwd = () => {
         </ErrMsg>
         <PasswordInput>
           <div>새로운 비밀번호</div>
-          {/* <label>숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!</label> */}
           <input
             type="password"
             placeholder="비밀번호를 입력해주세요"

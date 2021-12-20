@@ -22,7 +22,6 @@ import NaverAuthHandler from "./components/Signup/NaverAuthHandler";
 import GoogleAuthHandler from "./components/Signup/GoogleAuthHandler";
 import Landing from "./pages/Landing";
 import NotFound from "./pages/NotFound";
-import Test from "./pages/Test";
 import { setServices } from "./actions";
 
 const GlobalStyle = createGlobalStyle`
@@ -119,12 +118,14 @@ function App() {
             <Route path="/auth/naver/signup" element={<NaverAuthHandler />} />
             <Route path="/auth/google/signup" element={<GoogleAuthHandler />} />
 
-            <Route path="/test" element={<Test />} />
-
             <Route path={"*"} element={<NotFound />} />
           </Routes>
         </Pages>
-        <Footer />
+        {currentUrl === "/" ? null : (
+          <>
+            <Footer />
+          </>
+        )}
       </SectionStyle>
     </>
   );

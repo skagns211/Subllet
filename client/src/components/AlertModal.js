@@ -66,7 +66,6 @@ const AlertModal = ({
   checkDel,
   SuccessDel,
 }) => {
-  console.log(notLogin);
   return (
     <>
       <ModalBack onClick={handleClick} />
@@ -78,15 +77,15 @@ const AlertModal = ({
           <Link to="/mysubllet">
             <button>{alertMsg.button}</button>
           </Link>
+        ) : delAcc ? (
+          <Link to="/main">
+            <button>{alertMsg.button}</button>
+          </Link>
         ) : checkDel ? (
           <div>
             <button onClick={SuccessDel}>{alertMsg.button}</button>
             <button onClick={handleClick}>취소</button>
           </div>
-        ) : delAcc ? (
-          <Link to="/main">
-            <button>{alertMsg.button}</button>
-          </Link>
         ) : notLogin ? (
           <Link to="/userlogin">
             <button>{alertMsg.button}</button>
