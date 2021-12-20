@@ -314,6 +314,7 @@ const MyScribe = ({ myScribe, sortedMyScribe, setMyScribe, test, setTest }) => {
             email: state.loginUserInfo.email,
             nickname: state.loginUserInfo.nickname,
             profile: state.loginUserInfo.profile,
+            signup_method: state.loginUserInfo.signup_method,
             total_subscribes,
             total_price,
             total_scraps,
