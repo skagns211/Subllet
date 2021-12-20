@@ -1,4 +1,4 @@
-const { Service, Comment, Price, Scrap } = require("../models");
+const { User, Service, Comment, Price, Scrap } = require("../models");
 
 module.exports = {
   services: {
@@ -20,6 +20,7 @@ module.exports = {
         ],
       });
 
+
       try {
         res.json({ services });
       } catch (err) {
@@ -38,6 +39,7 @@ module.exports = {
         include: {
           attributes: [
             "id",
+            "user_id",
             "commenter",
             "message",
             "likes",

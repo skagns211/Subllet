@@ -1,6 +1,6 @@
 require("dotenv").config();
 const axios = require("axios");
-const { User } = require("../models");
+const { User, Service, Comment, Scrap, Subscribe } = require("../models");
 const {
   generateAccessToken,
   generateRefreshToken,
@@ -241,6 +241,74 @@ module.exports = {
       } catch (err) {
         console.error(err);
         return res.status(500).send("Server error");
+      }
+    },
+  },
+  delete: {
+    post: async (req, res) => {
+      const id = req.id;
+      const { message } = req.body;
+
+      if (!message) {
+        return res.status(400).send("Empty body");
+      }
+
+      if (message !== "회원탈퇴") {
+        return res.status(400).send("Bad request");
+      }
+
+      const subscribe = await Subscribe.findOne({
+        where: { user_id: id },
+      });
+
+      if (subscribe) {
+        await Subscribe.destroy({
+          where: { user_id: id },
+        });
+      }
+
+      const scrap = await Scrap.findOne({
+        where: { user_id: id },
+      });
+
+      if (scrap) {
+        await Scrap.destroy({
+          where: { user_id: id },
+        });
+      }
+
+      const comment = await Comment.findOne({
+        where: { user_id: id },
+      });
+
+      if (comment) {
+        const service = await Service.findOne({
+          where: { id: comment.service_id },
+        });
+
+        if (comment.likes === true) {
+          await Service.update(
+            {
+              total_likes: service.total_likes - 1,
+            },
+            {
+              where: { id: service.id },
+            }
+          );
+        }
+        await Comment.destroy({
+          where: { user_id: id },
+        });
+      }
+
+      await User.destroy({
+        where: { id },
+      });
+
+      try {
+        return res.status(204).send("Success");
+      } catch (err) {
+        console.error(err);
       }
     },
   },
