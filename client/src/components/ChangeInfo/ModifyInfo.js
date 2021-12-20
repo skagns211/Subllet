@@ -37,7 +37,7 @@ const ImgForm = styled.div`
     width: 9.5rem;
     height: 9.5rem;
     object-fit: cover;
-    border-radius: 7rem;
+    border-radius: 70%;
   }
   @media only screen and (min-width: 768px) {
     flex-direction: column;

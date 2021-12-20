@@ -162,13 +162,14 @@ const MyInfo = () => {
     total_scraps,
     total_subscribes,
   } = state.loginUserInfo;
+  const defaultImg = "https://i.esdrop.com/d/z3v0lj8ztjvc/kXWkE8sPcW.png";
 
   return (
     <MyInfoContainer>
       <MyInfoTitle>회원정보</MyInfoTitle>
       <MyInfoBox>
         <LeftBox>
-          <img src={profile} />
+          <img src={profile ? profile : defaultImg} />
         </LeftBox>
         <RightBox>
           <div>닉네임: {nickname}</div>

@@ -8,14 +8,16 @@ const StylePick = styled.div`
   color: #ff8a00;
   font-size: 1.5rem;
   margin-top: 3rem;
-  margin-left: 0.5rem;
-  width: 99.5%;
+  margin-left: 0.9rem;
+  width: 96%;
   img {
     cursor: pointer;
   }
 `;
 
 const PickBox = styled.div`
+  display: flex;
+  flex-direction: column;
   @media only screen and (max-width: 500px) {
     margin-left: 1rem;
   }
@@ -54,6 +56,8 @@ const PickBox = styled.div`
 `;
 
 const ForUserBox = styled.div`
+  display: flex;
+  flex-direction: column;
   @media only screen and (max-width: 500px) {
     margin-right: 1.8rem;
   }
