@@ -362,7 +362,8 @@ const MyScribe = ({ myScribe, sortedMyScribe, setMyScribe, test, setTest }) => {
         </CategoryBox>
         {myScribe.length === 0 ? (
           <div className="noScribeMessage">
-            구독중인 서비스가 없습니다. 구독을 추가해주세요.
+            구독중인 서비스가 없습니다.
+            <br /> 구독을 추가해주세요.
           </div>
         ) : (
           sortedMyScribe.map((el, idx) => {
