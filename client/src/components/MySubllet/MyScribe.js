@@ -260,7 +260,6 @@ const MyScribe = ({ myScribe, sortedMyScribe, setMyScribe, test, setTest }) => {
   // const sortedMyScribe = myScribe.sort((a, b) => {
   //   return a.Service.id - b.Service.id;
   // });
-  // console.log(sortedMyScribe);
   const allServices = state.services;
   // const copyAllServices = state.services.slice();
 
@@ -275,8 +274,6 @@ const MyScribe = ({ myScribe, sortedMyScribe, setMyScribe, test, setTest }) => {
     }
   });
 
-  console.log(myScribeInfo);
-
   const [isModify, setIsModify] = useState(false);
   const [index, setIndex] = useState("");
   const [patchBody, setPatchBody] = useState({
@@ -285,9 +282,7 @@ const MyScribe = ({ myScribe, sortedMyScribe, setMyScribe, test, setTest }) => {
     planprice: "",
     paydate: "",
   });
-  useEffect(() => {
-    console.log(patchBody);
-  }, [patchBody]);
+  useEffect(() => {}, [patchBody]);
 
   const scribeHandler = (idx) => {
     setIsModify(!isModify);

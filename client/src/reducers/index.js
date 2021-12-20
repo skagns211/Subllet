@@ -11,8 +11,6 @@ import selectPlan from "./selectPlan";
 import service from "./service";
 import services from "./services";
 
-// reducers폴더의 reducer파일 import 후 combineReducers 함수의 인자로 넣어서 combine
-
 const persistConfig = {
   key: "root",
   storage,
