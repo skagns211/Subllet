@@ -11,7 +11,14 @@ const randomIdx = Math.floor(Math.random() * IMG["backImg"].length);
 const randomBackImg = IMG.backImg[randomIdx];
 
 const MainSection = styled.section`
-  /* font-family: "InfinitySans-RegularA1"; */
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
   @media only screen and (max-width: 800px) {
     display: flex;
     flex-direction: column;
@@ -236,7 +243,9 @@ const MainCard = () => {
         dispatch(setIsLogin(false));
         // window.location.href = "/userlogin";
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {

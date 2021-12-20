@@ -86,7 +86,10 @@ function App() {
   useEffect(() => {
     axios
       .get("/service")
-      .then((res) => dispatch(setServices(res.data.services)));
+      .then((res) => dispatch(setServices(res.data.services)))
+      .catch((err) => {
+        console.log(err);
+      });
   }, [dispatch]);
 
   return (

@@ -7,6 +7,13 @@ import OauthLogin from "./OauthLogin";
 import axios from "axios";
 
 const LoginStyled = styled.div`
+@font-face {
+    font-family: 'InfinitySans-RegularA1';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+font-family: 'InfinitySans-RegularA1';
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -100,6 +107,9 @@ const EmailContainer = styled.div`
     font-size: 2rem;
     color: #ffffff;
     width: 1rem;
+    &.at {
+      font-family: "Geo", sans-serif;
+    }
   }
   input {
     margin-right: 1.1rem;
@@ -292,7 +302,7 @@ const LoginForm = () => {
               onChange={handleEmailValue("email")}
               onKeyPress={inputEnter}
             ></input>
-            <span>@</span>
+            <span className="at">@</span>
             <SelectEmail
               onChange={(value) => {
                 handleSelect(value);
