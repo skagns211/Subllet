@@ -9,7 +9,6 @@ import Shopping from "../components/Main/Shopping";
 import Pick from "../components/Main/Pick";
 import Book from "../components/Main/Book";
 import Life from "../components/Main/Life";
-import axios from "axios";
 
 const StyledTopBody = styled.section`
   max-width: 1100px;
@@ -28,7 +27,6 @@ const Main = () => {
     <>
       <StyledTopBody>
         {state.isLogin ? <MainCard /> : <GuestMainCard />}
-        {/* isLogin에 따라 */}
       </StyledTopBody>
       <StyledBottomBody>
         <Video />

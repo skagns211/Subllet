@@ -8,6 +8,14 @@ const randomIdx = Math.floor(Math.random() * IMG["backImg"].length);
 const randomBackImg = IMG.backImg[randomIdx];
 
 const MainSection = styled.section`
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
   @media only screen and (max-width: 800px) {
     display: flex;
     flex-direction: column;
@@ -65,6 +73,7 @@ const MainCardBody = styled.div`
     border-radius: 2rem;
   }
   .user {
+    font-family: "Geo", sans-serif;
     background-color: transparent;
     align-self: flex-start;
     margin: 1rem 0 0 0;
@@ -159,6 +168,7 @@ const MainCardRightBottom = styled.div`
 `;
 
 const RequestWindow = styled.div`
+  font-family: "Geo", sans-serif;
   background-color: black;
   position: absolute;
   padding: 0 1rem 0 1rem;

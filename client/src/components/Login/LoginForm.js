@@ -7,6 +7,13 @@ import OauthLogin from "./OauthLogin";
 import axios from "axios";
 
 const LoginStyled = styled.div`
+@font-face {
+    font-family: 'InfinitySans-RegularA1';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+font-family: 'InfinitySans-RegularA1';
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,10 +21,10 @@ const LoginStyled = styled.div`
     background-color: #272729;
     padding: 0 5rem 10rem 5rem;
     margin-top: 5rem;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
   }
   hr {
-    width: 95%;
+    width: 100%;
     margin-top: 1rem;
     border: 1px solid #7e7e7e;
   }
@@ -30,12 +37,12 @@ const LoginStyled = styled.div`
   .emailTitle {
     color: #ffffff;
     font-size: 1.5rem;
-    margin: 3rem 10rem 1rem 0;
+    margin: 3rem 0 1rem 0;
   }
   .passwordTitle {
     color: #ffffff;
     font-size: 1.5rem;
-    margin: 3rem 10rem 1rem 0;
+    margin: 3rem 0 1rem 0;
   }
   .warning {
     margin: 1rem 6rem 0 0;
@@ -45,6 +52,27 @@ const LoginStyled = styled.div`
     margin: 1rem 6rem 0 0;
     color: #cf3c3c;
   }
+  @media only screen and (max-width: 800px) {
+    .loginFormContainer {
+      background-color: #272729;
+      padding: 0 1.5rem 5rem 1.5rem;
+      margin-top: 5rem;
+      border-radius: 0.5rem;
+    }
+    .title {
+      font-size: 1.5rem;
+    }
+    .emailTitle {
+      font-size: 1rem;
+    }
+    .passwordTitle {
+      font-size: 1rem;
+    }
+    .warning { 
+      font-size: 0.8rem;
+      width: 15rem;
+      margin-right: 0;
+    }
 `;
 
 const LoginBtn = styled.button`
@@ -52,7 +80,7 @@ const LoginBtn = styled.button`
   margin-top: 2rem;
   margin-bottom: 1rem;
   /* position: relative; */
-  width: 97%;
+  width: 100%;
   height: 2.62rem;
   border: none;
   border-radius: 0.2rem;
@@ -79,13 +107,16 @@ const EmailContainer = styled.div`
     font-size: 2rem;
     color: #ffffff;
     width: 1rem;
+    &.at {
+      font-family: "Geo", sans-serif;
+    }
   }
   input {
     margin-right: 1.1rem;
     border-radius: 0.2rem;
     border: 0.5px solid gray;
     font-size: 1rem;
-    width: 9rem;
+    width: 10rem;
   }
   .inputEmail {
     display: inline-flex;
@@ -95,14 +126,20 @@ const EmailContainer = styled.div`
     height: 2rem;
     width: 6.5rem;
   }
+  @media only screen and (max-width: 800px) {
+    input {
+      width: 44%;
+      height: 2rem;
+      margin-right: 0.4rem;
+    }
+  }
 `;
 
 const SelectEmail = styled(Select)`
-  width: 9.8rem;
+  width: 10rem;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   margin-left: 1.2rem;
   .Select__control {
-    border: 1px solid #a1a1a1;
     border-radius: 0.2rem;
     cursor: pointer;
   }
@@ -131,11 +168,25 @@ const SelectEmail = styled(Select)`
     color: gray;
     /* background: purple; */
   }
+  @media only screen and (max-width: 800px) {
+    width: 47%;
+    margin-left: 0.5rem;
+    .Select__control {
+      width: 100%;
+      height: 0.8rem;
+    }
+    .Select__single-value.css-qc6sy-singleValue {
+      width: 5.5rem;
+    }
+    .Select__input-container.css-1pndypt-Input {
+      width: 5.5rem;
+    }
+  }
 `;
 
 const PassWordContainer = styled.div`
   input {
-    width: 22rem;
+    width: 98%;
     height: 2rem;
     text-indent: 1rem;
     font-size: 1rem;
@@ -179,7 +230,7 @@ const LoginForm = () => {
     });
   };
 
-  //! email이 이미 선택되어 있으면 id에 재선택된 email을 붙여줌
+  //! email이 이미 선택되어 있으면 id에 재선택된 email을 붙여줌 //
   const handleSelect = (value, key) => {
     const atIndex = loginInfo.email.indexOf("@");
     const justId = loginInfo.email.slice(0, atIndex);
@@ -251,14 +302,14 @@ const LoginForm = () => {
               onChange={handleEmailValue("email")}
               onKeyPress={inputEnter}
             ></input>
-            <span>@</span>
+            <span className="at">@</span>
             <SelectEmail
               onChange={(value) => {
                 handleSelect(value);
               }}
               classNamePrefix="Select"
               options={emailList}
-              placeholder="선택해주세요"
+              placeholder="선택해 주세요"
             ></SelectEmail>
           </EmailContainer>
         </LoginContainer>

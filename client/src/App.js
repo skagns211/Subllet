@@ -38,8 +38,6 @@ const GlobalStyle = createGlobalStyle`
     overflow: auto;
     /* height: 100%; */
     min-width: 370px;
-    @media only screen and (max-width: 800px) {
-  }
   a {
     color: #ffffff;
     text-decoration: none;
@@ -87,7 +85,10 @@ function App() {
   useEffect(() => {
     axios
       .get("/service")
-      .then((res) => dispatch(setServices(res.data.services)));
+      .then((res) => dispatch(setServices(res.data.services)))
+      .catch((err) => {
+        console.log(err);
+      });
   }, [dispatch]);
 
   return (
