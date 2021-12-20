@@ -230,7 +230,7 @@ const LoginForm = () => {
     });
   };
 
-  //! email이 이미 선택되어 있으면 id에 재선택된 email을 붙여줌
+  //! email이 이미 선택되어 있으면 id에 재선택된 email을 붙여줌 //
   const handleSelect = (value, key) => {
     const atIndex = loginInfo.email.indexOf("@");
     const justId = loginInfo.email.slice(0, atIndex);
