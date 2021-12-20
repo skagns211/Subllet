@@ -45,18 +45,19 @@ const PasswordInput = styled.div`
   }
   @media only screen and (min-width: 768px) {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: flex-start;
+    margin: 5rem 0 0 29.5%;
     div {
-      display: flex;
-      align-items: center;
-      margin-right: 1rem;
       margin-bottom: 0;
       font-size: 1rem;
     }
     input {
+      margin-top: 0.1rem;
       padding: 0.5rem;
       font-size: 1rem;
-      width: 50%;
+      width: 56%;
     }
   }
 `;
@@ -74,7 +75,7 @@ const DeleteButton = styled.div`
     }
     font-family: "InfinitySans-RegularA1";
     position: absolute;
-    top: 22.5rem;
+    top: 24rem;
     padding: 0.5rem 2rem;
     font-size: 1.5rem;
     background-color: #3a3f51;
@@ -99,22 +100,22 @@ const ErrMsg = styled.div`
   }
 `;
 
-const DeleteForm = () => {
+const DeleteOauth = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { id } = state.loginUserInfo;
 
   const [open, setOpen] = useState(false);
   const [alertMsg, setAlertMsg] = useState({});
-  const [delAcc, setDelAcc] = useState(false);
-  const [checkDel, setCheckDel] = useState(false);
+  const [delAcc, setDelAcc] = useState();
+  const [checkDel, setCheckDel] = useState();
 
-  const [pwd, setPwd] = useState();
+  const [message, setMessage] = useState();
   const [emptyPwd, setEmptyPwd] = useState(false);
   const [wrongPwd, setWrongPwd] = useState(false);
 
   const inputPwd = (e) => {
-    setPwd(e.target.value);
+    setMessage(e.target.value);
     setEmptyPwd(false);
     setWrongPwd(false);
   };
@@ -145,22 +146,21 @@ const DeleteForm = () => {
 
   const SuccessDel = () => {
     axios
-      .post("/user", {
-        password: pwd,
+      .post("/oauth/delete", {
+        message,
       })
       .then(() => {
         const loginUserInfo = {
           email: "",
           nickname: "",
           profile: "",
-          signup_method: "",
         };
         setAlertMsg({
           message: "회원탈퇴가 완료되었습니다. 그동안 이용해주셔서 감사합니다.",
           button: "확인",
         });
         setDelAcc(true);
-        setOpen(!open);
+        setOpen(true);
         setCheckDel(!checkDel);
         dispatch(setLoginUserInfo(loginUserInfo));
         dispatch(setIsLogin(false));
@@ -182,7 +182,7 @@ const DeleteForm = () => {
   };
 
   const delAccount = () => {
-    if (!pwd) {
+    if (!message) {
       setEmptyPwd(true);
     } else {
       setAlertMsg({
@@ -208,16 +208,12 @@ const DeleteForm = () => {
       <DeleteLabel>회원 탈퇴</DeleteLabel>
       <StyledForm>
         <PasswordInput>
-          <div>비밀번호</div>
-          <input
-            type="password"
-            placeholder="비밀번호를 입력해주세요"
-            onChange={inputPwd}
-          />
+          <div>탈퇴를 확인하려면 '회원탈퇴'를 입력해주세요</div>
+          <input type="text" placeholder="회원탈퇴" onChange={inputPwd} />
         </PasswordInput>
         <ErrMsg>
-          {emptyPwd ? <div>비밀번호를 입력해주세요</div> : null}
-          {wrongPwd ? <div>잘못된 비밀번호입니다.</div> : null}
+          {emptyPwd ? <div>입력칸을 채워주세요</div> : null}
+          {wrongPwd ? <div>잘못된 입력입니다</div> : null}
         </ErrMsg>
 
         <DeleteButton>
@@ -228,4 +224,4 @@ const DeleteForm = () => {
   );
 };
 
-export default DeleteForm;
+export default DeleteOauth;

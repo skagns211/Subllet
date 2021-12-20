@@ -10,15 +10,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
     origin: process.env.CLIENT_ORIGIN,
-    // origin: "https://shy-baboon-86.loca.lt",
-    // origin: "*",
     credentials: true,
     methods: ["GET", "POST", "OPTIONS", "PATCH", "DELETE"],
   })
 );
 app.use(cookieParser());
 app.use("/", indexRouter, (req, res) => {
-  res.send("안녕하세요! Subllet API입니다.")
+  res.send("안녕하세요! Subllet API입니다.");
 });
 
 const HTTPS_PORT = process.env.HTTPS_PORT || 4000;

@@ -28,6 +28,7 @@ module.exports = {
       const salt = await generateSalt();
       const hashedPassword = await hashPassword(password, salt);
 
+      console.log(hashPassword);
       await User.create({
         email,
         password: hashedPassword,

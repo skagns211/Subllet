@@ -29,7 +29,7 @@ const SelectTab = styled(Select)`
   }
   .Select__placeholder {
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
   .Select__option {
     font-size: 1rem;
@@ -83,7 +83,7 @@ const SelectTab2 = styled(Select)`
   }
   .Select__placeholder {
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
   .Select__option {
     background-color: black;
@@ -495,7 +495,7 @@ export const SelectDate2 = ({ patchBody, setPatchBody, id }) => {
   const handleResize = () => {
     const innerWidth = window.innerWidth;
     innerWidth <= 816
-      ? setHolderMessage("")
+      ? setHolderMessage("Day")
       : setHolderMessage("결제일을 선택해 주세요");
   };
 
@@ -549,6 +549,23 @@ export const SelectPrice = ({
     }
   };
 
+  const [holderMessage, setHolderMessage] = useState("요금제를 선택해 주세요");
+
+  const handleResize = () => {
+    const innerWidth = window.innerWidth;
+    innerWidth <= 816
+      ? setHolderMessage("Price")
+      : setHolderMessage("요금제를 선택해 주세요");
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <SelectTab2
       classNamePrefix="Select"
@@ -559,7 +576,7 @@ export const SelectPrice = ({
       noOptionsMessage={({ inputValue }) =>
         !inputValue ? null : "해당하는 요금제가 존재하지 않습니다"
       }
-      placeholder="요금제를 선택해 주세요"
+      placeholder={holderMessage}
       isClearable
       // selectedValue={{ label: `${planname} (${planprice})`, value: "" }}
     />
@@ -570,11 +587,9 @@ export const SelectPrice = ({
 
 export const NavSelectService = ({ setIndex, postBody, setPostBody }) => {
   const state = useSelector((state) => state);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const allServices = state.services;
 
-  const options2 = allServices.map((service, idx) => {
+  const options = allServices.map((service, idx) => {
     return {
       label: (
         <List
@@ -590,18 +605,10 @@ export const NavSelectService = ({ setIndex, postBody, setPostBody }) => {
     };
   });
 
-  const handleChange = (value) => {
-    if (value !== null) {
-      setPostBody({ ...postBody, id: value.value.id });
-    } else {
-      setPostBody({ ...postBody, id: "" });
-    }
-  };
-
   return (
     <SelectTabNav
       classNamePrefix="Select"
-      options={options2}
+      options={options}
       // onChange={(value) => handleChange(value)}
       search
       // value={data.value}

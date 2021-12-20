@@ -7,6 +7,13 @@ import OauthLogin from "./OauthLogin";
 import axios from "axios";
 
 const LoginStyled = styled.div`
+@font-face {
+    font-family: 'InfinitySans-RegularA1';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+font-family: 'InfinitySans-RegularA1';
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,10 +21,10 @@ const LoginStyled = styled.div`
     background-color: #272729;
     padding: 0 5rem 10rem 5rem;
     margin-top: 5rem;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
   }
   hr {
-    width: 23rem;
+    width: 100%;
     margin-top: 1rem;
     border: 1px solid #7e7e7e;
   }
@@ -30,28 +37,60 @@ const LoginStyled = styled.div`
   .emailTitle {
     color: #ffffff;
     font-size: 1.5rem;
-    margin: 3rem 19rem 1rem 0;
+    margin: 3rem 0 1rem 0;
   }
   .passwordTitle {
     color: #ffffff;
     font-size: 1.5rem;
-    margin: 3rem 17.5rem 1rem 0;
+    margin: 3rem 0 1rem 0;
   }
   .warning {
     margin: 1rem 6rem 0 0;
     color: #cf3c3c;
   }
-  .loginBtn {
-    color: #ff8a00;
-    font-size: 1rem;
-    background-color: #3a3f51;
-    border-color: #3f4660 #3f4660;
-    border-radius: 0.5rem;
-    margin-top: 4rem;
-    margin-bottom: 2rem;
-    margin: 4rem 0 2rem 4rem;
-    width: 16rem;
-    height: 2rem;
+  .verify {
+    margin: 1rem 6rem 0 0;
+    color: #cf3c3c;
+  }
+  @media only screen and (max-width: 800px) {
+    .loginFormContainer {
+      background-color: #272729;
+      padding: 0 1.5rem 5rem 1.5rem;
+      margin-top: 5rem;
+      border-radius: 0.5rem;
+    }
+    .title {
+      font-size: 1.5rem;
+    }
+    .emailTitle {
+      font-size: 1rem;
+    }
+    .passwordTitle {
+      font-size: 1rem;
+    }
+    .warning { 
+      font-size: 0.8rem;
+      width: 15rem;
+      margin-right: 0;
+    }
+`;
+
+const LoginBtn = styled.button`
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  /* position: relative; */
+  width: 100%;
+  height: 2.62rem;
+  border: none;
+  border-radius: 0.2rem;
+  /* margin-left: 0.2rem; */
+  background-color: #252a3c;
+  font-size: 1rem;
+  color: #ff8a00;
+  :hover {
+    color: #252a3c;
+    box-shadow: #ff8a00 0 5rem 0rem 2rem inset;
   }
 `;
 
@@ -68,13 +107,16 @@ const EmailContainer = styled.div`
     font-size: 2rem;
     color: #ffffff;
     width: 1rem;
+    &.at {
+      font-family: "Geo", sans-serif;
+    }
   }
   input {
     margin-right: 1.1rem;
     border-radius: 0.2rem;
     border: 0.5px solid gray;
     font-size: 1rem;
-    width: 9rem;
+    width: 10rem;
   }
   .inputEmail {
     display: inline-flex;
@@ -84,23 +126,20 @@ const EmailContainer = styled.div`
     height: 2rem;
     width: 6.5rem;
   }
-  .cancleBtn {
-    position: relative;
-    left: 8.5rem;
-    width: 1.5rem;
-    height: 1.5rem;
-    button {
-      padding: 0.8rem 1rem 0.25rem 1rem;
+  @media only screen and (max-width: 800px) {
+    input {
+      width: 44%;
+      height: 2rem;
+      margin-right: 0.4rem;
     }
   }
 `;
 
 const SelectEmail = styled(Select)`
-  width: 9.8rem;
+  width: 10rem;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   margin-left: 1.2rem;
   .Select__control {
-    border: 1px solid #a1a1a1;
     border-radius: 0.2rem;
     cursor: pointer;
   }
@@ -129,32 +168,44 @@ const SelectEmail = styled(Select)`
     color: gray;
     /* background: purple; */
   }
+  @media only screen and (max-width: 800px) {
+    width: 47%;
+    margin-left: 0.5rem;
+    .Select__control {
+      width: 100%;
+      height: 0.8rem;
+    }
+    .Select__single-value.css-qc6sy-singleValue {
+      width: 5.5rem;
+    }
+    .Select__input-container.css-1pndypt-Input {
+      width: 5.5rem;
+    }
+  }
 `;
 
 const PassWordContainer = styled.div`
   input {
-    width: 22rem;
+    width: 98%;
     height: 2rem;
     text-indent: 1rem;
     font-size: 1rem;
   }
 `;
 
-const emailList = [
-  { value: "naver.com", label: "naver.com" },
-  { value: "gmail.com", label: "gmail.com" },
-  { value: "hanmail.net", label: "hanmail.net" },
-  { value: "daum.net", label: "daum.net" },
-  { value: "nate.com", label: "nate.com" },
-  { value: "hotmail.com", label: "hotmail.com" },
-  { value: "outlook.com", label: "outlook.com" },
-  { value: "icloud.com", label: "icloud.com" },
-  { value: "직접 입력", label: "직접 입력" },
-];
-
 const LoginForm = () => {
   const dispatch = useDispatch(); //! action 사용 함수
 
+  const emailList = [
+    { value: "naver.com", label: "naver.com" },
+    { value: "gmail.com", label: "gmail.com" },
+    { value: "hanmail.net", label: "hanmail.net" },
+    { value: "daum.net", label: "daum.net" },
+    { value: "nate.com", label: "nate.com" },
+    { value: "hotmail.com", label: "hotmail.com" },
+    { value: "outlook.com", label: "outlook.com" },
+    { value: "icloud.com", label: "icloud.com" },
+  ];
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -179,11 +230,7 @@ const LoginForm = () => {
     });
   };
 
-  const [isSelectSelf, setIsSelectSelf] = useState(false);
-
-  //! email이 이미 선택되어 있으면 id에 재선택된 email을 붙여줌
-  //! email option이 "직접입력"이면 option을 text로 바꿔줌
-  //! 직접 입력한 value 적용 필요!!!!!
+  //! email이 이미 선택되어 있으면 id에 재선택된 email을 붙여줌 //
   const handleSelect = (value, key) => {
     const atIndex = loginInfo.email.indexOf("@");
     const justId = loginInfo.email.slice(0, atIndex);
@@ -196,9 +243,6 @@ const LoginForm = () => {
           ...loginInfo,
           email: loginInfo.email + "@" + value.value,
         });
-    value.value === "직접 입력"
-      ? setIsSelectSelf(true)
-      : setIsSelectSelf(false);
   };
   const [isEamilSelect, setIsEmailSelect] = useState("");
   const handleEmailSelect = (value) => {
@@ -206,6 +250,7 @@ const LoginForm = () => {
   };
   const [isWarning, setIsWarning] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
+  const [isVerify, setIsVerify] = useState(false);
 
   const postInfo = () => {
     const { email, password } = loginInfo;
@@ -220,15 +265,19 @@ const LoginForm = () => {
           password,
         })
         .then((res) => {
-          const { userInfo } = res.data; //! refreshToken을 어디로 받을지 상의필요
+          const { userInfo } = res.data;
           const loginUserInfo = userInfo;
+          if (res.data === "Resended") {
+            setIsVerify(true);
+            setIsWarning(false);
+            return;
+          }
           dispatch(setLoginUserInfo(loginUserInfo));
-          // dispatch(setAccessToken(accessToken));
           dispatch(setIsLogin(true));
-          // navigate("/");
-          window.location.replace("/main"); //! navigate 사용시 isLogin에 따른 nav변경 안됨
+          window.location.replace("/main");
         })
         .catch((err) => {
+          console.log(err);
           setIsWarning(true);
           setIsEmpty(false);
         });
@@ -253,31 +302,15 @@ const LoginForm = () => {
               onChange={handleEmailValue("email")}
               onKeyPress={inputEnter}
             ></input>
-            <span>@</span>
-            {isSelectSelf ? (
-              <span>
-                <input
-                  className="inputEmail"
-                  type="text"
-                  onChange={(value) => handleEmailSelect(value)} //! 손봐야함
-                  value={isEamilSelect}
-                ></input>
-                <span className="cancleBtn">
-                  <button type="button" onClick={() => setIsSelectSelf(false)}>
-                    X
-                  </button>
-                </span>
-              </span>
-            ) : (
-              <SelectEmail
-                onChange={(value) => {
-                  handleSelect(value);
-                }}
-                classNamePrefix="Select"
-                options={emailList}
-                placeholder="선택해주세요"
-              ></SelectEmail>
-            )}
+            <span className="at">@</span>
+            <SelectEmail
+              onChange={(value) => {
+                handleSelect(value);
+              }}
+              classNamePrefix="Select"
+              options={emailList}
+              placeholder="선택해 주세요"
+            ></SelectEmail>
           </EmailContainer>
         </LoginContainer>
         <div className="passwordTitle">비밀번호</div>
@@ -297,12 +330,14 @@ const LoginForm = () => {
         {isEmpty ? (
           <div className="warning">이메일과 비밀번호를 모두 입력해주세요</div>
         ) : null}
-        <input
-          type="button"
-          className="loginBtn"
-          value="로그인"
-          onClick={() => postInfo()}
-        ></input>
+        {isVerify ? (
+          <div className="verify">
+            이메일 인증이 필요합니다.<br></br>발송된 이메일을 확인해 주세요.
+          </div>
+        ) : null}
+        <LoginBtn className="loginBtn" onClick={() => postInfo()}>
+          로그인
+        </LoginBtn>
         <hr />
         <OauthLogin />
       </div>

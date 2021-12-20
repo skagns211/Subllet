@@ -7,6 +7,7 @@ import { setLoginUserInfo, setIsLogin } from "../../actions";
 
 const StyledBody = styled.section`
   max-width: 100%;
+  margin-top: 2rem;
   margin-bottom: 1rem;
 `;
 
@@ -210,7 +211,7 @@ const Comment = ({
     setDel(!del);
     axios
       .delete(`/comment/${ServiceId}`)
-      .then((res) => {
+      .then(() => {
         setChange(!change);
         let del = comments.filter(
           (comment) => comment.commenter !== state.loginUserInfo.nickname
@@ -349,12 +350,12 @@ const Comment = ({
               <Comments key={comment.id}>
                 <CommentList>
                   <CommentInfo>
-                    <div>{comment.commenter}</div>
+                    <div>{state.loginUserInfo.nickname}</div>
                     <div>{day(comment.createdAt)}</div>
                   </CommentInfo>
                   <div>
                     {comment.message}
-                    {state.loginUserInfo.nickname === comment.commenter ? (
+                    {state.loginUserInfo.id === comment.user_id ? (
                       <i
                         className="fas fa-minus-circle"
                         onClick={delComment}

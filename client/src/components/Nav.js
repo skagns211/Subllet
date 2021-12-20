@@ -11,14 +11,9 @@ import logo from "../IMG/favicon.png";
 const NavHeader = styled.header`
   display: flex;
   justify-content: space-around;
-  /* justify-content: space-between; //둘 중 하나 골라야함 */
   background-color: #0f0f0f;
   width: 100%;
   height: 70px;
-  /* border: 1px solid white; */
-  @media only screen and (max-width: 500px) {
-    padding-left: 1rem;
-  }
 `;
 
 const MinNavTap = styled.span`
@@ -64,7 +59,7 @@ const MinNavTap = styled.span`
       }
     }
   }
-  @media only screen and (min-width: 800px) {
+  @media only screen and (min-width: 801px) {
     display: none;
   }
 `;
@@ -176,11 +171,6 @@ const Font = styled.span`
 
 const RightNav = styled.span`
   display: flex;
-  /* :hover ul {
-    visibility: visible;
-  } */
-  /* border: 1px solid white; */
-
   li {
     padding: 0.5rem 0;
     border-bottom: 1px solid #ff8a00;
@@ -238,12 +228,13 @@ const Test = styled.div`
       margin: 1rem 0rem 0rem 1.2rem;
     }
     ul {
-      margin-left 59%;
+      left -3%;
     }
   }
   @media only screen and (min-width: 500px) and (max-width: 800px) {
     ul {
-      margin-left: 70%;
+      /* margin-left: 70%; */
+      left: 4%;
     }
   }
 `;

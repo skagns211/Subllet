@@ -1,5 +1,3 @@
-// import {  } from "../actions/index";
-
 import {
   LOGIN_USER_INFO,
   SUB_COUNT,
@@ -12,6 +10,7 @@ const loginUserInfo = {
   email: "",
   nickname: "",
   profile: "",
+  signup_method: "",
   total_subscribes: 0,
   total_price: 0,
   total_scraps: 0,
@@ -26,6 +25,7 @@ const userReducer = (state = loginUserInfo, action) => {
         email: action.payload.email,
         nickname: action.payload.nickname,
         profile: action.payload.profile,
+        signup_method: action.payload.signup_method,
         total_subscribes: action.payload.total_subscribes,
         total_price: action.payload.total_price,
         total_scraps: action.payload.total_scraps,

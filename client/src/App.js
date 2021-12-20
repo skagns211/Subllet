@@ -21,6 +21,7 @@ import KakaoAuthHandler from "./components/Signup/KakaoAuthHandler";
 import NaverAuthHandler from "./components/Signup/NaverAuthHandler";
 import GoogleAuthHandler from "./components/Signup/GoogleAuthHandler";
 import Landing from "./pages/Landing";
+import NotFound from "./pages/NotFound";
 import { setServices } from "./actions";
 
 const GlobalStyle = createGlobalStyle`
@@ -36,9 +37,7 @@ const GlobalStyle = createGlobalStyle`
     /* display: flex; */
     overflow: auto;
     /* height: 100%; */
-    @media only screen and (max-width: 800px) {
     min-width: 370px;
-  }
   a {
     color: #ffffff;
     text-decoration: none;
@@ -86,14 +85,15 @@ function App() {
   useEffect(() => {
     axios
       .get("/service")
-      .then((res) => dispatch(setServices(res.data.services)));
+      .then((res) => dispatch(setServices(res.data.services)))
+      .catch((err) => {
+        console.log(err);
+      });
   }, [dispatch]);
 
   return (
     <>
       <GlobalStyle />
-      {/* <Routes> */}
-      {/* </Routes> */}
       <SectionStyle>
         {currentUrl === "/" ? null : (
           <>
@@ -101,7 +101,6 @@ function App() {
             <div className="mobileNav">
               <NavSelectServiceDown />
             </div>
-            {/* <SearchBar /> */}
           </>
         )}
         <Pages>
@@ -119,9 +118,15 @@ function App() {
             <Route path="/auth/kakao/signup" element={<KakaoAuthHandler />} />
             <Route path="/auth/naver/signup" element={<NaverAuthHandler />} />
             <Route path="/auth/google/signup" element={<GoogleAuthHandler />} />
+
+            <Route path={"*"} element={<NotFound />} />
           </Routes>
         </Pages>
-        <Footer />
+        {currentUrl === "/" ? null : (
+          <>
+            <Footer />
+          </>
+        )}
       </SectionStyle>
     </>
   );

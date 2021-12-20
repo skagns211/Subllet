@@ -10,6 +10,14 @@ const StyledBody = styled.div`
   margin: 2rem auto;
   width: 50rem;
   max-width: 100%;
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
 `;
 
 const StyledForm = styled.div`
@@ -37,7 +45,7 @@ const ImgForm = styled.div`
     width: 9.5rem;
     height: 9.5rem;
     object-fit: cover;
-    border-radius: 7rem;
+    border-radius: 70%;
   }
   @media only screen and (min-width: 768px) {
     flex-direction: column;
@@ -70,6 +78,14 @@ const ImgInput = styled.div`
     }
   }
   button {
+    @font-face {
+      font-family: "InfinitySans-RegularA1";
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+        format("woff");
+      font-weight: normal;
+      font-style: normal;
+    }
+    font-family: "InfinitySans-RegularA1";
     background-color: #3a3f51;
     color: #ff8a00;
     padding: 1rem;
@@ -105,7 +121,16 @@ const InfoForm = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   button {
+    @font-face {
+      font-family: "InfinitySans-RegularA1";
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+        format("woff");
+      font-weight: normal;
+      font-style: normal;
+    }
+    font-family: "InfinitySans-RegularA1";
     position: absolute;
     top: 32.4rem;
     padding: 1rem;
@@ -131,7 +156,7 @@ const InfoForm = styled.div`
   @media only screen and (min-width: 800px) {
     button {
       position: absolute;
-      top: 32.4rem;
+      top: 33.3rem;
     }
   }
 `;
@@ -266,7 +291,7 @@ const ModifyInfo = () => {
           });
           setOpen(!open);
           dispatch(changeUserInfo(res.data.userInfo));
-          setSuccess(true);
+          setSuccess(!success);
         })
         .catch((err) => {
           if (err.response.status === 401 && state.isLogin === true) {
@@ -288,13 +313,16 @@ const ModifyInfo = () => {
           handleClick={handleClick}
         />
       ) : null}
-      <ChangeLabel>회원정보변경</ChangeLabel>
+      <ChangeLabel>회원정보 변경</ChangeLabel>
       <StyledForm>
         <ImgForm>
           {profile ? (
-            <img src={profile} alt='profile 이미지'/>
+            <img src={profile} alt="profile 이미지" />
           ) : (
-            <img src="https://subllet-profile.s3.ap-northeast-2.amazonaws.com/istockphoto-1223671392-170667a.jpeg" alt='profile 기본이미지' />
+            <img
+              src="https://subllet-profile.s3.ap-northeast-2.amazonaws.com/istockphoto-1223671392-170667a.jpeg"
+              alt="profile 기본이미지"
+            />
           )}
           <ImgInput>
             <div>
@@ -325,7 +353,7 @@ const ModifyInfo = () => {
                 <ErrMsg color={"red"}>중복된 닉네임입니다.</ErrMsg>
               ) : null}
               {emptyNick ? (
-                <ErrMsg color={"red"}>닉네임을 입력해주세요.</ErrMsg>
+                <ErrMsg color={"red"}>닉네임을 입력해 주세요.</ErrMsg>
               ) : null}
             </div>
           </InfoInput>

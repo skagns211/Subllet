@@ -11,7 +11,14 @@ const randomIdx = Math.floor(Math.random() * IMG["backImg"].length);
 const randomBackImg = IMG.backImg[randomIdx];
 
 const MainSection = styled.section`
-  /* font-family: "InfinitySans-RegularA1"; */
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
   @media only screen and (max-width: 800px) {
     display: flex;
     flex-direction: column;
@@ -124,12 +131,14 @@ const MainCardBody = styled.div`
     }
     .totalPrice {
       padding-left: 1.3rem;
+      width: 14rem;
     }
     .nextPay {
       padding-left: 1.3rem;
+      width: 14rem;
     }
     hr {
-      width: 21.1rem;
+      width: 90%;
     }
   }
 `;
@@ -176,7 +185,6 @@ const MainCardRightBottom = styled.div`
   flex-direction: column;
   .info {
     margin-top: 1rem;
-    margin-right: 5rem;
     margin-bottom: 1rem;
     padding: 0.5rem 0rem 0 1.5rem;
     width: 10.5rem;
@@ -195,6 +203,14 @@ const MainCardRightBottom = styled.div`
       font-size: 0.9rem;
     }
   }
+  @media only screen and (max-width: 500px) {
+    .info {
+      width: 9.5rem;
+    }
+    .addSub {
+      width: 9.5rem;
+    }
+  }
 `;
 const MainCard = () => {
   const state = useSelector((state) => state);
@@ -208,6 +224,7 @@ const MainCard = () => {
     email,
     nickname,
     profile,
+    signup_method,
     total_price,
     total_scraps,
     total_subscribes,
@@ -227,7 +244,9 @@ const MainCard = () => {
         dispatch(setIsLogin(false));
         // window.location.href = "/userlogin";
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -255,6 +274,7 @@ const MainCard = () => {
             email,
             nickname,
             profile,
+            signup_method,
             total_subscribes,
             total_price,
             total_scraps,
@@ -337,7 +357,7 @@ const MainCard = () => {
               ? service.map((el, idx) => {
                   return (
                     <div key={idx}>
-                      {nextPayDate[idx] >= 0 && nextPayDate[idx] < 11
+                      {nextPayDate[idx] >= 0 && nextPayDate[idx] < 10
                         ? `${el} : ${nextPayDate[idx] + 1}일 전`
                         : null}
                     </div>
@@ -362,7 +382,7 @@ const MainCard = () => {
             </span>
             <MainCardRightBottom>
               <span className="info">
-                Huni 님의 <br />
+                {state.loginUserInfo.nickname} 님의 <br />
                 <div>총 구독 수 : {total_subscribes}개</div>
                 <div>총 스크랩 수 : {total_scraps}개</div>
               </span>

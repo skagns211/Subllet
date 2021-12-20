@@ -142,10 +142,13 @@ const Filter = ({
                 Video
               </li>
               <li onClick={(category) => filterServices(category, price, free)}>
-                Book
+                Music
               </li>
               <li onClick={(category) => filterServices(category, price, free)}>
-                Music
+                Shopping
+              </li>
+              <li onClick={(category) => filterServices(category, price, free)}>
+                Book
               </li>
               <li onClick={(category) => filterServices(category, price, free)}>
                 Life

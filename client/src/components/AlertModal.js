@@ -32,6 +32,12 @@ const StyledBody = styled.div`
       color: #252a3c;
     }
   }
+  div {
+    display: flex;
+    button {
+      margin: 0 1rem;
+    }
+  }
   @media only screen and (min-width: 768px) {
     width: 32rem;
     max-width: 28rem;
@@ -57,8 +63,9 @@ const AlertModal = ({
   notLogin,
   success,
   delAcc,
+  checkDel,
+  SuccessDel,
 }) => {
-  console.log(notLogin);
   return (
     <>
       <ModalBack onClick={handleClick} />
@@ -74,6 +81,11 @@ const AlertModal = ({
           <Link to="/main">
             <button>{alertMsg.button}</button>
           </Link>
+        ) : checkDel ? (
+          <div>
+            <button onClick={SuccessDel}>{alertMsg.button}</button>
+            <button onClick={handleClick}>취소</button>
+          </div>
         ) : notLogin ? (
           <Link to="/userlogin">
             <button>{alertMsg.button}</button>

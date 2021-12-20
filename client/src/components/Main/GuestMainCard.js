@@ -8,6 +8,14 @@ const randomIdx = Math.floor(Math.random() * IMG["backImg"].length);
 const randomBackImg = IMG.backImg[randomIdx];
 
 const MainSection = styled.section`
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
   @media only screen and (max-width: 800px) {
     display: flex;
     flex-direction: column;
@@ -65,6 +73,7 @@ const MainCardBody = styled.div`
     border-radius: 2rem;
   }
   .user {
+    font-family: "Geo", sans-serif;
     background-color: transparent;
     align-self: flex-start;
     margin: 1rem 0 0 0;
@@ -96,12 +105,14 @@ const MainCardBody = styled.div`
     }
     .totalPrice {
       padding-left: 1.3rem;
+      width: 14rem;
     }
     .nextPay {
       padding-left: 1.3rem;
+      width: 14rem;
     }
     hr {
-      width: 21.5rem;
+      width: 90%;
     }
   }
 `;
@@ -146,18 +157,32 @@ const MainCardRightBottom = styled.div`
       font-size: 0.9rem;
     }
   }
+  @media only screen and (max-width: 500px) {
+    .info {
+      width: 9.5rem;
+    }
+    .addSub {
+      width: 9.5rem;
+    }
+  }
 `;
 
 const RequestWindow = styled.div`
+  font-family: "Geo", sans-serif;
   background-color: black;
   position: absolute;
   padding: 0 1rem 0 1rem;
   opacity: 0.8;
   z-index: 501;
+  .guest {
+    color: #ff8a00;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 
   @media only screen and (max-width: 800px) {
     margin: 11rem 0 0 0;
-    left: 23%;
+    left: 22%;
     width: 50%;
     height: 15rem;
     text-align: center;

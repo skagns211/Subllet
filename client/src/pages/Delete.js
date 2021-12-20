@@ -1,15 +1,24 @@
 import React from "react";
-import styled from "styled-components";
 import DeleteForm from "../components/Delete/DeleteForm";
-
-const StyledBody = styled.div`
-`;
+import DeleteOauth from "../components/Delete/DeleteOauth";
+import DeleteAccount from "../components/Delete/DeleteAccount";
+import { useSelector } from "react-redux";
 
 const Delete = () => {
+  const loginUserInfo = useSelector((state) => state.loginUserInfo);
+
   return (
-    <StyledBody>
-      <DeleteForm />
-    </StyledBody>
+    <div>
+      {loginUserInfo.signup_method &&
+      loginUserInfo.signup_method === "Normal" ? (
+        <DeleteForm />
+      ) : loginUserInfo.signup_method &&
+        loginUserInfo.signup_method !== "Normal" ? (
+        <DeleteOauth />
+      ) : (
+        <DeleteAccount />
+      )}
+    </div>
   );
 };
 

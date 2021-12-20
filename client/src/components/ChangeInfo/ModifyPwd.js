@@ -10,6 +10,14 @@ const StyledBody = styled.div`
   margin: 2rem auto;
   width: 50rem;
   max-width: 100%;
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
 `;
 
 const StyledForm = styled.div`
@@ -69,7 +77,16 @@ const ChangeButton = styled.div`
   margin: 2rem 0 2.5rem 0;
   display: flex;
   justify-content: center;
+
   button {
+    @font-face {
+      font-family: "InfinitySans-RegularA1";
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+        format("woff");
+      font-weight: normal;
+      font-style: normal;
+    }
+    font-family: "InfinitySans-RegularA1";
     position: absolute;
     top: 65rem;
     padding: 1rem 2rem;
@@ -202,7 +219,6 @@ const ModifyPwd = () => {
         </ErrMsg>
         <PasswordInput>
           <div>새로운 비밀번호</div>
-          {/* <label>숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!</label> */}
           <input
             type="password"
             placeholder="비밀번호를 입력해주세요"

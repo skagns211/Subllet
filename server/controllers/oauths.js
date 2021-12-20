@@ -1,6 +1,6 @@
 require("dotenv").config();
 const axios = require("axios");
-const { User } = require("../models");
+const { User, Service, Comment, Scrap, Subscribe } = require("../models");
 const {
   generateAccessToken,
   generateRefreshToken,
@@ -39,9 +39,8 @@ module.exports = {
           "https://www.googleapis.com/oauth2/v1/userinfo",
           { headers: { Authorization: `Bearer ${access_token}` } }
         );
-        console.log(googleUserInfo);
+
         const { email, picture } = googleUserInfo.data;
-        console.log(email);
         const userInfo = await User.findOne({
           where: { email },
         });
@@ -95,15 +94,13 @@ module.exports = {
         const url = `${endPoint}?grant_type=${grant_type}&client_id=${client_id}&client_secret=${client_secret}&code=${authorizationCode}&state=${state}`;
         const response = await axios.post(url);
         const { access_token } = response.data;
-        console.log(access_token);
+   
         const NaverUserInfo = await axios.get(
           "https://openapi.naver.com/v1/nid/me",
           { headers: { Authorization: `Bearer ${access_token}` } }
         );
-        console.log(NaverUserInfo.data);
 
         const { email, profile_image } = NaverUserInfo.data.response;
-
         const userInfo = await User.findOne({
           where: { email },
         });
@@ -175,7 +172,6 @@ module.exports = {
         });
 
         const { email, profile } = KakaoUserInfo.data.kakao_account;
-
         const userInfo = await User.findOne({
           where: { email },
         });
@@ -241,6 +237,74 @@ module.exports = {
       } catch (err) {
         console.error(err);
         return res.status(500).send("Server error");
+      }
+    },
+  },
+  delete: {
+    post: async (req, res) => {
+      const id = req.id;
+      const { message } = req.body;
+
+      if (!message) {
+        return res.status(400).send("Empty body");
+      }
+
+      if (message !== "회원탈퇴") {
+        return res.status(400).send("Bad request");
+      }
+
+      const subscribe = await Subscribe.findOne({
+        where: { user_id: id },
+      });
+
+      if (subscribe) {
+        await Subscribe.destroy({
+          where: { user_id: id },
+        });
+      }
+
+      const scrap = await Scrap.findOne({
+        where: { user_id: id },
+      });
+
+      if (scrap) {
+        await Scrap.destroy({
+          where: { user_id: id },
+        });
+      }
+
+      const comment = await Comment.findOne({
+        where: { user_id: id },
+      });
+
+      if (comment) {
+        const service = await Service.findOne({
+          where: { id: comment.service_id },
+        });
+
+        if (comment.likes === true) {
+          await Service.update(
+            {
+              total_likes: service.total_likes - 1,
+            },
+            {
+              where: { id: service.id },
+            }
+          );
+        }
+        await Comment.destroy({
+          where: { user_id: id },
+        });
+      }
+
+      await User.destroy({
+        where: { id },
+      });
+
+      try {
+        return res.status(204).send("Success");
+      } catch (err) {
+        console.error(err);
       }
     },
   },

@@ -231,12 +231,6 @@ const FooterBox = styled.div`
   }
 `;
 
-const Member = styled.span`
-  display: flex;
-  justify-content: space-between;
-  border: 1px solid red;
-`;
-
 const Footer = () => {
   const [isMember, setIsMember] = useState([
     "Kim namhun",

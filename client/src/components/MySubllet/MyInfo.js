@@ -105,11 +105,17 @@ const RightBox = styled.span`
     margin-top: 1.5rem;
     /* border: 0.5px solid white; */
     display: flex;
+
     a {
-      width: 50%;
+      width: 52%;
       display: flex;
       align-items: center;
       text-align: center;
+      button {
+        @media only screen and (max-width: 600px) {
+          font-size: 0.75rem;
+        }
+      }
     }
     @media only screen and (min-width: 601px) and (max-width: 850px) {
       font-size: 1.2rem;
@@ -173,13 +179,14 @@ const MyInfo = ({ myScrap }) => {
     total_scraps,
     total_subscribes,
   } = state.loginUserInfo;
+  const defaultImg = "https://i.esdrop.com/d/z3v0lj8ztjvc/kXWkE8sPcW.png";
 
   return (
     <MyInfoContainer>
       <MyInfoTitle>회원정보</MyInfoTitle>
       <MyInfoBox>
         <LeftBox>
-          <img src={profile} />
+          <img src={profile ? profile : defaultImg} />
         </LeftBox>
         <RightBox>
           <div>닉네임: {nickname}</div>

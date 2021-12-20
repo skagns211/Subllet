@@ -128,7 +128,7 @@ const CategoryBox = styled.div`
     }
   }
   @media only screen and (max-width: 600px) {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 `;
 
@@ -461,74 +461,3 @@ const MyScribe = ({ myScribe, sortedMyScribe, setMyScribe, test, setTest }) => {
 };
 
 export default MyScribe;
-
-// allServices.map((service) => {
-//   return (
-//     <ListBox>
-//       <div className="name">
-//         <img src={service.outer_image} />
-//       </div>
-//       <div className="plan">
-//         <SelectBox name="modifyPlan">
-//           {/* {service.Prices.map((el) => {
-//             return (
-//               <option selected>
-//                 {el.title},{[el.price]}
-//               </option>
-//             );
-//           })} */}
-//           <option selected>
-//             {service.price.planname},{[service.planprice]}
-//           </option>
-//         </SelectBox>
-//       </div>
-//       <div className="date">매달 0일</div>
-//       <div className="category">{service.category}</div>
-//     </ListBox>
-//   );
-// })
-
-// {isModify === false ?
-//   sortedMyScribe.map((el, idx) => {
-//       return (
-//         <ListBox>
-//           <div className="name">
-//             <img src={el.Service.outer_image} />
-//           </div>
-//           <div className="plan">
-//             {el.planname},{[el.planprice]}
-//           </div>
-//           {isModify ===false ? <div className="date">매달 {el.paydate}일</div>: <div className="date">매월 {el.paydate}일</div>}
-//           {/* <div className="date">매달 {el.paydate}일</div> */}
-//           <div className="category">{el.Service.category}</div>
-//           <div className="fix">
-//             <div>수정하기</div>
-//             <div>삭제</div>
-//           </div>
-//         </ListBox>
-//       );
-//     })
-//   : myScribeInfo.map((service) => {
-//       return (
-//         <ListBox>
-//           <div className="name">
-//             <img src={service.outer_image} />
-//           </div>
-//           <div className="plan">
-//             <SelectBox name="modifyPlan">
-//               {service.Prices.map((el) => {
-//                 return (
-//                   <option selected>
-//                     {el.title},{[el.price]}
-//                   </option>
-//                 );
-//               })}
-//             </SelectBox>
-//           </div>
-//           <div className="date">
-//             <SelectDate2 />
-//           </div>
-//           <div className="category">{service.category}</div>
-//         </ListBox>
-//       );
-//     })}
