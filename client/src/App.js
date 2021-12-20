@@ -37,8 +37,8 @@ const GlobalStyle = createGlobalStyle`
     /* display: flex; */
     overflow: auto;
     /* height: 100%; */
-    @media only screen and (max-width: 800px) {
     min-width: 370px;
+    @media only screen and (max-width: 800px) {
   }
   a {
     color: #ffffff;

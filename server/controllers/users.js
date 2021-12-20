@@ -1,4 +1,4 @@
-const { User, Comment, Subscribe, Scrap, Service } = require("../models");
+const { User, Service, Comment, Subscribe, Scrap } = require("../models");
 const {
   generateSalt,
   hashPassword,

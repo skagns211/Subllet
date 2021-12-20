@@ -39,9 +39,8 @@ module.exports = {
           "https://www.googleapis.com/oauth2/v1/userinfo",
           { headers: { Authorization: `Bearer ${access_token}` } }
         );
-        console.log(googleUserInfo);
+
         const { email, picture } = googleUserInfo.data;
-        console.log(email);
         const userInfo = await User.findOne({
           where: { email },
         });
@@ -95,15 +94,13 @@ module.exports = {
         const url = `${endPoint}?grant_type=${grant_type}&client_id=${client_id}&client_secret=${client_secret}&code=${authorizationCode}&state=${state}`;
         const response = await axios.post(url);
         const { access_token } = response.data;
-        console.log(access_token);
+   
         const NaverUserInfo = await axios.get(
           "https://openapi.naver.com/v1/nid/me",
           { headers: { Authorization: `Bearer ${access_token}` } }
         );
-        console.log(NaverUserInfo.data);
 
         const { email, profile_image } = NaverUserInfo.data.response;
-
         const userInfo = await User.findOne({
           where: { email },
         });
@@ -152,7 +149,7 @@ module.exports = {
         const client_secret = process.env.KAKAO_SECRET;
         const endPoint = "https://kauth.kakao.com/oauth/token";
         const grant_type = "authorization_code";
-        const redirect_uri = process.env.CLIENT_ORIGIN + "/auth/kakao/callback";
+        const redirect_uri = process.env.CLIENT_ORIGIN + "/auth/kakao/signup";
         const url = `${endPoint}?code=${authorizationCode}&client_id=${client_id}&client_secret=${client_secret}&redirect_uri=${redirect_uri}&grant_type=${grant_type}`;
 
         const response = await axios({
@@ -175,7 +172,6 @@ module.exports = {
         });
 
         const { email, profile } = KakaoUserInfo.data.kakao_account;
-
         const userInfo = await User.findOne({
           where: { email },
         });

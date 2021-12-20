@@ -178,7 +178,6 @@ const MainCardRightBottom = styled.div`
   flex-direction: column;
   .info {
     margin-top: 1rem;
-    margin-right: 5rem;
     margin-bottom: 1rem;
     padding: 0.5rem 0rem 0 1.5rem;
     width: 10.5rem;
@@ -349,7 +348,7 @@ const MainCard = () => {
               ? service.map((el, idx) => {
                   return (
                     <div key={idx}>
-                      {nextPayDate[idx] >= 0 && nextPayDate[idx] < 11
+                      {nextPayDate[idx] >= 0 && nextPayDate[idx] < 10
                         ? `${el} : ${nextPayDate[idx] + 1}일 전`
                         : null}
                     </div>

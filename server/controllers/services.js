@@ -1,4 +1,4 @@
-const { Service, Comment, Price, Scrap } = require("../models");
+const { User, Service, Comment, Price, Scrap } = require("../models");
 
 module.exports = {
   services: {
@@ -19,6 +19,7 @@ module.exports = {
           },
         ],
       });
+
 
       try {
         res.json({ services });
