@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 
 const StyledBody = styled.div`
   margin: 0 0 -70px 0;
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
   width: 100%;
   height: 100vh;
   scroll-snap-type: y mandatory;

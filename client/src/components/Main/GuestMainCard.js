@@ -141,7 +141,6 @@ const MainCardRightBottom = styled.div`
   flex-direction: column;
   .info {
     margin-top: 1rem;
-    margin-right: 5rem;
     margin-bottom: 1rem;
     padding: 0.5rem 0rem 0 1.5rem;
     width: 10.5rem;
@@ -174,15 +173,9 @@ const RequestWindow = styled.div`
   padding: 0 1rem 0 1rem;
   opacity: 0.8;
   z-index: 501;
-  .guest {
-    color: #ff8a00;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-
   @media only screen and (max-width: 800px) {
     margin: 11rem 0 0 0;
-    left: 22%;
+    left: 21%;
     width: 50%;
     height: 15rem;
     text-align: center;
