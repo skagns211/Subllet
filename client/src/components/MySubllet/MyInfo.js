@@ -153,7 +153,6 @@ const Button = styled.button`
 
 const MyInfo = () => {
   const state = useSelector((state) => state);
-  console.log(state.loginUserInfo);
   const {
     email,
     nickname,

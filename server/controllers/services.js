@@ -38,6 +38,7 @@ module.exports = {
         include: {
           attributes: [
             "id",
+            "user_id",
             "commenter",
             "message",
             "likes",

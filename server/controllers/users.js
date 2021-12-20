@@ -1,4 +1,4 @@
-const { User, Comment, Subscribe, Scrap } = require("../models");
+const { User, Comment, Subscribe, Scrap, Service } = require("../models");
 const {
   generateSalt,
   hashPassword,
@@ -103,17 +103,49 @@ module.exports = {
         return res.status(400).send("Inconsistency");
       }
 
-      await Subscribe.destroy({
+      const subscribe = await Subscribe.findOne({
         where: { user_id: id },
       });
 
-      await Scrap.destroy({
+      if (subscribe) {
+        await Subscribe.destroy({
+          where: { user_id: id },
+        });
+      }
+
+      const scrap = await Scrap.findOne({
         where: { user_id: id },
       });
 
-      await Comment.destroy({
+      if (scrap) {
+        await Scrap.destroy({
+          where: { user_id: id },
+        });
+      }
+
+      const comment = await Comment.findOne({
         where: { user_id: id },
       });
+
+      if (comment) {
+        const service = await Service.findOne({
+          where: { id: comment.service_id },
+        });
+
+        if (comment.likes === true) {
+          await Service.update(
+            {
+              total_likes: service.total_likes - 1,
+            },
+            {
+              where: { id: service.id },
+            }
+          );
+        }
+        await Comment.destroy({
+          where: { user_id: id },
+        });
+      }
 
       await User.destroy({
         where: { id },
