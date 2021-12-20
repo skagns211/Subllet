@@ -22,6 +22,14 @@ const NavHeader = styled.header`
 `;
 
 const MinNavTap = styled.span`
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
   display: flex;
   flex-shrink: 0;
   a {
@@ -62,6 +70,14 @@ const MinNavTap = styled.span`
 `;
 
 const MaxNavTap = styled.div`
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
   display: flex;
   justify-self: right;
   flex-shrink: 0;

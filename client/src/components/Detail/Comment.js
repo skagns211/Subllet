@@ -16,6 +16,22 @@ const ServiceOption = styled.div`
   margin: 1rem 1rem 1rem 1rem;
   font-size: 1.5rem;
   color: #ff8a00;
+  div {
+    &.like {
+      display: flex;
+      align-items: flex-end;
+      font-size: 1.5rem;
+      @font-face {
+        font-family: "InfinitySans-RegularA1";
+        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+          format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+      font-family: "InfinitySans-RegularA1";
+    }
+  }
+
   @media only screen and (min-width: 768px) {
     font-size: 2rem;
   }
@@ -71,7 +87,16 @@ const Likes = styled.div`
 const SendButton = styled.div`
   text-align: right;
   margin: 1rem 0rem;
+
   button {
+    @font-face {
+      font-family: "InfinitySans-RegularA1";
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+        format("woff");
+      font-weight: normal;
+      font-style: normal;
+    }
+    font-family: "InfinitySans-RegularA1";
     background-color: #3a3f51;
     border: 0px;
     font-size: 1rem;
@@ -286,7 +311,7 @@ const Comment = ({
       ) : null}
       <ServiceOption>
         <div>Comment {comments.length}개</div>
-        <div>
+        <div className="like">
           추천: {detail.total_likes} 비추천: {detail.total_unlikes}
         </div>
       </ServiceOption>

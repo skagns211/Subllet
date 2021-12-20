@@ -4,10 +4,19 @@ import styled from "styled-components";
 import Select from "react-select";
 import axios from "axios";
 import AgreeCheck from "./AgreeCheck";
+import AlertModal from "../AlertModal";
 
 //! Styled Setting--------------------------------------------
 
 const SignUpContainer = styled.div`
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
   width: 100%;
   height: 100%;
   /* margin-top: 0.5rem; */
@@ -47,6 +56,8 @@ const EmailTab = styled.div`
   div {
     font-size: 1rem;
     &.At {
+      font-family: "Geo", sans-serif;
+      margin: 0;
       width: 10%;
       font-size: 2rem;
       text-align: center;
@@ -76,7 +87,14 @@ const InputBox = styled.input`
 
 const SelectEmail = styled(Select)`
   width: 45%;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
   .Select__control {
     border: 1px solid #a1a1a1;
     border-radius: 0.2rem;
@@ -131,6 +149,14 @@ const Button = styled.button`
   /* margin-left: 0.2rem; */
   background-color: #252a3c;
   font-size: 1rem;
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  font-family: "InfinitySans-RegularA1";
   color: #ff8a00;
   :hover {
     color: #252a3c;
@@ -147,31 +173,23 @@ const SignUpForm = () => {
 
   useEffect(() => {
     setEmail(frontEmail + "@" + backEmail);
-    // console.log(frontEmail);
   }, [frontEmail]);
 
   useEffect(() => {
     setEmail(frontEmail + "@" + backEmail);
-    // console.log(backEmail);
   }, [backEmail]);
 
-  useEffect(() => {
-    // console.log(email);
-  }, [email]);
+  useEffect(() => {}, [email]);
 
   const [userInfo, setUserInfo] = useState({
     nickname: "",
     password: "",
     passwordCheck: "",
   });
-  useEffect(() => {
-    validPassword(userInfo.password);
-  }, [userInfo.password]);
 
   useEffect(() => {
     validPassword(userInfo.password);
     equalPassword(userInfo.password, userInfo.passwordCheck);
-    // console.log(userInfo);
   }, [userInfo]);
 
   const userData = {
@@ -186,15 +204,46 @@ const SignUpForm = () => {
   const [isDupNickname, setIsDupNickname] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [isPwdCheck, setIsPwdCheck] = useState(false);
+  const [isAgree, setIsAgree] = useState(false);
   const [isCheck, setIsCheck] = useState(false);
+
   //! 회원가입 상태 state
   const [isComplete, setIsComplete] = useState(false);
+
+  //! 모달 State
+  const [open, setOpen] = useState(false);
+  const [alertMsg, setAlertMsg] = useState({});
+  const [success, setSuccess] = useState(false);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
 
   //! 메세지 State
   const [emailMessage, setEmailMessage] = useState("");
   const [nicknameMessage, setNicknameMessage] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordCheckMessage, setPasswordCheckMessage] = useState("");
+  const [checkMessage, setCheckMessage] = useState("");
+
+  const checkFunc = () => {
+    if (
+      isEmail &&
+      isDupEmail &&
+      isDupNickname &&
+      isPassword &&
+      isPwdCheck &&
+      isAgree === true
+    ) {
+      setIsCheck(true);
+      setCheckMessage("");
+    } else {
+      setIsCheck(false);
+    }
+  };
+  useEffect(() => {
+    checkFunc();
+  }, [isEmail, isDupEmail, isDupNickname, isPassword, isPwdCheck, isAgree]);
 
   //!SelectBox Options-------------------------------------------
   const options = [
@@ -241,7 +290,6 @@ const SignUpForm = () => {
 
   const handleEmailBackValue = (value, key) => {
     setBackEmail(value.value);
-    // console.log(value.value);
   };
   const handleInputValue = (key) => (e) => {
     setUserInfo({ ...userInfo, [key]: e.target.value });
@@ -251,7 +299,6 @@ const SignUpForm = () => {
 
   const checkEmail = () => {
     //! 이메일 중복확인
-    console.log(userData.email);
     if (frontEmail.length === 0 || backEmail.length === 0) {
       setIsDupEmail(false);
       setEmailMessage("이메일이 입력되지 않았습니다. 이메일을 입력해 주세요");
@@ -259,18 +306,18 @@ const SignUpForm = () => {
       axios
         .post("/auth/email", { email: userData.email })
         .then((res) => {
-          console.log(res);
           setIsEmail(true);
           setIsDupEmail(true);
           setEmailMessage("사용 가능한 이메일입니다");
         })
         .catch((err) => {
-          console.log(err.response);
           const resMsg = err.response.data;
           if (resMsg === "Overlap") {
+            setIsEmail(false);
             setIsDupEmail(false);
             setEmailMessage("이미 회원가입된 이메일입니다");
           } else if (resMsg === "Empty body") {
+            setIsEmail(false);
             setIsDupEmail(false);
             setEmailMessage(
               "이메일이 입력되지 않았습니다. 이메일을 입력해 주세요"
@@ -288,7 +335,6 @@ const SignUpForm = () => {
         setNicknameMessage("사용가능한 닉네임입니다");
       })
       .catch((err) => {
-        console.error(err.response);
         const resMsg = err.response.data;
         if (resMsg === "Overlap") {
           setIsDupNickname(false);
@@ -303,25 +349,22 @@ const SignUpForm = () => {
   };
 
   const handleComplete = () => {
-    console.log(isEmail, isDupEmail, isDupNickname, isPassword, isPwdCheck);
-    if (
-      isEmail &&
-      isDupEmail &&
-      isDupNickname &&
-      isPassword &&
-      isPwdCheck === false
-    ) {
-      console.log("회원가입 요청이 실패하였습니다");
+    if (isCheck !== true) {
+      setCheckMessage("모든 정보를 정확하게 입력해 주세요");
     } else {
       axios.post("/auth/signup", userData).then((res) => {
-        console.log(res.data);
         const resMsg = res.data;
         if (resMsg === "Signup success") {
+          setAlertMsg({
+            message:
+              "회원가입이 완료되었습니다. 이메일 인증 후 이용하시기 바랍니다.",
+            button: "확인",
+          });
+          setSuccess(true);
           setIsComplete(true);
-          console.log("회원가입 요청이 성공적으로 전달되었습니다");
-          setTimeout(() => {
-            navigate("/main");
-          }, 1000);
+          // setTimeout(() => {
+          //   navigate("/main");
+          // }, 1000);
         }
       });
     }
@@ -331,6 +374,13 @@ const SignUpForm = () => {
 
   return (
     <SignUpContainer>
+      {isComplete ? (
+        <AlertModal
+          alertMsg={alertMsg}
+          success={success}
+          handleClick={handleClick}
+        />
+      ) : null}
       <ElementBox>
         <ElementTitle>이메일</ElementTitle>
         <EmailTab>
@@ -400,8 +450,11 @@ const SignUpForm = () => {
         {isPwdCheck ? null : userInfo.passwordCheck.length === 0 ? null : (
           <ErrorMessage>{passwordCheckMessage}</ErrorMessage>
         )}
+        {checkMessage.length === 0 ? null : (
+          <ErrorMessage>{checkMessage}</ErrorMessage>
+        )}
       </ElementBox>
-      <AgreeCheck isCheck={isCheck} setIsCheck={setIsCheck} />
+      <AgreeCheck isAgree={isAgree} setIsAgree={setIsAgree} />
       <Button onClick={() => handleComplete()}>회원가입</Button>
     </SignUpContainer>
   );

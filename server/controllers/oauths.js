@@ -152,7 +152,7 @@ module.exports = {
         const client_secret = process.env.KAKAO_SECRET;
         const endPoint = "https://kauth.kakao.com/oauth/token";
         const grant_type = "authorization_code";
-        const redirect_uri = process.env.CLIENT_ORIGIN + "/auth/kakao/callback";
+        const redirect_uri = process.env.CLIENT_ORIGIN + "/auth/kakao/signup";
         const url = `${endPoint}?code=${authorizationCode}&client_id=${client_id}&client_secret=${client_secret}&redirect_uri=${redirect_uri}&grant_type=${grant_type}`;
 
         const response = await axios({

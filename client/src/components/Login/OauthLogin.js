@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import kakao_oauth from "../../IMG/Oauth/kakao_oauth.png";
 import google_oauth from "../../IMG/Oauth/google_oauth.png";
-import naver_oauth from "../../IMG/Oauth/naver_oauth.png";
+import NaverButton from "../../IMG/Oauth/NaverButton.png";
 require("dotenv").config();
 
 const OauthContainer = styled.div`
@@ -65,7 +65,7 @@ const OauthLogin = () => {
           <img src={kakao_oauth} />
         </a>
         <a href={NAVER_AUTH_URL}>
-          <img src={naver_oauth} />
+          <img src={NaverButton} />
         </a>
         <a href={GOOGLE_AUTH_URL}>
           <img src={google_oauth} />
