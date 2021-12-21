@@ -4,10 +4,18 @@ import styled from "styled-components";
 
 import Filter from "../components/AllView/Filter";
 import FilterList from "../components/AllView/FilterList";
+import LoadingSpinner from "../components/LodingSpinner";
 
 const StyledBody = styled.article`
   max-width: 950px;
   margin: 0 auto;
+`;
+
+const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 65vh;
 `;
 
 const AllView = () => {
@@ -15,10 +23,11 @@ const AllView = () => {
   const [price, setPrice] = useState(false);
   const [free, setFree] = useState(false);
   const [services, setServices] = useState();
-  const [filter, setFilter] = useState();
+  const [filter, setFilter] = useState([""]);
   const [categoryName, setCategoryName] = useState("카테고리");
   const [priceName, setpriceName] = useState("가격");
   const [freeName, setfreeName] = useState("체험하기 유무");
+  const [loading, setLoading] = useState();
 
   const [select, setSelect] = useState({
     category: "",
@@ -27,7 +36,9 @@ const AllView = () => {
   });
 
   useEffect(() => {
+    setLoading(true);
     axios.get("/service").then((res) => {
+      setLoading(false);
       setServices(res.data.services);
       setFilter(res.data.services);
     });
@@ -113,19 +124,27 @@ const AllView = () => {
 
   return (
     <StyledBody>
-      <Filter
-        category={category}
-        setCategory={setCategory}
-        price={price}
-        setPrice={setPrice}
-        free={free}
-        setFree={setFree}
-        filterServices={filterServices}
-        categoryName={categoryName}
-        priceName={priceName}
-        freeName={freeName}
-      />
-      <FilterList filter={filter} />
+      {loading ? (
+        <Loading>
+          <LoadingSpinner />
+        </Loading>
+      ) : (
+        <>
+          <Filter
+            category={category}
+            setCategory={setCategory}
+            price={price}
+            setPrice={setPrice}
+            free={free}
+            setFree={setFree}
+            filterServices={filterServices}
+            categoryName={categoryName}
+            priceName={priceName}
+            freeName={freeName}
+          />
+          <FilterList filter={filter} />
+        </>
+      )}
     </StyledBody>
   );
 };
