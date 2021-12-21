@@ -320,7 +320,7 @@ const ModifyInfo = () => {
             <img src={profile} alt="profile 이미지" />
           ) : (
             <img
-              src="https://subllet-profile.s3.ap-northeast-2.amazonaws.com/istockphoto-1223671392-170667a.jpeg"
+              src="https://i.esdrop.com/d/z3v0lj8ztjvc/OizvMNga4W.png"
               alt="profile 기본이미지"
             />
           )}
