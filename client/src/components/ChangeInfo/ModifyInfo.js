@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import AlertModal from "../AlertModal";
 import { changeUserInfo, setIsLogin, setLoginUserInfo } from "../../actions";
+require("dotenv").config();
 
 const StyledBody = styled.div`
   color: white;
@@ -212,7 +213,7 @@ const ModifyInfo = () => {
   AWS.config.update({
     region: "ap-northeast-2",
     credentials: new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: "ap-northeast-2:553da489-28ff-4eb6-b0ba-1187a7a08c29",
+      IdentityPoolId: process.env.REACT_APP_S3_IDENTITY_ID,
     }),
   });
 
