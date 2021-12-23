@@ -1,19 +1,21 @@
-import { React, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
 import { setLoginUserInfo, setIsLogin } from "../../actions";
 import styled from "styled-components";
 import OauthLogin from "./OauthLogin";
 import axios from "axios";
+import LoadingSpinner from "../LodingSpinner";
 
 const LoginStyled = styled.div`
-@font-face {
-    font-family: 'InfinitySans-RegularA1';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff') format('woff');
+  @font-face {
+    font-family: "InfinitySans-RegularA1";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff")
+      format("woff");
     font-weight: normal;
     font-style: normal;
-}
-font-family: 'InfinitySans-RegularA1';
+  }
+  font-family: "InfinitySans-RegularA1";
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,6 +54,9 @@ font-family: 'InfinitySans-RegularA1';
     margin: 1rem 6rem 0 0;
     color: #cf3c3c;
   }
+  .loading {
+    margin-top: 20rem;
+  }
   @media only screen and (max-width: 800px) {
     .loginFormContainer {
       background-color: #272729;
@@ -68,11 +73,12 @@ font-family: 'InfinitySans-RegularA1';
     .passwordTitle {
       font-size: 1rem;
     }
-    .warning { 
+    .warning {
       font-size: 0.8rem;
       width: 15rem;
       margin-right: 0;
     }
+  }
 `;
 
 const LoginBtn = styled.button`
@@ -244,13 +250,11 @@ const LoginForm = () => {
           email: loginInfo.email + "@" + value.value,
         });
   };
-  const [isEamilSelect, setIsEmailSelect] = useState("");
-  const handleEmailSelect = (value) => {
-    setIsEmailSelect(value.value);
-  };
+
   const [isWarning, setIsWarning] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
   const [isVerify, setIsVerify] = useState(false);
+  const [isLoding, setIsLoding] = useState(false);
 
   const postInfo = () => {
     const { email, password } = loginInfo;
@@ -274,6 +278,7 @@ const LoginForm = () => {
           }
           dispatch(setLoginUserInfo(loginUserInfo));
           dispatch(setIsLogin(true));
+          setIsLoding(true);
           window.location.replace("/main");
         })
         .catch((err) => {
@@ -290,57 +295,63 @@ const LoginForm = () => {
 
   return (
     <LoginStyled>
-      <div className="loginFormContainer">
-        <div className="title">로그인</div>
-        <hr />
-        <div className="emailTitle">이메일</div>
-        <LoginContainer>
-          <EmailContainer>
+      {isLoding ? (
+        <div className="loading">
+          <LoadingSpinner />
+        </div>
+      ) : (
+        <div className="loginFormContainer">
+          <div className="title">로그인</div>
+          <hr />
+          <div className="emailTitle">이메일</div>
+          <LoginContainer>
+            <EmailContainer>
+              <input
+                type="text"
+                placeholder="이메일"
+                onChange={handleEmailValue("email")}
+                onKeyPress={inputEnter}
+              ></input>
+              <span className="at">@</span>
+              <SelectEmail
+                onChange={(value) => {
+                  handleSelect(value);
+                }}
+                classNamePrefix="Select"
+                options={emailList}
+                placeholder="선택해 주세요"
+              ></SelectEmail>
+            </EmailContainer>
+          </LoginContainer>
+          <div className="passwordTitle">비밀번호</div>
+          <PassWordContainer>
             <input
-              type="text"
-              placeholder="이메일"
-              onChange={handleEmailValue("email")}
+              type="password"
+              placeholder="비밀번호"
+              onChange={handlePwdValue("password")}
               onKeyPress={inputEnter}
             ></input>
-            <span className="at">@</span>
-            <SelectEmail
-              onChange={(value) => {
-                handleSelect(value);
-              }}
-              classNamePrefix="Select"
-              options={emailList}
-              placeholder="선택해 주세요"
-            ></SelectEmail>
-          </EmailContainer>
-        </LoginContainer>
-        <div className="passwordTitle">비밀번호</div>
-        <PassWordContainer>
-          <input
-            type="password"
-            placeholder="비밀번호"
-            onChange={handlePwdValue("password")}
-            onKeyPress={inputEnter}
-          ></input>
-        </PassWordContainer>
-        {isWarning ? (
-          <div className="warning">
-            이메일 또는 비밀번호가 올바르지 않습니다
-          </div>
-        ) : null}
-        {isEmpty ? (
-          <div className="warning">이메일과 비밀번호를 모두 입력해주세요</div>
-        ) : null}
-        {isVerify ? (
-          <div className="verify">
-            이메일 인증이 필요합니다.<br></br>발송된 이메일을 확인해 주세요.
-          </div>
-        ) : null}
-        <LoginBtn className="loginBtn" onClick={() => postInfo()}>
-          로그인
-        </LoginBtn>
-        <hr />
-        <OauthLogin />
-      </div>
+          </PassWordContainer>
+          {isWarning ? (
+            <div className="warning">
+              이메일 또는 비밀번호가 올바르지 않습니다
+            </div>
+          ) : null}
+          {isEmpty ? (
+            <div className="warning">이메일과 비밀번호를 모두 입력해주세요</div>
+          ) : null}
+          {isVerify ? (
+            <div className="verify">
+              이메일 인증이 필요합니다.<br></br>발송된 이메일을 확인해 주세요.
+            </div>
+          ) : null}
+          <LoginBtn className="loginBtn" onClick={() => postInfo()}>
+            로그인
+          </LoginBtn>
+          <hr />
+          <OauthLogin />
+        </div>
+      )}
     </LoginStyled>
   );
 };

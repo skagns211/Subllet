@@ -27,7 +27,7 @@ const AllView = () => {
   const [categoryName, setCategoryName] = useState("카테고리");
   const [priceName, setpriceName] = useState("가격");
   const [freeName, setfreeName] = useState("체험하기 유무");
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(false);
 
   const [select, setSelect] = useState({
     category: "",

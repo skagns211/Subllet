@@ -54,7 +54,7 @@ const OauthSignUp = () => {
   // const KAKAO_REST_API_KEY = process.env.KAKAO_REST_API_KEY;
   const KAKAO_JAVASCRIPT_KEY = process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY; //! javascript key
   const KAKAO_CALLBACK_URL_LOCAL = "https://localhost:3000/auth/kakao/signup";
-  const KAKAO_CALLBACK_URL = "https://subllet.co.kr/auth/kakao/signup";
+  const KAKAO_CALLBACK_URL = "https://www.subllet.co.kr/auth/kakao/signup";
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_JAVASCRIPT_KEY}&redirect_uri=${KAKAO_CALLBACK_URL}&response_type=code`;
 
   const NAVER_CLIENT_ID_LOCAL = process.env.REACT_APP_NAVER_CLIENT_ID_LOCAL;
