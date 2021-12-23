@@ -1,4 +1,4 @@
-import react, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import OauthSignUp from "../components/Signup/OauthSignUp";
 import SignUpForm from "../components/Signup/SignUpForm";
