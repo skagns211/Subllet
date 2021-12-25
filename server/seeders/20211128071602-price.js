@@ -198,7 +198,7 @@ module.exports = {
         service_id: 13,
         title: "무제한 듣기 + 오프라인 재생",
         price: "9800원",
-        message: "-무제한 듣기 + VIBE 앱에서 오프라인 재생(DRM 저장)",
+        message: "-무제한 듣기 + VIBE 앱에서 오프라인 재생 (DRM 저장)",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
