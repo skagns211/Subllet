@@ -8,7 +8,8 @@ module.exports = {
         message: "넷플릭스 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%82%E1%85%A6%E1%86%BA%E1%84%91%E1%85%B3%E1%86%AF%E1%84%85%E1%85%B5%E1%86%A8%E1%84%89%E1%85%B3+inner1.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/TQLAawsFEN.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%82%E1%85%A6%E1%86%BA%E1%84%91%E1%85%B3%E1%86%AF%E1%84%85%E1%85%B5%E1%86%A8%E1%84%89%E1%85%B3.png",
         category: "video",
         total_likes: 0,
         url: "https://www.netflix.com/kr",
@@ -21,7 +22,8 @@ module.exports = {
         message: "왓챠 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%AA%E1%86%BA%E1%84%8E%E1%85%A3+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/xazlZQviV1.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%8B%E1%85%AA%E1%86%BA%E1%84%8E%E1%85%A3.png",
         category: "video",
         total_likes: 0,
         url: "https://watcha.com",
@@ -47,7 +49,8 @@ module.exports = {
         message: "웨이브 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%B0%E1%84%8B%E1%85%B5%E1%84%87%E1%85%B3+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/D48URKpxNV.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%8B%E1%85%B0%E1%84%8B%E1%85%B5%E1%84%87%E1%85%B3.png",
         category: "video",
         total_likes: 0,
         url: "https://www.wavve.com",
@@ -60,7 +63,8 @@ module.exports = {
         message: "티빙 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%90%E1%85%B5%E1%84%87%E1%85%B5%E1%86%BC+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/sDSq2faVsC.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%90%E1%85%B5%E1%84%87%E1%85%B5%E1%86%BC.png",
         category: "video",
         total_likes: 0,
         url: "https://www.tving.com",
@@ -73,7 +77,8 @@ module.exports = {
         message: "라프텔 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%85%E1%85%A1%E1%84%91%E1%85%B3%E1%84%90%E1%85%A6%E1%86%AF+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/1NV5YLChVa.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%85%E1%85%A1%E1%84%91%E1%85%B3%E1%84%90%E1%85%A6%E1%86%AF.png",
         category: "video",
         total_likes: 0,
         url: "https://laftel.net",
@@ -86,7 +91,8 @@ module.exports = {
         message: "디즈니 플러스 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%83%E1%85%B5%E1%84%8C%E1%85%B3%E1%84%82%E1%85%B5+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/moJRkdc6iF.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%83%E1%85%B5%E1%84%8C%E1%85%B3%E1%84%82%E1%85%B5.png",
         category: "video",
         total_likes: 0,
         url: "http://www.disneyplus.com",
@@ -99,7 +105,8 @@ module.exports = {
         message: "애플티비 플러스 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%A2%E1%84%91%E1%85%B3%E1%86%AF%E1%84%90%E1%85%B5%E1%84%87%E1%85%B5+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/PdsxbyQGDJ.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%8B%E1%85%A2%E1%84%91%E1%85%B3%E1%86%AF%E1%84%90%E1%85%B5%E1%84%87%E1%85%B5.png",
         category: "video",
         total_likes: 0,
         url: "https://www.apple.com/kr/apple-tv-plus",
@@ -112,7 +119,8 @@ module.exports = {
         message: "밀리의 서재 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%86%E1%85%B5%E1%86%AF%E1%84%85%E1%85%B5%E1%84%8B%E1%85%B4%E1%84%89%E1%85%A5%E1%84%8C%E1%85%A2+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/Y7dBzslC5x.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%86%E1%85%B5%E1%86%AF%E1%84%85%E1%85%B5.png",
         category: "book",
         total_likes: 0,
         url: "https://millie.co.kr/",
@@ -125,7 +133,8 @@ module.exports = {
         message: "리디셀렉트 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%85%E1%85%B5%E1%84%83%E1%85%B5%E1%84%89%E1%85%A6%E1%86%AF%E1%84%85%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3+inner.jpeg",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/cl4oQFH5Nq.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%85%E1%85%B5%E1%84%83%E1%85%B5%E1%84%89%E1%85%A6%E1%86%AF%E1%84%85%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3.png",
         category: "book",
         total_likes: 0,
         url: "https://select.ridibooks.com",
@@ -138,7 +147,8 @@ module.exports = {
         message: "교보sam 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%AD%E1%84%87%E1%85%A9+inner.jpeg",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/w1ljwVgUtR.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%89%E1%85%A2%E1%86%B7.png",
         category: "book",
         total_likes: 0,
         url: "https://digital.kyobobook.co.kr/digital/ebook/ebookMain.ink",
@@ -151,7 +161,8 @@ module.exports = {
         message: "예스북클럽 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B3%E1%84%87%E1%85%AE%E1%86%A8%E1%84%8F%E1%85%B3%E1%86%AF%E1%84%85%E1%85%A5%E1%86%B8+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/8yBpKkLNGe.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B3%E1%84%87%E1%85%AE%E1%86%A8.png",
         category: "book",
         total_likes: 0,
         url: "http://m.yes24.com/BookClub/Main",
@@ -164,7 +175,8 @@ module.exports = {
         message: "바이브 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%87%E1%85%A1%E1%84%8B%E1%85%B5%E1%84%87%E1%85%B3+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/FwwEpeKt69.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%87%E1%85%A1%E1%84%8B%E1%85%B5%E1%84%87%E1%85%B3.png",
         category: "music",
         total_likes: 0,
         url: "https://vibe.naver.com/today",
@@ -177,7 +189,8 @@ module.exports = {
         message: "스포티파이 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%89%E1%85%B3%E1%84%91%E1%85%A9%E1%84%90%E1%85%B5%E1%84%91%E1%85%A1%E1%84%8B%E1%85%B5+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/JjPSoEVs7h.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%89%E1%85%B3%E1%84%91%E1%85%A9%E1%84%90%E1%85%B5%E1%84%91%E1%85%A1%E1%84%8B%E1%85%B5.png",
         category: "music",
         total_likes: 0,
         url: "https://www.spotify.com/kr-ko/",
@@ -190,7 +203,8 @@ module.exports = {
         message: "애플뮤직 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%A2%E1%84%91%E1%85%B3%E1%86%AF%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/eAiVAGjOGO.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%8B%E1%85%A2%E1%84%91%E1%85%B3%E1%86%AF%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8.png",
         category: "music",
         total_likes: 0,
         url: "http://www.applemusic.co.kr/",
@@ -203,7 +217,8 @@ module.exports = {
         message: "지니 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%8C%E1%85%B5%E1%84%82%E1%85%B5+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/MVamdMFHC3.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%8C%E1%85%B5%E1%84%82%E1%85%B5.png",
         category: "music",
         total_likes: 0,
         url: "https://www.genie.co.kr/",
@@ -216,7 +231,8 @@ module.exports = {
         message: "멜론 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%86%E1%85%A6%E1%86%AF%E1%84%85%E1%85%A9%E1%86%AB+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/fuM0mtY8hZ.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%86%E1%85%A6%E1%86%AF%E1%84%85%E1%85%A9%E1%86%AB.png",
         category: "music",
         total_likes: 0,
         url: "https://www.melon.com/",
@@ -229,7 +245,8 @@ module.exports = {
         message: "플로 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%91%E1%85%B3%E1%86%AF%E1%84%85%E1%85%A9+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/3SpsfWTjUG.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%91%E1%85%B3%E1%86%AF%E1%84%85%E1%85%A9.png",
         category: "music",
         total_likes: 0,
         url: "https://www.music-flo.com/",
@@ -242,7 +259,8 @@ module.exports = {
         message: "쿠팡 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%8F%E1%85%AE%E1%84%91%E1%85%A1%E1%86%BC+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/RrWF1yzE4r.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%8F%E1%85%AE%E1%84%91%E1%85%A1%E1%86%BC.png",
         category: "shopping",
         total_likes: 0,
         url: "https://www.coupang.com/",
@@ -255,7 +273,8 @@ module.exports = {
         message: "마켓컬리 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%86%E1%85%A1%E1%84%8F%E1%85%A6%E1%86%BA%E1%84%8F%E1%85%A5%E1%86%AF%E1%84%85%E1%85%B5+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/pP5W3k3Wry.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%86%E1%85%A1%E1%84%8F%E1%85%A6%E1%86%BA%E1%84%8F%E1%85%A5%E1%86%AF%E1%84%85%E1%85%B5.png",
         category: "shopping",
         total_likes: 0,
         url: "https://www.kurly.com/",
@@ -268,7 +287,8 @@ module.exports = {
         message: "네이버플러스 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%82%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%87%E1%85%A5+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/I1fMT6lzML.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%82%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%87%E1%85%A5.png",
         category: "shopping",
         total_likes: 0,
         url: "https://nid.naver.com/membership/join?pcode=Naver_brandsearch_A",
@@ -281,7 +301,8 @@ module.exports = {
         message: "티몬 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%90%E1%85%B5%E1%84%86%E1%85%A9%E1%86%AB+inner.jpeg",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/lFe1qosu6S.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%90%E1%85%B5%E1%84%86%E1%85%A9%E1%86%AB.png",
         category: "shopping",
         total_likes: 0,
         url: "https://www.tmon.co.kr/",
@@ -294,7 +315,8 @@ module.exports = {
         message: "11번가 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/11%E1%84%87%E1%85%A5%E1%86%AB%E1%84%80%E1%85%A1+inner.jpeg",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/zolteR9ICi.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer11%E1%84%87%E1%85%A5%E1%86%AB%E1%84%80%E1%85%A1.png",
         category: "shopping",
         total_likes: 0,
         url: "https://www.11st.co.kr/main",
@@ -307,7 +329,8 @@ module.exports = {
         message: "와이즐리 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%AA%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B3%E1%86%AF%E1%84%85%E1%85%B5+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/jgZDl957hu.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%8B%E1%85%AA%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B3%E1%86%AF%E1%84%85%E1%85%B5.png",
         category: "life",
         total_likes: 0,
         url: "https://wisely.wiselycompany.com/",
@@ -320,7 +343,8 @@ module.exports = {
         message: "런드리고 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%85%E1%85%A5%E1%86%AB%E1%84%83%E1%85%B3%E1%84%85%E1%85%B5%E1%84%80%E1%85%A9+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/bNPcBAdPFK.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%85%E1%85%A5%E1%86%AB%E1%84%83%E1%85%B3%E1%84%85%E1%85%B5%E1%84%80%E1%85%A9.png",
         category: "life",
         total_likes: 0,
         url: "https://www.laundrygo.com/",
@@ -333,7 +357,8 @@ module.exports = {
         message: "술담화 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%89%E1%85%AE%E1%86%AF%E1%84%83%E1%85%A1%E1%86%B7%E1%84%92%E1%85%AA+inneer.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/XltGn3C9g6.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%89%E1%85%AE%E1%86%AF%E1%84%83%E1%85%A1%E1%86%B7%E1%84%92%E1%85%AA.png",
         category: "life",
         total_likes: 0,
         url: "https://www.sooldamhwa.com/",
@@ -346,7 +371,8 @@ module.exports = {
         message: "청소연구소 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%8E%E1%85%A5%E1%86%BC%E1%84%89%E1%85%A9%E1%84%8B%E1%85%A7%E1%86%AB%E1%84%80%E1%85%AE%E1%84%89%E1%85%A9+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/u7CYggIkTv.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%8E%E1%85%A5%E1%86%BC%E1%84%89%E1%85%A9%E1%84%8B%E1%85%A7%E1%86%AB%E1%84%80%E1%85%AE%E1%84%89%E1%85%A9.png",
         category: "life",
         total_likes: 0,
         url: "https://www.cleaninglab.co.kr/",

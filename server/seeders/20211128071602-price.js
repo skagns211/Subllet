@@ -8,7 +8,7 @@ module.exports = {
         title: "베이식",
         price: "9500원",
         message:
-          "-이용기기 모바일, 태블릿, PC, TV -화질 SD(480p)화질 -동시시청 1명",
+          "-이용기기 모바일, 태블릿, PC, TV -화질 SD(480p) -동시시청 1명",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -17,7 +17,7 @@ module.exports = {
         title: "스탠다드",
         price: "13500원",
         message:
-          "-이용기기 모바일, 태블릿, PC, TV -화질 FHD(1080p)화질 -동시시청 2명",
+          "-이용기기 모바일, 태블릿, PC, TV -화질 FHD(1080p) -동시시청 2명",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -25,8 +25,7 @@ module.exports = {
         service_id: 1,
         title: "프리미엄",
         price: "14500원",
-        message:
-          "-이용기기 모바일, 태블릿, PC, TV -화질 UHD(4K)화질 -동시시청 4명",
+        message: "-이용기기 모바일, 태블릿, PC, TV -화질 UHD(4K) -동시시청 4명",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -35,7 +34,7 @@ module.exports = {
         title: "베이식",
         price: "7900원",
         message:
-          "-이용기기 모바일, 태블릿, PC, TV -화질 FHD(1080p)화질 -동시시청 1명",
+          "-이용기기 모바일, 태블릿, PC, TV -화질 FHD(1080p) -동시시청 1명",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -43,8 +42,7 @@ module.exports = {
         service_id: 2,
         title: "프리미엄",
         price: "12900원",
-        message:
-          "-이용기기 모바일, 태블릿, PC, TV -화질 UHD(4K)화질 -동시시청 4명",
+        message: "-이용기기 모바일, 태블릿, PC, TV -화질 UHD(4K) -동시시청 4명",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -60,8 +58,7 @@ module.exports = {
         service_id: 4,
         title: "베이식",
         price: "7900원",
-        message:
-          "-이용기기 모바일, 태블릿, PC -화질 HD(720p)화질 -동시시청 1명",
+        message: "-이용기기 모바일, 태블릿, PC -화질 HD(720p) -동시시청 1명",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -70,7 +67,7 @@ module.exports = {
         title: "스탠다드",
         price: "10900원",
         message:
-          "-이용기기 모바일, 태블릿, PC, TV -화질 FHD(1080p)화질 -동시시청 2명",
+          "-이용기기 모바일, 태블릿, PC, TV -화질 FHD(1080p) -동시시청 2명",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -78,8 +75,7 @@ module.exports = {
         service_id: 4,
         title: "프리미엄",
         price: "13900원",
-        message:
-          "-이용기기 모바일, 태블릿, PC, TV -화질 UHD(4k)화질 -동시시청 4명",
+        message: "-이용기기 모바일, 태블릿, PC, TV -화질 UHD(4k) -동시시청 4명",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -87,8 +83,7 @@ module.exports = {
         service_id: 5,
         title: "베이식",
         price: "7900원",
-        message:
-          "-이용기기 모바일, 태블릿, PC -화질 HD(720p)화질 -동시시청 1명",
+        message: "-이용기기 모바일, 태블릿, PC -화질 HD(720p) -동시시청 1명",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -97,7 +92,7 @@ module.exports = {
         title: "스탠다드",
         price: "10900원",
         message:
-          "-이용기기 모바일, 태블릿, PC, TV -화질 FHD(1080p)화질 -동시시청 2명",
+          "-이용기기 모바일, 태블릿, PC, TV -화질 FHD(1080p) -동시시청 2명",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -105,8 +100,7 @@ module.exports = {
         service_id: 5,
         title: "프리미엄",
         price: "13900원",
-        message:
-          "-이용기기 모바일, 태블릿, PC, TV -화질 UHD(4k)화질 -동시시청 4명",
+        message: "-이용기기 모바일, 태블릿, PC, TV -화질 UHD(4k) -동시시청 4명",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -115,7 +109,7 @@ module.exports = {
         title: "베이식",
         price: "9900원",
         message:
-          "-이용기기 모바일, 태블릿, PC, TV -화질 FHD(1080p)화질 -동시시청 1명",
+          "-이용기기 모바일, 태블릿, PC, TV -화질 FHD(1080p) -동시시청 1명",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -124,7 +118,7 @@ module.exports = {
         title: "프리미엄",
         price: "14900원",
         message:
-          "-이용기기 모바일, 태블릿, PC, TV -화질 FHD(1080p)화질 -동시시청 4명",
+          "-이용기기 모바일, 태블릿, PC, TV -화질 FHD(1080p) -동시시청 4명",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -132,8 +126,7 @@ module.exports = {
         service_id: 7,
         title: "기본",
         price: "9900원",
-        message:
-          "-이용기기 모바일, 태블릿, PC, TV -화질 UHD(4k)화질 -동시시청 4명",
+        message: "-이용기기 모바일, 태블릿, PC, TV -화질 UHD(4k) -동시시청 4명",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -141,8 +134,7 @@ module.exports = {
         service_id: 8,
         title: "기본",
         price: "6500원",
-        message:
-          "-이용기기 모바일, 태블릿, PC, TV -화질 UHD(4k)화질 -동시시청 5명",
+        message: "-이용기기 모바일, 태블릿, PC, TV -화질 UHD(4k) -동시시청 5명",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
