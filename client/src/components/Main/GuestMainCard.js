@@ -275,7 +275,7 @@ const GuestMainCard = () => {
           <div>
             <img
               alt="defaultImg"
-              src="https://i.esdrop.com/d/z3v0lj8ztjvc/OizvMNga4W.png"
+              src="https://sublletimg.s3.amazonaws.com/profile+(1).png"
             />
             <span className="user">Guest 님의 Subllet</span>
           </div>
