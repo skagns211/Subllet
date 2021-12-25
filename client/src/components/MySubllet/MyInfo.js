@@ -179,7 +179,7 @@ const MyInfo = ({ myScrap }) => {
     total_scraps,
     total_subscribes,
   } = state.loginUserInfo;
-  const defaultImg = "https://i.esdrop.com/d/z3v0lj8ztjvc/kXWkE8sPcW.png";
+  const defaultImg = "https://sublletimg.s3.amazonaws.com/profile+(1).png";
 
   return (
     <MyInfoContainer>

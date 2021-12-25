@@ -321,7 +321,7 @@ const ModifyInfo = () => {
             <img src={profile} alt="profile 이미지" />
           ) : (
             <img
-              src="https://i.esdrop.com/d/z3v0lj8ztjvc/OizvMNga4W.png"
+              src="https://sublletimg.s3.amazonaws.com/profile+(1).png"
               alt="profile 기본이미지"
             />
           )}
