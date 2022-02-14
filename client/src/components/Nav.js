@@ -246,7 +246,7 @@ const Nav = () => {
   const { profile } = state.loginUserInfo;
   const accessToken = window.localStorage.getItem("accessToken");
   const currentUrl = location.pathname;
-  const defaultImg = "https://i.esdrop.com/d/z3v0lj8ztjvc/kXWkE8sPcW.png";
+  const defaultImg = "https://sublletimg.s3.amazonaws.com/profile+(1).png";
 
   const logoutHandler = () => {
     axios

@@ -36,7 +36,8 @@ module.exports = {
         message: "유튜브 설명메세지",
         inner_image:
           "https://subllet-profile.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%B2%E1%84%90%E1%85%B2%E1%84%87%E1%85%B3+inner.png",
-        outer_image: "https://i.esdrop.com/d/z3v0lj8ztjvc/VYFz026D5l.png",
+        outer_image:
+          "https://sublletimg.s3.amazonaws.com/outer%E1%84%8B%E1%85%B2%E1%84%90%E1%85%B2%E1%84%87%E1%85%B3.png",
         category: "video",
         total_likes: 0,
         url: "https://www.youtube.com/premium",
